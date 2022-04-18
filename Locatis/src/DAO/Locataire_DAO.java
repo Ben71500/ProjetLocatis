@@ -1,0 +1,160 @@
+package DAO;
+
+import DAO.DAO;
+import Locatis.Locataire;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Locataire_DAO extends DAO<Locataire>{
+    
+    public Locataire_DAO(Connection connection) {
+        super(connection);
+    }
+
+    @Override
+    public boolean create(Locataire obj) {
+        try {
+            Statement etat = this.connection.createStatement();
+            String requeteProc ="Insert into locataire VALUES ('"+ obj.getId()+ "' , '"
+                    + obj.getNom()+ "' , '"
+                    + obj.getPrenom()+ "' , '"
+                    + obj.getAge()+ "' , "
+                    + obj.getAnciennete().getDateSQL()+ " , '"
+                    + obj.getMail()+ "' , '"
+                    + obj.getTelephone()+ "' );";
+            etat.execute(requeteProc);
+            /*requeteProc = "Select ID_locataire from Locataire where Nom = '"
+                    +obj.getNom()+"' AND Prenom = '"
+                    +obj.getPrenom()+"' AND Age = '"
+                    +obj.getAge()+"' AND Anciennete = "
+                    +obj.getAnciennete().getDateSQL()+" AND Mail = '"
+                    +obj.getMail()+"' AND Telephone = '"+obj.getTelephone()+"'";
+            ResultSet res = etat.executeQuery(requeteProc);
+            res.next();
+            int id = res.getInt("ID_locataire");
+            requeteProc = "Insert into habiter VALUES ('"+obj.getLogement().getID()+"' , '"+id+"' )";
+            etat.execute(requeteProc);*/
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean delete(Locataire obj) {
+        try {
+            Statement etat = this.connection.createStatement();
+            //return !etat.execute("delete from locataire, habiter where ID_locataire=" + obj.getId());
+            return !etat.execute("delete from locataire where ID_locataire=" + obj.getId()) /*&& !etat.execute("delete from habiter where ID_locataire="+obj.getId())*/;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean update(Locataire obj) {
+        try {
+            Statement etat;
+            etat = this.connection.createStatement();
+            String requeteProc ="update locataire set Nom='"
+                    +obj.getNom()+"' , Prenom='"
+                    +obj.getPrenom()+"' , Age='"
+                    +obj.getAge()+"' , Anciennete="
+                    +obj.getAnciennete().getDateSQL()+" , Mail='"
+                    +obj.getMail()+"' , Telephone='"
+                    +obj.getTelephone()+"' where ID_locataire="
+                    +obj.getId()+" ;";
+            etat.execute(requeteProc);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        } 
+    }
+
+    @Override
+    public Locataire selectById(int id) {
+
+        try {
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select * from locataire where ID_locataire=" + id);
+            res.next();
+            return new Locataire(res.getInt("ID_locataire"),
+                    res.getString("Nom"),
+                    res.getString("Prenom"),
+                    res.getInt("Age"),
+                    this.getMyDate(res.getDate("Anciennete")),
+                    res.getString("Mail"),
+                    res.getString("Telephone")
+            );
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public Locataire selectByName(String nom) {
+        try {
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select * from locataire where Nom='" + nom + "'");
+            res.next();
+
+            return new Locataire(res.getInt("ID_locataire"), res.getString("Nom"), res.getString("Prenom"), res.getInt("Age"), this.getMyDate(res.getDate("Anciennete")), res.getString("Mail"), res.getString("Telephone"));
+
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Locataire> getAll() {
+
+        List<Locataire> allLocataire = new ArrayList<>();
+        try {
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select * from locataire");
+            while (res.next()) {
+                        allLocataire.add(new Locataire(
+                        res.getInt("ID_locataire"),
+                        res.getString("Nom"),
+                        res.getString("Prenom"),
+                        res.getInt("Age"),
+                        this.getMyDate(res.getDate("Anciennete")),
+                        res.getString("Mail"),
+                        res.getString("Telephone")
+                ));
+            }
+        } catch (SQLException ex) {
+            return allLocataire;
+        }
+        return allLocataire;
+    }
+    
+     public List<Locataire> getSearch(String texte) {
+
+        List<Locataire> allLocataire = new ArrayList<>();
+        try {
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select * from locataire where Nom like'%" + texte + "%'");
+            while (res.next()) {
+                        allLocataire.add(new Locataire(
+                        res.getInt("ID_locataire"),
+                        res.getString("Nom"),
+                        res.getString("Prenom"),
+                        res.getInt("Age"),
+                        this.getMyDate(res.getDate("Anciennete")),
+                        res.getString("Mail"),
+                        res.getString("Telephone")
+                ));
+            }
+        } catch (SQLException ex) {
+            return allLocataire;
+        }
+        return allLocataire;
+    }
+}
