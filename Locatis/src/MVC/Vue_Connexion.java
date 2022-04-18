@@ -1,5 +1,6 @@
 package MVC;
 
+import interfaceGraphique.EmptyFieldException;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -12,11 +13,13 @@ public class Vue_Connexion extends JFrame {
     private JPanel centre = new JPanel();
     private JPanel bas = new JPanel();
     private JPanel panneau_boutons = new JPanel();
+    private JPanel panneau_infos = new JPanel();
     
     private JLabel titre = new JLabel("Connectez-vous !");
     
     private JLabel login_label = new JLabel("Login : ");
     private JLabel mdp_label = new JLabel("Mot de Passe : ");
+    private JLabel messageErreur = new JLabel();
     private JLabel mdp_oublie = new JLabel("Mot de Passe oublié");
     
     private JTextField login = new JTextField();
@@ -39,11 +42,14 @@ public class Vue_Connexion extends JFrame {
         GridLayout gridlayout=new GridLayout(2,2);
         gridlayout.setHgap(10);
         gridlayout.setVgap(10);
-        centre.setLayout(gridlayout);
-        centre.add(this.login_label);
-        centre.add(this.login);
-        centre.add(this.mdp_label);
-        centre.add(this.motDePasse);
+        panneau_infos.setLayout(gridlayout);
+        panneau_infos.add(this.login_label);
+        panneau_infos.add(this.login);
+        panneau_infos.add(this.mdp_label);
+        panneau_infos.add(this.motDePasse);
+        centre.setLayout(new BorderLayout());
+        centre.add(this.panneau_infos, BorderLayout.CENTER);
+        centre.add(this.messageErreur, BorderLayout.SOUTH);
         
         bas.setLayout(new GridLayout(1,2));
         bas.add(this.connexion);
@@ -54,6 +60,26 @@ public class Vue_Connexion extends JFrame {
         this.pack();
     }
 
+    public JTextField getLogin() {
+        return login;
+    }
+
+    public JPasswordField getMotDePasse() {
+        return motDePasse;
+    }
+
+    public String getLoginTexte() {
+        return login.getText();
+    }
+
+    public String getMotDePasseTexte() {
+        return new String(motDePasse.getPassword());
+    }
+
+    public JLabel getMessageErreur() {
+        return messageErreur;
+    }
+
     /**
      * Ajouter un écouteur à un bouton désigné par son nom
      *
@@ -61,8 +87,7 @@ public class Vue_Connexion extends JFrame {
      * @param listener l'écouteur à ajouter
      */
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
-        JButton bouton;
-        bouton = switch (nomBouton.toUpperCase()) {
+        JButton bouton = switch (nomBouton.toUpperCase()) {
             case "CONNEXION" ->
                 bouton = connexion;
             default ->
@@ -70,6 +95,15 @@ public class Vue_Connexion extends JFrame {
         };
         if (bouton != null) {
             bouton.addActionListener(listener);
+        }
+    }
+    
+    public void verifierChamps() throws EmptyFieldException{
+        if(this.login.getText().equals("")){
+            throw new EmptyFieldException("un login");
+        }else
+        if(new String(motDePasse.getPassword()).equals("")){
+            throw new EmptyFieldException("un mot de passe");
         }
     }
 

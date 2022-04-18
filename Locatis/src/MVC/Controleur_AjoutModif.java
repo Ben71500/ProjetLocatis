@@ -84,7 +84,7 @@ public class Controleur_AjoutModif implements ActionListener{
                     laVue.reset();
                 }catch (EmptyFieldException ex) {
                     ex.afficherErreur();
-                } 
+                }
             }
             case "MODIFIER" -> {
                 try {

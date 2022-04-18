@@ -1,12 +1,14 @@
 package interfaceGraphique;
 
+import javax.swing.JLabel;
+
 public class UserNotFoundException extends Exception{
     
     public UserNotFoundException() {
         super("");
     }
     
-    public void afficherErreur(){
-        //new PopupInformation("Veuillez sélectionner "+this.getMessage());
+    public void afficherErreur(JLabel message){
+        message.setText("Login ou mot de passe incorrect !");
     }
 }

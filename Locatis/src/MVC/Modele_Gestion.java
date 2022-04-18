@@ -71,20 +71,19 @@ public class  Modele_Gestion {
     }
     
     public void modeleUtilisateurs(){
-        String[] tabEntetes = {"ID","Login", "Mot de passe", "Catégorie"};
+        String[] tabEntetes = {"ID","Login", "Catégorie"};
         this.setEntetes(tabEntetes);
         
         //Récupération des utilisateurs dans une ArrayList
         Utilisateurs_DAO lesUtilisateurs= new Utilisateurs_DAO(connBdd);
         liste=(ArrayList<Utilisateur>)lesUtilisateurs.getAll();
         //On convertit cette ArrayList en tableau à deux dimensions
-        this.tableau = new String[liste.size()][4];
+        this.tableau = new String[liste.size()][3];
         for(int i=0; i<liste.size();i++){
             Utilisateur user=(Utilisateur) liste.get(i);
             tableau [i][0]=user.getId()+"";
             tableau [i][1]=user.getLogin();
-            tableau [i][2]=user.getMotDePasse();
-            tableau [i][3]=user.getCat()+"";
+            tableau [i][2]=user.getCat()+"";
         }
     }
     
