@@ -31,6 +31,11 @@ public class Modele_AjoutModif{
         messageDAO.create(nouveauMessage);
     }
     
+    public void ajouterCampagne(Campagne nouvelleCampagne){
+        /*Message_DAO messageDAO=new Message_DAO(connBdd);
+        messageDAO.create(nouveauMessage);*/
+    }
+    
     public void modifierLocataire(Locataire leLocataire){
         Locataire_DAO locataireDAO=new Locataire_DAO(connBdd);
         locataireDAO.update(leLocataire);
@@ -44,5 +49,10 @@ public class Modele_AjoutModif{
     public void modifierMessage(Message leMessage){
         Message_DAO messageDAO=new Message_DAO(connBdd);
         messageDAO.update(leMessage);
+    }
+    
+    public void modifierCampagne(Campagne laCampagne){
+        /*Message_DAO messageDAO=new Message_DAO(connBdd);
+        messageDAO.update(leMessage);*/
     }
 }

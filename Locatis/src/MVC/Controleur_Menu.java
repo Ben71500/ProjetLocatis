@@ -77,12 +77,9 @@ public class Controleur_Menu implements ActionListener {
             case "GESTION DES CAMPAGNES" -> {
                 laVue.quitter();
                 SwingUtilities.invokeLater(new Runnable(){
-                    @Override
                     public void run(){
-                        Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("message"), new Modele_Gestion("messages"), userConnecte, "message");
-                        controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        controleur.getVue().setSize(800,500);
-                        controleur.getVue().setVisible(true);
+                        Controleur_AjoutModif controleur = new Controleur_AjoutModif(userConnecte, "campagne");                
+                        controleur.getVue().afficherVue();
                     }
                 });
             }

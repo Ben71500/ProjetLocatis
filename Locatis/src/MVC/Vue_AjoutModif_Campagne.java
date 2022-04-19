@@ -1,12 +1,13 @@
 package MVC;
 
-import Locatis.Campagne;
-import Locatis.Utilisateur;
+import Locatis.*;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 import interfaceGraphique.EmptyFieldException;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.*;
@@ -18,15 +19,23 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     private JPanel centre = new JPanel();
     private JPanel panneau_info = new JPanel();
     private JPanel panneau_boutons= new JPanel();
+    private JPanel panneau_gauche = new JPanel();
+    private JPanel panneau_droite = new JPanel();
     
     private JLabel titre = new JLabel();
+    private JLabel titreCampagne_label = new JLabel("Titre : ");
+    private JLabel message_label = new JLabel("Message : ");
+    private JLabel frequence_label = new JLabel("Fréquence : ");
     private JLabel dateDebut_label = new JLabel ("Date de début : ");
     private JLabel dateFin_label = new JLabel ("Date de fin : ");
-    private JLabel frequence_label = new JLabel("Fréquence : ");
+    private JLabel listes_label = new JLabel("Listes de diffusion : ");
     
+    private JTextField titreCampagne = new JTextField();
+    private JTextArea message = new JTextArea();
+    private JComboBox frequence = new JComboBox();
     private JDateChooser dateDebut = new JDateChooser();
     private JDateChooser dateFin = new JDateChooser();
-    private JComboBox frequence = new JComboBox();
+    private JList listes;
     
     private JButton ajouter = new JButton("Ajouter");
     private JButton modifier = new JButton("Modifier");
@@ -88,17 +97,45 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         centre.add(this.panneau_info, BorderLayout.CENTER);
         centre.add(this.panneau_boutons, BorderLayout.SOUTH);
         
-        panneau_info.setLayout(new GridLayout(3,2));
-        panneau_info.add(this.dateDebut_label);
-        panneau_info.add(this.dateDebut);
-        panneau_info.add(this.dateFin_label);
-        panneau_info.add(this.dateFin);
+        panneau_info.setLayout(new GridLayout(1,2));
+        panneau_info.add(this.panneau_gauche);
+        panneau_info.add(this.panneau_droite);
         
-        this.frequence.addItem("Utilisateur");
-        this.frequence.addItem("Gestionnaire");
-        this.frequence.addItem("Administrateur");
-        panneau_info.add(frequence_label);
-        panneau_info.add(frequence);
+        panneau_gauche.setLayout(new GridLayout(2,2));
+        panneau_gauche.add(this.titreCampagne_label);
+        panneau_gauche.add(this.titreCampagne);
+        panneau_gauche.add(this.message_label);
+        panneau_gauche.add(this.message);
+        
+        ArrayList<String> liste = new ArrayList<>();
+        liste.add("a");
+        liste.add("b");
+        liste.add("c");
+        remplirListe(liste);
+        
+        panneau_droite.setLayout(new GridLayout(4,2));
+        panneau_droite.add(frequence_label);
+        panneau_droite.add(frequence);
+        panneau_droite.add(this.dateDebut_label);
+        panneau_droite.add(this.dateDebut);
+        panneau_droite.add(this.dateFin_label);
+        panneau_droite.add(this.dateFin);
+        panneau_droite.add(listes_label);
+        panneau_droite.add(listes);
+        
+        this.frequence.addItem("Une seule fois");
+        this.frequence.addItem("Quotidien");
+        this.frequence.addItem("Hebdomadaire");
+        this.frequence.addItem("Mensuel");
+        this.frequence.addItem("Annuel");
+        
+        this.dateDebut.setCalendar(Calendar.getInstance());
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) this.dateDebut.getDateEditor();
+        editor.setEditable(false);
+        
+        this.dateFin.setCalendar(Calendar.getInstance());
+        JTextFieldDateEditor editor2 = (JTextFieldDateEditor) this.dateFin.getDateEditor();
+        editor2.setEditable(false);
     }
     
     /**
@@ -148,13 +185,13 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     }
 
     @Override
-    public Utilisateur getNouvelObjet() {
+    public Campagne getNouvelObjet() {
         //return new Utilisateur(0, this.dateDebut.getText(), this.dateFin.getText(), this.frequence.getSelectedItem()+"");
         return null;
     }
 
     @Override
-    public Utilisateur getObjetModifie() {
+    public Campagne getObjetModifie() {
         //return new Utilisateur(this.user.getId(), this.dateDebut.getText(), this.dateFin.getText(), this.frequence.getSelectedItem()+"");
         return null;
     }
@@ -162,8 +199,24 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     @Override
     public void afficherVue() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setBounds(100, 100, 350, 300);
+        this.setBounds(100, 100, 600, 300);
         //controleur.getVue().setSize(500,500);
         this.setVisible(true);
+    }
+    
+    /*public void remplirListe(ArrayList<ListeDeDiffusion> uneListe){
+        DefaultListModel<String> model = new DefaultListModel<>();
+        for(int i=0;i<uneListe.size();i++){
+            model.addElement(uneListe.get(i).toString());
+        }
+        listes = new JList<>(model);
+    }*/
+    
+    public void remplirListe(ArrayList<String> uneListe){
+        DefaultListModel<String> model = new DefaultListModel<>();
+        for(int i=0;i<uneListe.size();i++){
+            model.addElement(uneListe.get(i));
+        }
+        listes = new JList<>(model);
     }
 }

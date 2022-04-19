@@ -21,6 +21,7 @@ public class Controleur_AjoutModif implements ActionListener{
         switch(donnee){
             case "locataire" -> this.laVue = new Vue_AjoutModif_Locataires();
             case "utilisateur" -> this.laVue = new Vue_AjoutModif_Utilisateurs();
+            case "campagne" -> this.laVue = new Vue_AjoutModif_Campagne();
             default -> this.laVue = null;
         }
         
@@ -36,6 +37,7 @@ public class Controleur_AjoutModif implements ActionListener{
         switch(donnee){
             case "locataire" -> this.laVue = new Vue_AjoutModif_Locataires((Locataire) obj);
             case "utilisateur" -> this.laVue = new Vue_AjoutModif_Utilisateurs((Utilisateur) obj);
+            case "campagne" -> this.laVue = new Vue_AjoutModif_Campagne((Campagne) obj);
             default -> this.laVue = null;
         }
         
@@ -80,6 +82,11 @@ public class Controleur_AjoutModif implements ActionListener{
                             leModele.ajouterMessage(leMessage);
                             PopupInformation popup=new PopupInformation("Le message a bien été ajouté.");
                         }
+                        case "campagne" -> {
+                            Campagne laCampagne = (Campagne) laVue.getNouvelObjet();
+                            leModele.ajouterCampagne(laCampagne);
+                            PopupInformation popup=new PopupInformation("La campagne a bien été ajoutée.");
+                        }
                     }
                     laVue.reset();
                 }catch (EmptyFieldException ex) {
@@ -104,6 +111,11 @@ public class Controleur_AjoutModif implements ActionListener{
                             Message leMessage = (Message) laVue.getObjetModifie();
                             leModele.modifierMessage(leMessage);
                             PopupInformation popup=new PopupInformation("Le message a bien été modifié.");
+                        }
+                        case "campagne" -> {
+                            Campagne laCampagne = (Campagne) laVue.getObjetModifie();
+                            leModele.modifierCampagne(laCampagne);
+                            PopupInformation popup=new PopupInformation("La campagne a bien été modifiée.");
                         }
                     }
                     laVue.quitter();
