@@ -1,24 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Locatis;
 
-import DAO.Utilisateurs_DAO;
-import DAO.Locataire_DAO;
-import DAO.Message_DAO;
-import DAO.Connexion;
-import DAO.ConnectionBDD;
+import DAO.*;
 import java.sql.*;
 import java.util.ArrayList;
 
-/**
- *
- * @author benja
- */
 public class Test {
     public static void main (String args[]){
         
+        Campagne c = new Campagne(1, "t", new MyDate(2022,04,20), new MyDate(2022,04,30), "12:00:00", "mensuel", new Utilisateur(0,"admin","admin", "cat"));
+        Connection connBdd= ConnectionBDD.getInstance(new Connexion());
+        Campagne_DAO cd = new Campagne_DAO(connBdd);
+        //System.out.println(cd.update(c));
+        ArrayList<Campagne> liste = (ArrayList<Campagne>) cd.getAll();
+        for(int i=0;i<liste.size();i++)
+            System.out.println(liste.get(i).getTitre());
+        //System.out.println(cd.selectByName("t").getId());
+        cd.delete(c);
     }
 }

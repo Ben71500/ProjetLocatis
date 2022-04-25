@@ -27,6 +27,8 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     private JLabel message_label = new JLabel("Message : ");
     private JLabel frequence_label = new JLabel("Fréquence : ");
     private JLabel dateDebut_label = new JLabel ("Date de début : ");
+    private JLabel heure_label = new JLabel ("Heure : ");
+    private JLabel heure2_label = new JLabel (" h ");
     private JLabel dateFin_label = new JLabel ("Date de fin : ");
     private JLabel listes_label = new JLabel("Listes de diffusion : ");
     
@@ -34,6 +36,8 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     private JTextArea message = new JTextArea();
     private JComboBox frequence = new JComboBox();
     private JDateChooser dateDebut = new JDateChooser();
+    private JComboBox heure = new JComboBox();
+    private JComboBox minute = new JComboBox();
     private JDateChooser dateFin = new JDateChooser();
     private JList listes;
     
@@ -113,11 +117,18 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         liste.add("c");
         remplirListe(liste);
         
-        panneau_droite.setLayout(new GridLayout(4,2));
+        remplirComboBox(heure, 24);
+        remplirComboBox(minute, 60);
+        
+        panneau_droite.setLayout(new GridLayout(6,2));
         panneau_droite.add(frequence_label);
         panneau_droite.add(frequence);
         panneau_droite.add(this.dateDebut_label);
         panneau_droite.add(this.dateDebut);
+        panneau_droite.add(this.heure_label);
+        panneau_droite.add(this.heure);
+        panneau_droite.add(this.heure2_label);
+        panneau_droite.add(this.minute);
         panneau_droite.add(this.dateFin_label);
         panneau_droite.add(this.dateFin);
         panneau_droite.add(listes_label);
@@ -218,5 +229,10 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
             model.addElement(uneListe.get(i));
         }
         listes = new JList<>(model);
+    }
+    
+    public void remplirComboBox(JComboBox comboBox, int n){
+        for(int i=0;i<n;i++)
+            comboBox.addItem(i);
     }
 }

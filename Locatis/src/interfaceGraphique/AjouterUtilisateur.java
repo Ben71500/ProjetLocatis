@@ -80,7 +80,7 @@ public class AjouterUtilisateur extends JFrame implements ActionListener {
                 case "Administrateur" -> cat = "adm";
                 default -> System.out.println("Erreur liée à la catégorie du compte");
             }
-            Utilisateur user=new Utilisateur(0 ,login.getText(), mdp.getText(), cat);
+            Utilisateur user=new Utilisateur(1 ,login.getText(), mdp.getText(), cat);
             Connection connBdd= ConnectionBDD.getInstance(new Connexion());
             System.out.println(ConnectionBDD.isInstanceOf(new Connexion()));
             Utilisateurs_DAO nouvelUtilisateur=new Utilisateurs_DAO(connBdd);

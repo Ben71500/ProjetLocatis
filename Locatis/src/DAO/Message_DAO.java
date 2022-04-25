@@ -51,12 +51,10 @@ public class Message_DAO extends DAO<Message>{
         } catch (SQLException ex) {
             return false;
         }
-        
     }
 
     @Override
     public Message selectById(int id) {
-
         try {
             Statement statement = this.connection.createStatement();
             ResultSet res = statement.executeQuery("Select * from message where ID_message=" + id);
@@ -86,7 +84,6 @@ public class Message_DAO extends DAO<Message>{
 
     @Override
     public List<Message> getAll() {
-
         List<Message> allMessages = new ArrayList<>();
         try {
             Statement statement = this.connection.createStatement();

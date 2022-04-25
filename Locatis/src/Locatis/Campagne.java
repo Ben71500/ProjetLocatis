@@ -5,21 +5,29 @@ public class Campagne {
     private ArrayList<String> listeEmail;
     
     private int id;
+    private String titre;
     private MyDate dateDebut;
     private MyDate dateFin;
+    private String heure;
     private String frequence;
     private Utilisateur utilisateur;
 
-    public Campagne(int id, MyDate dateDebut, MyDate dateFin, String frequence, Utilisateur utilisateur) {
+    public Campagne(int id, String titre, MyDate dateDebut, MyDate dateFin, String heure, String frequence, Utilisateur utilisateur) {
         this.id = id;
+        this.titre = titre;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
+        this.heure = heure;
         this.frequence = frequence;
         this.utilisateur = utilisateur;
     }
 
     public int getId() {
         return id;
+    }
+    
+    public String getTitre() {
+        return titre;
     }
 
     public MyDate getDateDebut() {
@@ -30,6 +38,10 @@ public class Campagne {
         return dateFin;
     }
 
+    public String getHeure() {
+        return heure;
+    }
+    
     public String getFrequence() {
         return frequence;
     }
