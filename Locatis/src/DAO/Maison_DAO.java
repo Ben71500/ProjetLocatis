@@ -30,11 +30,7 @@ public class Maison_DAO extends DAO<Maison>{
         try {
             Statement etat;
             etat = this.connection.createStatement();
-            String requeteProc ="Insert into batiment VALUES ('"+ obj.getID()+ "' , '"+ obj.getAdresse()+ "' );";
-            System.out.println(requeteProc);
-            etat.execute(requeteProc);
-            requeteProc = "Insert into maison VALUES ('"+obj.getID()+"');";
-            System.out.println(requeteProc);
+            String requeteProc ="Insert into logement (`ID_batiment`, `Adresse`) VALUES ("+ obj.getID()+ " , '"+ obj.getAdresse()+ "' );";
             etat.execute(requeteProc);
             return true;
         } catch (SQLException ex) {
@@ -48,11 +44,7 @@ public class Maison_DAO extends DAO<Maison>{
         try {
             Statement etat;
             etat = this.connection.createStatement();
-            String requeteProc ="DELETE FROM batiment where ID_batiment = "+obj.getID()+" ;";
-            System.out.println(requeteProc);
-            etat.execute(requeteProc);
-            requeteProc = "DELETE FROM maison where ID_batiment = "+obj.getID()+" ;";
-            System.out.println(requeteProc);
+            String requeteProc ="DELETE FROM logement where ID_batiment = "+obj.getID()+" ;";
             etat.execute(requeteProc);
             return true;
         } catch (SQLException ex) {
@@ -64,11 +56,12 @@ public class Maison_DAO extends DAO<Maison>{
     public boolean update(Maison obj) {
         try {
             Statement statement = this.connection.createStatement();
-            return !statement.execute("update batiment set "
+            return !statement.execute("update logement set "
                     + "Adresse='" + obj.getAdresse()
                     + "' where  ID_batiment=" + obj.getID()
             );
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
             return false;
         }
         
@@ -79,7 +72,7 @@ public class Maison_DAO extends DAO<Maison>{
 
         try {
             Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from batiment where id=" + id);
+            ResultSet res = statement.executeQuery("Select * from logement where id=" + id +" AND NumeroAppartement IS NULL");
             res.next();
             return new Maison(res.getInt("ID_batiment"),
                     res.getString("Adresse")
@@ -93,9 +86,8 @@ public class Maison_DAO extends DAO<Maison>{
     public Maison selectByName(String adresse) {
         try {
             Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from batiment where Adresse='" + adresse + "'");
+            ResultSet res = statement.executeQuery("Select * from logement where Adresse='" + adresse + "' AND NumeroAppartement IS NULL");
             res.next();
-
             return new Maison(res.getInt("ID_batiment"), res.getString("Adresse"));
 
         } catch (SQLException ex) {
@@ -109,7 +101,7 @@ public class Maison_DAO extends DAO<Maison>{
         List<Maison> allMaison = new ArrayList<>();
         try {
             Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from batiment");
+            ResultSet res = statement.executeQuery("Select ID_batiment, adresse from logement where NumeroAppartement IS NULL ;");
             while (res.next()) {
                         allMaison.add(new Maison(
                         res.getInt("ID_batiment"),
