@@ -27,8 +27,8 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
         this.laVue = uneVue;
         this.leModele = unModele;
         this.leModele.initialiser();
-        //laVue.setTable(leModele.getTable());
         
+        //laVue.setTable(leModele.getTable());
         laVue.definirTableau(leModele.getTableau(),leModele.getEntetes());
         uneVue.ajouterEcouteurBouton("Ajouter", this);
         uneVue.ajouterEcouteurBouton("Modifier", this);

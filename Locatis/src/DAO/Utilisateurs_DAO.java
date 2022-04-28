@@ -74,7 +74,7 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
 
         try {
             Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from utilisateur where id=" + id);
+            ResultSet res = statement.executeQuery("Select * from utilisateur where ID_utilisateur=" + id);
             res.next();
             return new Utilisateur(res.getInt("ID_utilisateur"),
                     res.getString("login"),
@@ -82,6 +82,7 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
                     res.getString("CAT")
             );
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
             return null;
         }
     }

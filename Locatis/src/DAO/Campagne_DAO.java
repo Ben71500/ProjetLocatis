@@ -47,12 +47,13 @@ public class Campagne_DAO extends DAO<Campagne>{
                     + "Titre_campagne ='" + obj.getTitre()+ "' , "
                     + "Date_Debut =" + obj.getDateDebut().getDateSQL()+ " , "
                     + "Date_Fin =" + obj.getDateFin().getDateSQL()+ " , "
-                    + "Heure ='" + obj.getHeure().getTimeSQL()+ "' , "
+                    + "Heure =" + obj.getHeure().getTimeSQL()+ " , "
                     + "frequence ='" + obj.getFrequence()+ "' , "
                     + "ID_utilisateur =" + obj.getUtilisateur().getId()
                     + " where  ID_campagne=" + obj.getId()
             );
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
             return false;
         }
     }
@@ -98,7 +99,6 @@ public class Campagne_DAO extends DAO<Campagne>{
             Statement statement = this.connection.createStatement();
             Utilisateurs_DAO user = new Utilisateurs_DAO(this.connection);
             ResultSet res = statement.executeQuery("Select * from campagne");
-            System.out.println(user.selectById(res.getInt("ID_utilisateur")).getLogin());
             while (res.next()) {
                 allCampagnes.add(new Campagne(res.getInt("ID_campagne"),
                     res.getString("Titre_campagne"),
@@ -110,6 +110,7 @@ public class Campagne_DAO extends DAO<Campagne>{
                 ));
             }
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
             return allCampagnes;
         }
         return allCampagnes;

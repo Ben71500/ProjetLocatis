@@ -8,6 +8,9 @@ import interfaceGraphique.PasDeLignesSelectionneesException;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -79,11 +82,14 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         this.pack();
         
         this.campagne=camp;
+        this.titreCampagne.setText(this.campagne.getTitre());
+        heure.setSelectedItem(this.campagne.getHeure().getHeure());
+        minute.setSelectedItem(this.campagne.getHeure().getMinute());
         Calendar calendarDebut = new GregorianCalendar(campagne.getDateDebut().getAnnee(), campagne.getDateDebut().getMois()-1 , campagne.getDateDebut().getJour());
         dateDebut.setCalendar(calendarDebut);
         
         Calendar calendarFin = new GregorianCalendar(campagne.getDateFin().getAnnee(), campagne.getDateFin().getMois()-1 , campagne.getDateFin().getJour());
-        dateDebut.setCalendar(calendarFin);
+        dateFin.setCalendar(calendarFin);
         //dateDebut.setText(user.getLogin());
         //dateFin.setText(user.getMotDePasse());
         /*switch(user.getCat()){
@@ -175,8 +181,19 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         this.dateDebut.setCalendar(Calendar.getInstance());
         JTextFieldDateEditor editor = (JTextFieldDateEditor) this.dateDebut.getDateEditor();
         editor.setEditable(false);
+        this.dateDebut.setMinSelectableDate(Calendar.getInstance().getTime());
+        this.dateDebut.getDateEditor().addPropertyChangeListener(
+            new PropertyChangeListener() {
+                @Override
+                public void propertyChange(PropertyChangeEvent e) {
+                    if(dateFin.getCalendar().before(dateDebut.getCalendar()))
+                        dateFin.setDate(dateDebut.getDate());
+                    dateFin.setMinSelectableDate(dateDebut.getDate());
+                }
+        });
         
         this.dateFin.setCalendar(Calendar.getInstance());
+        
         JTextFieldDateEditor editor2 = (JTextFieldDateEditor) this.dateFin.getDateEditor();
         editor2.setEditable(false);
     }
@@ -236,7 +253,7 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         frequence.setSelectedIndex(0);
         heure.setSelectedIndex(0);
         minute.setSelectedIndex(0);
-        listes.setSelectedIndex(0);
+        listes.clearSelection();
     }
     
     @Override
@@ -273,7 +290,7 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     @Override
     public void afficherVue() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setBounds(100, 100, 600, 300);
+        this.setBounds(100, 100, 600, 600);
         //controleur.getVue().setSize(500,500);
         this.setVisible(true);
         if(this.frequence.getSelectedItem().equals("Une seule fois"))

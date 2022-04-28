@@ -216,7 +216,11 @@ public class Vue_Gestion extends JFrame {
     }
     
     public void verifierSelection() throws PasDeLignesSelectionneesException{
-        if(this.table.getSelectedRowCount()==0)
-            throw new PasDeLignesSelectionneesException("un "+this.donnees);
+        if(this.table.getSelectedRowCount()==0){
+            if(this.donnees.equals("campagne"))
+                throw new PasDeLignesSelectionneesException("une "+this.donnees);
+            else
+                throw new PasDeLignesSelectionneesException("un "+this.donnees);
+        }
     }
 }

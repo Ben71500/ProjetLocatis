@@ -207,6 +207,10 @@ public class  Modele_Gestion {
                 Maison_DAO maisonDao=new Maison_DAO(connBdd);
                 maisonDao.delete((Maison) this.getSelection(n));
             }
+            case "campagnes" -> {
+                Campagne_DAO campagneDao=new Campagne_DAO(connBdd);
+                campagneDao.delete((Campagne) this.getSelection(n));
+            }
         }
         this.liste.remove(n);
     }

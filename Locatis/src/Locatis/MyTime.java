@@ -9,6 +9,14 @@ public class MyTime {
         this.heure = heure;
         this.minute = minute;
     }
+
+    public int getHeure() {
+        return heure;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
     
     public String getTimeSQL(){
         String s="'";
