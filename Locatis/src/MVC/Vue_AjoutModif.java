@@ -1,6 +1,7 @@
 package MVC;
 
 import interfaceGraphique.EmptyFieldException;
+import interfaceGraphique.PasDeLignesSelectionneesException;
 import java.awt.event.ActionListener;
 
 public interface Vue_AjoutModif {
@@ -9,7 +10,7 @@ public interface Vue_AjoutModif {
     
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener);
     
-    public void verifierChamps() throws EmptyFieldException;
+    public void verifierChamps() throws EmptyFieldException, PasDeLignesSelectionneesException;
     
     public void reset();
     

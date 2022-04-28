@@ -8,11 +8,11 @@ public class Campagne {
     private String titre;
     private MyDate dateDebut;
     private MyDate dateFin;
-    private String heure;
+    private MyTime heure;
     private String frequence;
     private Utilisateur utilisateur;
 
-    public Campagne(int id, String titre, MyDate dateDebut, MyDate dateFin, String heure, String frequence, Utilisateur utilisateur) {
+    public Campagne(int id, String titre, MyDate dateDebut, MyDate dateFin, MyTime heure, String frequence, Utilisateur utilisateur) {
         this.id = id;
         this.titre = titre;
         this.dateDebut = dateDebut;
@@ -38,7 +38,7 @@ public class Campagne {
         return dateFin;
     }
 
-    public String getHeure() {
+    public MyTime getHeure() {
         return heure;
     }
     

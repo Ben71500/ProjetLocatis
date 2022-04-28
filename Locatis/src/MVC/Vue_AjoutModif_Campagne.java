@@ -4,6 +4,7 @@ import Locatis.*;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 import interfaceGraphique.EmptyFieldException;
+import interfaceGraphique.PasDeLignesSelectionneesException;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -20,7 +21,12 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     private JPanel panneau_info = new JPanel();
     private JPanel panneau_boutons= new JPanel();
     private JPanel panneau_gauche = new JPanel();
+    private JPanel panneau_titre = new JPanel();
+    private JPanel panneau_message = new JPanel();
     private JPanel panneau_droite = new JPanel();
+    private JPanel panneau_temps = new JPanel();
+    private JPanel panneau_heure = new JPanel();
+    private JPanel panneau_listes = new JPanel();
     
     private JLabel titre = new JLabel();
     private JLabel titreCampagne_label = new JLabel("Titre : ");
@@ -105,13 +111,28 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         panneau_info.add(this.panneau_gauche);
         panneau_info.add(this.panneau_droite);
         
-        panneau_gauche.setLayout(new GridLayout(2,2));
-        panneau_gauche.add(this.titreCampagne_label);
-        panneau_gauche.add(this.titreCampagne);
-        panneau_gauche.add(this.message_label);
-        panneau_gauche.add(this.message);
+        panneau_titre.setLayout(new GridLayout(1,2));
+        panneau_titre.add(this.titreCampagne_label);
+        panneau_titre.add(this.titreCampagne);
+        
+        panneau_message.setLayout(new GridLayout(1,2));
+        panneau_message.add(this.message_label);
+        panneau_message.add(this.message);
+        
+        panneau_gauche.setLayout(new BorderLayout());
+        panneau_gauche.add(panneau_titre, BorderLayout.NORTH);
+        panneau_gauche.add(panneau_message, BorderLayout.CENTER);
         
         ArrayList<String> liste = new ArrayList<>();
+        liste.add("a");
+        liste.add("b");
+        liste.add("c");
+        liste.add("a");
+        liste.add("b");
+        liste.add("c");
+        liste.add("a");
+        liste.add("b");
+        liste.add("c");
         liste.add("a");
         liste.add("b");
         liste.add("c");
@@ -120,19 +141,30 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         remplirComboBox(heure, 24);
         remplirComboBox(minute, 60);
         
-        panneau_droite.setLayout(new GridLayout(6,2));
-        panneau_droite.add(frequence_label);
-        panneau_droite.add(frequence);
-        panneau_droite.add(this.dateDebut_label);
-        panneau_droite.add(this.dateDebut);
-        panneau_droite.add(this.heure_label);
-        panneau_droite.add(this.heure);
-        panneau_droite.add(this.heure2_label);
-        panneau_droite.add(this.minute);
-        panneau_droite.add(this.dateFin_label);
-        panneau_droite.add(this.dateFin);
-        panneau_droite.add(listes_label);
-        panneau_droite.add(listes);
+        panneau_heure.add(this.heure);
+        panneau_heure.add(this.heure2_label);
+        panneau_heure.add(this.minute);
+        
+        panneau_temps.setLayout(new GridLayout(4,2));
+        panneau_temps.add(frequence_label);
+        panneau_temps.add(frequence);
+        panneau_temps.add(this.dateDebut_label);
+        panneau_temps.add(this.dateDebut);
+        panneau_temps.add(this.heure_label);
+        panneau_temps.add(this.panneau_heure);
+        panneau_temps.add(this.dateFin_label);
+        panneau_temps.add(this.dateFin);
+        
+        /*panneau_listes.setLayout(new BorderLayout());
+        panneau_listes.add(listes_label, BorderLayout.NORTH);
+        panneau_listes.add(listes, BorderLayout.CENTER);*/
+        panneau_listes.setLayout(new GridLayout(1,2));
+        panneau_listes.add(listes_label);
+        JScrollPane pane = new JScrollPane(listes);
+        panneau_listes.add(pane);
+        
+        panneau_droite.add(panneau_temps);
+        panneau_droite.add(panneau_listes);
         
         this.frequence.addItem("Une seule fois");
         this.frequence.addItem("Quotidien");
@@ -147,6 +179,18 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         this.dateFin.setCalendar(Calendar.getInstance());
         JTextFieldDateEditor editor2 = (JTextFieldDateEditor) this.dateFin.getDateEditor();
         editor2.setEditable(false);
+    }
+    
+    public MyDate getDateDebut(){
+        return new MyDate(this.dateDebut.getCalendar().get(Calendar.YEAR), this.dateDebut.getCalendar().get(Calendar.MONTH)+1, this.dateDebut.getCalendar().get(Calendar.DAY_OF_MONTH));
+    }
+    
+    public MyDate getDateFin(){
+        return new MyDate(this.dateFin.getCalendar().get(Calendar.YEAR), this.dateFin.getCalendar().get(Calendar.MONTH)+1, this.dateFin.getCalendar().get(Calendar.DAY_OF_MONTH));
+    }
+    
+    public MyTime getHeure(){
+        return new MyTime(Integer.parseInt(this.heure.getSelectedItem().toString()),Integer.parseInt(this.minute.getSelectedItem().toString()));
     }
     
     /**
@@ -175,16 +219,25 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     
     @Override
     public void reset(){
-        /*dateDebut.setText("");
-        dateFin.setText("");*/
+        titreCampagne.setText("");
+        message.setText("");
         frequence.setSelectedIndex(0);
+        heure.setSelectedIndex(0);
+        minute.setSelectedIndex(0);
+        listes.setSelectedIndex(0);
     }
     
     @Override
-    public void verifierChamps() throws EmptyFieldException{
-        /*if(this.dateDebut.getText().equals("")){
-            throw new EmptyFieldException("un nom");
+    public void verifierChamps() throws EmptyFieldException, PasDeLignesSelectionneesException{
+        if(this.titreCampagne.getText().equals("")){
+            throw new EmptyFieldException("un titre");
         }else
+        if(this.message.getText().equals("")){
+            throw new EmptyFieldException("un message");
+        }else
+        if(this.listes.getSelectedIndices().length==0)
+            throw new PasDeLignesSelectionneesException("une liste de diffusion");
+        /*else
         if(this.dateFin.getText().equals("")){
             throw new EmptyFieldException("un prénom");
         }*/
@@ -197,8 +250,7 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
 
     @Override
     public Campagne getNouvelObjet() {
-        //return new Utilisateur(0, this.dateDebut.getText(), this.dateFin.getText(), this.frequence.getSelectedItem()+"");
-        return null;
+        return new Campagne(0, this.titre.getText(), this.getDateDebut(), this.getDateFin(), this.getHeure(), this.frequence.getSelectedItem().toString(), null);
     }
 
     @Override
@@ -232,7 +284,11 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     }
     
     public void remplirComboBox(JComboBox comboBox, int n){
-        for(int i=0;i<n;i++)
-            comboBox.addItem(i);
+        for(int i=0;i<n;i++){
+            if(i<10)
+                comboBox.addItem("0"+i);
+            else
+                comboBox.addItem(i);
+        }
     }
 }

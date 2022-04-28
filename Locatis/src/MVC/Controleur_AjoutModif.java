@@ -105,6 +105,8 @@ public class Controleur_AjoutModif implements ActionListener{
                     laVue.reset();
                 }catch (EmptyFieldException ex) {
                     ex.afficherErreur();
+                }catch (PasDeLignesSelectionneesException ex){
+                    ex.afficherErreur();
                 }
             }
             case "MODIFIER" -> {
@@ -145,7 +147,7 @@ public class Controleur_AjoutModif implements ActionListener{
                     laVue.quitter();
                     SwingUtilities.invokeLater(new Runnable(){
                         public void run(){
-                            Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("locataire"),new Modele_Gestion("locataires"), userConnecte, typeDonnee);                
+                            Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion(typeDonnee),new Modele_Gestion(typeDonnee+"s"), userConnecte, typeDonnee);               
                             controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                             controleur.getVue().setSize(500,500);
                             controleur.getVue().setVisible(true);
@@ -153,13 +155,15 @@ public class Controleur_AjoutModif implements ActionListener{
                     });
                 } catch (EmptyFieldException ex) {
                     ex.afficherErreur();
+                }catch (PasDeLignesSelectionneesException ex){
+                    ex.afficherErreur();
                 }
             }
             case "RETOUR" -> {
                 laVue.quitter();
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run(){
-                        Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion(typeDonnee),new Modele_Gestion(typeDonnee), userConnecte, typeDonnee);                
+                        Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion(typeDonnee),new Modele_Gestion(typeDonnee+"s"), userConnecte, typeDonnee);                
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         controleur.getVue().setSize(500,500);
                         controleur.getVue().setVisible(true);
