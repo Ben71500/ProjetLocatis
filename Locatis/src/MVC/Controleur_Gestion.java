@@ -8,8 +8,6 @@ import java.awt.event.KeyAdapter;
 import java.io.File;
 import java.util.*;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -147,14 +145,17 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
                       System.out.println(file.getAbsolutePath());
                     }
                     try{
-                        Scanner fichierCSV = new Scanner(file).useDelimiter(";");
+                        Scanner fichierCSV = new Scanner(file);
                         ArrayList<Locataire> listeLoca = new ArrayList<>();
                         while (fichierCSV.hasNextLine()){
-                            Locataire loca = new Locataire(0, fichierCSV.next(), fichierCSV.next(), fichierCSV.nextInt(), new MyDate(fichierCSV.next()), fichierCSV.next(), fichierCSV.next());
+                            String ligne = fichierCSV.nextLine();
+                            String[] ligneSeparer = ligne.split(",");
+                            Locataire loca = new Locataire(0, ligneSeparer[0], ligneSeparer[1], Integer.parseInt(ligneSeparer[2]), new MyDate(ligneSeparer[3]), ligneSeparer[4], ligneSeparer[5]);
                             listeLoca.add(loca);
                         }
-                        Locataire_DAO loca_dao = new Locataire_DAO();
+                        leModele.insererViaCSV(listeLoca);
                     }catch(Exception ex){
+                        System.out.println("erreur");
                         System.out.println(ex.getMessage());
                     }
                 }

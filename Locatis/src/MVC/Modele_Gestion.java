@@ -168,6 +168,13 @@ public class  Modele_Gestion {
         }
     }
     
+    public void insererViaCSV(ArrayList<Locataire> loca_liste){
+        Locataire_DAO loca_dao = new Locataire_DAO(connBdd);
+        for (int i = 0; i < loca_liste.size(); i++){
+            loca_dao.create(loca_liste.get(i));
+        }
+    }
+    
     public void supprimer(int n){
         switch(this.donnees){
             case "locataires" -> {

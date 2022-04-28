@@ -28,17 +28,6 @@ public class Locataire_DAO extends DAO<Locataire>{
                     + obj.getMail()+ "' , '"
                     + obj.getTelephone()+ "' );";
             etat.execute(requeteProc);
-            /*requeteProc = "Select ID_locataire from Locataire where Nom = '"
-                    +obj.getNom()+"' AND Prenom = '"
-                    +obj.getPrenom()+"' AND Age = '"
-                    +obj.getAge()+"' AND Anciennete = "
-                    +obj.getAnciennete().getDateSQL()+" AND Mail = '"
-                    +obj.getMail()+"' AND Telephone = '"+obj.getTelephone()+"'";
-            ResultSet res = etat.executeQuery(requeteProc);
-            res.next();
-            int id = res.getInt("ID_locataire");
-            requeteProc = "Insert into habiter VALUES ('"+obj.getLogement().getID()+"' , '"+id+"' )";
-            etat.execute(requeteProc);*/
             return true;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
