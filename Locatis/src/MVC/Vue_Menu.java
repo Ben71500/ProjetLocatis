@@ -22,7 +22,7 @@ public class Vue_Menu extends JFrame {
     private JButton gestionListes = new JButton("Gestion des listes de diffusion");
     private JButton gestionLocataires = new JButton("Gestion des locataires");
     private JButton gestionUtilisateurs = new JButton("Gestion des utilisateurs");
-    private JButton gestionBatiments = new JButton("Gestion des bâtiments");
+    private JButton gestionBatiments = new JButton("Gestion des batiments");
     private JButton gestionCampagnes = new JButton("Gestion des campagnes");
     private JButton statistiques = new JButton("Voir les statistiques");
     private JButton importer = new JButton("Importer des données");

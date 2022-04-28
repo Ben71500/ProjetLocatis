@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class Vue_AjoutModif_Batiment extends JFrame implements Vue_AjoutModif{
+public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
     
     private JPanel panneau = new JPanel();
     private JPanel haut = new JPanel();
@@ -15,27 +15,23 @@ public class Vue_AjoutModif_Batiment extends JFrame implements Vue_AjoutModif{
     private JPanel panneau_boutons= new JPanel();
     
     private JLabel titre = new JLabel();
-    private JLabel login_label = new JLabel ("Login : ");
-    private JLabel mdp_label = new JLabel ("Mot de passe : ");
-    private JLabel cat_label = new JLabel("Catégorie : ");
+    private JLabel adresse_label = new JLabel ("Adresse : ");
     
-    private JTextField login = new JTextField();
-    private JTextField mdp = new JTextField();
-    private JComboBox categorie = new JComboBox();
+    private JTextField adresse = new JTextField();
     
     private JButton ajouter = new JButton("Ajouter");
     private JButton modifier = new JButton("Modifier");
     private JButton retour = new JButton("Retour");
     
-    private Utilisateur user;
+    private Maison maison;
     
     private static final long serialVersionUID = 1L;
     private JPanel pan;
 
     
-    public Vue_AjoutModif_Batiment(){
-        super("Ajouter un logement");
-        titre.setText("Ajouter un logement");
+    public Vue_AjoutModif_Maison(){
+        super("Ajouter une maison");
+        titre.setText("Ajouter une maison");
         initialisation();
         
         panneau_boutons.setLayout(new GridLayout(1,2));
@@ -46,9 +42,9 @@ public class Vue_AjoutModif_Batiment extends JFrame implements Vue_AjoutModif{
         this.pack();
     }
     
-    public Vue_AjoutModif_Batiment(Utilisateur unUtilisateur) {
-        super("Modifier un logement");
-        titre.setText("Modifier un logement");
+    public Vue_AjoutModif_Maison(Maison uneMaison) {
+        super("Modifier une maison");
+        titre.setText("Modifier une maison");
         initialisation();
         
         panneau_boutons.setLayout(new GridLayout(1,2));
@@ -58,15 +54,8 @@ public class Vue_AjoutModif_Batiment extends JFrame implements Vue_AjoutModif{
         this.getContentPane().add(this.panneau);
         this.pack();
         
-        this.user=unUtilisateur;
-        login.setText(user.getLogin());
-        mdp.setText(user.getMotDePasse());
-        /*switch(user.getCat()){
-            case "usr" -> categorie.setSelectedIndex(0);
-            case "ges" ->categorie.setSelectedIndex(1);
-            case "adm" -> categorie.setSelectedIndex(2);
-        }*/
-        categorie.setSelectedItem(user.getCat());
+        this.maison = uneMaison;
+        adresse.setText(maison.getAdresse());
     }
     
     public void initialisation(){
@@ -83,16 +72,8 @@ public class Vue_AjoutModif_Batiment extends JFrame implements Vue_AjoutModif{
         centre.add(this.panneau_boutons, BorderLayout.SOUTH);
         
         panneau_info.setLayout(new GridLayout(3,2));
-        panneau_info.add(this.login_label);
-        panneau_info.add(this.login);
-        panneau_info.add(this.mdp_label);
-        panneau_info.add(this.mdp);
-        
-        this.categorie.addItem("Utilisateur");
-        this.categorie.addItem("Gestionnaire");
-        this.categorie.addItem("Administrateur");
-        panneau_info.add(cat_label);
-        panneau_info.add(categorie);
+        panneau_info.add(this.adresse_label);
+        panneau_info.add(this.adresse);
     }
     
     /**
@@ -121,18 +102,13 @@ public class Vue_AjoutModif_Batiment extends JFrame implements Vue_AjoutModif{
     
     @Override
     public void reset(){
-        login.setText("");
-        mdp.setText("");
-        categorie.setSelectedIndex(0);
+        adresse.setText("");
     }
     
     @Override
     public void verifierChamps() throws EmptyFieldException{
-        if(this.login.getText().equals("")){
-            throw new EmptyFieldException("un nom");
-        }else
-        if(this.mdp.getText().equals("")){
-            throw new EmptyFieldException("un prénom");
+        if(this.adresse.getText().equals("")){
+            throw new EmptyFieldException("une adresse");
         }
     }
     
@@ -142,13 +118,13 @@ public class Vue_AjoutModif_Batiment extends JFrame implements Vue_AjoutModif{
     }
 
     @Override
-    public Utilisateur getNouvelObjet() {
-        return new Utilisateur(0, this.login.getText(), this.mdp.getText(), this.categorie.getSelectedItem()+"");
+    public Maison getNouvelObjet() {
+        return new Maison(0, this.adresse.getText());
     }
 
     @Override
-    public Utilisateur getObjetModifie() {
-        return new Utilisateur(this.user.getId(), this.login.getText(), this.mdp.getText(), this.categorie.getSelectedItem()+"");
+    public Maison getObjetModifie() {
+        return new Maison(this.maison.getID(), this.maison.getAdresse());
     }
 
     @Override

@@ -28,6 +28,11 @@ public class Vue_Gestion extends JFrame {
     private JTable table;
     private TableRowSorter<TableModel> sort;
     
+    private JRadioButton buttonRadioAppart = new JRadioButton("Appartement", true);
+    private JRadioButton buttonRadioMaison = new JRadioButton("Maison");
+    
+    private ButtonGroup group = new ButtonGroup();
+    
     private JButton ajouter = new JButton("Ajouter");
     private JButton modifier = new JButton("Modifier");
     private JButton supprimer = new JButton("Supprimer");
@@ -52,7 +57,7 @@ public class Vue_Gestion extends JFrame {
         centre.setLayout(new BorderLayout());
         centre.add(this.panneau_recherches, BorderLayout.NORTH);
         //centre.add(new JScrollPane(this.panneau_info), BorderLayout.CENTER);
-        centre.add(this.panneau_boutons, BorderLayout.SOUTH);
+        panneau.add(this.panneau_boutons, BorderLayout.SOUTH);
         
         panneau_recherches.setLayout(new GridLayout(1,2));
         panneau_recherches.add(this.rechercher_label);
@@ -65,10 +70,22 @@ public class Vue_Gestion extends JFrame {
         panneau_boutons.add(supprimer);
         panneau_boutons.add(retour);
         
+        if(lesDonnees.equals("batiment") || lesDonnees.equals("appartement") || lesDonnees.equals("maison")){
+            panneau_boutons.add(buttonRadioAppart);
+            panneau_boutons.add(buttonRadioMaison);
+            group.add(buttonRadioAppart);
+            group.add(buttonRadioMaison);
+        }
+        
         this.getContentPane().add(this.panneau);
         this.pack();
     }
 
+    public void setDonnees(String donnees) {
+        this.donnees = donnees;
+    }
+
+    
     public String getDonnees() {
         return donnees;
     }
@@ -79,6 +96,14 @@ public class Vue_Gestion extends JFrame {
     
     public int getLigne(){
         return this.table.getSelectedRow();
+    }
+    
+    public JRadioButton getButtonRadioAppart(){
+        return buttonRadioAppart;
+    }
+    
+    public JRadioButton getButtonRadioMaison(){
+        return buttonRadioMaison;
     }
     
     public JTextField getRecherche(){
@@ -95,7 +120,7 @@ public class Vue_Gestion extends JFrame {
 
     public void definirTableau(String[][] donnees, String[] entetes) {
         
-        this.tableau= new DefaultTableModel(donnees, entetes)
+        this.tableau = new DefaultTableModel(donnees, entetes)
         {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -117,6 +142,14 @@ public class Vue_Gestion extends JFrame {
         //panneau_info.setPreferredSize(preferredSize);
         //panneau_info.add(new JScrollPane(table), BorderLayout.CENTER);
         centre.add(new JScrollPane(this.table), BorderLayout.CENTER);
+    }
+    
+    public void changerTableau(String[][] donnees, String[] entetes){
+        centre.removeAll();
+        centre.setLayout(new BorderLayout());
+        centre.add(this.panneau_recherches, BorderLayout.NORTH);
+        definirTableau(donnees, entetes);
+        this.validate();
     }
 
     /**
@@ -142,6 +175,21 @@ public class Vue_Gestion extends JFrame {
         if (bouton != null) {
             bouton.addActionListener(listener);
         }
+        if(donnees.equals("appartement") || donnees.equals("maison")){
+            JRadioButton boutonRadio;
+            boutonRadio = switch (nomBouton.toUpperCase()) {
+                case "APPARTEMENT" ->
+                    boutonRadio = buttonRadioAppart;
+                case "MAISON" ->
+                    boutonRadio = buttonRadioMaison;
+                default ->
+                    null;
+            };
+            if (boutonRadio != null) {
+                boutonRadio.addActionListener(listener);
+            }
+        }
+        
     }
 
     public void quitter() {

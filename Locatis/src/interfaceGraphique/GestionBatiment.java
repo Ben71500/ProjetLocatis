@@ -12,7 +12,6 @@ import DAO.Maison_DAO;
 import Locatis.Appartement;
 import Locatis.Maison;
 import Locatis.Utilisateur;
-import static interfaceGraphique.GestionBatiment1.getListeMaison;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -46,7 +45,7 @@ import javax.swing.table.TableRowSorter;
  *
  * @author benja
  */
-public class GestionBatiment1 extends JFrame implements ActionListener{
+public class GestionBatiment extends JFrame implements ActionListener{
     
     private String[] enteteAppartement = {"ID","Adresse", "Numéro étage", "Numéro appartement"};
     private String[] enteteMaison = {"ID","Adresse"};
@@ -81,7 +80,7 @@ public class GestionBatiment1 extends JFrame implements ActionListener{
     
     private Utilisateur userConnecte;
     
-    public GestionBatiment1(Utilisateur user){
+    public GestionBatiment(Utilisateur user){
         
         super("Gestion des batiments");
         userConnecte=user;

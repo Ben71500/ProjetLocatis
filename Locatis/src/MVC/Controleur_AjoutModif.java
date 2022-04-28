@@ -9,8 +9,8 @@ import javax.swing.*;
 public class Controleur_AjoutModif implements ActionListener{
     
     //private final Vue_AjoutModif_Locataires laVue;
-    private final Vue_AjoutModif laVue;
-    private final Modele_AjoutModif leModele;
+    private Vue_AjoutModif laVue;
+    private Modele_AjoutModif leModele;
     private Utilisateur userConnecte;
     private String typeDonnee;
 
@@ -22,6 +22,8 @@ public class Controleur_AjoutModif implements ActionListener{
             case "locataire" -> this.laVue = new Vue_AjoutModif_Locataires();
             case "utilisateur" -> this.laVue = new Vue_AjoutModif_Utilisateurs();
             case "campagne" -> this.laVue = new Vue_AjoutModif_Campagne();
+            case "maison" -> this.laVue = new Vue_AjoutModif_Maison();
+            case "appartement" -> this.laVue = new Vue_AjoutModif_Appartement();
             default -> this.laVue = null;
         }
         
@@ -38,6 +40,8 @@ public class Controleur_AjoutModif implements ActionListener{
             case "locataire" -> this.laVue = new Vue_AjoutModif_Locataires((Locataire) obj);
             case "utilisateur" -> this.laVue = new Vue_AjoutModif_Utilisateurs((Utilisateur) obj);
             case "campagne" -> this.laVue = new Vue_AjoutModif_Campagne((Campagne) obj);
+            case "maison" -> this.laVue = new Vue_AjoutModif_Maison((Maison) obj);
+            case "appartement" -> this.laVue = new Vue_AjoutModif_Appartement((Appartement) obj);
             default -> this.laVue = null;
         }
         
@@ -87,6 +91,16 @@ public class Controleur_AjoutModif implements ActionListener{
                             leModele.ajouterCampagne(laCampagne);
                             PopupInformation popup=new PopupInformation("La campagne a bien été ajoutée.");
                         }
+                        case "appartement" -> {
+                            Appartement unAppartement = (Appartement) laVue.getNouvelObjet();
+                            leModele.ajouterAppartement(unAppartement);
+                            PopupInformation popup=new PopupInformation("L'appartement a bien été ajoutée.");
+                        }
+                        case "maison" -> {
+                            Maison uneMaison = (Maison) laVue.getNouvelObjet();
+                            leModele.ajouterMaison(uneMaison);
+                            PopupInformation popup=new PopupInformation("La maison a bien été ajoutée.");
+                        }
                     }
                     laVue.reset();
                 }catch (EmptyFieldException ex) {
@@ -117,6 +131,16 @@ public class Controleur_AjoutModif implements ActionListener{
                             leModele.modifierCampagne(laCampagne);
                             PopupInformation popup=new PopupInformation("La campagne a bien été modifiée.");
                         }
+                        case "maison" -> {
+                            Maison laMaison = (Maison) laVue.getObjetModifie();
+                            leModele.modifierMaison(laMaison);
+                            PopupInformation popup=new PopupInformation("La maison a bien été modifiée.");
+                        }
+                        case "appartement" -> {
+                            Appartement unAppartement = (Appartement) laVue.getObjetModifie();
+                            leModele.modifierAppartement(unAppartement);
+                            PopupInformation popup=new PopupInformation("L'appartement a bien été modifiée.");
+                        }
                     }
                     laVue.quitter();
                     SwingUtilities.invokeLater(new Runnable(){
@@ -135,7 +159,7 @@ public class Controleur_AjoutModif implements ActionListener{
                 laVue.quitter();
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run(){
-                        Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("locataire"),new Modele_Gestion("locataires"), userConnecte, typeDonnee);                
+                        Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion(typeDonnee),new Modele_Gestion(typeDonnee), userConnecte, typeDonnee);                
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         controleur.getVue().setSize(500,500);
                         controleur.getVue().setVisible(true);

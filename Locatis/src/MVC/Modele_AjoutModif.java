@@ -26,6 +26,16 @@ public class Modele_AjoutModif{
         utilisateurDAO.create(nouvelUtilisateur);
     }
     
+    public void ajouterAppartement(Appartement unAppartment){
+        Appartement_DAO appartement = new Appartement_DAO(connBdd);
+        appartement.create(unAppartment);
+    }
+    
+    public void ajouterMaison(Maison uneMaison){
+        Maison_DAO maison = new Maison_DAO(connBdd);
+        maison.create(uneMaison);
+    }
+    
     public void ajouterMessage(Message nouveauMessage){
         Message_DAO messageDAO=new Message_DAO(connBdd);
         messageDAO.create(nouveauMessage);
@@ -34,6 +44,16 @@ public class Modele_AjoutModif{
     public void ajouterCampagne(Campagne nouvelleCampagne){
         /*Message_DAO messageDAO=new Message_DAO(connBdd);
         messageDAO.create(nouveauMessage);*/
+    }
+    
+    public void modifierAppartement(Appartement unAppartment){
+        Appartement_DAO appartement = new Appartement_DAO(connBdd);
+        appartement.update(unAppartment);
+    }
+    
+    public void modifierMaison(Maison uneMaison){
+        Maison_DAO maison = new Maison_DAO(connBdd);
+        maison.update(uneMaison);
     }
     
     public void modifierLocataire(Locataire leLocataire){

@@ -2,9 +2,18 @@ package MVC;
 
 import DAO.*;
 import Locatis.*;
+import static interfaceGraphique.GestionBatiment.getListeMaison;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 public class  Modele_Gestion {
     
@@ -20,6 +29,12 @@ public class  Modele_Gestion {
     public Modele_Gestion(String lesDonnees) {
         this.donnees = lesDonnees;
     }
+
+    public void setDonnees(String donnees) {
+        this.donnees = donnees;
+    }
+    
+    
 
     public void setEntetes(String[] entetes) {
         this.entetes = entetes;
@@ -46,6 +61,8 @@ public class  Modele_Gestion {
             case "locataires" -> modeleLocataires();
             case "utilisateurs" -> modeleUtilisateurs();
             case "messages" -> modeleMessages();
+            case "appartement" -> modeleAppartement();
+            case "maison" -> modeleMaison();
         }
     }
 
@@ -101,6 +118,34 @@ public class  Modele_Gestion {
             tableau [i][0]=unMessage.getId()+"";
             tableau [i][1]=unMessage.getMessage();
             tableau [i][2]=unMessage.getDateEcriture().getDateEcrite()+"";
+        }
+    }
+    
+    public void modeleMaison(){
+        String[] tabEntetes = {"ID","Adresse"};
+        this.setEntetes(tabEntetes);
+        Maison_DAO lesMaison = new Maison_DAO(connBdd);
+        liste = (ArrayList<Maison>)lesMaison.getAll();
+        this.tableau = new String[liste.size()][2];
+        for(int i=0; i<liste.size();i++){
+            Maison uneMaison = (Maison) liste.get(i);
+            tableau [i][0]= uneMaison.getID()+"";
+            tableau [i][1]= uneMaison.getAdresse();
+        }
+    }
+    
+    public void modeleAppartement(){
+        String[] tabEntetes = {"ID","Adresse", "Numéro étage", "Numéro appartement"};
+        this.setEntetes(tabEntetes);
+        Appartement_DAO lesApparts = new Appartement_DAO(connBdd);
+        liste = (ArrayList<Appartement>)lesApparts.getAll();
+        this.tableau = new String[liste.size()][4];
+        for(int i=0; i<liste.size();i++){
+            Appartement unAppartement = (Appartement) liste.get(i);
+            tableau [i][0]= unAppartement.getID()+"";
+            tableau [i][1]= unAppartement.getAdresse()+"";
+            tableau [i][2]= unAppartement.getEtage()+"";
+            tableau [i][3]= unAppartement.getApart()+"";
         }
     }
     
