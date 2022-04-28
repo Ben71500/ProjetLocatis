@@ -86,6 +86,7 @@ public class Vue_Gestion extends JFrame {
             panneau_boutons.add(buttonRadioMaison);
             group.add(buttonRadioAppart);
             group.add(buttonRadioMaison);
+            panneau_boutons.add(inserer);
         }
         
         this.getContentPane().add(this.panneau);

@@ -168,10 +168,24 @@ public class  Modele_Gestion {
         }
     }
     
-    public void insererViaCSV(ArrayList<Locataire> loca_liste){
+    public void insererViaCSVLocataire(ArrayList<Locataire> loca_liste){
         Locataire_DAO loca_dao = new Locataire_DAO(connBdd);
         for (int i = 0; i < loca_liste.size(); i++){
             loca_dao.create(loca_liste.get(i));
+        }
+    }
+    
+    public void insererViaCSVMaison(ArrayList<Maison> maison_liste){
+        Maison_DAO maison_dao = new Maison_DAO(connBdd);
+        for (int i = 0; i < maison_liste.size(); i++){
+            maison_dao.create(maison_liste.get(i));
+        }
+    }
+    
+    public void insererViaCSVAppartement(ArrayList<Appartement> appartement_liste){
+        Appartement_DAO appartement_dao = new Appartement_DAO(connBdd);
+        for (int i = 0; i < appartement_liste.size(); i++){
+            appartement_dao.create(appartement_liste.get(i));
         }
     }
     

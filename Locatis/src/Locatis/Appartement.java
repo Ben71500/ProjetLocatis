@@ -10,6 +10,12 @@ public class Appartement extends Batiment{
         this.etage=numEtage;
         this.apart=numApart;
     }
+    
+    public Appartement(String adresse, int numEtage, int numApart){
+        super(adresse);
+        this.etage=numEtage;
+        this.apart=numApart;
+    }
 
     public int getEtage() {
         return etage;

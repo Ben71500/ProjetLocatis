@@ -146,14 +146,36 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
                     }
                     try{
                         Scanner fichierCSV = new Scanner(file);
-                        ArrayList<Locataire> listeLoca = new ArrayList<>();
-                        while (fichierCSV.hasNextLine()){
-                            String ligne = fichierCSV.nextLine();
-                            String[] ligneSeparer = ligne.split(",");
-                            Locataire loca = new Locataire(0, ligneSeparer[0], ligneSeparer[1], Integer.parseInt(ligneSeparer[2]), new MyDate(ligneSeparer[3]), ligneSeparer[4], ligneSeparer[5]);
-                            listeLoca.add(loca);
+                        if(typeDonnee.equals("locataire")){
+                            ArrayList<Locataire> listeLoca = new ArrayList<>();
+                            while (fichierCSV.hasNextLine()){
+                                String ligne = fichierCSV.nextLine();
+                                String[] ligneSeparer = ligne.split(",");
+                                Locataire loca = new Locataire(0, ligneSeparer[0], ligneSeparer[1], Integer.parseInt(ligneSeparer[2]), new MyDate(ligneSeparer[3]), ligneSeparer[4], ligneSeparer[5]);
+                                listeLoca.add(loca);
+                            }
+                            leModele.insererViaCSVLocataire(listeLoca);
                         }
-                        leModele.insererViaCSV(listeLoca);
+                        else if(typeDonnee.equals("maison")){
+                            ArrayList<Maison> listeMaison = new ArrayList<>();
+                            while (fichierCSV.hasNextLine()){
+                                String ligne = fichierCSV.nextLine();
+                                String[] ligneSeparer = ligne.split(",");
+                                Maison maison = new Maison(ligneSeparer[0]);
+                                listeMaison.add(maison);
+                            }
+                            leModele.insererViaCSVMaison(listeMaison);
+                        }
+                        else{
+                            ArrayList<Appartement> listeAppartement = new ArrayList<>();
+                            while (fichierCSV.hasNextLine()){
+                                String ligne = fichierCSV.nextLine();
+                                String[] ligneSeparer = ligne.split(",");
+                                Appartement appartement = new Appartement(ligneSeparer[0], Integer.parseInt(ligneSeparer[1]), Integer.parseInt(ligneSeparer[2]));
+                                listeAppartement.add(appartement);
+                            }
+                            leModele.insererViaCSVAppartement(listeAppartement);
+                        }
                     }catch(Exception ex){
                         System.out.println("erreur");
                         System.out.println(ex.getMessage());

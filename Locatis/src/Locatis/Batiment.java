@@ -9,6 +9,11 @@ public class Batiment {
         this.ID=idBat;
         this.adresse=adresseBat;
     } 
+    
+    public Batiment(String adresse){
+        this.ID = 0;
+        this.adresse = adresse;
+    }
 
     public int getID() {
         return ID;
