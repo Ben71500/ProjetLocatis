@@ -30,6 +30,10 @@ public class Controleur_AjoutModif implements ActionListener{
         laVue.ajouterEcouteurBouton("Ajouter", this);
         laVue.ajouterEcouteurBouton("Modifier", this);
         laVue.ajouterEcouteurBouton("Retour", this);
+        
+        if(donnee.equals("campagne")){
+            laVue.ajouterEcouteurBouton("Frequence", this);
+        }
     }
     
         public Controleur_AjoutModif(Utilisateur user, String donnee, Object obj){
@@ -48,6 +52,12 @@ public class Controleur_AjoutModif implements ActionListener{
         laVue.ajouterEcouteurBouton("Ajouter", this);
         laVue.ajouterEcouteurBouton("Modifier", this);
         laVue.ajouterEcouteurBouton("Retour", this);
+        
+        if(donnee.equals("campagne")){
+            /*Vue_AjoutModif_Campagne vue = (Vue_AjoutModif_Campagne)laVue;
+            vue.getFrequence().addActionListener(this);*/
+            laVue.ajouterEcouteurBouton("Frequence", this);
+        }
     }
 
     public Vue_AjoutModif getVue() {
@@ -65,6 +75,16 @@ public class Controleur_AjoutModif implements ActionListener{
     //Méthode de la classe abstraite KeyAdapter
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(this.typeDonnee.equals("campagne")){
+            JComboBox cb = (JComboBox) e.getSource();
+            String newSelection = (String) cb.getSelectedItem();
+            System.out.println(newSelection);
+            
+            //Vue_AjoutModif_Campagne vue = (Vue_AjoutModif_Campagne)laVue;
+            
+            
+        
+        }else{
         JButton source = (JButton) e.getSource();
         switch (source.getText().toUpperCase()) {
             case "AJOUTER" -> {
@@ -172,6 +192,7 @@ public class Controleur_AjoutModif implements ActionListener{
                     }
                 });
             }
+        }
         }
     }
 }

@@ -180,6 +180,16 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         JTextFieldDateEditor editor2 = (JTextFieldDateEditor) this.dateFin.getDateEditor();
         editor2.setEditable(false);
     }
+
+    public JComboBox getFrequence() {
+        return frequence;
+    }
+
+    public void setFrequence(JComboBox frequence) {
+        this.frequence = frequence;
+    }
+    
+    
     
     public MyDate getDateDebut(){
         return new MyDate(this.dateDebut.getCalendar().get(Calendar.YEAR), this.dateDebut.getCalendar().get(Calendar.MONTH)+1, this.dateDebut.getCalendar().get(Calendar.DAY_OF_MONTH));
@@ -215,6 +225,8 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         if (bouton != null) {
             bouton.addActionListener(listener);
         }
+        if(nomBouton.toUpperCase().equals("FREQUENCE"))
+            this.frequence.addActionListener(listener);
     }
     
     @Override
