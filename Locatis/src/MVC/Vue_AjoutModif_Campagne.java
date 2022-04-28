@@ -276,6 +276,10 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         this.setBounds(100, 100, 600, 300);
         //controleur.getVue().setSize(500,500);
         this.setVisible(true);
+        if(this.frequence.getSelectedItem().equals("Une seule fois"))
+            this.dateFin.setEnabled(false);
+        else
+            this.dateFin.setEnabled(true);
     }
     
     /*public void remplirListe(ArrayList<ListeDeDiffusion> uneListe){
@@ -301,5 +305,9 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
             else
                 comboBox.addItem(i);
         }
+    }
+    
+    public void test(){
+        System.out.println("test ok");
     }
 }
