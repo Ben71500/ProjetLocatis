@@ -56,10 +56,13 @@ public class Maison_DAO extends DAO<Maison>{
     public boolean update(Maison obj) {
         try {
             Statement statement = this.connection.createStatement();
-            return !statement.execute("update logement set "
+            System.out.println("Coucou");
+            String sql = "update logement set "
                     + "Adresse='" + obj.getAdresse()
-                    + "' where  ID_batiment=" + obj.getID()
-            );
+                    + "' where  ID_batiment=" + obj.getID();
+            statement.execute(sql);
+            System.out.println(sql);
+            return true;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;

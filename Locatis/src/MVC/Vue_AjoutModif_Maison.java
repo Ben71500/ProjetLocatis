@@ -124,7 +124,7 @@ public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
 
     @Override
     public Maison getObjetModifie() {
-        return new Maison(this.maison.getID(), this.maison.getAdresse());
+        return new Maison(this.maison.getID(), this.adresse.getText());
     }
 
     @Override

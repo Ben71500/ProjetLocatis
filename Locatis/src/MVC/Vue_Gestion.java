@@ -70,7 +70,12 @@ public class Vue_Gestion extends JFrame {
         panneau_boutons.add(supprimer);
         panneau_boutons.add(retour);
         
-        if(lesDonnees.equals("batiment") || lesDonnees.equals("appartement") || lesDonnees.equals("maison")){
+        if (lesDonnees.equals("maison")){
+            buttonRadioAppart.setSelected(false);
+            buttonRadioMaison.setSelected(true);
+        }
+        
+        if(lesDonnees.equals("appartement") || lesDonnees.equals("maison")){
             panneau_boutons.add(buttonRadioAppart);
             panneau_boutons.add(buttonRadioMaison);
             group.add(buttonRadioAppart);
@@ -79,6 +84,10 @@ public class Vue_Gestion extends JFrame {
         
         this.getContentPane().add(this.panneau);
         this.pack();
+    }
+
+    public void setTitre(String titre) {
+        this.titre.setText(titre);
     }
 
     public void setDonnees(String donnees) {

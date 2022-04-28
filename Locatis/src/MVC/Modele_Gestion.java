@@ -61,8 +61,8 @@ public class  Modele_Gestion {
             case "locataires" -> modeleLocataires();
             case "utilisateurs" -> modeleUtilisateurs();
             case "messages" -> modeleMessages();
-            case "appartement" -> modeleAppartement();
-            case "maison" -> modeleMaison();
+            case "appartements" -> modeleAppartement();
+            case "maisons" -> modeleMaison();
         }
     }
 
@@ -159,9 +159,13 @@ public class  Modele_Gestion {
                 Utilisateurs_DAO userDao=new Utilisateurs_DAO(connBdd);
                 userDao.delete((Utilisateur) this.getSelection(n));
             }
-            case "umessages" -> {
-                Message_DAO messageDao=new Message_DAO(connBdd);
-                messageDao.delete((Message) this.getSelection(n));
+            case "appartements" -> {
+                Appartement_DAO appartementDao=new Appartement_DAO(connBdd);
+                appartementDao.delete((Appartement) this.getSelection(n));
+            }
+            case "maisons" -> {
+                Maison_DAO maisonDao=new Maison_DAO(connBdd);
+                maisonDao.delete((Maison) this.getSelection(n));
             }
         }
         this.liste.remove(n);

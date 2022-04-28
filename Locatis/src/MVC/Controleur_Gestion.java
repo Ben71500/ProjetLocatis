@@ -60,17 +60,19 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
         if(e.getSource() == this.laVue.getButtonRadioAppart() || e.getSource() == this.laVue.getButtonRadioMaison()){
             if(this.laVue.getButtonRadioAppart().isSelected()){
                 this.typeDonnee = "appartement";
-                leModele.setDonnees(this.typeDonnee);
+                leModele.setDonnees(this.typeDonnee+"s");
                 leModele.initialiser();
                 laVue.setDonnees("appartement");
+                laVue.setTitre("Les appartements");
                 laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
                 
             }
             else if(this.laVue.getButtonRadioMaison().isSelected()){
                     this.typeDonnee = "maison";
-                    leModele.setDonnees(this.typeDonnee);
+                    leModele.setDonnees(this.typeDonnee+"s");
                     leModele.initialiser();
                     laVue.setDonnees("maison");
+                    laVue.setTitre("Les maisons");
                     laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
             }
         }

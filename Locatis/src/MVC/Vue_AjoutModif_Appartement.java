@@ -59,7 +59,7 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
         this.pack();
         
         this.appart=unUtilisateur;
-        adresse.setText(appart.getID()+"");
+        adresse.setText(appart.getAdresse());
         nombreEtage.setText(appart.getEtage()+"");
         numeroAppart.setText(appart.getApart()+"");
     }

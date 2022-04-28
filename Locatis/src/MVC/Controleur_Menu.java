@@ -75,7 +75,7 @@ public class Controleur_Menu implements ActionListener {
                 laVue.quitter();
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run(){
-                        Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("appartement"), new Modele_Gestion("appartement"), userConnecte, "appartement");                
+                        Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("appartement"), new Modele_Gestion("appartements"), userConnecte, "appartement");                
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         controleur.getVue().setSize(800,500);
                         controleur.getVue().setVisible(true);
