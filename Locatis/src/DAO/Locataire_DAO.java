@@ -135,7 +135,7 @@ public class Locataire_DAO extends DAO<Locataire>{
         return allLocataire;
     }
     
-     public List<Locataire> getSearch(String texte) {
+    public List<Locataire> getSearch(String texte) {
 
         List<Locataire> allLocataire = new ArrayList<>();
         try {

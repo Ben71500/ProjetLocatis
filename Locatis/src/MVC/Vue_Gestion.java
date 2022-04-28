@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.*;
 
 public class Vue_Gestion extends JFrame {
@@ -37,6 +38,7 @@ public class Vue_Gestion extends JFrame {
     private JButton modifier = new JButton("Modifier");
     private JButton supprimer = new JButton("Supprimer");
     private JButton retour = new JButton("Retour");
+    private JButton inserer = new JButton("Insere");
     
     private String donnees;
 
@@ -69,6 +71,10 @@ public class Vue_Gestion extends JFrame {
         panneau_boutons.add(modifier);
         panneau_boutons.add(supprimer);
         panneau_boutons.add(retour);
+        
+        if(lesDonnees.equals("locataire")){
+            panneau_boutons.add(inserer);
+        }
         
         if (lesDonnees.equals("maison")){
             buttonRadioAppart.setSelected(false);
@@ -178,6 +184,8 @@ public class Vue_Gestion extends JFrame {
                 bouton = supprimer;
             case "RETOUR" ->
                 bouton = retour;
+            case "INSERE" ->
+                bouton = inserer;
             default ->
                 null;
         };

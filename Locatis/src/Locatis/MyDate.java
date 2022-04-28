@@ -14,6 +14,12 @@ public class MyDate {
     private int mois;
     private int jour;
     
+    public MyDate(String uneDate){
+        this.annee = Integer.parseInt(uneDate.substring(0, 3));
+        this.mois = Integer.parseInt(uneDate.substring(5, 7));
+        this.jour = Integer.parseInt(uneDate.substring(9, 11));
+    }
+    
     public MyDate(int uneAnnee, int unMois, int unJour){
         this.annee = uneAnnee;
         this.mois = unMois;

@@ -5,11 +5,16 @@ import interfaceGraphique.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
+import java.io.File;
+import java.util.*;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 
 public class Controleur_Gestion extends KeyAdapter implements ActionListener {
 
@@ -31,6 +36,9 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
         uneVue.ajouterEcouteurBouton("Modifier", this);
         uneVue.ajouterEcouteurBouton("Supprimer", this);
         uneVue.ajouterEcouteurBouton("Retour", this);
+        if(donnee.equals("locataire")){
+            uneVue.ajouterEcouteurBouton("Insere", this);
+        }
         if(donnee.equals("appartement")){
             uneVue.ajouterEcouteurBouton("Appartement", this);
             uneVue.ajouterEcouteurBouton("Maison", this);
@@ -127,6 +135,28 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
                             controleur.getVue().setVisible(true);
                         }
                     });
+                }
+                case "INSERE" -> {
+                    FileNameExtensionFilter filtre = new FileNameExtensionFilter("CSV files (*csv)", "csv");
+                    JFileChooser choose = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+                    choose.setFileFilter(filtre);
+                    int res = choose.showOpenDialog(null);
+                    File file = new File("C:/");
+                    if (res == JFileChooser.APPROVE_OPTION) {
+                      file = choose.getSelectedFile();
+                      System.out.println(file.getAbsolutePath());
+                    }
+                    try{
+                        Scanner fichierCSV = new Scanner(file).useDelimiter(";");
+                        ArrayList<Locataire> listeLoca = new ArrayList<>();
+                        while (fichierCSV.hasNextLine()){
+                            Locataire loca = new Locataire(0, fichierCSV.next(), fichierCSV.next(), fichierCSV.nextInt(), new MyDate(fichierCSV.next()), fichierCSV.next(), fichierCSV.next());
+                            listeLoca.add(loca);
+                        }
+                        Locataire_DAO loca_dao = new Locataire_DAO();
+                    }catch(Exception ex){
+                        System.out.println(ex.getMessage());
+                    }
                 }
             }
         }
