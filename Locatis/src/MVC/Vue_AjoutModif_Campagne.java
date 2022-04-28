@@ -255,8 +255,7 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
 
     @Override
     public Campagne getObjetModifie() {
-        //return new Utilisateur(this.user.getId(), this.dateDebut.getText(), this.dateFin.getText(), this.frequence.getSelectedItem()+"");
-        return null;
+        return new Campagne(this.campagne.getId(), this.titre.getText(), this.getDateDebut(), this.getDateFin(), this.getHeure(), this.frequence.getSelectedItem().toString(), null);
     }
 
     @Override

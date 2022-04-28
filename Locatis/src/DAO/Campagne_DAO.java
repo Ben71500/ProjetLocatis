@@ -68,7 +68,7 @@ public class Campagne_DAO extends DAO<Campagne>{
                     res.getString("Titre_campagne"),
                     this.getMyDate(res.getDate("Date_Debut")),
                     this.getMyDate(res.getDate("Date_Fin")),
-                    res.getString("Heure"),
+                    this.getMyTime(res.getTime("Heure")),
                     res.getString("frequence"),
                     user.selectById(res.getInt("ID_utilisateur"))
             );
@@ -85,7 +85,7 @@ public class Campagne_DAO extends DAO<Campagne>{
             res.next();
             Utilisateurs_DAO user = new Utilisateurs_DAO(this.connection);
             return new Campagne(res.getInt("ID_campagne"), res.getString("Titre_campagne"), this.getMyDate(res.getDate("Date_Debut")),
-                    this.getMyDate(res.getDate("Date_Fin")), res.getString("Heure"), res.getString("frequence"), user.selectById(res.getInt("ID_utilisateur")));
+                    this.getMyDate(res.getDate("Date_Fin")), this.getMyTime(res.getTime("Heure")), res.getString("frequence"), user.selectById(res.getInt("ID_utilisateur")));
         } catch (SQLException ex) {
             return null;
         }
@@ -103,7 +103,7 @@ public class Campagne_DAO extends DAO<Campagne>{
                     res.getString("Titre_campagne"),
                     this.getMyDate(res.getDate("Date_Debut")),
                     this.getMyDate(res.getDate("Date_Fin")),
-                    res.getString("Heure"),
+                    this.getMyTime(res.getTime("Heure")),
                     res.getString("frequence"),
                     user.selectById(res.getInt("ID_utilisateur"))
                 ));

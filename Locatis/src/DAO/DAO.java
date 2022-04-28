@@ -1,9 +1,11 @@
 package DAO;
 
 import Locatis.MyDate;
+import Locatis.MyTime;
 import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
+import java.sql.Time;
 
 
 /**
@@ -84,6 +86,12 @@ public abstract class DAO<T> {
         int annee = d.toLocalDate().getYear();
         int mois = d.toLocalDate().getMonthValue();
         return new MyDate(annee, mois, jour);
+    }
+    
+    protected MyTime getMyTime(Time t){
+        int heure = t.toLocalTime().getHour();
+        int minute = t.toLocalTime().getMinute();
+        return new MyTime(heure, minute);
     }
     /*protected Date getDate(MyDate d){
         new Date;
