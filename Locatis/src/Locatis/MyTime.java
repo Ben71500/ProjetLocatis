@@ -11,6 +11,13 @@ public class MyTime {
     }
     
     public String getTimeSQL(){
-        return "'"+this.heure+":"+this.minute+":00'";
+        String s="'";
+        if(this.heure<10)
+            s+="0";
+        s+=this.heure+":";
+        if(this.minute<10)
+            s+="0";
+        s+=this.minute+":00'";
+        return s;
     }
 }

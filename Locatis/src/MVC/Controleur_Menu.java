@@ -86,8 +86,10 @@ public class Controleur_Menu implements ActionListener {
                 laVue.quitter();
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run(){
-                        Controleur_AjoutModif controleur = new Controleur_AjoutModif(userConnecte, "campagne");                
-                        controleur.getVue().afficherVue();
+                        Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("campagne"), new Modele_Gestion("campagnes"), userConnecte, "campagne");                
+                        controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        controleur.getVue().setSize(800,500);
+                        controleur.getVue().setVisible(true);
                     }
                 });
             }

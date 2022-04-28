@@ -88,6 +88,7 @@ public class Controleur_AjoutModif implements ActionListener{
                         }
                         case "campagne" -> {
                             Campagne laCampagne = (Campagne) laVue.getNouvelObjet();
+                            laCampagne.setUtilisateur(userConnecte);
                             leModele.ajouterCampagne(laCampagne);
                             PopupInformation popup=new PopupInformation("La campagne a bien été ajoutée.");
                         }
@@ -130,6 +131,7 @@ public class Controleur_AjoutModif implements ActionListener{
                         }
                         case "campagne" -> {
                             Campagne laCampagne = (Campagne) laVue.getObjetModifie();
+                            laCampagne.setUtilisateur(userConnecte);
                             leModele.modifierCampagne(laCampagne);
                             PopupInformation popup=new PopupInformation("La campagne a bien été modifiée.");
                         }

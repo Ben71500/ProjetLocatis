@@ -63,6 +63,7 @@ public class  Modele_Gestion {
             case "messages" -> modeleMessages();
             case "appartements" -> modeleAppartement();
             case "maisons" -> modeleMaison();
+            case "campagnes" -> modeleCampagne();
         }
     }
 
@@ -146,6 +147,24 @@ public class  Modele_Gestion {
             tableau [i][1]= unAppartement.getAdresse()+"";
             tableau [i][2]= unAppartement.getEtage()+"";
             tableau [i][3]= unAppartement.getApart()+"";
+        }
+    }
+    
+    public void modeleCampagne(){
+        String[] tabEntetes = {"ID","Titre","Date de début", "Heure", "Date de fin", "Fréquence", "ID Utilisateur"};
+        this.setEntetes(tabEntetes);
+        Campagne_DAO lesCampagnes = new Campagne_DAO(connBdd);
+        liste = (ArrayList<Campagne>)lesCampagnes.getAll();
+        this.tableau = new String[liste.size()][7];
+        for(int i=0; i<liste.size();i++){
+            Campagne uneCampagne = (Campagne) liste.get(i);
+            tableau [i][0]= uneCampagne.getId()+"";
+            tableau [i][1]= uneCampagne.getTitre();
+            tableau [i][2]= uneCampagne.getDateDebut().getDateEcrite();
+            tableau [i][3]= uneCampagne.getHeure().getTimeSQL();
+            tableau [i][4]= uneCampagne.getDateFin().getDateEcrite();
+            tableau [i][5]= uneCampagne.getFrequence();
+            tableau [i][6]= uneCampagne.getUtilisateur().getId()+"";
         }
     }
     
