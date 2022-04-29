@@ -95,6 +95,15 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         panneau_info.add(categorie);
     }
     
+    public String getCat(){
+        return switch (this.categorie.getSelectedItem()+"") {
+            case "Administrateur" -> "adm";
+            case "Gestionnaire" -> "ges";
+            case "Utilisateur" -> "uti";
+            default -> "";
+        };
+    }
+    
     /**
      * Ajouter un écouteur à un bouton désigné par son nom
      *
@@ -143,12 +152,12 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
 
     @Override
     public Utilisateur getNouvelObjet() {
-        return new Utilisateur(0, this.login.getText(), this.mdp.getText(), this.categorie.getSelectedItem()+"");
+        return new Utilisateur(0, this.login.getText(), this.mdp.getText(), this.getCat());
     }
 
     @Override
     public Utilisateur getObjetModifie() {
-        return new Utilisateur(this.user.getId(), this.login.getText(), this.mdp.getText(), this.categorie.getSelectedItem()+"");
+        return new Utilisateur(this.user.getId(), this.login.getText(), this.mdp.getText(), this.getCat());
     }
 
     @Override

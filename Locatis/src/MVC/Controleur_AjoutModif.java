@@ -94,39 +94,14 @@ public class Controleur_AjoutModif implements ActionListener{
                 case "AJOUTER" -> {
                     try{
                         this.laVue.verifierChamps();
-                        switch(this.typeDonnee){
-                            case "locataire" -> {
-                                Locataire leLocataire = (Locataire) laVue.getNouvelObjet();
-                                leModele.ajouterLocataire(leLocataire);
-                                PopupInformation popup=new PopupInformation("Le locataire "+leLocataire.getNom()+" "+leLocataire.getPrenom()+" a été ajouté.");
-                            }
-                            case "utilisateur" -> {
-                                Utilisateur nouvelUtilisateur = (Utilisateur) laVue.getNouvelObjet();
-                                leModele.ajouterUtilisateur(nouvelUtilisateur);
-                                PopupInformation popup=new PopupInformation("L'utilisateur "+nouvelUtilisateur.getLogin()+" a été ajouté.");
-                            }
-                            case "message" -> {
-                                Message leMessage = (Message) laVue.getNouvelObjet();
-                                leModele.ajouterMessage(leMessage);
-                                PopupInformation popup=new PopupInformation("Le message a bien été ajouté.");
-                            }
-                            case "campagne" -> {
-                                Campagne laCampagne = (Campagne) laVue.getNouvelObjet();
-                                laCampagne.setUtilisateur(userConnecte);
-                                leModele.ajouterCampagne(laCampagne);
-                                PopupInformation popup=new PopupInformation("La campagne a bien été ajoutée.");
-                            }
-                            case "appartement" -> {
-                                Appartement unAppartement = (Appartement) laVue.getNouvelObjet();
-                                leModele.ajouterAppartement(unAppartement);
-                                PopupInformation popup=new PopupInformation("L'appartement a bien été ajoutée.");
-                            }
-                            case "maison" -> {
-                                Maison uneMaison = (Maison) laVue.getNouvelObjet();
-                                leModele.ajouterMaison(uneMaison);
-                                PopupInformation popup=new PopupInformation("La maison a bien été ajoutée.");
-                            }
+                        if(typeDonnee.equals("campagne")){
+                            Campagne laCampagne = (Campagne) laVue.getNouvelObjet();
+                            laCampagne.setUtilisateur(userConnecte);
+                            leModele.ajouter(laCampagne);
+                        }else{
+                            leModele.ajouter(laVue.getNouvelObjet());
                         }
+                        PopupInformation popup=new PopupInformation(this.typeDonnee+" ajouté.");
                         laVue.reset();
                     }catch (EmptyFieldException ex) {
                         ex.afficherErreur();
@@ -137,39 +112,14 @@ public class Controleur_AjoutModif implements ActionListener{
                 case "MODIFIER" -> {
                     try {
                         this.laVue.verifierChamps();
-                        switch(this.typeDonnee){
-                            case "locataire" -> {
-                                Locataire leLocataire = (Locataire) laVue.getObjetModifie();
-                                leModele.modifierLocataire(leLocataire);
-                                PopupInformation popup=new PopupInformation("Le locataire "+leLocataire.getNom()+" "+leLocataire.getPrenom()+" a bien été modifié.");
-                            }
-                            case "utilisateur" -> {
-                                Utilisateur nouvelUtilisateur = (Utilisateur) laVue.getObjetModifie();
-                                leModele.modifierUtilisateur(nouvelUtilisateur);
-                                PopupInformation popup=new PopupInformation("L'utilisateur "+nouvelUtilisateur.getLogin()+" a bien été modifié.");
-                            }
-                            case "message" -> {
-                                Message leMessage = (Message) laVue.getObjetModifie();
-                                leModele.modifierMessage(leMessage);
-                                PopupInformation popup=new PopupInformation("Le message a bien été modifié.");
-                            }
-                            case "campagne" -> {
-                                Campagne laCampagne = (Campagne) laVue.getObjetModifie();
-                                laCampagne.setUtilisateur(userConnecte);
-                                leModele.modifierCampagne(laCampagne);
-                                PopupInformation popup=new PopupInformation("La campagne a bien été modifiée.");
-                            }
-                            case "maison" -> {
-                                Maison laMaison = (Maison) laVue.getObjetModifie();
-                                leModele.modifierMaison(laMaison);
-                                PopupInformation popup=new PopupInformation("La maison a bien été modifiée.");
-                            }
-                            case "appartement" -> {
-                                Appartement unAppartement = (Appartement) laVue.getObjetModifie();
-                                leModele.modifierAppartement(unAppartement);
-                                PopupInformation popup=new PopupInformation("L'appartement a bien été modifiée.");
-                            }
+                        if(typeDonnee.equals("campagne")){
+                            Campagne laCampagne = (Campagne) laVue.getObjetModifie();
+                            laCampagne.setUtilisateur(userConnecte);
+                            leModele.modifier(laCampagne);
+                        }else{
+                            leModele.modifier(laVue.getObjetModifie());
                         }
+                        PopupInformation popup=new PopupInformation(this.typeDonnee+" modifié.");
                         laVue.quitter();
                         SwingUtilities.invokeLater(new Runnable(){
                             public void run(){

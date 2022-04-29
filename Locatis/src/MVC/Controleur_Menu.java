@@ -44,8 +44,18 @@ public class Controleur_Menu implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton source = (JButton) e.getSource();
         switch (source.getText().toUpperCase()) {
-            case "LISTES" -> {
+            case "GESTION DES LISTES DE DIFFUSION" -> {
                 laVue.quitter();
+                SwingUtilities.invokeLater(new Runnable(){
+                    @Override
+                    public void run(){
+                        Controleur_Gestion_Listes controleur = new Controleur_Gestion_Listes(new Vue_Gestion_Listes(), new Modele_Gestion_Listes(), userConnecte);
+                        controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        controleur.getVue().setSize(800,500);
+                        controleur.getVue().setVisible(true);
+                    }
+                });
+                
             }
             case "GESTION DES LOCATAIRES" -> {
                 laVue.quitter();

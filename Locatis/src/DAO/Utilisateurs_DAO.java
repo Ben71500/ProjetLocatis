@@ -39,6 +39,7 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
                     + obj.getCat() + "')"
             );
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
             return false;
         }
     }
