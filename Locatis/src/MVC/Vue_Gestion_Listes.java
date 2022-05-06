@@ -16,14 +16,22 @@ public class Vue_Gestion_Listes extends JFrame {
     private JPanel panneau = new JPanel();
     private JPanel haut = new JPanel();
     private JPanel centre = new JPanel();
-    //private JPanel panneau_info = new JPanel();
+    private JPanel panneau_infos = new JPanel();
     private JPanel panneau_boutons = new JPanel();
+    private JPanel panneau_nom = new JPanel();
     private JPanel panneau_recherches = new JPanel();
+    private JPanel panneau_boutons_radios = new JPanel();
     
     private JLabel titre;
+    private JLabel nom_label = new JLabel("Nom de la liste de diffusion : ");
     private JLabel rechercher_label = new JLabel("Rechercher : ");
+    private JLabel trier_label = new JLabel("Trier par : ");
     
+    private JTextField nom = new JTextField();
     private JTextField recherche = new JTextField();
+    private JTextField nombre = new JTextField();
+    
+    private JComboBox tri = new JComboBox();
     
     private DefaultTableModel tableau;
     private JTable table;
@@ -37,9 +45,7 @@ public class Vue_Gestion_Listes extends JFrame {
     
     private JButton ajouter = new JButton("Ajouter");
     private JButton selectionnerTout = new JButton("Selectionner tout");
-    private JButton deselectionner = new JButton("Tout déselectionner");
-    private JButton modifier = new JButton("Modifier");
-    private JButton supprimer = new JButton("Supprimer");
+    private JButton deselectionner = new JButton("Tout deselectionner");
     private JButton retour = new JButton("Retour");
     
 
@@ -57,27 +63,48 @@ public class Vue_Gestion_Listes extends JFrame {
         haut.add(this.titre);
         
         centre.setLayout(new BorderLayout());
-        centre.add(this.panneau_recherches, BorderLayout.NORTH);
+        centre.add(this.panneau_infos, BorderLayout.NORTH);
         //centre.add(new JScrollPane(this.panneau_info), BorderLayout.CENTER);
         panneau.add(this.panneau_boutons, BorderLayout.SOUTH);
         
-        panneau_recherches.setLayout(new GridLayout(1,2));
+        
+        panneau_nom.setLayout(new GridLayout(1,2));
+        panneau_nom.add(nom_label);
+        panneau_nom.add(nom);
+       
+        panneau_recherches.setLayout(new GridLayout(1,5));
         panneau_recherches.add(this.rechercher_label);
         panneau_recherches.add(this.recherche);
+        panneau_recherches.add(trier_label);
+        panneau_recherches.add(tri);
+        panneau_recherches.add(panneau_boutons_radios);
+        tri.addItem("Tous");
+        tri.addItem("ID");
+        tri.addItem("Nom");
+        tri.addItem("Prénom");
+        tri.addItem("Age");
+        tri.addItem("Ancienneté");
+        //panneau_boutons_radios.setVisible(false);
+        
+        panneau_infos.setLayout(new GridLayout(2,1));
+        panneau_infos.add(panneau_nom);
+        panneau_infos.add(panneau_recherches);
         
         //Ajout des différents boutons
         panneau_boutons.setLayout(new GridLayout(1,4));
         panneau_boutons.add(ajouter);
-        panneau_boutons.add(modifier);
-        panneau_boutons.add(supprimer);
+        panneau_boutons.add(selectionnerTout);
+        panneau_boutons.add(deselectionner);
         panneau_boutons.add(retour);
         
         
         
-        
-        panneau_boutons.add(buttonRadioEgal);
-        panneau_boutons.add(buttonRadioSuperieur);
-        panneau_boutons.add(buttonRadioInferieur);
+        panneau_boutons_radios.setLayout(new GridLayout(1,4));
+        panneau_boutons_radios.add(buttonRadioEgal);
+        panneau_boutons_radios.add(buttonRadioSuperieur);
+        panneau_boutons_radios.add(buttonRadioInferieur);
+        panneau_boutons_radios.add(nombre);
+        panneau_boutons_radios.setVisible(false);
         group.add(buttonRadioEgal);
         group.add(buttonRadioSuperieur);
         group.add(buttonRadioInferieur);
@@ -91,11 +118,6 @@ public class Vue_Gestion_Listes extends JFrame {
         this.titre.setText(titre);
     }
 
-    
-
-    
-    
-    
     public DefaultTableModel getTableau() {
         return tableau;
     }
@@ -103,8 +125,6 @@ public class Vue_Gestion_Listes extends JFrame {
     public int getLigne(){
         return this.table.getSelectedRow();
     }
-    
-    
     
     public JTextField getRecherche(){
         return this.recherche;
@@ -117,6 +137,8 @@ public class Vue_Gestion_Listes extends JFrame {
     public JTable getTable() {
         return table;
     }
+    
+    
 
     public void definirTableau(Object[][] donnees, String[] entetes) {
         
@@ -129,86 +151,60 @@ public class Vue_Gestion_Listes extends JFrame {
         };
         
         sort = new TableRowSorter<>(this.tableau);
+        for(int i=0;i<entetes.length;i++)
+            sort.setSortable(i, false);
         //Ajout du tableau des locataires
         this.table = new JTable(tableau){
-            private static final long serialVersionUID = 1L;
-            /*@Override
-            public Class getColumnClass(int column) {
-                switch (column) {
-                    case 1,4:
-                        return Integer.class;
-                    case 2,3,5,6,7:
-                        return String.class;
-                    default:
-                        return Boolean.class;
-                }
-            }*/
+            //private static final long serialVersionUID = 1L;
+            @Override
             public Class getColumnClass(int column) {
                 //renvoie Boolean.class
                 return getValueAt(0, column).getClass(); 
-      }
+            }
         };
+        
         table.setSelectionMode(SINGLE_SELECTION);
         table.setRowSorter(sort);
-        //Dimension preferredSize = new Dimension(1000,1000);
-        //table.setSize(900, 400);
-        /*table.sizeColumnsToFit(500);
-        table.setPreferredSize(1000);
-        table.get*/
-        //table.setPreferredSize(preferredSize);
-        //panneau_info.setPreferredSize(preferredSize);
-        //panneau_info.add(new JScrollPane(table), BorderLayout.CENTER);
+        //table.setAutoCreateRowSorter(false);
         centre.add(new JScrollPane(this.table), BorderLayout.CENTER);
+        
     }
     
-    public void changerTableau(String[][] donnees, String[] entetes){
+    public void changerTableau(Object[][] donnees, String[] entetes){
         centre.removeAll();
         centre.setLayout(new BorderLayout());
-        centre.add(this.panneau_recherches, BorderLayout.NORTH);
+        centre.add(this.panneau_infos, BorderLayout.NORTH);
         definirTableau(donnees, entetes);
         this.validate();
     }
 
     /**
-     * Ajouter un écouteur à un bouton désigné par son nom
+     * Ajouter un écouteur à un composant désigné par son nom
      *
-     * @param nomBouton le nom du bouton sur lequel l'écouteur doit être ajouté
+     * @param nomComposant le nom du composant sur lequel l'écouteur doit être ajouté
      * @param listener l'écouteur à ajouter
      */
-    public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
-        JButton bouton;
-        bouton = switch (nomBouton.toUpperCase()) {
+    public void ajouterEcouteur(String nomComposant, ActionListener listener) {
+        switch (nomComposant.toUpperCase()) {
             case "AJOUTER" ->
-                bouton = ajouter;
-            case "MODIFIER" ->
-                bouton = modifier;
-            case "SUPPRIMER" ->
-                bouton = supprimer;
+                ajouter.addActionListener(listener);
+            case "SELECTIONNER TOUT" ->
+                selectionnerTout.addActionListener(listener);
+            case "TOUT DESELECTIONNER" ->
+                deselectionner.addActionListener(listener);
             case "RETOUR" ->
-                bouton = retour;
-            default ->
-                null;
-        };
-        if (bouton != null) {
-            bouton.addActionListener(listener);
-        }
-        
-            JRadioButton boutonRadio;
-            boutonRadio = switch (nomBouton.toUpperCase()) {
-                case "EGAL" ->
-                    boutonRadio = buttonRadioEgal;
-                case "SUPERIEUR" ->
-                    boutonRadio = buttonRadioSuperieur;
-                case "INFERIEUR" ->
-                    boutonRadio = buttonRadioInferieur;
-                default ->
-                    null;
-            };
-            if (boutonRadio != null) {
-                boutonRadio.addActionListener(listener);
-            }
-        
-        
+                retour.addActionListener(listener);
+            
+            case "EGAL" ->
+                buttonRadioEgal.addActionListener(listener);
+            case "SUPERIEUR" ->
+                buttonRadioSuperieur.addActionListener(listener);
+            case "INFERIEUR" ->
+                buttonRadioInferieur.addActionListener(listener);
+                
+            case "TRI" ->
+                tri.addActionListener(listener);
+        } 
     }
 
     public void quitter() {
@@ -220,5 +216,39 @@ public class Vue_Gestion_Listes extends JFrame {
         if(this.table.getSelectedRowCount()==0){
             throw new PasDeLignesSelectionneesException("une liste");
         }
+    }
+    
+    public void afficherPanneauBoutonsRadios(){
+        if(tri.getSelectedItem().equals("Age") || tri.getSelectedItem().equals("Ancienneté"))
+            this.panneau_boutons_radios.setVisible(true);
+        else
+            this.panneau_boutons_radios.setVisible(false);
+    }
+    
+    
+    public String getBoutonRadio(){
+        if(this.buttonRadioEgal.isSelected())
+            return "=";
+        if(this.buttonRadioSuperieur.isSelected())
+            return ">";
+        if(this.buttonRadioInferieur.isSelected())
+            return "<";
+        return "";
+    }
+    
+    public String getCategorie(){
+        return (String) tri.getSelectedItem();
+    }
+
+    public int getNombre() {
+        try {
+            return Integer.parseInt(nombre.getText());
+        }catch(NumberFormatException e){
+            return -1;
+        }  
+    }
+    
+    public JTextField getNombreJTextField(){
+        return this.nombre;
     }
 }
