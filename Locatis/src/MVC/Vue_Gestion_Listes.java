@@ -263,4 +263,8 @@ public class Vue_Gestion_Listes extends JFrame {
             throw new EmptyFieldException("un nom de liste");
         }
     }
+    
+    public void reset(){
+        this.nom.setText("");
+    }
 }

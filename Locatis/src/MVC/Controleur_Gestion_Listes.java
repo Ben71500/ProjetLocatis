@@ -3,6 +3,7 @@ package MVC;
 import Locatis.Campagne;
 import Locatis.Utilisateur;
 import interfaceGraphique.EmptyFieldException;
+import interfaceGraphique.PasDeCaseCocheeException;
 import interfaceGraphique.PopupInformation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -114,14 +115,23 @@ public class Controleur_Gestion_Listes extends KeyAdapter implements ActionListe
                         this.laVue.verifierChamps();
                         PopupInformation popup2;
                         if(leModele.getListeCasesCochees().isEmpty())
-                            popup2=new PopupInformation("Sélectionner Locataire");
-                        else
-                            leModele.ajouter(laVue.getNom());
+                            throw new PasDeCaseCocheeException();
                         
+                        leModele.ajouter(laVue.getNom());
                         PopupInformation popup=new PopupInformation("Liste de diffusion ajoutée.");
-                        //laVue.reset();
-
+                        
+                        
+                        laVue.reset();
+                        leModele.decocherTout();
+                        laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
+                        laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
+                            public void tableChanged(TableModelEvent e) {
+                                leModele.cocher(e.getFirstRow());
+                            }
+                        });
                     }catch (EmptyFieldException ex) {
+                        ex.afficherErreur();
+                    }catch (PasDeCaseCocheeException ex) {
                         ex.afficherErreur();
                     }
                     /*SwingUtilities.invokeLater(new Runnable(){

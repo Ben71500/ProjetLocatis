@@ -47,9 +47,7 @@ public class Modele_Gestion_Listes {
 
     public ArrayList<Integer> getListeCasesCochees() {
         return listeCasesCochees;
-    }
-    
-    
+    }    
 
     public void setEntetes(String[] entetes) {
         this.entetes = entetes;
@@ -176,7 +174,7 @@ public class Modele_Gestion_Listes {
         ArrayList<Locataire> listeLoca = new ArrayList<>();
         Locataire_DAO lesLocataires= new Locataire_DAO(this.connBdd);
         for(int i=0;i<this.listeCasesCochees.size();i++)
-            listeLoca.add(lesLocataires.selectById(i));
+            listeLoca.add(lesLocataires.selectById(this.listeCasesCochees.get(i)));
         return listeLoca;
     }
 }
