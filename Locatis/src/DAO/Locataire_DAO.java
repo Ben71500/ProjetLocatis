@@ -1,8 +1,10 @@
 package DAO;
 
 import DAO.DAO;
+import Locatis.Appartement;
 import Locatis.Batiment;
 import Locatis.Locataire;
+import Locatis.Maison;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -177,13 +179,30 @@ public class Locataire_DAO extends DAO<Locataire>{
             Statement statement = this.connection.createStatement();
             ResultSet res = statement.executeQuery("Select ID_batiment from habiter where ID_locataire=" + id);
             while (res.next()) {
-                Appartement_DAO batiment = new Appartement_DAO(connection);
-                allBatiments.add(batiment.selectById(res.getInt("ID_batiment")));
-                System.out.println(res.getInt("ID_batiment")+"   "+batiment.selectById(res.getInt("ID_batiment")));
+                allBatiments.add(selectBatimentById(res.getInt("ID_batiment")));
             }
             return allBatiments;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+    
+    public Batiment selectBatimentById(int id){
+        try {
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select * from logement where ID_batiment=" + id);
+            res.next();
+            if(res.getString("NumeroAppartement")==null)   
+                return new Maison(res.getInt("ID_batiment"),
+                    res.getString("Adresse"));
+            else
+                return new Appartement(res.getInt("ID_batiment"),
+                    res.getString("Adresse"),
+                    res.getInt("NombreEtage"),
+                    res.getInt("NumeroAppartement")
+                );
+        } catch (SQLException ex) {
             return null;
         }
     }

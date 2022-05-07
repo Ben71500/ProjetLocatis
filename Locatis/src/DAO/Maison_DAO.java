@@ -75,7 +75,7 @@ public class Maison_DAO extends DAO<Maison>{
 
         try {
             Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from logement where id=" + id +" AND NumeroAppartement IS NULL");
+            ResultSet res = statement.executeQuery("Select * from logement where ID_batiment=" + id +" AND NumeroAppartement IS NULL");
             res.next();
             return new Maison(res.getInt("ID_batiment"),
                     res.getString("Adresse")

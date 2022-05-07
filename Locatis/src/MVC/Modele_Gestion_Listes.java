@@ -2,8 +2,10 @@ package MVC;
 
 import DAO.ConnectionBDD;
 import DAO.Connexion;
+import DAO.ListeDeDiffusion_DAO;
 import DAO.Locataire_DAO;
 import Locatis.Batiment;
+import Locatis.ListeDeDiffusion;
 import Locatis.Locataire;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -21,14 +23,14 @@ public class Modele_Gestion_Listes {
      * Constructeur du modèle
      */    
     public Modele_Gestion_Listes() {
-        String[] tabEntetes = {"Case","ID","Nom", "Prénom", "Age", "Ancienneté", "Mail", "Téléphone"};
+        String[] tabEntetes = {"Case","ID","Nom", "Prénom", "Age", "Ancienneté", "Mail", "Téléphone","Logements"};
         this.setEntetes(tabEntetes);
         
         //Récupération des locataires dans une ArrayList
         Locataire_DAO lesLocataires= new Locataire_DAO(this.connBdd);
         liste=(ArrayList<Locataire>)lesLocataires.getAll();
         //On convertit cette ArrayList en tableau à deux dimensions
-        tableau = new Object[liste.size()][8];
+        tableau = new Object[liste.size()][9];
         for(int i=0; i<liste.size();i++){
             Locataire leLocataire = (Locataire) liste.get(i);
             tableau [i][0]= false;
@@ -39,8 +41,15 @@ public class Modele_Gestion_Listes {
             tableau [i][5]=leLocataire.getAnciennete().getDateEcrite();
             tableau [i][6]=leLocataire.getMail();
             tableau [i][7]=leLocataire.getTelephone();
+            tableau [i][8]=lesLocataires.getLocation(leLocataire.getId());
         }
     }
+
+    public ArrayList<Integer> getListeCasesCochees() {
+        return listeCasesCochees;
+    }
+    
+    
 
     public void setEntetes(String[] entetes) {
         this.entetes = entetes;
@@ -110,12 +119,11 @@ public class Modele_Gestion_Listes {
         
         liste=(ArrayList<Locataire>)lesLocataires.getRequete(requete);
         //On convertit cette ArrayList en tableau à deux dimensions
-        tableau = new Object[liste.size()][8];
+        tableau = new Object[liste.size()][9];
         for(int i=0; i<liste.size();i++){
             Locataire leLocataire = (Locataire) liste.get(i);
             
             ArrayList<Batiment> listebat=(ArrayList<Batiment>) lesLocataires.getLocation(leLocataire.getId());
-            System.out.println(listebat);
             
             tableau [i][0]= listeCasesCochees.contains(leLocataire.getId());
             tableau [i][1]=leLocataire.getId();
@@ -125,6 +133,7 @@ public class Modele_Gestion_Listes {
             tableau [i][5]=leLocataire.getAnciennete().getDateEcrite();
             tableau [i][6]=leLocataire.getMail();
             tableau [i][7]=leLocataire.getTelephone();
+            tableau [i][8]=lesLocataires.getLocation(leLocataire.getId());
         }
         
     }
@@ -157,4 +166,17 @@ public class Modele_Gestion_Listes {
         }
         return tab;
     }*/
+    
+    public void ajouter(String nom){
+        ListeDeDiffusion_DAO lesListes= new ListeDeDiffusion_DAO(this.connBdd);
+        lesListes.create(new ListeDeDiffusion(0,nom,this.convertir()));
+    }
+    
+    private ArrayList<Locataire> convertir(){
+        ArrayList<Locataire> listeLoca = new ArrayList<>();
+        Locataire_DAO lesLocataires= new Locataire_DAO(this.connBdd);
+        for(int i=0;i<this.listeCasesCochees.size();i++)
+            listeLoca.add(lesLocataires.selectById(i));
+        return listeLoca;
+    }
 }

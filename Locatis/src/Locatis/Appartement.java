@@ -35,6 +35,14 @@ public class Appartement extends Batiment{
     
     @Override
     public String toString(){
-        return this.getID()+" : "+this.getAdresse()+" Etage : "+this.getEtage()+" Appartement : "+this.getApart();
+        String chaine = "Appartement "+this.getApart();
+        if(this.getEtage()==0)
+            chaine += ", rez-de-chaussée, ";
+        if(this.getEtage()==1)
+            chaine += ", 1er étage, ";
+        else
+            chaine += ", "+this.getEtage()+" ème étage, ";
+        chaine += this.getAdresse();
+        return chaine;
     }
 }

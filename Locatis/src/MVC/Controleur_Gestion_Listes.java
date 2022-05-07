@@ -1,6 +1,9 @@
 package MVC;
 
+import Locatis.Campagne;
 import Locatis.Utilisateur;
+import interfaceGraphique.EmptyFieldException;
+import interfaceGraphique.PopupInformation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -107,14 +110,26 @@ public class Controleur_Gestion_Listes extends KeyAdapter implements ActionListe
             JButton source = (JButton) e.getSource();
             switch (source.getText().toUpperCase()) {
                 case "AJOUTER" -> {
-                    laVue.quitter();
+                    try{
+                        this.laVue.verifierChamps();
+                        PopupInformation popup2;
+                        if(leModele.getListeCasesCochees().isEmpty())
+                            popup2=new PopupInformation("Sélectionner Locataire");
+                        else
+                            leModele.ajouter(laVue.getNom());
+                        
+                        PopupInformation popup=new PopupInformation("Liste de diffusion ajoutée.");
+                        //laVue.reset();
 
-                    SwingUtilities.invokeLater(new Runnable(){
+                    }catch (EmptyFieldException ex) {
+                        ex.afficherErreur();
+                    }
+                    /*SwingUtilities.invokeLater(new Runnable(){
                         public void run(){
                             /*Controleur_AjoutModif controleur = new Controleur_AjoutModif(userConnecte);                
-                            controleur.getVue().afficherVue();*/
+                            controleur.getVue().afficherVue();
                         }
-                    });
+                    });*/
                 }
                 case "SELECTIONNER TOUT" -> {
                     leModele.cocherTout();

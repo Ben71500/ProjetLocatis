@@ -72,7 +72,7 @@ public class Appartement_DAO extends DAO<Appartement>{
 
         try {
             Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from logement where id=" + id +" AND NumeroAppartement IS NOT NULL");
+            ResultSet res = statement.executeQuery("Select * from logement where ID_batiment=" + id +" AND NumeroAppartement IS NOT NULL");
             res.next();
             return new Appartement(res.getInt("ID_batiment"),
                     res.getString("Adresse"),
@@ -80,6 +80,7 @@ public class Appartement_DAO extends DAO<Appartement>{
                     res.getInt("NombreEtage")
             );
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
             return null;
         }
     }

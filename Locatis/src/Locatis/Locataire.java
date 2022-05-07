@@ -11,7 +11,6 @@ public class Locataire {
     private MyDate anciennete;
     private String mail;
     private String telephone;
-    private Batiment logement;
 
     public Locataire(int id, String nom, String prenom, int age, MyDate dateAnciennete, String mail, String telephone) {
         this.id = id;
@@ -21,17 +20,6 @@ public class Locataire {
         this.anciennete = dateAnciennete;
         this.mail = mail;
         this.telephone = telephone;
-    }
-    
-    public Locataire(int id, String nom, String prenom, int age, MyDate dateAnciennete, String mail, String telephone, Batiment unLogement) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.age = age;
-        this.anciennete = dateAnciennete;
-        this.mail = mail;
-        this.telephone = telephone;
-        this.logement = unLogement;
     }
     
     public String getMail(){
@@ -80,14 +68,6 @@ public class Locataire {
 
     public void setAnciennete(MyDate anciennete) {
         this.anciennete = anciennete;
-    }
-
-    public Batiment getLogement() {
-        return logement;
-    }
-
-    public void setLogement(Batiment logement) {
-        this.logement = logement;
     }
     
     @Override

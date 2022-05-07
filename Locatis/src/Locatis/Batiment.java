@@ -31,8 +31,13 @@ public class Batiment {
         this.adresse = adresse;
     }
     
-    @Override
+    /*@Override
     public String toString(){
         return this.getID()+" : "+this.getAdresse();
+    }*/
+    
+    @Override
+    public String toString(){
+        return this.getAdresse();
     }
 }

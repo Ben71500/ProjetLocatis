@@ -114,6 +114,12 @@ public class Vue_Gestion_Listes extends JFrame {
         this.pack();
     }
 
+    public String getNom() {
+        return nom.getText();
+    }
+    
+    
+
     public void setTitre(String titre) {
         this.titre.setText(titre);
     }
@@ -250,5 +256,11 @@ public class Vue_Gestion_Listes extends JFrame {
     
     public JTextField getNombreJTextField(){
         return this.nombre;
+    }
+    
+    public void verifierChamps() throws EmptyFieldException{
+        if(this.nom.getText().equals("")){
+            throw new EmptyFieldException("un nom de liste");
+        }
     }
 }
