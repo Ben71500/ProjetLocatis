@@ -14,6 +14,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
@@ -30,7 +32,7 @@ public class Controleur_Gestion_Listes extends KeyAdapter implements ActionListe
         this.laVue = uneVue;
         this.leModele = unModele;
         
-        laVue.definirTableau(leModele.getTableau(),leModele.getEntetes());
+        
         uneVue.ajouterEcouteur("Ajouter", this);
         uneVue.ajouterEcouteur("Selectionner tout", this);
         uneVue.ajouterEcouteur("Tout deselectionner", this);
@@ -40,7 +42,14 @@ public class Controleur_Gestion_Listes extends KeyAdapter implements ActionListe
         uneVue.ajouterEcouteur("Inferieur", this);
         uneVue.ajouterEcouteur("Tri", this);
         uneVue.getRecherche().getDocument().addDocumentListener(effectuerRecherche());
-        uneVue.getNombreJTextField().getDocument().addDocumentListener(effectuerTri());
+        uneVue.getNombreJSpinner().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadio(), laVue.getNombre());
+                actualiser();
+            }
+        });
+        laVue.definirTableau(leModele.getTableau(),leModele.getEntetes());
         uneVue.getTable().getModel().addTableModelListener(new TableModelListener() {
             public void tableChanged(TableModelEvent e) {
                 unModele.cocher(e.getFirstRow());
@@ -73,36 +82,25 @@ public class Controleur_Gestion_Listes extends KeyAdapter implements ActionListe
             laVue.afficherPanneauBoutonsRadios();
             //leModele.getAll();
             leModele.trierPar(laVue.getCategorie());
-            laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
-            laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
-                public void tableChanged(TableModelEvent e) {
-                    leModele.cocher(e.getFirstRow());
-                }
-            });
+            actualiser();
         }else
         
         if(e.getSource().getClass().isInstance(new JRadioButton())){
-            if(laVue.getNombre()==-1)
+            /*if(laVue.getNombre()==-1)
                 leModele.trierPar(laVue.getCategorie());
-            else
-                leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadio(), laVue.getNombre());
-            laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
-            laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
-                public void tableChanged(TableModelEvent e) {
-                    leModele.cocher(e.getFirstRow());
-                }
-            });
+            else{*/
+                if(laVue.getCategorie().equals("Age"))
+                    leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadio(), laVue.getNombre());
+                else
+                    leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadio(), laVue.getDate());
+            //}
+            actualiser();
         }else
         
         if(e.getSource().getClass().isInstance(new JTextField())){
             
             leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadio(), laVue.getNombre());
-            laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
-            laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
-                public void tableChanged(TableModelEvent e) {
-                    leModele.cocher(e.getFirstRow());
-                }
-            });
+            actualiser();
         }
         
         else{
@@ -123,12 +121,7 @@ public class Controleur_Gestion_Listes extends KeyAdapter implements ActionListe
                         
                         laVue.reset();
                         leModele.decocherTout();
-                        laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
-                        laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
-                            public void tableChanged(TableModelEvent e) {
-                                leModele.cocher(e.getFirstRow());
-                            }
-                        });
+                        actualiser();
                     }catch (EmptyFieldException ex) {
                         ex.afficherErreur();
                     }catch (PasDeCaseCocheeException ex) {
@@ -143,21 +136,11 @@ public class Controleur_Gestion_Listes extends KeyAdapter implements ActionListe
                 }
                 case "SELECTIONNER TOUT" -> {
                     leModele.cocherTout();
-                    laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
-                    laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
-                        public void tableChanged(TableModelEvent e) {
-                            leModele.cocher(e.getFirstRow());
-                        }
-                    });
+                    actualiser();
                 }
                 case "TOUT DESELECTIONNER" -> {
                     leModele.decocherTout();
-                    laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
-                    laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
-                        public void tableChanged(TableModelEvent e) {
-                            leModele.cocher(e.getFirstRow());
-                        }
-                    });
+                    actualiser();
                 }
                 case "RETOUR" -> {
                     laVue.quitter();
@@ -173,42 +156,6 @@ public class Controleur_Gestion_Listes extends KeyAdapter implements ActionListe
                 
             }
         }
-    }
-    
-    public DocumentListener effectuerTri(){
-        return new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                
-                if(laVue.getNombre()==-1)
-                leModele.trierPar(laVue.getCategorie());
-                else
-                    leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadio(), laVue.getNombre());
-                laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
-                laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
-                    public void tableChanged(TableModelEvent e) {
-                        leModele.cocher(e.getFirstRow());
-                    }
-                });
-                laVue.getNombreJTextField().requestFocus();
-            }
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                if(laVue.getNombre()==-1)
-                leModele.trierPar(laVue.getCategorie());
-                else
-                    leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadio(), laVue.getNombre());
-                laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
-                laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
-                    public void tableChanged(TableModelEvent e) {
-                        leModele.cocher(e.getFirstRow());
-                    }
-                });
-                laVue.getNombreJTextField().requestFocus();
-            }
-            @Override
-            public void changedUpdate(DocumentEvent e) {}
-        };
     }
     
     public DocumentListener effectuerRecherche(){
@@ -233,6 +180,15 @@ public class Controleur_Gestion_Listes extends KeyAdapter implements ActionListe
             @Override
             public void changedUpdate(DocumentEvent e) {}
         };
+    }
+    
+    public void actualiser(){
+        laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
+        laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
+            public void tableChanged(TableModelEvent e) {
+                leModele.cocher(e.getFirstRow());
+            }
+        });
     }
     
 }

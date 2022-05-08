@@ -1,14 +1,17 @@
 package MVC;
 
 import Locatis.*;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 import interfaceGraphique.*;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Calendar;
 import javax.swing.*;
 import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
-import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.*;
 
 public class Vue_Gestion_Listes extends JFrame {
@@ -29,7 +32,8 @@ public class Vue_Gestion_Listes extends JFrame {
     
     private JTextField nom = new JTextField();
     private JTextField recherche = new JTextField();
-    private JTextField nombre = new JTextField();
+    private JSpinner nombre = new JSpinner();
+    private JDateChooser date = new JDateChooser();
     
     private JComboBox tri = new JComboBox();
     
@@ -67,7 +71,6 @@ public class Vue_Gestion_Listes extends JFrame {
         //centre.add(new JScrollPane(this.panneau_info), BorderLayout.CENTER);
         panneau.add(this.panneau_boutons, BorderLayout.SOUTH);
         
-        
         panneau_nom.setLayout(new GridLayout(1,2));
         panneau_nom.add(nom_label);
         panneau_nom.add(nom);
@@ -97,8 +100,6 @@ public class Vue_Gestion_Listes extends JFrame {
         panneau_boutons.add(deselectionner);
         panneau_boutons.add(retour);
         
-        
-        
         panneau_boutons_radios.setLayout(new GridLayout(1,4));
         panneau_boutons_radios.add(buttonRadioEgal);
         panneau_boutons_radios.add(buttonRadioSuperieur);
@@ -109,6 +110,21 @@ public class Vue_Gestion_Listes extends JFrame {
         group.add(buttonRadioSuperieur);
         group.add(buttonRadioInferieur);
         
+        nombre.setModel(new SpinnerNumberModel(0, 0, 200, 1));
+        nombre.setEditor(new JSpinner.DefaultEditor(nombre));
+        
+        this.date.setCalendar(Calendar.getInstance());
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) this.date.getDateEditor();
+        editor.setEditable(false);
+        this.date.getDateEditor().addPropertyChangeListener(
+            new PropertyChangeListener() {
+                @Override
+                public void propertyChange(PropertyChangeEvent e) {
+                    /*if(date.getCalendar().before(date.getCalendar()))
+                        System.out.println("");*/
+                    //System.out.println("d");
+                }
+        });
         
         this.getContentPane().add(this.panneau);
         this.pack();
@@ -118,7 +134,9 @@ public class Vue_Gestion_Listes extends JFrame {
         return nom.getText();
     }
     
-    
+    public String getDate(){
+        return new MyDate(this.date.getCalendar().get(Calendar.YEAR), this.date.getCalendar().get(Calendar.MONTH)+1, this.date.getCalendar().get(Calendar.DAY_OF_MONTH)).getDateSQL();
+    }
 
     public void setTitre(String titre) {
         this.titre.setText(titre);
@@ -143,11 +161,8 @@ public class Vue_Gestion_Listes extends JFrame {
     public JTable getTable() {
         return table;
     }
-    
-    
 
     public void definirTableau(Object[][] donnees, String[] entetes) {
-        
         this.tableau = new DefaultTableModel(donnees, entetes)
         {
             @Override
@@ -161,7 +176,6 @@ public class Vue_Gestion_Listes extends JFrame {
             sort.setSortable(i, false);
         //Ajout du tableau des locataires
         this.table = new JTable(tableau){
-            //private static final long serialVersionUID = 1L;
             @Override
             public Class getColumnClass(int column) {
                 //renvoie Boolean.class
@@ -171,9 +185,7 @@ public class Vue_Gestion_Listes extends JFrame {
         
         table.setSelectionMode(SINGLE_SELECTION);
         table.setRowSorter(sort);
-        //table.setAutoCreateRowSorter(false);
         centre.add(new JScrollPane(this.table), BorderLayout.CENTER);
-        
     }
     
     public void changerTableau(Object[][] donnees, String[] entetes){
@@ -218,19 +230,17 @@ public class Vue_Gestion_Listes extends JFrame {
         this.dispose();
     }
     
-    public void verifierSelection() throws PasDeLignesSelectionneesException{
-        if(this.table.getSelectedRowCount()==0){
-            throw new PasDeLignesSelectionneesException("une liste");
-        }
-    }
-    
     public void afficherPanneauBoutonsRadios(){
-        if(tri.getSelectedItem().equals("Age") || tri.getSelectedItem().equals("Ancienneté"))
+        if(tri.getSelectedItem().equals("Age") || tri.getSelectedItem().equals("Ancienneté")){
             this.panneau_boutons_radios.setVisible(true);
-        else
+            this.panneau_boutons_radios.remove(3);
+            if(tri.getSelectedItem().equals("Age"))
+                this.panneau_boutons_radios.add(nombre);
+            else
+                this.panneau_boutons_radios.add(date);
+        }else
             this.panneau_boutons_radios.setVisible(false);
     }
-    
     
     public String getBoutonRadio(){
         if(this.buttonRadioEgal.isSelected())
@@ -243,18 +253,17 @@ public class Vue_Gestion_Listes extends JFrame {
     }
     
     public String getCategorie(){
-        return (String) tri.getSelectedItem();
+        if(tri.getSelectedItem().equals("Ancienneté"))
+            return "Anciennete";
+        else
+            return (String) tri.getSelectedItem();
     }
 
-    public int getNombre() {
-        try {
-            return Integer.parseInt(nombre.getText());
-        }catch(NumberFormatException e){
-            return -1;
-        }  
+    public String getNombre() {
+        return nombre.getValue()+"";
     }
     
-    public JTextField getNombreJTextField(){
+    public JSpinner getNombreJSpinner(){
         return this.nombre;
     }
     

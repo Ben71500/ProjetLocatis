@@ -69,7 +69,7 @@ public class Modele_Gestion_Listes {
         return liste.get(nb);
     }
     
-    public void getTri(String categorie, String signe, int nombre){
+    public void getTri(String categorie, String signe, String nombre){
         String requete = "Select * from locataire where "+categorie+" "+signe+" "+nombre;
         executerRequete(requete);
     }
@@ -132,9 +132,10 @@ public class Modele_Gestion_Listes {
             tableau [i][6]=leLocataire.getMail();
             tableau [i][7]=leLocataire.getTelephone();
             tableau [i][8]=lesLocataires.getLocation(leLocataire.getId());
-        }
-        
+        }       
     }
+    
+    
     
     public void cocher(int ligne){
         int id=(int) tableau[ligne][1];
