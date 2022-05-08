@@ -40,10 +40,12 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
         if(donnee.equals("appartement")){
             uneVue.ajouterEcouteurBouton("Appartement", this);
             uneVue.ajouterEcouteurBouton("Maison", this);
+            uneVue.ajouterEcouteurBouton("Insere", this);
         }
         if(donnee.equals("maison")){
             uneVue.ajouterEcouteurBouton("Appartement", this);
             uneVue.ajouterEcouteurBouton("Maison", this);
+            uneVue.ajouterEcouteurBouton("Insere", this);
         }
         uneVue.getRecherche().getDocument().addDocumentListener(effectuerRecherche());
     }
