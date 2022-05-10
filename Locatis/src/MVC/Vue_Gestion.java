@@ -1,14 +1,11 @@
 package MVC;
 
-import Locatis.*;
 import interfaceGraphique.*;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
-import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.*;
 
 public class Vue_Gestion extends JFrame {
@@ -206,8 +203,7 @@ public class Vue_Gestion extends JFrame {
             if (boutonRadio != null) {
                 boutonRadio.addActionListener(listener);
             }
-        }
-        
+        }   
     }
 
     public void quitter() {

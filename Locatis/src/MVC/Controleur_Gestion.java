@@ -93,8 +93,13 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
 
                     SwingUtilities.invokeLater(new Runnable(){
                         public void run(){
-                            Controleur_AjoutModif controleur = new Controleur_AjoutModif(userConnecte, typeDonnee);                
-                            controleur.getVue().afficherVue();
+                            if(typeDonnee.equals("liste")){
+                                Controleur_Ajout_Listes controleur= new Controleur_Ajout_Listes(new Vue_Ajout_Listes(), new Modele_Ajout_Listes(), userConnecte);
+                                controleur.getVue().afficherVue();
+                            }else{
+                                Controleur_AjoutModif controleur = new Controleur_AjoutModif(userConnecte, typeDonnee);                
+                                controleur.getVue().afficherVue();
+                            }
                         }
                     });
                 }

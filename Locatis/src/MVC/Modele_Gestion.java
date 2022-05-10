@@ -2,18 +2,9 @@ package MVC;
 
 import DAO.*;
 import Locatis.*;
-import static interfaceGraphique.GestionBatiment.getListeMaison;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 
 public class  Modele_Gestion {
     
@@ -22,20 +13,28 @@ public class  Modele_Gestion {
     private List liste;
     private String donnees;
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
+    private DAO dao;
 
     /**
      * Constructeur du modèle
      */    
     public Modele_Gestion(String lesDonnees) {
         this.donnees = lesDonnees;
+        switch(this.donnees){
+            case "locataires" -> dao = new Locataire_DAO(this.connBdd);
+            case "utilisateurs" -> dao = new Utilisateurs_DAO(this.connBdd);
+            case "messages" -> dao = new Message_DAO(this.connBdd);
+            case "appartements" -> dao = new Appartement_DAO(this.connBdd);
+            case "maisons" -> dao = new Maison_DAO(this.connBdd);
+            case "campagnes" -> dao = new Campagne_DAO(this.connBdd);
+            case "liste" -> dao = new ListeDeDiffusion_DAO(this.connBdd);
+        }
     }
 
     public void setDonnees(String donnees) {
         this.donnees = donnees;
     }
     
-    
-
     public void setEntetes(String[] entetes) {
         this.entetes = entetes;
     }
@@ -64,6 +63,7 @@ public class  Modele_Gestion {
             case "appartements" -> modeleAppartement();
             case "maisons" -> modeleMaison();
             case "campagnes" -> modeleCampagne();
+            case "liste" -> modeleListe();
         }
     }
 
@@ -72,8 +72,8 @@ public class  Modele_Gestion {
         this.setEntetes(tabEntetes);
         
         //Récupération des locataires dans une ArrayList
-        Locataire_DAO lesLocataires= new Locataire_DAO(this.connBdd);
-        liste=(ArrayList<Locataire>)lesLocataires.getAll();
+        //Locataire_DAO lesLocataires= new Locataire_DAO(this.connBdd);
+        liste=(ArrayList<Locataire>)dao.getAll();
         //On convertit cette ArrayList en tableau à deux dimensions
         tableau = new String[liste.size()][7];
         for(int i=0; i<liste.size();i++){
@@ -93,8 +93,8 @@ public class  Modele_Gestion {
         this.setEntetes(tabEntetes);
         
         //Récupération des utilisateurs dans une ArrayList
-        Utilisateurs_DAO lesUtilisateurs= new Utilisateurs_DAO(connBdd);
-        liste=(ArrayList<Utilisateur>)lesUtilisateurs.getAll();
+        //Utilisateurs_DAO lesUtilisateurs= new Utilisateurs_DAO(connBdd);
+        liste=(ArrayList<Utilisateur>)dao.getAll();
         //On convertit cette ArrayList en tableau à deux dimensions
         this.tableau = new String[liste.size()][3];
         for(int i=0; i<liste.size();i++){
@@ -110,8 +110,8 @@ public class  Modele_Gestion {
         this.setEntetes(tabEntetes);
         
         //Récupération des messages dans une ArrayList
-        Message_DAO lesMessages= new Message_DAO(connBdd);
-        liste=(ArrayList<Message>)lesMessages.getAll();
+        //Message_DAO lesMessages= new Message_DAO(connBdd);
+        liste=(ArrayList<Message>)dao.getAll();
         //On convertit cette ArrayList en tableau à deux dimensions
         this.tableau = new String[liste.size()][3];
         for(int i=0; i<liste.size();i++){
@@ -125,8 +125,8 @@ public class  Modele_Gestion {
     public void modeleMaison(){
         String[] tabEntetes = {"ID","Adresse"};
         this.setEntetes(tabEntetes);
-        Maison_DAO lesMaison = new Maison_DAO(connBdd);
-        liste = (ArrayList<Maison>)lesMaison.getAll();
+        //Maison_DAO lesMaison = new Maison_DAO(connBdd);
+        liste = (ArrayList<Maison>)dao.getAll();
         this.tableau = new String[liste.size()][2];
         for(int i=0; i<liste.size();i++){
             Maison uneMaison = (Maison) liste.get(i);
@@ -138,8 +138,8 @@ public class  Modele_Gestion {
     public void modeleAppartement(){
         String[] tabEntetes = {"ID","Adresse", "Numéro étage", "Numéro appartement"};
         this.setEntetes(tabEntetes);
-        Appartement_DAO lesApparts = new Appartement_DAO(connBdd);
-        liste = (ArrayList<Appartement>)lesApparts.getAll();
+        //Appartement_DAO lesApparts = new Appartement_DAO(connBdd);
+        liste = (ArrayList<Appartement>)dao.getAll();
         this.tableau = new String[liste.size()][4];
         for(int i=0; i<liste.size();i++){
             Appartement unAppartement = (Appartement) liste.get(i);
@@ -153,8 +153,8 @@ public class  Modele_Gestion {
     public void modeleCampagne(){
         String[] tabEntetes = {"ID","Titre","Date de début", "Heure", "Date de fin", "Fréquence", "ID Utilisateur"};
         this.setEntetes(tabEntetes);
-        Campagne_DAO lesCampagnes = new Campagne_DAO(connBdd);
-        liste = (ArrayList<Campagne>)lesCampagnes.getAll();
+        //Campagne_DAO lesCampagnes = new Campagne_DAO(connBdd);
+        liste = (ArrayList<Campagne>)dao.getAll();
         this.tableau = new String[liste.size()][7];
         for(int i=0; i<liste.size();i++){
             Campagne uneCampagne = (Campagne) liste.get(i);
@@ -165,6 +165,21 @@ public class  Modele_Gestion {
             tableau [i][4]= uneCampagne.getDateFin().getDateEcrite();
             tableau [i][5]= uneCampagne.getFrequence();
             tableau [i][6]= uneCampagne.getUtilisateur().getId()+"";
+        }
+    }
+    
+    public void modeleListe(){
+        String[] tabEntetes = {"ID","Nom"};
+        this.setEntetes(tabEntetes);
+        
+        //Récupération des listes dans une ArrayList
+        liste=(ArrayList<ListeDeDiffusion>)dao.getAll();
+        //On convertit cette ArrayList en tableau à deux dimensions
+        this.tableau = new String[liste.size()][2];
+        for(int i=0; i<liste.size();i++){
+            ListeDeDiffusion listeDeDiffusion=(ListeDeDiffusion) liste.get(i);
+            tableau [i][0]=listeDeDiffusion.getId()+"";
+            tableau [i][1]=listeDeDiffusion.getNom();
         }
     }
     
@@ -189,8 +204,15 @@ public class  Modele_Gestion {
         }
     }
     
+    //à tester
+    public void insererViaCSV(List liste_csv){
+        for (int i = 0; i < liste_csv.size(); i++){
+            dao.create(liste_csv.get(i));
+        }
+    }
+    
     public void supprimer(int n){
-        switch(this.donnees){
+        /*switch(this.donnees){
             case "locataires" -> {
                 Locataire_DAO locDao=new Locataire_DAO(connBdd);
                 locDao.delete((Locataire) this.getSelection(n));
@@ -211,7 +233,8 @@ public class  Modele_Gestion {
                 Campagne_DAO campagneDao=new Campagne_DAO(connBdd);
                 campagneDao.delete((Campagne) this.getSelection(n));
             }
-        }
+        }*/
+        dao.delete(this.getSelection(n));
         this.liste.remove(n);
     }
 }

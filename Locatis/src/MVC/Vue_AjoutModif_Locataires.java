@@ -39,10 +39,6 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
     
     private Locataire leLocataire;
     
-    private static final long serialVersionUID = 1L;
-    private JPanel pan;
-
-    
     public Vue_AjoutModif_Locataires(){
         super("Ajouter un locataire");
         titre.setText("Ajouter un locataire");

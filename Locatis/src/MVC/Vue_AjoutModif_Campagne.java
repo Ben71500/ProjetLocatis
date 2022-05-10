@@ -25,15 +25,16 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     private JPanel panneau_boutons= new JPanel();
     private JPanel panneau_gauche = new JPanel();
     private JPanel panneau_titre = new JPanel();
-    private JPanel panneau_message = new JPanel();
+    //private JPanel panneau_message = new JPanel();
     private JPanel panneau_droite = new JPanel();
     private JPanel panneau_temps = new JPanel();
     private JPanel panneau_heure = new JPanel();
     private JPanel panneau_listes = new JPanel();
+    private Panneau_Message panneau_message = new Panneau_Message();
     
     private JLabel titre = new JLabel();
     private JLabel titreCampagne_label = new JLabel("Titre : ");
-    private JLabel message_label = new JLabel("Message : ");
+    /*private JLabel message_label = new JLabel("Message : ");*/
     private JLabel frequence_label = new JLabel("Fréquence : ");
     private JLabel dateDebut_label = new JLabel ("Date de début : ");
     private JLabel heure_label = new JLabel ("Heure : ");
@@ -42,7 +43,7 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     private JLabel listes_label = new JLabel("Listes de diffusion : ");
     
     private JTextField titreCampagne = new JTextField();
-    private JTextArea message = new JTextArea();
+    /*private JTextArea message = new JTextArea();*/
     private JComboBox frequence = new JComboBox();
     private JDateChooser dateDebut = new JDateChooser();
     private JComboBox heure = new JComboBox();
@@ -65,8 +66,13 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         panneau_boutons.add(ajouter);
         panneau_boutons.add(retour);
         
+        
+        
         this.getContentPane().add(this.panneau);
         this.pack();
+        
+        /*panneau.revalidate();
+        panneau_message.revalidate();*/
     }
     
     public Vue_AjoutModif_Campagne(Campagne camp) {
@@ -121,13 +127,16 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         panneau_titre.add(this.titreCampagne_label);
         panneau_titre.add(this.titreCampagne);
         
-        panneau_message.setLayout(new GridLayout(1,2));
+        /*panneau_message.setLayout(new GridLayout(1,2));
         panneau_message.add(this.message_label);
-        panneau_message.add(this.message);
+        panneau_message.add(this.message);*/
+        
         
         panneau_gauche.setLayout(new BorderLayout());
         panneau_gauche.add(panneau_titre, BorderLayout.NORTH);
         panneau_gauche.add(panneau_message, BorderLayout.CENTER);
+        
+        panneau_message.setVisible(true);panneau_message.validate();
         
         ArrayList<String> liste = new ArrayList<>();
         liste.add("a");
@@ -249,7 +258,7 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     @Override
     public void reset(){
         titreCampagne.setText("");
-        message.setText("");
+        //message.setText("");
         frequence.setSelectedIndex(0);
         heure.setSelectedIndex(0);
         minute.setSelectedIndex(0);
@@ -261,9 +270,9 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         if(this.titreCampagne.getText().equals("")){
             throw new EmptyFieldException("un titre");
         }else
-        if(this.message.getText().equals("")){
+        /*if(this.message.getText().equals("")){
             throw new EmptyFieldException("un message");
-        }else
+        }else*/
         if(this.listes.getSelectedIndices().length==0)
             throw new PasDeLignesSelectionneesException("une liste de diffusion");
         /*else

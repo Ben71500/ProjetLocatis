@@ -49,7 +49,8 @@ public class Controleur_Menu implements ActionListener {
                 SwingUtilities.invokeLater(new Runnable(){
                     @Override
                     public void run(){
-                        Controleur_Gestion_Listes controleur = new Controleur_Gestion_Listes(new Vue_Gestion_Listes(), new Modele_Gestion_Listes(), userConnecte);
+                        //Controleur_Ajout_Listes controleur = new Controleur_Ajout_Listes(new Vue_Ajout_Listes(), new Modele_Ajout_Listes(), userConnecte);
+                        Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("liste"), new Modele_Gestion("liste"), userConnecte, "liste");
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         controleur.getVue().setSize(800,500);
                         controleur.getVue().setVisible(true);

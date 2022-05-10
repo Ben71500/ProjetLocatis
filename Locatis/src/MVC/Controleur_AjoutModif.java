@@ -55,8 +55,7 @@ public class Controleur_AjoutModif implements ActionListener{
         laVue.ajouterEcouteurBouton("Retour", this);
         
         if(donnee.equals("campagne")){
-            /*Vue_AjoutModif_Campagne vue = (Vue_AjoutModif_Campagne)laVue;
-            vue.getFrequence().addActionListener(this);*/
+            /*laVue.getFrequence().addActionListener(this);*/
             laVue.ajouterEcouteurBouton("Frequence", this);
         }
     }

@@ -29,10 +29,6 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
     
     private Appartement appart;
     
-    private static final long serialVersionUID = 1L;
-    private JPanel pan;
-
-    
     public Vue_AjoutModif_Appartement(){
         super("Ajouter un appartement");
         titre.setText("Ajouter un appartement");

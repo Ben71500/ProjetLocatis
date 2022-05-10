@@ -1,6 +1,5 @@
 package MVC;
 
-import Locatis.Campagne;
 import Locatis.Utilisateur;
 import interfaceGraphique.EmptyFieldException;
 import interfaceGraphique.PasDeCaseCocheeException;
@@ -13,7 +12,6 @@ import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
@@ -21,17 +19,16 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-public class Controleur_Gestion_Listes extends KeyAdapter implements ActionListener{
+public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListener{
     
-    private final Vue_Gestion_Listes laVue;
-    private final Modele_Gestion_Listes leModele;
+    private final Vue_Ajout_Listes laVue;
+    private final Modele_Ajout_Listes leModele;
     private Utilisateur userConnecte;
 
-    public Controleur_Gestion_Listes(Vue_Gestion_Listes uneVue, Modele_Gestion_Listes unModele, Utilisateur user) {
+    public Controleur_Ajout_Listes(Vue_Ajout_Listes uneVue, Modele_Ajout_Listes unModele, Utilisateur user) {
         this.userConnecte = user;
         this.laVue = uneVue;
         this.leModele = unModele;
-        
         
         uneVue.ajouterEcouteur("Ajouter", this);
         uneVue.ajouterEcouteur("Selectionner tout", this);
@@ -56,11 +53,11 @@ public class Controleur_Gestion_Listes extends KeyAdapter implements ActionListe
             }
         });
     }
-    public Vue_Gestion_Listes getVue() {
+    public Vue_Ajout_Listes getVue() {
         return laVue;
     }
 
-    public Modele_Gestion_Listes getModele() {
+    public Modele_Ajout_Listes getModele() {
         return leModele;
     }
     
@@ -72,12 +69,6 @@ public class Controleur_Gestion_Listes extends KeyAdapter implements ActionListe
     @Override
     public void actionPerformed(ActionEvent e){
         
-        /*if(e.getSource().getClass().isInstance(new )){
-            laVue.afficherPanneauBoutonsRadios();
-            //leModele.getAll();
-            leModele.trierPar(laVue.getCategorie());
-            laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
-        }else*/
         if(e.getSource().getClass().isInstance(new JComboBox())){
             laVue.afficherPanneauBoutonsRadios();
             //leModele.getAll();
@@ -86,38 +77,29 @@ public class Controleur_Gestion_Listes extends KeyAdapter implements ActionListe
         }else
         
         if(e.getSource().getClass().isInstance(new JRadioButton())){
-            /*if(laVue.getNombre()==-1)
-                leModele.trierPar(laVue.getCategorie());
-            else{*/
-                if(laVue.getCategorie().equals("Age"))
-                    leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadio(), laVue.getNombre());
-                else
-                    leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadio(), laVue.getDate());
-            //}
+            if(laVue.getCategorie().equals("Age"))
+                leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadio(), laVue.getNombre());
+            else
+                leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadio(), laVue.getDate());
             actualiser();
         }else
         
         if(e.getSource().getClass().isInstance(new JTextField())){
-            
             leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadio(), laVue.getNombre());
             actualiser();
         }
         
         else{
-        
-        
             JButton source = (JButton) e.getSource();
             switch (source.getText().toUpperCase()) {
                 case "AJOUTER" -> {
                     try{
                         this.laVue.verifierChamps();
-                        PopupInformation popup2;
                         if(leModele.getListeCasesCochees().isEmpty())
                             throw new PasDeCaseCocheeException();
                         
                         leModele.ajouter(laVue.getNom());
                         PopupInformation popup=new PopupInformation("Liste de diffusion ajoutée.");
-                        
                         
                         laVue.reset();
                         leModele.decocherTout();
@@ -153,7 +135,6 @@ public class Controleur_Gestion_Listes extends KeyAdapter implements ActionListe
                         }
                     });*/
                 }
-                
             }
         }
     }
@@ -185,10 +166,10 @@ public class Controleur_Gestion_Listes extends KeyAdapter implements ActionListe
     public void actualiser(){
         laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
         laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
+            @Override
             public void tableChanged(TableModelEvent e) {
                 leModele.cocher(e.getFirstRow());
             }
         });
-    }
-    
+    }   
 }

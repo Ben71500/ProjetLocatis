@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Modele_Gestion_Listes {
+public class Modele_Ajout_Listes {
     
     private Object[][] tableau;
     private String[] entetes;
@@ -22,7 +22,7 @@ public class Modele_Gestion_Listes {
     /**
      * Constructeur du modèle
      */    
-    public Modele_Gestion_Listes() {
+    public Modele_Ajout_Listes() {
         String[] tabEntetes = {"Case","ID","Nom", "Prénom", "Age", "Ancienneté", "Mail", "Téléphone","Logements"};
         this.setEntetes(tabEntetes);
         

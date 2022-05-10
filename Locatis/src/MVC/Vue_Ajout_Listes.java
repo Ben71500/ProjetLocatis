@@ -14,7 +14,7 @@ import javax.swing.*;
 import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
 import javax.swing.table.*;
 
-public class Vue_Gestion_Listes extends JFrame {
+public class Vue_Ajout_Listes extends JFrame {
 
     private JPanel panneau = new JPanel();
     private JPanel haut = new JPanel();
@@ -53,7 +53,7 @@ public class Vue_Gestion_Listes extends JFrame {
     private JButton retour = new JButton("Retour");
     
 
-    public Vue_Gestion_Listes() {
+    public Vue_Ajout_Listes() {
         super("Création d'une liste de diffusion");
         
         panneau.setLayout(new BorderLayout());
@@ -275,5 +275,12 @@ public class Vue_Gestion_Listes extends JFrame {
     
     public void reset(){
         this.nom.setText("");
+    }
+    
+    public void afficherVue() {
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setBounds(100, 100, 350, 300);
+        //controleur.getVue().setSize(500,500);
+        this.setVisible(true);
     }
 }
