@@ -137,6 +137,7 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         panneau_gauche.add(panneau_message, BorderLayout.CENTER);
         
         panneau_message.setVisible(true);panneau_message.validate();
+        panneau_gauche.validate();
         
         ArrayList<String> liste = new ArrayList<>();
         liste.add("a");

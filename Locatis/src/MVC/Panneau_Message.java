@@ -7,7 +7,6 @@ import javax.swing.*;
 
 public class Panneau_Message extends JPanel{
     
-    private JPanel panneau = new JPanel();
     private JPanel haut = new JPanel();
     private JPanel centre = new JPanel();
     
@@ -21,18 +20,16 @@ public class Panneau_Message extends JPanel{
     
     public Panneau_Message(){
         
-        panneau.setLayout(new BorderLayout());
-        panneau.add(this.haut, BorderLayout.NORTH);
-        panneau.add(this.centre, BorderLayout.CENTER);
+        this.setLayout(new BorderLayout());
+        this.add(this.haut, BorderLayout.NORTH);
+        this.add(this.centre, BorderLayout.CENTER);
         
         haut.setLayout(new GridLayout(1,2));
         haut.add(objet_label);
         haut.add(objet);
         
         centre.setLayout(new BorderLayout());
-        panneau.add(this.contenu_label, BorderLayout.NORTH);
-        panneau.add(this.contenu, BorderLayout.CENTER);
-        panneau.setVisible(true);
-    }
-    
+        centre.add(this.contenu_label, BorderLayout.NORTH);
+        centre.add(this.contenu, BorderLayout.CENTER);
+    }   
 }
