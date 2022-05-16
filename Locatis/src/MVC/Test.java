@@ -10,7 +10,7 @@ public class Test {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 //Création d'une contrôleur qui communique avec une vue et un modèle
-                Utilisateur adm=new Utilisateur(0,"admin","admin","adm");
+                Utilisateur adm=new Utilisateur(0,"admin","admin","adm","","");
                 //Controleur_Menu controleur = new Controleur_Menu(new Vue_Menu(adm),new Modele_Gestion("locataires"), adm);
                 Controleur_Connexion controleur = new Controleur_Connexion(new Vue_Connexion(), new Modele_Connexion(adm));
                 //Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("locataire"),new Modele_Gestion("locataires"), adm, "locataire");                

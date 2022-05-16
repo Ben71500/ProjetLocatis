@@ -5,6 +5,8 @@
  */
 package Locatis;
 
+import java.sql.Date;
+
 /**
  *
  * @author benja
@@ -18,6 +20,12 @@ public class MyDate {
         this.annee = Integer.parseInt(uneDate.substring(0, 4));
         this.mois = Integer.parseInt(uneDate.substring(5, 7));
         this.jour = Integer.parseInt(uneDate.substring(8, 10));
+    }
+    
+    public MyDate(Date d){
+        this.jour = d.toLocalDate().getDayOfMonth();
+        this.annee = d.toLocalDate().getYear();
+        this.mois = d.toLocalDate().getMonthValue();
     }
     
     public MyDate(int uneAnnee, int unMois, int unJour){

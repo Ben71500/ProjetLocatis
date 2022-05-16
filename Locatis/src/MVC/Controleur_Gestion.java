@@ -78,8 +78,8 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
             else if(this.laVue.getButtonRadioMaison().isSelected()){
                     this.typeDonnee = "maison";
                     leModele.setDonnees(this.typeDonnee+"s");
-                    leModele.initialiser();
                     laVue.setDonnees("maison");
+                    leModele.initialiser();
                     laVue.setTitre("Les maisons");
                     laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
             }

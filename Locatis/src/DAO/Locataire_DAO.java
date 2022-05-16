@@ -19,6 +19,26 @@ public class Locataire_DAO extends DAO<Locataire>{
         super(connection);
     }
 
+    
+    public Locataire selectByIdCampagne(int id) {
+
+        try {
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select * from locataire where ID_locataire=" + id);
+            res.next();
+            return new Locataire(res.getInt("ID_locataire"),
+                    res.getString("Nom"),
+                    res.getString("Prenom"),
+                    res.getInt("Age"),
+                    this.getMyDate(res.getDate("Anciennete")),
+                    res.getString("Mail"),
+                    res.getString("Telephone")
+            );
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
+    
     @Override
     public boolean create(Locataire obj) {
         try {

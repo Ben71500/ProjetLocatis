@@ -21,6 +21,17 @@ public class Campagne {
         this.frequence = frequence;
         this.utilisateur = utilisateur;
     }
+    
+    public Campagne(int id, String titre, MyDate dateDebut, MyDate dateFin, MyTime heure, String frequence, Utilisateur utilisateur, ArrayList<String> listeEmail) {
+        this.id = id;
+        this.titre = titre;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.heure = heure;
+        this.frequence = frequence;
+        this.utilisateur = utilisateur;
+        this.listeEmail = listeEmail;
+    }
 
     public int getId() {
         return id;

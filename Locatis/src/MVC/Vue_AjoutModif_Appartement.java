@@ -78,6 +78,7 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
         panneau_info.add(this.adresse);
         panneau_info.add(this.numeroEtage_label);
         panneau_info.add(this.nombreEtage);
+        panneau_info.add(this.numeroAppart_label);
         panneau_info.add(this.numeroAppart);
     }
     

@@ -6,12 +6,16 @@ public class Utilisateur {
     private String login;
     private String motDePasse;
     private String cat;
+    private String email;
+    private String password;
     
-    public Utilisateur(int unId, String unLogin, String mdp, String cat){
+    public Utilisateur(int unId, String unLogin, String mdp, String cat, String email, String password){
         this.id=unId;
         this.login=unLogin;
         this.motDePasse=mdp;
         this.cat=cat;
+        this.email = email;
+        this.password = password;
     }
 
     public int getId() {
@@ -28,6 +32,22 @@ public class Utilisateur {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getMotDePasse() {

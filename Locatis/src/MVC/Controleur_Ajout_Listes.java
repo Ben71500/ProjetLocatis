@@ -9,9 +9,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
@@ -126,14 +128,14 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
                 }
                 case "RETOUR" -> {
                     laVue.quitter();
-                    /*SwingUtilities.invokeLater(new Runnable(){
+                    SwingUtilities.invokeLater(new Runnable(){
                         public void run(){ 
-                            Controleur_Menu controleur = new Controleur_Menu(new Vue_Menu(userConnecte),new Modele_Gestion(typeDonnee), userConnecte);
+                            Controleur_Menu controleur = new Controleur_Menu(new Vue_Menu(userConnecte),new Modele_Gestion("test"), userConnecte);
                             controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                             controleur.getVue().setBounds(100, 100, 350, 300);
                             controleur.getVue().setVisible(true);
                         }
-                    });*/
+                    });
                 }
             }
         }

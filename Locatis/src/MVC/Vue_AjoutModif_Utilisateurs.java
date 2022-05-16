@@ -18,10 +18,14 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
     private JLabel login_label = new JLabel ("Login : ");
     private JLabel mdp_label = new JLabel ("Mot de passe : ");
     private JLabel cat_label = new JLabel("Catégorie : ");
+    private JLabel email_label = new JLabel("Email : ");
+    private JLabel password_label = new JLabel("Password (Email) : ");
     
     private JTextField login = new JTextField();
     private JTextField mdp = new JTextField();
     private JComboBox categorie = new JComboBox();
+    private JTextField email = new JTextField();
+    private JTextField password = new JTextField();
     
     private JButton ajouter = new JButton("Ajouter");
     private JButton modifier = new JButton("Modifier");
@@ -82,7 +86,7 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         centre.add(this.panneau_info, BorderLayout.CENTER);
         centre.add(this.panneau_boutons, BorderLayout.SOUTH);
         
-        panneau_info.setLayout(new GridLayout(3,2));
+        panneau_info.setLayout(new GridLayout(5,2));
         panneau_info.add(this.login_label);
         panneau_info.add(this.login);
         panneau_info.add(this.mdp_label);
@@ -93,6 +97,10 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         this.categorie.addItem("Administrateur");
         panneau_info.add(cat_label);
         panneau_info.add(categorie);
+        panneau_info.add(email_label);
+        panneau_info.add(email);
+        panneau_info.add(password_label);
+        panneau_info.add(password);
     }
     
     public String getCat(){
@@ -133,6 +141,8 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         login.setText("");
         mdp.setText("");
         categorie.setSelectedIndex(0);
+        email.setText("");
+        password.setText("");
     }
     
     @Override
@@ -143,6 +153,16 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         if(this.mdp.getText().equals("")){
             throw new EmptyFieldException("un prénom");
         }
+        else{
+            if(this.email.getText().equals("")){
+                throw new EmptyFieldException("un email");
+            }
+            else{
+                if(this.password.getText().equals("")){
+                    throw new EmptyFieldException("un password");
+                }
+            }
+        }
     }
     
     @Override
@@ -152,12 +172,12 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
 
     @Override
     public Utilisateur getNouvelObjet() {
-        return new Utilisateur(0, this.login.getText(), this.mdp.getText(), this.getCat());
+        return new Utilisateur(0, this.login.getText(), this.mdp.getText(), this.getCat(), this.email.getText(), this.password.getText());
     }
 
     @Override
     public Utilisateur getObjetModifie() {
-        return new Utilisateur(this.user.getId(), this.login.getText(), this.mdp.getText(), this.getCat());
+        return new Utilisateur(this.user.getId(), this.login.getText(), this.mdp.getText(), this.getCat(), this.email.getText(), this.password.getText());
     }
 
     @Override

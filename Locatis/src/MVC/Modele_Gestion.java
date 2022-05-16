@@ -56,14 +56,15 @@ public class  Modele_Gestion {
     }
     
     public void initialiser(){
+        // Patch appliqué car probléme avec les button radio 
         switch(this.donnees){
-            case "locataires" -> modeleLocataires();
-            case "utilisateurs" -> modeleUtilisateurs();
-            case "messages" -> modeleMessages();
-            case "appartements" -> modeleAppartement();
-            case "maisons" -> modeleMaison();
-            case "campagnes" -> modeleCampagne();
-            case "liste" -> modeleListe();
+            case "locataires": dao = new Locataire_DAO(this.connBdd); modeleLocataires(); break;
+            case "utilisateurs": dao = new Utilisateurs_DAO(this.connBdd); modeleUtilisateurs(); break;
+            case "messages": dao = new Message_DAO(this.connBdd); modeleMessages(); break;
+            case "appartements": dao = new Appartement_DAO(this.connBdd); modeleAppartement(); break;
+            case "maisons": dao = new Maison_DAO(this.connBdd); modeleMaison(); break;
+            case "campagnes": dao = new Campagne_DAO(this.connBdd); modeleCampagne(); break;
+            case "liste": dao = new ListeDeDiffusion_DAO(this.connBdd); modeleListe(); break;
         }
     }
 

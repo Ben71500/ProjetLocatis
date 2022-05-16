@@ -1,5 +1,7 @@
 package Locatis;
 
+import java.sql.Time;
+
 public class MyTime {
     
     private int heure;
@@ -8,6 +10,11 @@ public class MyTime {
     public MyTime(int heure, int minute) {
         this.heure = heure;
         this.minute = minute;
+    }
+    
+    public MyTime(Time t){
+        this.heure = t.toLocalTime().getHour();
+        this.minute = t.toLocalTime().getMinute();
     }
 
     public int getHeure() {

@@ -32,11 +32,13 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
     public boolean create(Utilisateur obj) {
         try {
             Statement statement = this.connection.createStatement();
-            return !statement.execute("insert into utilisateur (ID_utilisateur, login, Mdp, CAT) values("
+            return !statement.execute("insert into utilisateur (ID_utilisateur, login, Mdp, CAT, Email, Password) values("
                     + obj.getId() + " , '"
                     + obj.getLogin() + "' , '"
                     + obj.getMotDePasse() + "' , '"
-                    + obj.getCat() + "')"
+                    + obj.getCat() + "' , '"
+                    + obj.getEmail() + "' , '"
+                    + obj.getPassword() + "')"
             );
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -61,7 +63,9 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
             return !statement.execute("update utilisateur set "
                     + "login='" + obj.getLogin()+ "' , "
                     + "Mdp='" + obj.getMotDePasse()+ "' , "
-                    + "CAT='" + obj.getCat() +"' "
+                    + "CAT='" + obj.getCat() +"' , "
+                    + "Email='" + obj.getEmail() + "' , '"
+                    + "Password='" + obj.getPassword() + "' "
                     + "where  ID_utilisateur=" + obj.getId()
             );
         } catch (SQLException ex) {
@@ -80,7 +84,9 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
             return new Utilisateur(res.getInt("ID_utilisateur"),
                     res.getString("login"),
                     res.getString("Mdp"),
-                    res.getString("CAT")
+                    res.getString("CAT"),
+                    res.getString("Email"),
+                    res.getString("Password")
             );
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -95,7 +101,7 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
             ResultSet res = statement.executeQuery("Select * from utilisateur where login='" + login + "'");
             res.next();
 
-            return new Utilisateur(res.getInt("ID_utilisateur"), res.getString("login"), res.getString("Mdp"), res.getString("CAT"));
+            return new Utilisateur(res.getInt("ID_utilisateur"), res.getString("login"), res.getString("Mdp"), res.getString("CAT"), res.getString("Email"), res.getString("Password"));
 
         } catch (SQLException ex) {
             return null;
@@ -114,8 +120,10 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
                         res.getInt("ID_utilisateur"),
                         res.getString("login"),
                         res.getString("Mdp"),
-                        res.getString("CAT"))
-                );
+                        res.getString("CAT"),
+                        res.getString("Email"),
+                        res.getString("Password")
+                ));
             }
         } catch (SQLException ex) {
             return allUtilisateurs;
