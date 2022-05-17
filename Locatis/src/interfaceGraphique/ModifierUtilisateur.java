@@ -114,10 +114,10 @@ public class ModifierUtilisateur extends JFrame implements ActionListener{
             id=id.substring(0,id.indexOf(':')-1);
             Utilisateur user=new Utilisateur(Integer.parseInt(id) ,login.getText(), mdp.getText(), cat);*/
             Utilisateur userChoisi = (Utilisateur) ID.getSelectedItem();
-            Utilisateur user=new Utilisateur(userChoisi.getId() ,login.getText(), mdp.getText(), cat);
+            /*Utilisateur user=new Utilisateur(userChoisi.getId() ,login.getText(), mdp.getText(), cat);*/
             Connection connBdd= ConnectionBDD.getInstance(new Connexion());
             Utilisateurs_DAO nouvelUtilisateur=new Utilisateurs_DAO(connBdd);
-            nouvelUtilisateur.update(user);
+            /*nouvelUtilisateur.update(user);*/
         }
         if(e.getSource()==retour){
             this.dispose();
