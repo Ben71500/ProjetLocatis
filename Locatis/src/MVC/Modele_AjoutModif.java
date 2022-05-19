@@ -30,11 +30,11 @@ public class Modele_AjoutModif{
         }
     }
     
-    public void ajouter(Object obj){
+    public <O> void  ajouter(O obj){
         dao.create(obj);
     }
     
-    public void modifier(Object obj){
+    public <O> void modifier(O obj){
         dao.update(obj);
     }
 }

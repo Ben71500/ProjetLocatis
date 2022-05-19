@@ -36,6 +36,8 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
         uneVue.ajouterEcouteur("Selectionner tout", this);
         uneVue.ajouterEcouteur("Tout deselectionner", this);
         uneVue.ajouterEcouteur("Retour", this);
+        uneVue.ajouterEcouteur("Locataires", this);
+        uneVue.ajouterEcouteur("Utilisateurs", this);
         uneVue.ajouterEcouteur("Egal", this);
         uneVue.ajouterEcouteur("Superieur", this);
         uneVue.ajouterEcouteur("Inferieur", this);
@@ -44,7 +46,7 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
         uneVue.getNombreJSpinner().addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadio(), laVue.getNombre());
+                leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadioSigne(), laVue.getNombre());
                 actualiser();
             }
         });
@@ -71,23 +73,49 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
     @Override
     public void actionPerformed(ActionEvent e){
         
-        if(e.getSource().getClass().isInstance(new JComboBox())){
-            laVue.afficherPanneauBoutonsRadios();
-            //leModele.getAll();
-            leModele.trierPar(laVue.getCategorie());
-            actualiser();
-        }else
+        
         
         if(e.getSource().getClass().isInstance(new JRadioButton())){
-            if(laVue.getCategorie().equals("Age"))
-                leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadio(), laVue.getNombre());
-            else
-                leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadio(), laVue.getDate());
-            actualiser();
+            
+            if(e.getSource() == this.laVue.getButtonRadioLocataires()){
+                /*this.typeDonnee = "appartement";*/
+                leModele.setDonnees("locataire");
+                leModele.choisirModele();
+                laVue.setDonnees("locataire");
+                /*laVue.setTitre("Les appartements");*/
+                laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
+                laVue.remplirComboBox();
+                /*laVue.ajouterEcouteur("Tri", this);*/
+            }
+            else if(e.getSource() == this.laVue.getButtonRadioUtilisateurs()){
+                    /*this.typeDonnee = "maison";*/
+                    leModele.setDonnees("utilisateur");
+                    laVue.setDonnees("utilisateur");
+                    laVue.remplirComboBox();
+                    laVue.ajouterEcouteur("Tri", this);
+                    leModele.choisirModele();
+                    /*laVue.setTitre("Les maisons");*/
+                    laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
+                    
+            }else{
+                if(laVue.getCategorie().equals("Age"))
+                    leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadioSigne(), laVue.getNombre());
+                else
+                    leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadioSigne(), laVue.getDate());
+                actualiser();
+            }
+        }else
+            if(e.getSource() == this.laVue.getTri()){
+                
+                laVue.afficherPanneauBoutonsRadios();
+                leModele.getAll();
+                leModele.trierPar(laVue.getCategorie());
+                actualiser();
+                
         }else
         
         if(e.getSource().getClass().isInstance(new JTextField())){
-            leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadio(), laVue.getNombre());
+            leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadioSigne(), laVue.getNombre());
             actualiser();
         }
         
@@ -129,10 +157,10 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
                 case "RETOUR" -> {
                     laVue.quitter();
                     SwingUtilities.invokeLater(new Runnable(){
-                        public void run(){ 
-                            Controleur_Menu controleur = new Controleur_Menu(new Vue_Menu(userConnecte),new Modele_Gestion("test"), userConnecte);
+                        public void run(){
+                            Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("liste"),new Modele_Gestion("liste"), userConnecte, "liste");                
                             controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                            controleur.getVue().setBounds(100, 100, 350, 300);
+                            controleur.getVue().setSize(500,500);
                             controleur.getVue().setVisible(true);
                         }
                     });
