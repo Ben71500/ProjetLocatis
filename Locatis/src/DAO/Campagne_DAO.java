@@ -51,6 +51,8 @@ public class Campagne_DAO extends DAO<Campagne>{
                     + "Date_Fin =" + obj.getDateFin().getDateSQL()+ " , "
                     + "Heure =" + obj.getHeure().getTimeSQL()+ " , "
                     + "frequence ='" + obj.getFrequence()+ "' , "
+                    + "DateProchainMail='" +obj.getDateProchainMail()+ "', "
+                    + "Terminer='" +obj.getTerminer()+ "', "
                     + "ID_utilisateur =" + obj.getUtilisateur().getId()
                     + " where  ID_campagne=" + obj.getId()
             );
@@ -123,7 +125,7 @@ public class Campagne_DAO extends DAO<Campagne>{
         try {
             Statement statement = this.connection.createStatement();
             Utilisateurs_DAO user = new Utilisateurs_DAO(this.connection);
-            ResultSet res = statement.executeQuery("Select * from campagne where Date_Fin > NOW() AND END != 1");
+            ResultSet res = statement.executeQuery("Select * from campagne where Date_Fin > NOW() AND END != 1 AND Date_Debut < NOW() AND (DateProchainMail <= NOW() OR DateProchainMail = NULL)");
             while (res.next()) {
                 allCampagnes.add(new Campagne(res.getInt("ID_campagne"),
                     res.getString("Titre_campagne"),
@@ -131,6 +133,8 @@ public class Campagne_DAO extends DAO<Campagne>{
                     this.getMyDate(res.getDate("Date_Fin")),
                     this.getMyTime(res.getTime("Heure")),
                     res.getString("frequence"),
+                    this.getMyDate(res.getDate("DateProchainMail")),
+                    res.getInt("Terminer"),
                     user.selectById(res.getInt("ID_utilisateur"))
                 ));
             }

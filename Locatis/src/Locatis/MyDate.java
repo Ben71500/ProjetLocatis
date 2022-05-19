@@ -81,4 +81,18 @@ public class MyDate {
         date+= " "+annee;
         return date;
     }
+    
+    public boolean verifierDate(){
+        if(this.getJour() == 31){
+            if(this.getMois() != 0 || this.getMois() != 2 || this.getMois() != 4 || this.getMois() != 6 || this.getMois() != 7 || this.getMois() != 9 || this.getMois() != 11){
+                return true;
+            }
+            else{
+                if(this.getMois() == 3){
+                    
+                }
+            }
+        }
+        return true;
+    }
 }
