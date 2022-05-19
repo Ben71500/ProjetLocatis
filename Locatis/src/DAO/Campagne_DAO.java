@@ -1,6 +1,8 @@
 package DAO;
 
 import Locatis.Campagne;
+import Locatis.ListeDeDiffusion;
+import Locatis.Locataire;
 import java.sql.*;
 import java.util.*;
 
@@ -115,4 +117,66 @@ public class Campagne_DAO extends DAO<Campagne>{
         }
         return allCampagnes;
     }   
+    
+    public List<Campagne> getAllSurveillance() {
+        List<Campagne> allCampagnes = new ArrayList<>();
+        try {
+            Statement statement = this.connection.createStatement();
+            Utilisateurs_DAO user = new Utilisateurs_DAO(this.connection);
+            ResultSet res = statement.executeQuery("Select * from campagne where Date_Fin > NOW() AND END != 1");
+            while (res.next()) {
+                allCampagnes.add(new Campagne(res.getInt("ID_campagne"),
+                    res.getString("Titre_campagne"),
+                    this.getMyDate(res.getDate("Date_Debut")),
+                    this.getMyDate(res.getDate("Date_Fin")),
+                    this.getMyTime(res.getTime("Heure")),
+                    res.getString("frequence"),
+                    user.selectById(res.getInt("ID_utilisateur"))
+                ));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return allCampagnes;
+        }
+        return allCampagnes;
+    }
+    
+    public ListeDeDiffusion getListeDeDiffusionByIdCampagne(int id){
+        ArrayList<Locataire> listeLocataire = new ArrayList<>();
+        try {
+            Statement statement = this.connection.createStatement();
+            ArrayList<Integer> listIdList = new ArrayList<>();
+            ResultSet res = statement.executeQuery("Select ID_listDiff from recevoir where ID_campagne = "+id);
+            while (res.next()) {
+                listIdList.add(res.getInt("ID_listDiff"));
+            }
+            String condition = "";
+            for(int j = 0; j < listIdList.size(); j++){
+                if(j == 0){
+                    condition += "where ID_listeDiff = "+listIdList.get(j);
+                }
+                else{
+                    condition += " OR ID_listeDiff = "+listIdList.get(j);
+                }
+            }
+            res = statement.executeQuery("Select DISTINCT(*) from locataire where ID_locataire in ( Select ID_locataire FROM locataire_liste "+condition+" )");
+            while (res.next()) {
+                        listeLocataire.add(new Locataire(
+                        res.getInt("ID_locataire"),
+                        res.getString("Nom"),
+                        res.getString("Prenom"),
+                        res.getInt("Age"),
+                        this.getMyDate(res.getDate("Anciennete")),
+                        res.getString("Mail"),
+                        res.getString("Telephone")
+                ));
+            }
+            ListeDeDiffusion listeDeDiffusionSurveillance = new ListeDeDiffusion(0, "surveillance", listeLocataire);
+            return listeDeDiffusionSurveillance;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return new ListeDeDiffusion(0, "surveillance", listeLocataire);
+        }
+    }
+    
 }

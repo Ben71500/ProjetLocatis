@@ -35,6 +35,8 @@ CREATE TABLE IF NOT EXISTS `campagne` (
   `Date_Fin` date NOT NULL,
   `Heure` time NOT NULL,
   `frequence` int(10) NOT NULL,
+  `DateProchainMail` date NULL,
+  `End` int(1) NOT NULL,
   `ID_utilisateur` int(20) NOT NULL,
   PRIMARY KEY (`ID_campagne`),
   UNIQUE KEY `ID_Campagne_IND` (`ID_campagne`),
@@ -163,10 +165,10 @@ CREATE TABLE IF NOT EXISTS `message` (
 DROP TABLE IF EXISTS `recevoir`;
 CREATE TABLE IF NOT EXISTS `recevoir` (
   `ID_campagne` int(64) NOT NULL,
-  `ID_locataire` int(40) NOT NULL,
-  PRIMARY KEY (`ID_campagne`,`ID_locataire`),
-  UNIQUE KEY `ID_RECEVOIR_IND` (`ID_campagne`,`ID_locataire`),
-  KEY `REF_RECEV_Locat_IND` (`ID_locataire`)
+  `ID_listeDiff` int(64) NOT NULL,
+  PRIMARY KEY (`ID_campagne`,`ID_listeDiff` ),
+  UNIQUE KEY `ID_RECEVOIR_IND` (`ID_campagne`,`ID_listeDiff` ),
+  KEY `REF_RECEV_Locat_IND` (`ID_listeDiff` )
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -192,7 +194,6 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`ID_utilisateur`, `login`, `Mdp`, `CAT`, `Email`, `Password`) VALUES
-(1, 'ben', 'ben', 'adm', '', ''),
 (2, 'Benjamin', 'ben', 'adm', 'theluffydu30@gmail.com', 'bvogzfkcpurcwnnc');
 COMMIT;
 

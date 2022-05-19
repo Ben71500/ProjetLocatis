@@ -10,9 +10,12 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.sql.SQLException;
 import java.sql.Statement;
+import DAO.*;
 import java.util.Date;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -28,20 +31,18 @@ public class SurveillanceCampagne {
         while(true){
             try
             {
-                Statement statement = this.connection.createStatement();
-                ResultSet res = statement.executeQuery("SELECT * FROM campagne LEFT JOIN utilisateur ON campagne.ID_utilisateur = utilisateur.ID_utilisateurwhere Date_Fin < NOW()");
-                res.next();
-                MyDate dateDebut = new MyDate(res.getDate("Date_Debut"));
-                Utilisateur utilisateur = new Utilisateur(res.getInt("ID_Utilisateur"), res.getString("login"), res.getString("Mdp"), res.getString("CAT"), res.getString("Email"), res.getString("Password"));
-                Campagne campagne = new Campagne(res.getInt("ID_campagne"), res.getString("Titre_campagne"),dateDebut, new MyDate(res.getDate("Date_Fin")), new MyTime(res.getTime("Heure")) ,res.getString("frequence"), utilisateur);
-                switch(campagne.getFrequence()){
-                    case "une seule fois" : break;
-                    case "Quotident" : envoieQuotidient(campagne); break;
-                    case "Hebdomadaire" : envoieHebdomadaire(campagne); break;
-                    case "Mensuel" : envoieMensuel(campagne); break;
-                    case "Annuel" :  envoieAnnuel(campagne); break;
+                Campagne_DAO campagne = new Campagne_DAO(this.connection);
+                List<Campagne> listeCampagne = campagne.getAllSurveillance();
+                for(int i = 0; i < listeCampagne.size(); i++){
+                    switch(listeCampagne.get(i).getFrequence()){
+                        case "une seule fois" : break;
+                        case "Quotident" : envoieQuotidient(listeCampagne.get(i)); break;
+                        case "Hebdomadaire" : envoieHebdomadaire(listeCampagne.get(i)); break;
+                        case "Mensuel" : envoieMensuel(listeCampagne.get(i)); break;
+                        case "Annuel" :  envoieAnnuel(listeCampagne.get(i)); break;
+                    }
                 }
-            }catch(SQLException ex){
+            }catch(Exception ex){
                 System.out.println(ex.getMessage());
             }
         }
@@ -51,12 +52,16 @@ public class SurveillanceCampagne {
         if(cmp.getDateDebut().getJour() == LocalDate.now().getDayOfMonth()){
             if(cmp.getHeure().getHeure() <= LocalTime.now().getHour() || (cmp.getHeure().getHeure() <= LocalTime.now().getHour() && cmp.getHeure().getMinute() <= LocalTime.now().getMinute())){
                 try{ 
-                    Statement statement = this.connection.createStatement();
-                    ResultSet res = statement.executeQuery("SELECT  FROM campagne LEFT JOIN utilisateur ON campagne.ID_utilisateur = utilisateur.ID_utilisateurwhere Date_Fin < NOW()");
-                    
+                    Campagne_DAO dao = new Campagne_DAO(connection);
+                    ListeDeDiffusion liste = dao.getListeDeDiffusionByIdCampagne(cmp.getId());
+                    ArrayList<String> listeEmail = new ArrayList<>();
+                    for(int j = 0; j < liste.getListe().size(); j++){
+                        listeEmail.add(liste.getListe().get(j).getMail());
+                    }
+                    cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();
                     mail.sendEmail(cmp.getUtilisateur().getEmail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), "coucou", cmp.getListeEmail());
-                }catch(SQLException ex){
+                }catch(Exception ex){
                     System.out.println(ex.getMessage());
                 }
             }
