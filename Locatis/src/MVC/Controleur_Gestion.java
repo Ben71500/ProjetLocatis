@@ -168,7 +168,7 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
                             while (fichierCSV.hasNextLine()){
                                 String ligne = fichierCSV.nextLine();
                                 String[] ligneSeparer = ligne.split(",");
-                                Maison maison = new Maison(ligneSeparer[0]);
+                                Maison maison = new Maison(ligneSeparer[0], ligneSeparer[1], ligneSeparer[2], ligneSeparer[3]);
                                 listeMaison.add(maison);
                             }
                             leModele.insererViaCSVMaison(listeMaison);
@@ -178,7 +178,7 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
                             while (fichierCSV.hasNextLine()){
                                 String ligne = fichierCSV.nextLine();
                                 String[] ligneSeparer = ligne.split(",");
-                                Appartement appartement = new Appartement(ligneSeparer[0], Integer.parseInt(ligneSeparer[1]), Integer.parseInt(ligneSeparer[2]));
+                                Appartement appartement = new Appartement(ligneSeparer[0], ligneSeparer[1], ligneSeparer[2], ligneSeparer[3], Integer.parseInt(ligneSeparer[4]), Integer.parseInt(ligneSeparer[5]));
                                 listeAppartement.add(appartement);
                             }
                             leModele.insererViaCSVAppartement(listeAppartement);

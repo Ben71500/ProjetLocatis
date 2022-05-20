@@ -124,30 +124,36 @@ public class  Modele_Gestion {
     }
     
     public void modeleMaison(){
-        String[] tabEntetes = {"ID","Adresse"};
+        String[] tabEntetes = {"ID","Numero Rue", "Nom Rue", "Ville", "Code Postal"};
         this.setEntetes(tabEntetes);
         //Maison_DAO lesMaison = new Maison_DAO(connBdd);
         liste = (ArrayList<Maison>)dao.getAll();
-        this.tableau = new String[liste.size()][2];
+        this.tableau = new String[liste.size()][6];
         for(int i=0; i<liste.size();i++){
             Maison uneMaison = (Maison) liste.get(i);
             tableau [i][0]= uneMaison.getID()+"";
-            tableau [i][1]= uneMaison.getAdresse();
+            tableau [i][1]= uneMaison.getNumeroRue();
+            tableau [i][2]= uneMaison.getNomRue();
+            tableau [i][3]= uneMaison.getVille();
+            tableau [i][4]= uneMaison.getCodePostal();
         }
     }
     
     public void modeleAppartement(){
-        String[] tabEntetes = {"ID","Adresse", "Numéro étage", "Numéro appartement"};
+        String[] tabEntetes = {"ID","Numero Rue", "Nom Rue", "Ville", "Code Postal", "Numéro étage", "Numéro appartement"};
         this.setEntetes(tabEntetes);
         //Appartement_DAO lesApparts = new Appartement_DAO(connBdd);
         liste = (ArrayList<Appartement>)dao.getAll();
-        this.tableau = new String[liste.size()][4];
+        this.tableau = new String[liste.size()][8];
         for(int i=0; i<liste.size();i++){
             Appartement unAppartement = (Appartement) liste.get(i);
             tableau [i][0]= unAppartement.getID()+"";
-            tableau [i][1]= unAppartement.getAdresse()+"";
-            tableau [i][2]= unAppartement.getEtage()+"";
-            tableau [i][3]= unAppartement.getApart()+"";
+            tableau [i][1]= unAppartement.getNumeroRue();
+            tableau [i][2]= unAppartement.getNomRue();
+            tableau [i][3]= unAppartement.getVille();
+            tableau [i][4]= unAppartement.getCodePostal();
+            tableau [i][5]= unAppartement.getEtage()+"";
+            tableau [i][6]= unAppartement.getApart()+"";
         }
     }
     
