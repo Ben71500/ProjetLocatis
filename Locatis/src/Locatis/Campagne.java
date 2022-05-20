@@ -10,6 +10,9 @@ public class Campagne {
     private MyDate dateFin;
     private MyTime heure;
     private String frequence;
+    private MyDate dateProchainMail;
+    private MyTime tempsProchainMail;
+    private int terminer;
     private Utilisateur utilisateur;
 
     public Campagne(int id, String titre, MyDate dateDebut, MyDate dateFin, MyTime heure, String frequence, Utilisateur utilisateur) {
@@ -19,18 +22,22 @@ public class Campagne {
         this.dateFin = dateFin;
         this.heure = heure;
         this.frequence = frequence;
+        this.dateProchainMail = null;
+        this.tempsProchainMail = null;
+        this.terminer = 0;
         this.utilisateur = utilisateur;
     }
     
-    public Campagne(int id, String titre, MyDate dateDebut, MyDate dateFin, MyTime heure, String frequence, Utilisateur utilisateur, ArrayList<String> listeEmail) {
+    public Campagne(int id, String titre, MyDate dateDebut, MyDate dateFin, MyTime heure, String frequence, MyDate dateProchainEmail, int terminer, Utilisateur utilisateur) {
         this.id = id;
         this.titre = titre;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.heure = heure;
         this.frequence = frequence;
+        this.dateProchainMail = dateProchainEmail;
+        this.terminer = terminer;
         this.utilisateur = utilisateur;
-        this.listeEmail = listeEmail;
     }
 
     public int getId() {
@@ -63,6 +70,30 @@ public class Campagne {
 
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
+    }
+
+    public MyDate getDateProchainMail() {
+        return dateProchainMail;
+    }
+
+    public void setDateProchainMail(MyDate dateProchainMail) {
+        this.dateProchainMail = dateProchainMail;
+    }
+
+    public MyTime getTempsProchainMail() {
+        return tempsProchainMail;
+    }
+
+    public void setTempsProchainMail(MyTime tempsProchainMail) {
+        this.tempsProchainMail = tempsProchainMail;
+    }
+
+    public int getTerminer() {
+        return terminer;
+    }
+
+    public void setTerminer(int terminer) {
+        this.terminer = terminer;
     }
     
     
