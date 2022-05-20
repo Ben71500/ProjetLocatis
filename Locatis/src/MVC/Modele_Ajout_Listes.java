@@ -64,7 +64,7 @@ public class Modele_Ajout_Listes {
     }
     
     public void modeleUtilisateurs(){
-        String[] tabEntetes = {"ID","Login", "Catégorie"};
+        String[] tabEntetes = {"Case", "ID","Login", "Catégorie"};
         this.setEntetes(tabEntetes);
         
         //Récupération des utilisateurs dans une ArrayList
@@ -140,12 +140,15 @@ public class Modele_Ajout_Listes {
     ///////////////////
     public void getTri(String categorie, String signe, String nombre){
         String requete = "Select * from locataire where "+categorie+" "+signe+" "+nombre;
-        executerRequete(requete);
+        executerRequeteLocataire(requete);
     }
     
     public void getAll(){
-        String requete = "Select * from locataire";
-        executerRequete(requete);
+        String requete = "Select * from "+this.donnees;
+        switch(this.donnees){
+            case "locataire" : executerRequeteLocataire(requete);
+            case "utilisateur" : executerRequeteUtilisateur(requete);
+        }
     }
     
     public void trierPar(String categorie){
@@ -162,10 +165,13 @@ public class Modele_Ajout_Listes {
                 case "Catégorie" -> requete+="CAT";
             }
         }
-        executerRequete(requete);
+        switch(this.donnees){
+            case "locataire" : executerRequeteLocataire(requete);
+            case "utilisateur" : executerRequeteUtilisateur(requete);
+        }
     }
     
-    public void executerRequete(String requete){
+    public void executerRequeteLocataire(String requete){
         //Récupération des locataires dans une ArrayList
         Locataire_DAO lesLocataires= new Locataire_DAO(this.connBdd);
         
@@ -174,9 +180,6 @@ public class Modele_Ajout_Listes {
         tableau = new Object[liste.size()][9];
         for(int i=0; i<liste.size();i++){
             Locataire leLocataire = (Locataire) liste.get(i);
-            
-            ArrayList<Batiment> listebat=(ArrayList<Batiment>) lesLocataires.getLocation(leLocataire.getId());
-            
             tableau [i][0]= listeCasesCochees.contains(leLocataire.getId());
             tableau [i][1]=leLocataire.getId();
             tableau [i][2]=leLocataire.getNom();
@@ -186,7 +189,23 @@ public class Modele_Ajout_Listes {
             tableau [i][6]=leLocataire.getMail();
             tableau [i][7]=leLocataire.getTelephone();
             tableau [i][8]=lesLocataires.getLocation(leLocataire.getId());
-        }       
+        }
+    }
+    
+    public void executerRequeteUtilisateur(String requete){
+        //Récupération des locataires dans une ArrayList
+        Utilisateurs_DAO lesUtilisateurs= new Utilisateurs_DAO(this.connBdd);
+        
+        liste=(ArrayList<Utilisateur>)lesUtilisateurs.getRequete(requete);
+        //On convertit cette ArrayList en tableau à deux dimensions
+        this.tableau = new Object[liste.size()][4];
+        for(int i=0; i<liste.size();i++){
+            Utilisateur user=(Utilisateur) liste.get(i);
+            tableau [i][0]= listeCasesCochees.contains(user.getId());
+            tableau [i][1]=user.getId();
+            tableau [i][2]=user.getLogin();
+            tableau [i][3]=user.getCat();
+        }
     }
     
     
@@ -207,16 +226,16 @@ public class Modele_Ajout_Listes {
         return tab;
     }*/
     
-    public void ajouter(String nom){
+    /*public void ajouter(String nom){
         ListeDeDiffusion_DAO lesListes= new ListeDeDiffusion_DAO(this.connBdd);
         lesListes.create(new ListeDeDiffusion(0,nom,this.convertir()));
     }
-    
+    /*
     private <O> ArrayList<O> convertir(){
         ArrayList<O> listeLoca = new ArrayList<>();
         /*Locataire_DAO lesLocataires= new Locataire_DAO(this.connBdd);
         for(int i=0;i<this.listeCasesCochees.size();i++)
             listeLoca.add(lesLocataires.selectById(this.listeCasesCochees.get(i)));*/
-        return listeLoca;
-    }
+        /*return listeLoca;
+    }*/
 }

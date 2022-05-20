@@ -80,19 +80,22 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
             if(e.getSource() == this.laVue.getButtonRadioLocataires()){
                 /*this.typeDonnee = "appartement";*/
                 leModele.setDonnees("locataire");
-                leModele.choisirModele();
+                
                 laVue.setDonnees("locataire");
+                laVue.remplirComboBox();
+                leModele.choisirModele();
                 /*laVue.setTitre("Les appartements");*/
                 laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
-                laVue.remplirComboBox();
+                
                 /*laVue.ajouterEcouteur("Tri", this);*/
             }
             else if(e.getSource() == this.laVue.getButtonRadioUtilisateurs()){
                     /*this.typeDonnee = "maison";*/
                     leModele.setDonnees("utilisateur");
                     laVue.setDonnees("utilisateur");
+                    
                     laVue.remplirComboBox();
-                    laVue.ajouterEcouteur("Tri", this);
+                    /*laVue.ajouterEcouteur("Tri", this);*/
                     leModele.choisirModele();
                     /*laVue.setTitre("Les maisons");*/
                     laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
@@ -106,12 +109,10 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
             }
         }else
             if(e.getSource() == this.laVue.getTri()){
-                
                 laVue.afficherPanneauBoutonsRadios();
                 leModele.getAll();
                 leModele.trierPar(laVue.getCategorie());
                 actualiser();
-                
         }else
         
         if(e.getSource().getClass().isInstance(new JTextField())){
@@ -128,7 +129,7 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
                         if(leModele.getListeCasesCochees().isEmpty())
                             throw new PasDeCaseCocheeException();
                         
-                        leModele.ajouter(laVue.getNom());
+                        //leModele.ajouter(laVue.getNom());
                         PopupInformation popup=new PopupInformation("Liste de diffusion ajoutée.");
                         
                         laVue.reset();

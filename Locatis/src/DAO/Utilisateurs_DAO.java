@@ -130,4 +130,25 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
         }
         return allUtilisateurs;
     }    
+    
+    public List<Utilisateur> getRequete(String requete) {
+
+        List<Utilisateur> allUtilisateurs = new ArrayList<>();
+        try {
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery(requete);
+            while (res.next()) {
+                allUtilisateurs.add(new Utilisateur(
+                    res.getInt("ID_utilisateur"),
+                    res.getString("login"),
+                    res.getString("Mdp"),
+                    res.getString("CAT"),
+                    res.getString("Email"),
+                    res.getString("Password")
+                ));            }
+        } catch (SQLException ex) {
+            return allUtilisateurs;
+        }
+        return allUtilisateurs;
+    }
 }

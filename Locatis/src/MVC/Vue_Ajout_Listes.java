@@ -295,7 +295,7 @@ public class Vue_Ajout_Listes extends JFrame {
     
     
     public String getCategorie(){
-        if(donnees.equals("locataire") && tri.getSelectedItem()!=null){
+        if(tri.getSelectedItem()!=null){
             if(tri.getSelectedItem().equals("Ancienneté"))
                 return "Anciennete";
             else
@@ -344,6 +344,7 @@ public class Vue_Ajout_Listes extends JFrame {
             tri.addItem("Tous");
             tri.addItem("ID");
             tri.addItem("Login");
+            tri.addItem("Catégorie");
         }
     }
 }
