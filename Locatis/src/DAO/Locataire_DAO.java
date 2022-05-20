@@ -215,13 +215,19 @@ public class Locataire_DAO extends DAO<Locataire>{
             res.next();
             if(res.getString("NumeroAppartement")==null)   
                 return new Maison(res.getInt("ID_batiment"),
-                    res.getString("Adresse"));
+                    res.getString("NumeroRue"),
+                    res.getString("NomRue"),
+                    res.getString("Ville"),
+                    res.getString("CodePostal"));
             else
                 return new Appartement(res.getInt("ID_batiment"),
-                    res.getString("Adresse"),
-                    res.getInt("NombreEtage"),
-                    res.getInt("NumeroAppartement")
-                );
+                    res.getString("NumeroRue"),
+                    res.getString("NomRue"),
+                    res.getString("Ville"),
+                    res.getString("CodePostal"),
+                    res.getInt("NumeroAppartement"),
+                    res.getInt("NombreEtage")
+            );
         } catch (SQLException ex) {
             return null;
         }

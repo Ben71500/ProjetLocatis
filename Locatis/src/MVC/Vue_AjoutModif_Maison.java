@@ -15,9 +15,16 @@ public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
     private JPanel panneau_boutons= new JPanel();
     
     private JLabel titre = new JLabel();
-    private JLabel adresse_label = new JLabel ("Adresse : ");
+    private JLabel numero_Rue_label = new JLabel ("Numero Rue : ");
+    private JLabel nom_Rue_label = new JLabel ("Nom Rue : ");
+    private JLabel ville_label = new JLabel ("Ville : ");
+    private JLabel codePostal_label = new JLabel ("Code Postal : ");
     
-    private JTextField adresse = new JTextField();
+    
+    private JTextField numeroRue = new JTextField();
+    private JTextField nomRue = new JTextField();
+    private JTextField ville = new JTextField();
+    private JTextField codePostal = new JTextField();
     
     private JButton ajouter = new JButton("Ajouter");
     private JButton modifier = new JButton("Modifier");
@@ -55,7 +62,10 @@ public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
         this.pack();
         
         this.maison = uneMaison;
-        adresse.setText(maison.getAdresse());
+        numeroRue.setText(maison.getNumeroRue());
+        nomRue.setText(maison.getNomRue());
+        ville.setText(maison.getVille());
+        codePostal.setText(maison.getCodePostal());
     }
     
     public void initialisation(){
@@ -71,9 +81,20 @@ public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
         centre.add(this.panneau_info, BorderLayout.CENTER);
         centre.add(this.panneau_boutons, BorderLayout.SOUTH);
         
-        panneau_info.setLayout(new GridLayout(3,2));
-        panneau_info.add(this.adresse_label);
-        panneau_info.add(this.adresse);
+        panneau_info.setLayout(new GridLayout(4,2));
+        
+        panneau_info.add(this.numero_Rue_label);
+        panneau_info.add(this.numeroRue);
+        
+        panneau_info.add(this.nom_Rue_label);
+        panneau_info.add(this.nomRue);
+        
+        panneau_info.add(this.ville_label);
+        panneau_info.add(this.ville);
+        
+        panneau_info.add(this.codePostal_label);
+        panneau_info.add(this.codePostal);
+        
     }
     
     /**
@@ -102,13 +123,25 @@ public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
     
     @Override
     public void reset(){
-        adresse.setText("");
+        numeroRue.setText("");
+        nomRue.setText("");
+        ville.setText("");
+        codePostal.setText("");
     }
     
     @Override
     public void verifierChamps() throws EmptyFieldException{
-        if(this.adresse.getText().equals("")){
-            throw new EmptyFieldException("une adresse");
+        if(this.numeroRue.getText().equals("")){
+            throw new EmptyFieldException("un numéro de rue");
+        }
+        if(this.nomRue.getText().equals("")){
+            throw new EmptyFieldException("un nom de rue");
+        }
+        if(this.ville.getText().equals("")){
+            throw new EmptyFieldException("une ville");
+        }
+        if(this.codePostal.getText().equals("")){
+            throw new EmptyFieldException("un code postal");
         }
     }
     
@@ -119,12 +152,12 @@ public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
 
     @Override
     public Maison getNouvelObjet() {
-        return new Maison(0, this.adresse.getText());
+        return new Maison(0, this.numeroRue.getText(), this.nomRue.getText(), this.ville.getText(), this.codePostal.getText());
     }
 
     @Override
     public Maison getObjetModifie() {
-        return new Maison(this.maison.getID(), this.adresse.getText());
+        return new Maison(this.maison.getID(), this.numeroRue.getText(), this.nomRue.getText(), this.ville.getText(), this.codePostal.getText());
     }
 
     @Override

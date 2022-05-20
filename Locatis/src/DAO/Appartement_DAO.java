@@ -30,7 +30,7 @@ public class Appartement_DAO extends DAO<Appartement>{
         try {
             Statement etat;
             etat = this.connection.createStatement();
-            String requeteProc = "Insert into logement VALUES ('"+obj.getID()+"' , '"+obj.getAdresse()+"' , '"+obj.getApart()+"' , '"+obj.getEtage()+"' );";
+            String requeteProc = "Insert into logement VALUES ('"+obj.getID()+"' , '"+obj.getNumeroRue()+"' , '"+obj.getNomRue()+"' , '"+obj.getVille()+"' , '"+obj.getCodePostal()+"' , '"+obj.getApart()+"' , '"+obj.getEtage()+"' );";
             System.out.println(requeteProc);
             etat.execute(requeteProc);
             return true;
@@ -58,7 +58,7 @@ public class Appartement_DAO extends DAO<Appartement>{
         try {
             Statement etat;
             etat = this.connection.createStatement();
-            String requeteProc ="update logement set Adresse ='"+obj.getAdresse()+"' , NumeroAppartement='"+obj.getApart()+"' , NombreEtage='"+obj.getEtage()+"' where ID_batiment="+obj.getID()+" ;";
+            String requeteProc ="update logement set NumeroRue ='"+obj.getNumeroRue()+"' , NomRue ='"+obj.getNomRue()+"' , Ville ='"+obj.getVille()+"' , CodePostal ='"+obj.getCodePostal()+"' ,NumeroAppartement='"+obj.getApart()+"' , NombreEtage='"+obj.getEtage()+"' where ID_batiment="+obj.getID()+" ;";
             etat.execute(requeteProc);
             return true;
         } catch (SQLException ex) {
@@ -75,7 +75,10 @@ public class Appartement_DAO extends DAO<Appartement>{
             ResultSet res = statement.executeQuery("Select * from logement where ID_batiment=" + id +" AND NumeroAppartement IS NOT NULL");
             res.next();
             return new Appartement(res.getInt("ID_batiment"),
-                    res.getString("Adresse"),
+                    res.getString("NumeroRue"),
+                    res.getString("NomRue"),
+                    res.getString("Ville"),
+                    res.getString("CodePostal"),
                     res.getInt("NumeroAppartement"),
                     res.getInt("NombreEtage")
             );
@@ -92,8 +95,14 @@ public class Appartement_DAO extends DAO<Appartement>{
             ResultSet res = statement.executeQuery("Select * from logement where Adresse='" + adresse + "' AND NumeroAppartement IS NOT NULL");
             res.next();
 
-            return new Appartement(res.getInt("ID_batiment"), res.getString("Adresse"), res.getInt("NumeroAppartement"), res.getInt("NombreEtage"));
-
+            return new Appartement(res.getInt("ID_batiment"),
+                    res.getString("NumeroRue"),
+                    res.getString("NomRue"),
+                    res.getString("Ville"),
+                    res.getString("CodePostal"),
+                    res.getInt("NumeroAppartement"),
+                    res.getInt("NombreEtage")
+            );
         } catch (SQLException ex) {
             return null;
         }
@@ -108,11 +117,14 @@ public class Appartement_DAO extends DAO<Appartement>{
             ResultSet res = statement.executeQuery("Select * from logement where NumeroAppartement IS NOT NULL");
             while (res.next()) {
                         allAppartement.add(new Appartement(
-                        res.getInt("ID_batiment"),
-                        res.getString("Adresse"),
-                        res.getInt("NumeroAppartement"),
-                        res.getInt("NombreEtage"))
-                );
+                            res.getInt("ID_batiment"),
+                            res.getString("NumeroRue"),
+                            res.getString("NomRue"),
+                            res.getString("Ville"),
+                            res.getString("CodePostal"),
+                            res.getInt("NumeroAppartement"),
+                            res.getInt("NombreEtage")
+                        ));
             }
         } catch (SQLException ex) {
             return allAppartement;

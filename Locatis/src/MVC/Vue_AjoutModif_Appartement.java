@@ -15,11 +15,18 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
     private JPanel panneau_boutons= new JPanel();
     
     private JLabel titre = new JLabel();
-    private JLabel adresse_label = new JLabel ("Adresse : ");
+    private JLabel numero_Rue_label = new JLabel ("Numero Rue : ");
+    private JLabel nom_Rue_label = new JLabel ("Nom Rue : ");
+    private JLabel ville_label = new JLabel ("Ville : ");
+    private JLabel codePostal_label = new JLabel ("Code Postal : ");
     private JLabel numeroEtage_label = new JLabel ("Nombre d'étage : ");
     private JLabel numeroAppart_label = new JLabel("Numéro d'appartement : ");
     
-    private JTextField adresse = new JTextField();
+    private JTextField numeroRue = new JTextField();
+    private JTextField nomRue = new JTextField();
+    private JTextField ville = new JTextField();
+    private JTextField codePostal = new JTextField();
+    
     private JTextField nombreEtage = new JTextField();
     private JTextField numeroAppart = new JTextField();
     
@@ -55,7 +62,10 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
         this.pack();
         
         this.appart=unUtilisateur;
-        adresse.setText(appart.getAdresse());
+        numeroRue.setText(appart.getNumeroRue());
+        nomRue.setText(appart.getNomRue());
+        ville.setText(appart.getVille());
+        codePostal.setText(appart.getCodePostal());
         nombreEtage.setText(appart.getEtage()+"");
         numeroAppart.setText(appart.getApart()+"");
     }
@@ -73,9 +83,19 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
         centre.add(this.panneau_info, BorderLayout.CENTER);
         centre.add(this.panneau_boutons, BorderLayout.SOUTH);
         
-        panneau_info.setLayout(new GridLayout(3,2));
-        panneau_info.add(this.adresse_label);
-        panneau_info.add(this.adresse);
+        panneau_info.setLayout(new GridLayout(6,2));
+        panneau_info.add(this.numero_Rue_label);
+        panneau_info.add(this.numeroRue);
+        
+        panneau_info.add(this.nom_Rue_label);
+        panneau_info.add(this.nomRue);
+        
+        panneau_info.add(this.ville_label);
+        panneau_info.add(this.ville);
+        
+        panneau_info.add(this.codePostal_label);
+        panneau_info.add(this.codePostal);
+        
         panneau_info.add(this.numeroEtage_label);
         panneau_info.add(this.nombreEtage);
         panneau_info.add(this.numeroAppart_label);
@@ -108,16 +128,33 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
     
     @Override
     public void reset(){
-        adresse.setText("");
+        numeroRue.setText("");
+        nomRue.setText("");
+        ville.setText("");
+        codePostal.setText("");
+        
         nombreEtage.setText("");
         numeroAppart.setText("");
     }
     
     @Override
     public void verifierChamps() throws EmptyFieldException{
-        if(this.adresse.getText().equals("")){
-            throw new EmptyFieldException("un nom");
-        }else
+        if(this.numeroRue.getText().equals("")){
+            throw new EmptyFieldException("un numéro de rue");
+        }
+        
+        if(this.nomRue.getText().equals("")){
+            throw new EmptyFieldException("un nom de rue");
+        }
+        
+        if(this.ville.getText().equals("")){
+            throw new EmptyFieldException("une ville");
+        }
+        
+        if(this.codePostal.getText().equals("")){
+            throw new EmptyFieldException("un code postal");
+        }
+        
         if(this.nombreEtage.getText().equals("")){
             throw new EmptyFieldException("un prénom");
         }
@@ -130,12 +167,12 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
 
     @Override
     public Appartement getNouvelObjet() {
-        return new Appartement(0, this.adresse.getText(), Integer.parseInt(this.nombreEtage.getText()), Integer.parseInt(this.numeroAppart.getText()));
+        return new Appartement(0, this.numeroRue.getText(), this.nomRue.getText(), this.ville.getText(), this.codePostal.getText(), Integer.parseInt(this.nombreEtage.getText()), Integer.parseInt(this.numeroAppart.getText()));
     }
 
     @Override
     public Appartement getObjetModifie() {
-        return new Appartement(this.appart.getID(), this.adresse.getText(), Integer.parseInt(this.nombreEtage.getText()), Integer.parseInt(this.numeroAppart.getText()));
+        return new Appartement(this.appart.getID(), this.numeroRue.getText(), this.nomRue.getText(), this.ville.getText(), this.codePostal.getText() , Integer.parseInt(this.nombreEtage.getText()), Integer.parseInt(this.numeroAppart.getText()));
     }
 
     @Override

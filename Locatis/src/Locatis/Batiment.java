@@ -3,16 +3,25 @@ package Locatis;
 public class Batiment {
     
     private int ID;
-    private String adresse;
+    private String numeroRue;
+    private String nomRue;
+    private String ville;
+    private String codePostal;
     
-    public Batiment(int idBat, String adresseBat){
-        this.ID=idBat;
-        this.adresse=adresseBat;
+    public Batiment(int id, String numeroRue, String nomRue, String ville, String codePostal){
+        this.ID=id;
+        this.numeroRue = numeroRue;
+        this.nomRue = nomRue;
+        this.ville=ville;
+        this.codePostal = codePostal;
     } 
     
-    public Batiment(String adresse){
+    public Batiment(String numeroRue, String nomRue, String ville, String codePostal){
         this.ID = 0;
-        this.adresse = adresse;
+        this.numeroRue = numeroRue;
+        this.nomRue = nomRue;
+        this.ville=ville;
+        this.codePostal = codePostal;
     }
 
     public int getID() {
@@ -23,13 +32,39 @@ public class Batiment {
         this.ID = ID;
     }
 
-    public String getAdresse() {
-        return adresse;
+    public String getNumeroRue() {
+        return numeroRue;
     }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public void setNumeroRue(String numeroRue) {
+        this.numeroRue = numeroRue;
     }
+
+    public String getNomRue() {
+        return nomRue;
+    }
+
+    public void setNomRue(String nomRue) {
+        this.nomRue = nomRue;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public String getCodePostal() {
+        return codePostal;
+    }
+
+    public void setCodePostal(String codePostal) {
+        this.codePostal = codePostal;
+    }
+
+    
     
     /*@Override
     public String toString(){
@@ -38,6 +73,6 @@ public class Batiment {
     
     @Override
     public String toString(){
-        return this.getAdresse();
+        return this.getNumeroRue()+" "+this.getNomRue()+" "+this.getVille()+" "+this.getCodePostal();
     }
 }

@@ -5,14 +5,14 @@ public class Appartement extends Batiment{
     private int etage;
     private int apart;
     
-    public Appartement(int id, String adresse, int numEtage, int numApart){
-        super(id,adresse);
+    public Appartement(int id, String numeroRue, String nomRue, String ville, String codePostal, int numEtage, int numApart){
+        super(id,numeroRue,nomRue,ville,codePostal);
         this.etage=numEtage;
         this.apart=numApart;
     }
     
-    public Appartement(String adresse, int numEtage, int numApart){
-        super(adresse);
+    public Appartement(String numeroRue, String nomRue, String ville, String codePostal, int numEtage, int numApart){
+        super(numeroRue,nomRue,ville,codePostal);
         this.etage=numEtage;
         this.apart=numApart;
     }
@@ -42,7 +42,7 @@ public class Appartement extends Batiment{
             chaine += ", 1er étage, ";
         else
             chaine += ", "+this.getEtage()+" ème étage, ";
-        chaine += this.getAdresse();
+        chaine += super.toString();
         return chaine;
     }
 }
