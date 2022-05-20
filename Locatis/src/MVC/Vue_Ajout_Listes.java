@@ -24,6 +24,8 @@ public class Vue_Ajout_Listes extends JFrame {
     private JPanel panneau_nom = new JPanel();
     private JPanel panneau_recherches = new JPanel();
     private JPanel panneau_boutons_radios = new JPanel();
+    private JPanel panneau_donnees = new JPanel();
+    private JPanel panneau_premiere_ligne = new JPanel();
     
     private JLabel titre;
     private JLabel nom_label = new JLabel("Nom de la liste de diffusion : ");
@@ -41,20 +43,26 @@ public class Vue_Ajout_Listes extends JFrame {
     private JTable table;
     private TableRowSorter<TableModel> sort;
     
+    private JRadioButton buttonRadioLocataires = new JRadioButton("Locataires");
+    private JRadioButton buttonRadioUtilisateurs = new JRadioButton("Utilisateurs");
     private JRadioButton buttonRadioEgal = new JRadioButton("=", true);
     private JRadioButton buttonRadioSuperieur = new JRadioButton(">");
     private JRadioButton buttonRadioInferieur = new JRadioButton("<");
     
-    private ButtonGroup group = new ButtonGroup();
+    private ButtonGroup group_donnees= new ButtonGroup();
+    private ButtonGroup group_signe = new ButtonGroup();
     
     private JButton ajouter = new JButton("Ajouter");
     private JButton selectionnerTout = new JButton("Selectionner tout");
     private JButton deselectionner = new JButton("Tout deselectionner");
     private JButton retour = new JButton("Retour");
     
+    private String donnees;    
 
-    public Vue_Ajout_Listes() {
+    public Vue_Ajout_Listes(String donnee) {
         super("Création d'une liste de diffusion");
+        
+        this.donnees = donnee;
         
         panneau.setLayout(new BorderLayout());
         panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -71,9 +79,14 @@ public class Vue_Ajout_Listes extends JFrame {
         //centre.add(new JScrollPane(this.panneau_info), BorderLayout.CENTER);
         panneau.add(this.panneau_boutons, BorderLayout.SOUTH);
         
-        panneau_nom.setLayout(new GridLayout(1,2));
-        panneau_nom.add(nom_label);
-        panneau_nom.add(nom);
+        panneau_premiere_ligne.setLayout(new GridLayout(1,4));
+        panneau_premiere_ligne.add(nom_label);
+        panneau_premiere_ligne.add(nom);
+        panneau_premiere_ligne.add(buttonRadioLocataires);
+        panneau_premiere_ligne.add(buttonRadioUtilisateurs);
+        group_donnees.add(buttonRadioLocataires);
+        group_donnees.add(buttonRadioUtilisateurs);
+        buttonRadioLocataires.setSelected(true);
        
         panneau_recherches.setLayout(new GridLayout(1,5));
         panneau_recherches.add(this.rechercher_label);
@@ -81,16 +94,11 @@ public class Vue_Ajout_Listes extends JFrame {
         panneau_recherches.add(trier_label);
         panneau_recherches.add(tri);
         panneau_recherches.add(panneau_boutons_radios);
-        tri.addItem("Tous");
-        tri.addItem("ID");
-        tri.addItem("Nom");
-        tri.addItem("Prénom");
-        tri.addItem("Age");
-        tri.addItem("Ancienneté");
+        remplirComboBox();
         //panneau_boutons_radios.setVisible(false);
         
         panneau_infos.setLayout(new GridLayout(2,1));
-        panneau_infos.add(panneau_nom);
+        panneau_infos.add(panneau_premiere_ligne);
         panneau_infos.add(panneau_recherches);
         
         //Ajout des différents boutons
@@ -106,9 +114,9 @@ public class Vue_Ajout_Listes extends JFrame {
         panneau_boutons_radios.add(buttonRadioInferieur);
         panneau_boutons_radios.add(nombre);
         panneau_boutons_radios.setVisible(false);
-        group.add(buttonRadioEgal);
-        group.add(buttonRadioSuperieur);
-        group.add(buttonRadioInferieur);
+        group_signe.add(buttonRadioEgal);
+        group_signe.add(buttonRadioSuperieur);
+        group_signe.add(buttonRadioInferieur);
         
         nombre.setModel(new SpinnerNumberModel(0, 0, 200, 1));
         nombre.setEditor(new JSpinner.DefaultEditor(nombre));
@@ -162,6 +170,10 @@ public class Vue_Ajout_Listes extends JFrame {
         return table;
     }
 
+    public void setDonnees(String donnees) {
+        this.donnees = donnees;
+    }
+
     public void definirTableau(Object[][] donnees, String[] entetes) {
         this.tableau = new DefaultTableModel(donnees, entetes)
         {
@@ -212,6 +224,11 @@ public class Vue_Ajout_Listes extends JFrame {
                 deselectionner.addActionListener(listener);
             case "RETOUR" ->
                 retour.addActionListener(listener);
+                
+            case "LOCATAIRES" ->
+                buttonRadioLocataires.addActionListener(listener);
+            case "UTILISATEURS" ->
+                buttonRadioUtilisateurs.addActionListener(listener);
             
             case "EGAL" ->
                 buttonRadioEgal.addActionListener(listener);
@@ -231,18 +248,20 @@ public class Vue_Ajout_Listes extends JFrame {
     }
     
     public void afficherPanneauBoutonsRadios(){
-        if(tri.getSelectedItem().equals("Age") || tri.getSelectedItem().equals("Ancienneté")){
-            this.panneau_boutons_radios.setVisible(true);
-            this.panneau_boutons_radios.remove(3);
-            if(tri.getSelectedItem().equals("Age"))
-                this.panneau_boutons_radios.add(nombre);
-            else
-                this.panneau_boutons_radios.add(date);
-        }else
-            this.panneau_boutons_radios.setVisible(false);
+        if(donnees.equals("locataire") && tri.getSelectedItem()!=null){
+            if(tri.getSelectedItem().equals("Age") || tri.getSelectedItem().equals("Ancienneté")){
+                this.panneau_boutons_radios.setVisible(true);
+                this.panneau_boutons_radios.remove(3);
+                if(tri.getSelectedItem().equals("Age"))
+                    this.panneau_boutons_radios.add(nombre);
+                else
+                    this.panneau_boutons_radios.add(date);
+            }else
+                this.panneau_boutons_radios.setVisible(false);
+        }
     }
     
-    public String getBoutonRadio(){
+    public String getBoutonRadioSigne(){
         if(this.buttonRadioEgal.isSelected())
             return "=";
         if(this.buttonRadioSuperieur.isSelected())
@@ -252,11 +271,37 @@ public class Vue_Ajout_Listes extends JFrame {
         return "";
     }
     
-    public String getCategorie(){
-        if(tri.getSelectedItem().equals("Ancienneté"))
-            return "Anciennete";
+    public String getBoutonRadioDonnees(){
+        if(this.buttonRadioLocataires.isSelected())
+            return "Locataires";
+        if(this.buttonRadioUtilisateurs.isSelected())
+            return "Utilisateurs";
         else
-            return (String) tri.getSelectedItem();
+            return "Signe";
+    }
+
+    public JRadioButton getButtonRadioLocataires() {
+        return buttonRadioLocataires;
+    }
+
+    public JRadioButton getButtonRadioUtilisateurs() {
+        return buttonRadioUtilisateurs;
+    }
+
+    public JComboBox getTri() {
+        return tri;
+    }
+    
+    
+    
+    public String getCategorie(){
+        if(tri.getSelectedItem()!=null){
+            if(tri.getSelectedItem().equals("Ancienneté"))
+                return "Anciennete";
+            else
+                return (String) tri.getSelectedItem();
+        }
+        return "";
     }
 
     public String getNombre() {
@@ -282,5 +327,24 @@ public class Vue_Ajout_Listes extends JFrame {
         this.setBounds(100, 100, 350, 300);
         //controleur.getVue().setSize(500,500);
         this.setVisible(true);
+    }
+    
+    public void remplirComboBox(){
+        if(this.donnees.equals("locataire")){
+            tri.removeAllItems();
+            tri.addItem("Tous");
+            tri.addItem("ID");
+            tri.addItem("Nom");
+            tri.addItem("Prénom");
+            tri.addItem("Age");
+            tri.addItem("Ancienneté");
+        }
+        else{
+            tri.removeAllItems();
+            tri.addItem("Tous");
+            tri.addItem("ID");
+            tri.addItem("Login");
+            tri.addItem("Catégorie");
+        }
     }
 }
