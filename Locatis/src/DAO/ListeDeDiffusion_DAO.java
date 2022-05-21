@@ -2,6 +2,8 @@ package DAO;
 
 import Locatis.ListeDeDiffusion;
 import Locatis.Locataire;
+import Locatis.Personne;
+import Locatis.Utilisateur;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +23,13 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
             Statement etat = this.connection.createStatement();
             String requeteProc ="Insert into listediffusion VALUES ('"+ obj.getId()+ "' , '"+ obj.getNom()+ "' );";
             etat.execute(requeteProc);
-            this.createListeLocataires(this.selectByName(obj.getNom()).getId(), obj.getListe());
+            ResultSet res = etat.executeQuery("Select LAST_INSERT_ID() as ID_listeDiff from listediffusion");
+            res.next();
+            int id=res.getInt("ID_listeDiff");
+            switch(obj.getTypeListe()){
+                case "locataire" -> createListeLocataires (id,obj.getListe());
+                case "utilisateur" -> createListeUtilisateurs (id,obj.getListe());
+            }
             return true;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -29,13 +37,26 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
         }
     }
     
-    public boolean createListeLocataires(int id, ArrayList<Locataire> liste) {
+    public boolean createListeLocataires(int id, ArrayList<Personne> liste) {
         try {
             Statement etat = this.connection.createStatement();
             for(int i=0; i<liste.size();i++){
-                String requete2 ="Insert into locataire_liste VALUES ("+ id + " , "+ liste.get(i).getId()+ " );";
-                etat.execute(requete2);
-                System.out.println("ok");
+                String requete ="Insert into locataire_liste VALUES ("+ id + " , "+ liste.get(i).getId()+ " );";
+                etat.execute(requete);
+            }
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+    
+    public boolean createListeUtilisateurs(int id, ArrayList<Personne> liste) {
+        try {
+            Statement etat = this.connection.createStatement();
+            for(int i=0; i<liste.size();i++){
+                String requete ="Insert into utilisateur_liste VALUES ("+ id + " , "+ liste.get(i).getId()+ " );";
+                etat.execute(requete);
             }
             return true;
         } catch (SQLException ex) {
@@ -47,7 +68,7 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     @Override
     public boolean delete(ListeDeDiffusion obj) {
         try {
-            deleteListeLocataires(obj.getId());
+            deleteListe(obj.getId(), obj.getTypeListe()+"_liste");
             Statement etat = this.connection.createStatement();
             return !etat.execute("delete from listediffusion where ID_listeDiff=" + obj.getId());
         } catch (SQLException ex) {
@@ -56,10 +77,10 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
         }
     }
     
-    public boolean deleteListeLocataires(int id) {
+    public boolean deleteListe(int id, String table) {
         try {
             Statement etat = this.connection.createStatement();
-            return !etat.execute("delete from locataire_liste where ID_listeDiff=" + id);
+            return !etat.execute("delete from "+table+" where ID_listeDiff=" + id);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -74,8 +95,11 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
             String requeteProc ="update listediffusion set Nom_liste='"
                     +obj.getNom()+"' where ID_listeDiff="+obj.getId()+" ;";
             etat.execute(requeteProc);
-            deleteListeLocataires(obj.getId());
-            createListeLocataires(obj.getId(), obj.getListe());
+            deleteListe(obj.getId(), obj.getTypeListe()+"_liste");
+            switch(obj.getTypeListe()){
+                case "locataire" -> createListeLocataires (obj.getId(),obj.getListe());
+                case "utilisateur" -> createListeUtilisateurs (obj.getId(),obj.getListe());
+            }
             return true;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -90,11 +114,20 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
             Statement statement = this.connection.createStatement();
             ResultSet res = statement.executeQuery("Select * from listeDiffusion where ID_listeDiff=" + id);
             res.next();
-            ArrayList<Locataire> locataires = (ArrayList<Locataire>) this.getAllLocataires(id);
-            return new ListeDeDiffusion(res.getInt("ID_listeDiff"),
-                    res.getString("Nom_liste"),
-                    locataires
-            );
+            
+            ArrayList<Personne> locataires = (ArrayList<Personne>) this.getAllLocataires(id);
+            if(!locataires.isEmpty()){  
+                return new ListeDeDiffusion(res.getInt("ID_listeDiff"),
+                        res.getString("Nom_liste"),
+                        locataires
+                );
+            }else{
+                ArrayList<Personne> utilisateurs = (ArrayList<Personne>) this.getAllUtilisateurs(id);
+                return new ListeDeDiffusion(res.getInt("ID_listeDiff"),
+                        res.getString("Nom_liste"),
+                        utilisateurs
+                );
+            }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return null;
@@ -107,8 +140,19 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
             Statement statement = this.connection.createStatement();
             ResultSet res = statement.executeQuery("Select * from listediffusion where Nom_liste='" + nom + "'");
             res.next();
-            ArrayList<Locataire> locataires = (ArrayList<Locataire>) this.getAllLocataires(res.getInt("ID_listeDiff"));
-            return new ListeDeDiffusion(res.getInt("ID_listeDiff"), res.getString("Nom_liste"), locataires);
+            ArrayList<Personne> locataires = (ArrayList<Personne>) this.getAllLocataires(res.getInt("ID_listeDiff"));
+            if(!locataires.isEmpty()){  
+                return new ListeDeDiffusion(res.getInt("ID_listeDiff"),
+                        res.getString("Nom_liste"),
+                        locataires
+                );
+            }else{
+                ArrayList<Personne> utilisateurs = (ArrayList<Personne>) this.getAllUtilisateurs(res.getInt("ID_listeDiff"));
+                return new ListeDeDiffusion(res.getInt("ID_listeDiff"),
+                        res.getString("Nom_liste"),
+                        utilisateurs
+                );
+            }
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -125,12 +169,19 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
             ResultSet res = statement.executeQuery("Select * from listediffusion");
             while (res.next()) {
                 
-                ArrayList<Locataire> locataires = (ArrayList<Locataire>) this.getAllLocataires(res.getInt("ID_listeDiff"));//(this.selectById(res.getInt("ID_listeDiff")));
-                allListes.add(new ListeDeDiffusion(
-                    res.getInt("ID_listeDiff"),
-                    res.getString("Nom_liste"),
-                    locataires
-                ));
+                ArrayList<Personne> locataires = (ArrayList<Personne>) this.getAllLocataires(res.getInt("ID_listeDiff"));
+                if(!locataires.isEmpty()){
+                    allListes.add( new ListeDeDiffusion(res.getInt("ID_listeDiff"),
+                            res.getString("Nom_liste"),
+                            locataires
+                    ));
+                }else{
+                    ArrayList<Personne> utilisateurs = (ArrayList<Personne>) this.getAllUtilisateurs(res.getInt("ID_listeDiff"));
+                    allListes.add( new ListeDeDiffusion(res.getInt("ID_listeDiff"),
+                            res.getString("Nom_liste"),
+                            utilisateurs
+                    ));
+                }
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -139,9 +190,9 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
         return allListes;
     }
     
-    public List<Locataire> getAllLocataires(int id) {
+    public List<Personne> getAllLocataires(int id) {
 
-        List<Locataire> allLocataires = new ArrayList<>();
+        List<Personne> allLocataires = new ArrayList<>();
         try {//distinct
             Statement statement = this.connection.createStatement();
             ResultSet res = statement.executeQuery("Select ID_locataire from locataire_liste where ID_listeDiff="+id);
@@ -155,4 +206,38 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
         }
         return allLocataires;
     }
+    
+    public List<Personne> getAllUtilisateurs(int id) {
+
+        List<Personne> allUtilisateurs = new ArrayList<>();
+        try {//distinct
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select ID_utilisateur from utilisateur_liste where ID_listeDiff="+id);
+            Utilisateurs_DAO utilisateurs = new Utilisateurs_DAO(this.connection);
+            while (res.next()) {
+                allUtilisateurs.add(utilisateurs.selectById(res.getInt("ID_utilisateur")));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+        return allUtilisateurs;
+    }
+    
+    /*public List<Personne> getAllPersonnes(int id) {
+
+        List<Personne> allPersonnes = new ArrayList<>();
+        try {//distinct
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select ID_utilisateur from utilisateur_liste where ID_listeDiff="+id);
+            Utilisateurs_DAO utilisateurs = new Utilisateurs_DAO(this.connection);
+            while (res.next()) {
+                allPersonnes.add(utilisateurs.selectById(res.getInt("ID_utilisateur")));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+        return allPersonnes;
+    }*/
 }

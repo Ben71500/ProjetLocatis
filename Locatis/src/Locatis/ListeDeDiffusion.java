@@ -2,13 +2,13 @@ package Locatis;
 
 import java.util.ArrayList;
 
-public class ListeDeDiffusion <O>{
+public class ListeDeDiffusion{
     
     private int id;
     private String nom;
-    private ArrayList<O> liste;
+    private ArrayList<Personne> liste;
 
-    public ListeDeDiffusion(int id, String nom, ArrayList<O> liste) {
+    public ListeDeDiffusion(int id, String nom, ArrayList<Personne> liste) {
         this.id = id;
         this.nom = nom;
         this.liste = liste;
@@ -22,8 +22,29 @@ public class ListeDeDiffusion <O>{
         return nom;
     }
 
-    public ArrayList<O> getListe() {
+    public ArrayList<Personne> getListe() {
         return liste;
+    }
+
+    public void setListe(ArrayList<Personne> liste) {
+        this.liste = liste;
+    }
+    
+    public String getTypeListe() {
+        if(liste.get(0) instanceof Locataire)
+            return"locataire";
+        if(liste.get(0) instanceof Utilisateur)
+            return"utilisateur";
+        else
+            return "";
+    }
+    
+    public ArrayList<Integer> getListeId(){
+        ArrayList<Integer> listeId = new ArrayList<>();
+        for(int i=0; i<liste.size();i++){
+            listeId.add(liste.get(i).getId());
+        }
+        return listeId;
     }
     
     /*public String toString(){

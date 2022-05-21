@@ -1,5 +1,6 @@
 package MVC;
 
+import Locatis.ListeDeDiffusion;
 import Locatis.Utilisateur;
 import interfaceGraphique.EmptyFieldException;
 import interfaceGraphique.PasDeCaseCocheeException;
@@ -7,11 +8,11 @@ import interfaceGraphique.PopupInformation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
@@ -27,36 +28,79 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
     private final Modele_Ajout_Listes leModele;
     private Utilisateur userConnecte;
 
-    public Controleur_Ajout_Listes(Vue_Ajout_Listes uneVue, Modele_Ajout_Listes unModele, Utilisateur user) {
+    public Controleur_Ajout_Listes(Utilisateur user) {
         this.userConnecte = user;
-        this.laVue = uneVue;
-        this.leModele = unModele;
+        this.laVue = new Vue_Ajout_Listes("locataire");
+        this.leModele = new Modele_Ajout_Listes("locataire");
         
-        uneVue.ajouterEcouteur("Ajouter", this);
-        uneVue.ajouterEcouteur("Selectionner tout", this);
-        uneVue.ajouterEcouteur("Tout deselectionner", this);
-        uneVue.ajouterEcouteur("Retour", this);
-        uneVue.ajouterEcouteur("Locataires", this);
-        uneVue.ajouterEcouteur("Utilisateurs", this);
-        uneVue.ajouterEcouteur("Egal", this);
-        uneVue.ajouterEcouteur("Superieur", this);
-        uneVue.ajouterEcouteur("Inferieur", this);
-        uneVue.ajouterEcouteur("Tri", this);
-        uneVue.getRecherche().getDocument().addDocumentListener(effectuerRecherche());
-        uneVue.getNombreJSpinner().addChangeListener(new ChangeListener() {
+        laVue.ajouterEcouteur("Ajouter", this);
+        laVue.ajouterEcouteur("Selectionner tout", this);
+        laVue.ajouterEcouteur("Tout deselectionner", this);
+        laVue.ajouterEcouteur("Retour", this);
+        laVue.ajouterEcouteur("Locataires", this);
+        laVue.ajouterEcouteur("Utilisateurs", this);
+        laVue.ajouterEcouteur("Egal", this);
+        laVue.ajouterEcouteur("Superieur", this);
+        laVue.ajouterEcouteur("Inferieur", this);
+        laVue.ajouterEcouteur("Tri", this);
+        laVue.getRecherche().getDocument().addDocumentListener(effectuerRecherche());
+        laVue.getNombreJSpinner().addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadioSigne(), laVue.getNombre());
-                actualiser();
+                trierTableau();
             }
         });
+        laVue.getDate().addPropertyChangeListener("date", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                trierTableau();
+            }   
+        });
         laVue.definirTableau(leModele.getTableau(),leModele.getEntetes());
-        uneVue.getTable().getModel().addTableModelListener(new TableModelListener() {
+        laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
             public void tableChanged(TableModelEvent e) {
-                unModele.cocher(e.getFirstRow());
+                leModele.cocher(e.getFirstRow());
             }
         });
     }
+    
+    public Controleur_Ajout_Listes(Utilisateur user, ListeDeDiffusion listeDiffusion) {
+        this.userConnecte = user;
+        this.laVue = new Vue_Ajout_Listes(listeDiffusion.getTypeListe(), listeDiffusion);
+        this.leModele = new Modele_Ajout_Listes(listeDiffusion.getTypeListe(), listeDiffusion.getListeId());
+        laVue.ajouterEcouteur("Ajouter", this);
+        laVue.ajouterEcouteur("Modifier", this);
+        laVue.ajouterEcouteur("Selectionner tout", this);
+        laVue.ajouterEcouteur("Tout deselectionner", this);
+        laVue.ajouterEcouteur("Retour", this);
+        laVue.ajouterEcouteur("Locataires", this);
+        laVue.ajouterEcouteur("Utilisateurs", this);
+        laVue.ajouterEcouteur("Egal", this);
+        laVue.ajouterEcouteur("Superieur", this);
+        laVue.ajouterEcouteur("Inferieur", this);
+        laVue.ajouterEcouteur("Tri", this);
+        laVue.getRecherche().getDocument().addDocumentListener(effectuerRecherche());
+        laVue.getNombreJSpinner().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                trierTableau();
+            }
+        });
+        laVue.getDate().addPropertyChangeListener("date", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                trierTableau();
+            }   
+        });
+        laVue.definirTableau(leModele.getTableau(),leModele.getEntetes());
+        laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
+            public void tableChanged(TableModelEvent e) {
+                leModele.cocher(e.getFirstRow());
+            }
+        });
+        
+    }
+    
     public Vue_Ajout_Listes getVue() {
         return laVue;
     }
@@ -73,54 +117,35 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
     @Override
     public void actionPerformed(ActionEvent e){
         
-        
-        
         if(e.getSource().getClass().isInstance(new JRadioButton())){
             
             if(e.getSource() == this.laVue.getButtonRadioLocataires()){
-                /*this.typeDonnee = "appartement";*/
                 leModele.setDonnees("locataire");
-                
                 laVue.setDonnees("locataire");
+                leModele.decocherTout();
                 laVue.remplirComboBox();
                 leModele.choisirModele();
-                /*laVue.setTitre("Les appartements");*/
-                laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
-                
-                /*laVue.ajouterEcouteur("Tri", this);*/
+                actualiser();
             }
             else if(e.getSource() == this.laVue.getButtonRadioUtilisateurs()){
-                    /*this.typeDonnee = "maison";*/
                     leModele.setDonnees("utilisateur");
                     laVue.setDonnees("utilisateur");
-                    
+                    leModele.decocherTout();
                     laVue.remplirComboBox();
-                    /*laVue.ajouterEcouteur("Tri", this);*/
                     leModele.choisirModele();
-                    /*laVue.setTitre("Les maisons");*/
-                    laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
+                    actualiser();
                     
-            }else{
-                if(laVue.getCategorie().equals("Age"))
-                    leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadioSigne(), laVue.getNombre());
-                else
-                    leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadioSigne(), laVue.getDate());
-                actualiser();
-            }
+                }else{
+                    trierTableau();
+                }
         }else
             if(e.getSource() == this.laVue.getTri()){
-                laVue.afficherPanneauBoutonsRadios();
-                leModele.getAll();
-                leModele.trierPar(laVue.getCategorie());
-                actualiser();
-        }else
+                trierTableau();
+            }else
         
-        if(e.getSource().getClass().isInstance(new JTextField())){
-            leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadioSigne(), laVue.getNombre());
-            actualiser();
-        }
         
-        else{
+        
+        {
             JButton source = (JButton) e.getSource();
             switch (source.getText().toUpperCase()) {
                 case "AJOUTER" -> {
@@ -129,12 +154,44 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
                         if(leModele.getListeCasesCochees().isEmpty())
                             throw new PasDeCaseCocheeException();
                         
-                        //leModele.ajouter(laVue.getNom());
+                        leModele.ajouter(laVue.getNom());
                         PopupInformation popup=new PopupInformation("Liste de diffusion ajoutée.");
                         
                         laVue.reset();
                         leModele.decocherTout();
                         actualiser();
+                    }catch (EmptyFieldException ex) {
+                        ex.afficherErreur();
+                    }catch (PasDeCaseCocheeException ex) {
+                        ex.afficherErreur();
+                    }
+                    /*SwingUtilities.invokeLater(new Runnable(){
+                        public void run(){
+                            /*Controleur_AjoutModif controleur = new Controleur_AjoutModif(userConnecte);                
+                            controleur.getVue().afficherVue();
+                        }
+                    });*/
+                }
+                case "MODIFIER" -> {
+                    try{
+                        this.laVue.verifierChamps();
+                        if(leModele.getListeCasesCochees().isEmpty())
+                            throw new PasDeCaseCocheeException();
+                        
+                        leModele.modifier(laVue.getObjetModifie());
+                        PopupInformation popup=new PopupInformation("Liste de diffusion modifiée.");
+                        laVue.quitter();
+                        SwingUtilities.invokeLater(new Runnable(){
+                            public void run(){
+                                Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("liste"),new Modele_Gestion("liste"), userConnecte, "liste");               
+                                controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                                controleur.getVue().setSize(500,500);
+                                controleur.getVue().setVisible(true);
+                            }
+                        });
+                        /*laVue.reset();
+                        leModele.decocherTout();
+                        actualiser();*/
                     }catch (EmptyFieldException ex) {
                         ex.afficherErreur();
                     }catch (PasDeCaseCocheeException ex) {
@@ -195,12 +252,25 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
     }
     
     public void actualiser(){
+        
         laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
+        
         laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
                 leModele.cocher(e.getFirstRow());
             }
         });
-    }   
+        laVue.getRecherche().setText("");
+    }
+    
+    public void trierTableau(){
+        laVue.afficherPanneauBoutonsRadios();
+        switch (laVue.getCategorie()) {
+            case "Age" -> leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadioSigne(), laVue.getNombre());
+            case "Anciennete" -> leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadioSigne(), laVue.getDateSaisie());
+            default -> leModele.trierPar(laVue.getCategorie());
+        }
+        actualiser();
+    }
 }

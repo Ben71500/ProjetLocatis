@@ -7,8 +7,6 @@ import interfaceGraphique.*;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 import javax.swing.*;
 import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
@@ -53,11 +51,14 @@ public class Vue_Ajout_Listes extends JFrame {
     private ButtonGroup group_signe = new ButtonGroup();
     
     private JButton ajouter = new JButton("Ajouter");
+    private JButton modifier = new JButton("Modifier");
     private JButton selectionnerTout = new JButton("Selectionner tout");
     private JButton deselectionner = new JButton("Tout deselectionner");
     private JButton retour = new JButton("Retour");
     
     private String donnees;    
+    
+    private ListeDeDiffusion listeDiffusion;
 
     public Vue_Ajout_Listes(String donnee) {
         super("Création d'une liste de diffusion");
@@ -124,27 +125,108 @@ public class Vue_Ajout_Listes extends JFrame {
         this.date.setCalendar(Calendar.getInstance());
         JTextFieldDateEditor editor = (JTextFieldDateEditor) this.date.getDateEditor();
         editor.setEditable(false);
-        this.date.getDateEditor().addPropertyChangeListener(
+        /*this.date.getDateEditor().addPropertyChangeListener(
             new PropertyChangeListener() {
                 @Override
                 public void propertyChange(PropertyChangeEvent e) {
                     /*if(date.getCalendar().before(date.getCalendar()))
                         System.out.println("");*/
                     //System.out.println("d");
-                }
-        });
+               /* }
+        });*/
         
         this.getContentPane().add(this.panneau);
         this.pack();
+    }
+    
+    public Vue_Ajout_Listes(String donnee, ListeDeDiffusion liste) {
+        super("Création d'une liste de diffusion");
+        
+        this.donnees = donnee;
+        
+        panneau.setLayout(new BorderLayout());
+        panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panneau.add(this.haut, BorderLayout.NORTH);
+        panneau.add(this.centre, BorderLayout.CENTER);
+        
+        //Titre
+        titre = new JLabel("Les listes");
+        titre.setFont(new java.awt.Font("Tahoma", 1, 24));
+        haut.add(this.titre);
+        
+        centre.setLayout(new BorderLayout());
+        centre.add(this.panneau_infos, BorderLayout.NORTH);
+        //centre.add(new JScrollPane(this.panneau_info), BorderLayout.CENTER);
+        panneau.add(this.panneau_boutons, BorderLayout.SOUTH);
+        
+        panneau_premiere_ligne.setLayout(new GridLayout(1,4));
+        panneau_premiere_ligne.add(nom_label);
+        panneau_premiere_ligne.add(nom);
+        panneau_premiere_ligne.add(buttonRadioLocataires);
+        panneau_premiere_ligne.add(buttonRadioUtilisateurs);
+        group_donnees.add(buttonRadioLocataires);
+        group_donnees.add(buttonRadioUtilisateurs);
+        if(donnee.equals("locataire"))
+            buttonRadioLocataires.setSelected(true);
+        else
+            buttonRadioUtilisateurs.setSelected(true);
+        panneau_recherches.setLayout(new GridLayout(1,5));
+        panneau_recherches.add(this.rechercher_label);
+        panneau_recherches.add(this.recherche);
+        panneau_recherches.add(trier_label);
+        panneau_recherches.add(tri);
+        panneau_recherches.add(panneau_boutons_radios);
+        remplirComboBox();
+        //panneau_boutons_radios.setVisible(false);
+        
+        panneau_infos.setLayout(new GridLayout(2,1));
+        panneau_infos.add(panneau_premiere_ligne);
+        panneau_infos.add(panneau_recherches);
+        
+        //Ajout des différents boutons
+        panneau_boutons.setLayout(new GridLayout(1,4));
+        panneau_boutons.add(modifier);
+        panneau_boutons.add(selectionnerTout);
+        panneau_boutons.add(deselectionner);
+        panneau_boutons.add(retour);
+        
+        panneau_boutons_radios.setLayout(new GridLayout(1,4));
+        panneau_boutons_radios.add(buttonRadioEgal);
+        panneau_boutons_radios.add(buttonRadioSuperieur);
+        panneau_boutons_radios.add(buttonRadioInferieur);
+        panneau_boutons_radios.add(nombre);
+        panneau_boutons_radios.setVisible(false);
+        group_signe.add(buttonRadioEgal);
+        group_signe.add(buttonRadioSuperieur);
+        group_signe.add(buttonRadioInferieur);
+        
+        nombre.setModel(new SpinnerNumberModel(0, 0, 200, 1));
+        nombre.setEditor(new JSpinner.DefaultEditor(nombre));
+        
+        this.date.setCalendar(Calendar.getInstance());
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) this.date.getDateEditor();
+        editor.setEditable(false);
+        
+        this.getContentPane().add(this.panneau);
+        this.pack();
+        
+        listeDiffusion = liste;
+        nom.setText(listeDiffusion.getNom());
     }
 
     public String getNom() {
         return nom.getText();
     }
     
-    public String getDate(){
+    public String getDateSaisie(){
         return new MyDate(this.date.getCalendar().get(Calendar.YEAR), this.date.getCalendar().get(Calendar.MONTH)+1, this.date.getCalendar().get(Calendar.DAY_OF_MONTH)).getDateSQL();
     }
+
+    public JDateChooser getDate() {
+        return date;
+    }
+    
+    
 
     public void setTitre(String titre) {
         this.titre.setText(titre);
@@ -218,6 +300,8 @@ public class Vue_Ajout_Listes extends JFrame {
         switch (nomComposant.toUpperCase()) {
             case "AJOUTER" ->
                 ajouter.addActionListener(listener);
+            case "MODIFIER" ->
+                modifier.addActionListener(listener);
             case "SELECTIONNER TOUT" ->
                 selectionnerTout.addActionListener(listener);
             case "TOUT DESELECTIONNER" ->
@@ -254,11 +338,13 @@ public class Vue_Ajout_Listes extends JFrame {
                 this.panneau_boutons_radios.remove(3);
                 if(tri.getSelectedItem().equals("Age"))
                     this.panneau_boutons_radios.add(nombre);
-                else
+                else{
                     this.panneau_boutons_radios.add(date);
+                }
             }else
                 this.panneau_boutons_radios.setVisible(false);
-        }
+        }else
+            this.panneau_boutons_radios.setVisible(false);
     }
     
     public String getBoutonRadioSigne(){
@@ -324,7 +410,7 @@ public class Vue_Ajout_Listes extends JFrame {
     
     public void afficherVue() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setBounds(100, 100, 350, 300);
+        this.setBounds(100, 100, 800, 300);
         //controleur.getVue().setSize(500,500);
         this.setVisible(true);
     }
@@ -346,5 +432,9 @@ public class Vue_Ajout_Listes extends JFrame {
             tri.addItem("Login");
             tri.addItem("Catégorie");
         }
+    }
+    
+    public ListeDeDiffusion getObjetModifie() {
+        return new ListeDeDiffusion(this.listeDiffusion.getId(), this.nom.getText(), null);
     }
 }

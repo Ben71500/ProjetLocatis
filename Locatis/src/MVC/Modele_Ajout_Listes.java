@@ -9,6 +9,7 @@ import DAO.Utilisateurs_DAO;
 import Locatis.Batiment;
 import Locatis.ListeDeDiffusion;
 import Locatis.Locataire;
+import Locatis.Personne;
 import Locatis.Utilisateur;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -32,6 +33,12 @@ public class Modele_Ajout_Listes {
         choisirModele();
     }
     
+    public Modele_Ajout_Listes(String lesDonnees, ArrayList<Integer> listeId) {
+        this.donnees = lesDonnees;
+        this.listeCasesCochees = listeId;
+        choisirModele();
+    }
+    
     public void choisirModele(){
         switch(this.donnees){
             case "locataire" -> modeleLocataires();
@@ -51,7 +58,7 @@ public class Modele_Ajout_Listes {
         tableau = new Object[liste.size()][9];
         for(int i=0; i<liste.size();i++){
             Locataire leLocataire = (Locataire) liste.get(i);
-            tableau [i][0]= false;
+            tableau [i][0]= listeCasesCochees.contains(leLocataire.getId());
             tableau [i][1]=leLocataire.getId();
             tableau [i][2]=leLocataire.getNom();
             tableau [i][3]=leLocataire.getPrenom();
@@ -74,7 +81,7 @@ public class Modele_Ajout_Listes {
         this.tableau = new Object[liste.size()][4];
         for(int i=0; i<liste.size();i++){
             Utilisateur user=(Utilisateur) liste.get(i);
-            tableau [i][0]= false;
+            tableau [i][0]= listeCasesCochees.contains(user.getId());
             tableau [i][1]=user.getId();
             tableau [i][2]=user.getLogin();
             tableau [i][3]=user.getCat();
@@ -139,17 +146,17 @@ public class Modele_Ajout_Listes {
     
     ///////////////////
     public void getTri(String categorie, String signe, String nombre){
-        String requete = "Select * from locataire where "+categorie+" "+signe+" "+nombre;
+        String requete = "Select * from "+this.donnees+" where "+categorie+" "+signe+" "+nombre;
         executerRequeteLocataire(requete);
     }
     
-    public void getAll(){
+    /*public void getAll(){
         String requete = "Select * from "+this.donnees;
         switch(this.donnees){
             case "locataire" : executerRequeteLocataire(requete);
             case "utilisateur" : executerRequeteUtilisateur(requete);
         }
-    }
+    }*/
     
     public void trierPar(String categorie){
         String requete = "Select * from "+this.donnees;
@@ -160,19 +167,21 @@ public class Modele_Ajout_Listes {
                 case "Nom" -> requete+="Nom";
                 case "Prénom" -> requete+="Prenom";
                 case "Age" -> requete+="Age";
-                case "Ancienneté" -> requete+="Anciennete";
+                case "Anciennete" -> requete+="Anciennete";
                 case "Login" -> requete+="login";
                 case "Catégorie" -> requete+="CAT";
             }
         }
         switch(this.donnees){
-            case "locataire" : executerRequeteLocataire(requete);
-            case "utilisateur" : executerRequeteUtilisateur(requete);
+            case "locataire" -> executerRequeteLocataire(requete);
+            case "utilisateur" -> executerRequeteUtilisateur(requete);
         }
     }
     
     public void executerRequeteLocataire(String requete){
         //Récupération des locataires dans une ArrayList
+        String[] tabEntetes = {"Case","ID","Nom", "Prénom", "Age", "Ancienneté", "Mail", "Téléphone","Logements"};
+        this.setEntetes(tabEntetes);
         Locataire_DAO lesLocataires= new Locataire_DAO(this.connBdd);
         
         liste=(ArrayList<Locataire>)lesLocataires.getRequete(requete);
@@ -193,6 +202,8 @@ public class Modele_Ajout_Listes {
     }
     
     public void executerRequeteUtilisateur(String requete){
+        String[] tabEntetes = {"Case", "ID","Login", "Catégorie"};
+        this.setEntetes(tabEntetes);
         //Récupération des locataires dans une ArrayList
         Utilisateurs_DAO lesUtilisateurs= new Utilisateurs_DAO(this.connBdd);
         
@@ -226,16 +237,52 @@ public class Modele_Ajout_Listes {
         return tab;
     }*/
     
-    /*public void ajouter(String nom){
+    public void ajouter(String nom){
         ListeDeDiffusion_DAO lesListes= new ListeDeDiffusion_DAO(this.connBdd);
-        lesListes.create(new ListeDeDiffusion(0,nom,this.convertir()));
+        lesListes.create(new ListeDeDiffusion(0,nom,this.convertirEnListePersonnes()));
+        /*switch(this.donnees){
+            case "locataire" -> lesListes.create(new ListeDeDiffusion(0,nom,this.convertirEnListeLocataires()));
+            case "utilisateur" -> lesListes.create(new ListeDeDiffusion(0,nom,this.convertirEnListeUtilisateurs()));
+        }*/
     }
-    /*
-    private <O> ArrayList<O> convertir(){
-        ArrayList<O> listeLoca = new ArrayList<>();
-        /*Locataire_DAO lesLocataires= new Locataire_DAO(this.connBdd);
+    
+    public void modifier(ListeDeDiffusion listeDiffusion){
+        ListeDeDiffusion_DAO lesListes= new ListeDeDiffusion_DAO(this.connBdd);
+        listeDiffusion.setListe(this.convertirEnListePersonnes());
+        /*switch(this.donnees){
+            case "locataire" -> listeDiffusion.setListe(this.convertirEnListeLocataires());
+            case "utilisateur" -> listeDiffusion.setListe(this.convertirEnListeUtilisateurs());
+        }*/
+        lesListes.update(listeDiffusion);
+    }
+    
+    /*private  ArrayList<Personne> convertirEnListeLocataires(){
+        ArrayList<Personne> listeLocataires = new ArrayList<>();
+        Locataire_DAO lesLocataires= new Locataire_DAO(this.connBdd);
         for(int i=0;i<this.listeCasesCochees.size();i++)
-            listeLoca.add(lesLocataires.selectById(this.listeCasesCochees.get(i)));*/
-        /*return listeLoca;
+            listeLocataires.add(lesLocataires.selectById(this.listeCasesCochees.get(i)));
+        return listeLocataires;
+    }
+    
+    private  ArrayList<Personne> convertirEnListeUtilisateurs(){
+        ArrayList<Personne> listeUtilisateurs = new ArrayList<>();
+        Utilisateurs_DAO lesUtilisateurs= new Utilisateurs_DAO(this.connBdd);
+        for(int i=0;i<this.listeCasesCochees.size();i++)
+            listeUtilisateurs.add(lesUtilisateurs.selectById(this.listeCasesCochees.get(i)));
+        return listeUtilisateurs;
     }*/
+    
+    private  ArrayList<Personne> convertirEnListePersonnes(){
+        ArrayList<Personne> listePersonnes = new ArrayList<>();
+        //Utilisateurs_DAO lesUtilisateurs= new Utilisateurs_DAO(this.connBdd);
+        DAO dao;
+        switch(this.donnees){
+            case "locataire" -> dao = new Locataire_DAO(this.connBdd);
+            case "utilisateur" -> dao = new Utilisateurs_DAO(this.connBdd);
+            default -> dao = null;
+        }
+        for(int i=0;i<this.listeCasesCochees.size();i++)
+            listePersonnes.add((Personne) dao.selectById(this.listeCasesCochees.get(i)));
+        return listePersonnes;
+    }
 }

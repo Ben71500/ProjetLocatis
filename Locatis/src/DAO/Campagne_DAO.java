@@ -3,6 +3,7 @@ package DAO;
 import Locatis.Campagne;
 import Locatis.ListeDeDiffusion;
 import Locatis.Locataire;
+import Locatis.Personne;
 import java.sql.*;
 import java.util.*;
 
@@ -146,7 +147,7 @@ public class Campagne_DAO extends DAO<Campagne>{
     }
     
     public ListeDeDiffusion getListeDeDiffusionByIdCampagne(int id){
-        ArrayList<Locataire> listeLocataire = new ArrayList<>();
+        ArrayList<Personne> listeLocataire = new ArrayList<>();
         try {
             Statement statement = this.connection.createStatement();
             ArrayList<Integer> listIdList = new ArrayList<>();

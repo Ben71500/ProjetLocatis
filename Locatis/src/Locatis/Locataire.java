@@ -1,8 +1,6 @@
 package Locatis;
 
-import java.util.*;
-
-public class Locataire {
+public class Locataire implements Personne{
     
     private int id;
     private String nom;
@@ -30,6 +28,7 @@ public class Locataire {
         return this.telephone;
     }
 
+    @Override
     public int getId() {
         return id;
     }

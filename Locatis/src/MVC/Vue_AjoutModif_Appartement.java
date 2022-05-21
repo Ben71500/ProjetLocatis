@@ -49,7 +49,7 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
         this.pack();
     }
     
-    public Vue_AjoutModif_Appartement(Appartement unUtilisateur) {
+    public Vue_AjoutModif_Appartement(Appartement unAppart) {
         super("Modifier un appartement");
         titre.setText("Modifier un appartement");
         initialisation();
@@ -61,7 +61,7 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
         this.getContentPane().add(this.panneau);
         this.pack();
         
-        this.appart=unUtilisateur;
+        this.appart=unAppart;
         numeroRue.setText(appart.getNumeroRue());
         nomRue.setText(appart.getNomRue());
         ville.setText(appart.getVille());

@@ -1,6 +1,6 @@
 package Locatis;
 
-public class Utilisateur {
+public class Utilisateur implements Personne{
     
     private int id;
     private String login;
@@ -18,6 +18,7 @@ public class Utilisateur {
         this.password = password;
     }
 
+    @Override
     public int getId() {
         return id;
     }
