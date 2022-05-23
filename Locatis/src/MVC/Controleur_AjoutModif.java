@@ -18,11 +18,11 @@ public class Controleur_AjoutModif implements ActionListener{
     public Controleur_AjoutModif(Utilisateur user, String donnee){
         this.userConnecte = user;
         this.typeDonnee = donnee;
-        this.leModele = new Modele_AjoutModif(donnee+"s");
+        this.leModele = new Modele_AjoutModif(donnee);
         switch(donnee){
             case "locataire" -> this.laVue = new Vue_AjoutModif_Locataires();
             case "utilisateur" -> this.laVue = new Vue_AjoutModif_Utilisateurs();
-            case "campagne" -> this.laVue = new Vue_AjoutModif_Campagne();
+            case "campagne" -> this.laVue = new Vue_AjoutModif_Campagne(leModele.retournerListesDeDiffusion());
             case "maison" -> this.laVue = new Vue_AjoutModif_Maison();
             case "appartement" -> this.laVue = new Vue_AjoutModif_Appartement();
             default -> this.laVue = null;
@@ -40,11 +40,11 @@ public class Controleur_AjoutModif implements ActionListener{
         public Controleur_AjoutModif(Utilisateur user, String donnee, Object obj){
         this.userConnecte = user;
         this.typeDonnee = donnee;
-        this.leModele = new Modele_AjoutModif(donnee+"s");
+        this.leModele = new Modele_AjoutModif(donnee);
         switch(donnee){
             case "locataire" -> this.laVue = new Vue_AjoutModif_Locataires((Locataire) obj);
             case "utilisateur" -> this.laVue = new Vue_AjoutModif_Utilisateurs((Utilisateur) obj);
-            case "campagne" -> this.laVue = new Vue_AjoutModif_Campagne((Campagne) obj);
+            case "campagne" -> this.laVue = new Vue_AjoutModif_Campagne(leModele.retournerListesDeDiffusion(), (Campagne) obj);
             case "maison" -> this.laVue = new Vue_AjoutModif_Maison((Maison) obj);
             case "appartement" -> this.laVue = new Vue_AjoutModif_Appartement((Appartement) obj);
             default -> this.laVue = null;
@@ -122,7 +122,7 @@ public class Controleur_AjoutModif implements ActionListener{
                         laVue.quitter();
                         SwingUtilities.invokeLater(new Runnable(){
                             public void run(){
-                                Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion(typeDonnee),new Modele_Gestion(typeDonnee+"s"), userConnecte, typeDonnee);               
+                                Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion(typeDonnee),new Modele_Gestion(typeDonnee), userConnecte, typeDonnee);               
                                 controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                                 controleur.getVue().setSize(500,500);
                                 controleur.getVue().setVisible(true);
@@ -138,7 +138,7 @@ public class Controleur_AjoutModif implements ActionListener{
                     laVue.quitter();
                     SwingUtilities.invokeLater(new Runnable(){
                         public void run(){
-                            Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion(typeDonnee),new Modele_Gestion(typeDonnee+"s"), userConnecte, typeDonnee);                
+                            Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion(typeDonnee),new Modele_Gestion(typeDonnee), userConnecte, typeDonnee);                
                             controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                             controleur.getVue().setSize(500,500);
                             controleur.getVue().setVisible(true);

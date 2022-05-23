@@ -240,4 +240,6 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
         }
         return allPersonnes;
     }*/
+    
+    //public List<ListeDeDiffusion>
 }

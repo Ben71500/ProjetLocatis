@@ -57,9 +57,10 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     
     private Campagne campagne;
     
-    public Vue_AjoutModif_Campagne(){
+    public Vue_AjoutModif_Campagne(ArrayList<String> liste){
         super("Ajouter une campagne");
         titre.setText("Ajouter une campagne");
+        remplirListe(liste);
         initialisation();
         
         panneau_boutons.setLayout(new GridLayout(1,2));
@@ -75,9 +76,10 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         panneau_message.revalidate();*/
     }
     
-    public Vue_AjoutModif_Campagne(Campagne camp) {
+    public Vue_AjoutModif_Campagne(ArrayList<String> liste, Campagne camp) {
         super("Modifier une campagne");
         titre.setText("Modifier une campagne");
+        remplirListe(liste);
         initialisation();
         
         panneau_boutons.setLayout(new GridLayout(1,2));
@@ -139,20 +141,20 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         panneau_message.setVisible(true);panneau_message.validate();
         panneau_gauche.validate();
         
-        ArrayList<String> liste = new ArrayList<>();
-        liste.add("a");
-        liste.add("b");
-        liste.add("c");
-        liste.add("a");
-        liste.add("b");
-        liste.add("c");
-        liste.add("a");
-        liste.add("b");
-        liste.add("c");
-        liste.add("a");
-        liste.add("b");
-        liste.add("c");
-        remplirListe(liste);
+//        ArrayList<String> liste = new ArrayList<>();
+//        liste.add("a");
+//        liste.add("b");
+//        liste.add("c");
+//        liste.add("a");
+//        liste.add("b");
+//        liste.add("c");
+//        liste.add("a");
+//        liste.add("b");
+//        liste.add("c");
+//        liste.add("a");
+//        liste.add("b");
+//        liste.add("c");
+//        remplirListe(liste);
         
         remplirComboBox(heure, 24);
         remplirComboBox(minute, 60);

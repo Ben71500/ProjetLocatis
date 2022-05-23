@@ -53,4 +53,12 @@ public class ListeDeDiffusion{
             s+=liste.get(i).toString()+" - ";
         return s;
     }*/
+    
+    @Override
+    public String toString(){
+        String s ="\n***"+this.id+"\n"+nom+"\n";
+        /*for(int i=0; i<liste.size();i++)
+            s+=liste.get(i).toString()+" - ";*/
+        return s;
+    }
 }

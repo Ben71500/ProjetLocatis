@@ -21,12 +21,12 @@ public class  Modele_Gestion {
     public Modele_Gestion(String lesDonnees) {
         this.donnees = lesDonnees;
         switch(this.donnees){
-            case "locataires" -> dao = new Locataire_DAO(this.connBdd);
-            case "utilisateurs" -> dao = new Utilisateurs_DAO(this.connBdd);
-            case "messages" -> dao = new Message_DAO(this.connBdd);
-            case "appartements" -> dao = new Appartement_DAO(this.connBdd);
-            case "maisons" -> dao = new Maison_DAO(this.connBdd);
-            case "campagnes" -> dao = new Campagne_DAO(this.connBdd);
+            case "locataire" -> dao = new Locataire_DAO(this.connBdd);
+            case "utilisateur" -> dao = new Utilisateurs_DAO(this.connBdd);
+            case "message" -> dao = new Message_DAO(this.connBdd);
+            case "appartement" -> dao = new Appartement_DAO(this.connBdd);
+            case "maison" -> dao = new Maison_DAO(this.connBdd);
+            case "campagne" -> dao = new Campagne_DAO(this.connBdd);
             case "liste" -> dao = new ListeDeDiffusion_DAO(this.connBdd);
         }
     }
@@ -58,12 +58,12 @@ public class  Modele_Gestion {
     public void initialiser(){
         // Patch appliqué car probléme avec les button radio 
         switch(this.donnees){
-            case "locataires": dao = new Locataire_DAO(this.connBdd); modeleLocataires(); break;
-            case "utilisateurs": dao = new Utilisateurs_DAO(this.connBdd); modeleUtilisateurs(); break;
-            case "messages": dao = new Message_DAO(this.connBdd); modeleMessages(); break;
-            case "appartements": dao = new Appartement_DAO(this.connBdd); modeleAppartement(); break;
-            case "maisons": dao = new Maison_DAO(this.connBdd); modeleMaison(); break;
-            case "campagnes": dao = new Campagne_DAO(this.connBdd); modeleCampagne(); break;
+            case "locataire": dao = new Locataire_DAO(this.connBdd); modeleLocataires(); break;
+            case "utilisateur": dao = new Utilisateurs_DAO(this.connBdd); modeleUtilisateurs(); break;
+            case "message": dao = new Message_DAO(this.connBdd); modeleMessages(); break;
+            case "appartement": dao = new Appartement_DAO(this.connBdd); modeleAppartement(); break;
+            case "maison": dao = new Maison_DAO(this.connBdd); modeleMaison(); break;
+            case "campagne": dao = new Campagne_DAO(this.connBdd); modeleCampagne(); break;
             case "liste": dao = new ListeDeDiffusion_DAO(this.connBdd); modeleListe(); break;
         }
     }

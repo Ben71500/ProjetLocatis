@@ -1,7 +1,9 @@
 package MVC;
 
 import DAO.*;
+import Locatis.ListeDeDiffusion;
 import java.sql.Connection;
+import java.util.ArrayList;
 
 public class Modele_AjoutModif{
     
@@ -15,17 +17,17 @@ public class Modele_AjoutModif{
     public Modele_AjoutModif(String lesDonnees) {
         this.donnees = lesDonnees;
         switch(lesDonnees.toUpperCase()){
-            case "LOCATAIRES" ->
+            case "LOCATAIRE" ->
                 dao = new Locataire_DAO(connBdd);
-            case "UTILISATEURS" ->
+            case "UTILISATEUR" ->
                 dao = new Utilisateurs_DAO(connBdd);
-            case "APPARTEMENTS" ->
+            case "APPARTEMENT" ->
                 dao = new Appartement_DAO(connBdd);
-            case "MAISONS" ->
+            case "MAISON" ->
                 dao = new Maison_DAO(connBdd);
-            case "MESSAGES" ->
+            case "MESSAGE" ->
                 dao = new Message_DAO(connBdd);
-            case "CAMPAGNES" ->
+            case "CAMPAGNE" ->
                 dao = new Campagne_DAO(connBdd);
         }
     }
@@ -36,5 +38,23 @@ public class Modele_AjoutModif{
     
     public <O> void modifier(O obj){
         dao.update(obj);
+    }
+    
+    public ArrayList<String> retournerListesDeDiffusion(){
+        DAO listeDiffusionDAO = new ListeDeDiffusion_DAO(this.connBdd);
+        ArrayList<ListeDeDiffusion> listesDeDiffusion = (ArrayList<ListeDeDiffusion>) listeDiffusionDAO.getAll();
+        ArrayList<String> listeNomsListes = new ArrayList<>();
+        for(int i=0;i<listesDeDiffusion.size();i++)
+            listeNomsListes.add(listesDeDiffusion.get(i).getNom());
+        return listeNomsListes;
+    }
+    
+    public ArrayList<String> retournerListesDeDiffusionSelectionnees(){
+        DAO listeDiffusionDAO = new ListeDeDiffusion_DAO(this.connBdd);
+        ArrayList<ListeDeDiffusion> listesDeDiffusion = (ArrayList<ListeDeDiffusion>) listeDiffusionDAO.getAll();
+        ArrayList<String> listeNomsListes = new ArrayList<>();
+        for(int i=0;i<listesDeDiffusion.size();i++)
+            listeNomsListes.add(listesDeDiffusion.get(i).getNom());
+        return listeNomsListes;
     }
 }
