@@ -2,24 +2,24 @@ package Locatis;
 
 public class Message {
     private int id;
+    private String objet;
     private String message;
-    private MyDate dateEcriture;
     
-    public Message(int unID, String unMessage, MyDate uneDateEcriture){
+    public Message(int unID, String unObjet, String unMessage){
         this.id = unID;
+        this.objet = unObjet;
         this.message = unMessage;
-        this.dateEcriture = uneDateEcriture;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getMessage() {
-        return message;
+    public String getObjet() {
+        return objet;
     }
 
-    public MyDate getDateEcriture() {
-        return dateEcriture;
+    public String getMessage() {
+        return message;
     }
 }

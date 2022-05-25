@@ -107,7 +107,7 @@ public class  Modele_Gestion {
     }
     
     public void modeleMessages(){
-        String[] tabEntetes = {"ID","Contenu", "Date d'écriture"};
+        String[] tabEntetes = {"ID","Objet", "Contenu"};
         this.setEntetes(tabEntetes);
         
         //Récupération des messages dans une ArrayList
@@ -117,9 +117,9 @@ public class  Modele_Gestion {
         this.tableau = new String[liste.size()][3];
         for(int i=0; i<liste.size();i++){
             Message unMessage=(Message) liste.get(i);
-            tableau [i][0]=unMessage.getId()+"";
-            tableau [i][1]=unMessage.getMessage();
-            tableau [i][2]=unMessage.getDateEcriture().getDateEcrite()+"";
+            tableau [i][0] = unMessage.getId()+"";
+            tableau [i][1] = unMessage.getObjet();
+            tableau [i][2] = unMessage.getMessage();
         }
     }
     

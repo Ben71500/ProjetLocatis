@@ -31,5 +31,27 @@ public class Panneau_Message extends JPanel{
         centre.setLayout(new BorderLayout());
         centre.add(this.contenu_label, BorderLayout.NORTH);
         centre.add(this.contenu, BorderLayout.CENTER);
-    }   
+    }
+    
+    public Panneau_Message(Message message){
+        this.message = message;
+        
+        this.setLayout(new BorderLayout());
+        this.add(this.haut, BorderLayout.NORTH);
+        this.add(this.centre, BorderLayout.CENTER);
+        haut.setLayout(new GridLayout(1,2));
+        haut.add(objet_label);
+        haut.add(objet);
+        centre.setLayout(new BorderLayout());
+        centre.add(this.contenu_label, BorderLayout.NORTH);
+        centre.add(this.contenu, BorderLayout.CENTER);
+    }
+    
+    public Message getNouveauMessage(){
+        return new Message(0,objet.getText(),contenu.getText());
+    }
+    
+    public Message getMessageModifie(){
+        return new Message(message.getId(),objet.getText(),contenu.getText());
+    }
 }

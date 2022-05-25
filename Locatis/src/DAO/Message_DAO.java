@@ -1,6 +1,5 @@
 package DAO;
 
-import DAO.DAO;
 import Locatis.Message;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -19,10 +18,10 @@ public class Message_DAO extends DAO<Message>{
     public boolean create(Message obj) {
         try {
             Statement statement = this.connection.createStatement();
-            return !statement.execute("insert into message (ID_message, Contenu, Date_Ecriture) values("
+            return !statement.execute("insert into message (ID_message, Objet, Contenu) values("
                     + obj.getId() + " , '"
-                    + obj.getMessage() + "' , "
-                    + obj.getDateEcriture().getDateSQL() + ")"
+                    + obj.getObjet() + "' , '"
+                    + obj.getMessage() + "')"
             );
         } catch (SQLException ex) {
             return false;
@@ -44,9 +43,9 @@ public class Message_DAO extends DAO<Message>{
         try {
             Statement statement = this.connection.createStatement();
             return !statement.execute("update message set "
+                    + "Objet='" + obj.getObjet()+ "' , "
                     + "Contenu='" + obj.getMessage()+ "' , "
-                    + "Date_Ecriture=" + obj.getDateEcriture().getDateSQL()
-                    + " where  ID_message=" + obj.getId()
+                    + " where ID_message=" + obj.getId()
             );
         } catch (SQLException ex) {
             return false;
@@ -60,8 +59,8 @@ public class Message_DAO extends DAO<Message>{
             ResultSet res = statement.executeQuery("Select * from message where ID_message=" + id);
             res.next();
             return new Message(res.getInt("ID_message"),
-                    res.getString("Contenu"),
-                    this.getMyDate(res.getDate("Date_Ecriture"))
+                    res.getString("Objet"),
+                    res.getString("Contenu")
             );
         } catch (SQLException ex) {
             return null;
@@ -72,10 +71,10 @@ public class Message_DAO extends DAO<Message>{
     public Message selectByName(String message) {
         try {
             Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from message where Contenu='" + message + "'");
+            ResultSet res = statement.executeQuery("Select * from message where Objet='" + message + "'");
             res.next();
 
-            return new Message(res.getInt("ID_message"), res.getString("Contenu"), this.getMyDate(res.getDate("Date_Ecriture")));
+            return new Message(res.getInt("ID_message"), res.getString("Objet"), res.getString("Contenu"));
 
         } catch (SQLException ex) {
             return null;
@@ -91,8 +90,8 @@ public class Message_DAO extends DAO<Message>{
             while (res.next()) {
                 allMessages.add(new Message(
                         res.getInt("ID_message"),
-                        res.getString("Contenu"),
-                        this.getMyDate(res.getDate("Date_Ecriture"))
+                        res.getString("Objet"),
+                        res.getString("Contenu")
                 ));
             }
         } catch (SQLException ex) {
@@ -101,4 +100,3 @@ public class Message_DAO extends DAO<Message>{
         return allMessages;
     }    
 }
-

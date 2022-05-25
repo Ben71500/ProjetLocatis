@@ -17,6 +17,9 @@ public class Campagne_DAO extends DAO<Campagne>{
     public boolean create(Campagne obj) {
         try {
             Statement statement = this.connection.createStatement();
+            Contient_DAO contient = new Contient_DAO(this.connection);
+            
+            Recevoir_DAO recevoir = new Recevoir_DAO(this.connection);
             return !statement.execute("insert into campagne (ID_campagne, Titre_campagne, Date_Debut, Date_Fin, Heure, frequence, ID_utilisateur) values("
                     + obj.getId() + " , '"
                     + obj.getTitre() + "' , "
@@ -70,12 +73,17 @@ public class Campagne_DAO extends DAO<Campagne>{
             ResultSet res = statement.executeQuery("Select * from campagne where ID_campagne=" + id);
             res.next();
             Utilisateurs_DAO user = new Utilisateurs_DAO(this.connection);
-            return new Campagne(res.getInt("ID_campagne"),
+            Contient_DAO contient = new Contient_DAO(this.connection);
+            Recevoir_DAO recevoir = new Recevoir_DAO(this.connection);
+            int idCampagne = res.getInt("ID_campagne");
+            return new Campagne(idCampagne,
                     res.getString("Titre_campagne"),
                     this.getMyDate(res.getDate("Date_Debut")),
                     this.getMyDate(res.getDate("Date_Fin")),
                     this.getMyTime(res.getTime("Heure")),
                     res.getString("frequence"),
+                    contient.getMessage(idCampagne),
+                    recevoir.getListes(idCampagne),
                     user.selectById(res.getInt("ID_utilisateur"))
             );
         } catch (SQLException ex) {
@@ -90,8 +98,11 @@ public class Campagne_DAO extends DAO<Campagne>{
             ResultSet res = statement.executeQuery("Select * from campagne where Titre_campagne='" + campagne + "'");
             res.next();
             Utilisateurs_DAO user = new Utilisateurs_DAO(this.connection);
-            return new Campagne(res.getInt("ID_campagne"), res.getString("Titre_campagne"), this.getMyDate(res.getDate("Date_Debut")),
-                    this.getMyDate(res.getDate("Date_Fin")), this.getMyTime(res.getTime("Heure")), res.getString("frequence"), user.selectById(res.getInt("ID_utilisateur")));
+            Contient_DAO contient = new Contient_DAO(this.connection);
+            Recevoir_DAO recevoir = new Recevoir_DAO(this.connection);
+            int idCampagne = res.getInt("ID_campagne");
+            return new Campagne(idCampagne, res.getString("Titre_campagne"), this.getMyDate(res.getDate("Date_Debut")),
+                    this.getMyDate(res.getDate("Date_Fin")), this.getMyTime(res.getTime("Heure")), res.getString("frequence"), contient.getMessage(idCampagne), recevoir.getListes(idCampagne), user.selectById(res.getInt("ID_utilisateur")));
         } catch (SQLException ex) {
             return null;
         }
@@ -103,14 +114,20 @@ public class Campagne_DAO extends DAO<Campagne>{
         try {
             Statement statement = this.connection.createStatement();
             Utilisateurs_DAO user = new Utilisateurs_DAO(this.connection);
+            Contient_DAO contient = new Contient_DAO(this.connection);
+            Recevoir_DAO recevoir = new Recevoir_DAO(this.connection);
             ResultSet res = statement.executeQuery("Select * from campagne");
+            
             while (res.next()) {
-                allCampagnes.add(new Campagne(res.getInt("ID_campagne"),
+                int idCampagne = res.getInt("ID_campagne");
+                allCampagnes.add(new Campagne(idCampagne,
                     res.getString("Titre_campagne"),
                     this.getMyDate(res.getDate("Date_Debut")),
                     this.getMyDate(res.getDate("Date_Fin")),
                     this.getMyTime(res.getTime("Heure")),
                     res.getString("frequence"),
+                    contient.getMessage(idCampagne),
+                    recevoir.getListes(idCampagne),
                     user.selectById(res.getInt("ID_utilisateur"))
                 ));
             }
@@ -126,14 +143,19 @@ public class Campagne_DAO extends DAO<Campagne>{
         try {
             Statement statement = this.connection.createStatement();
             Utilisateurs_DAO user = new Utilisateurs_DAO(this.connection);
+            Contient_DAO contient = new Contient_DAO(this.connection);
+            Recevoir_DAO recevoir = new Recevoir_DAO(this.connection);
             ResultSet res = statement.executeQuery("Select * from campagne where Date_Fin > NOW() AND END != 1 AND Date_Debut < NOW() AND (DateProchainMail <= NOW() OR DateProchainMail = NULL)");
             while (res.next()) {
-                allCampagnes.add(new Campagne(res.getInt("ID_campagne"),
+                int idCampagne = res.getInt("ID_campagne");
+                allCampagnes.add(new Campagne(idCampagne,
                     res.getString("Titre_campagne"),
                     this.getMyDate(res.getDate("Date_Debut")),
                     this.getMyDate(res.getDate("Date_Fin")),
                     this.getMyTime(res.getTime("Heure")),
                     res.getString("frequence"),
+                    contient.getMessage(idCampagne),
+                    recevoir.getListes(idCampagne),
                     this.getMyDate(res.getDate("DateProchainMail")),
                     res.getInt("Terminer"),
                     user.selectById(res.getInt("ID_utilisateur"))
