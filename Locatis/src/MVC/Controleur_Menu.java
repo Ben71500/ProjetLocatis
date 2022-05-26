@@ -108,7 +108,7 @@ public class Controleur_Menu implements ActionListener {
                 laVue.quitter();
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run(){
-                        Controleur_Statistique controleur = new Controleur_Statistique(new Vue_Statistique(), new Modele_Statistique(), userConnecte);                
+                        Controleur_Statistique controleur = new Controleur_Statistique(new Vue_Statistique(), new Modele_Statistique(), userConnecte);
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         controleur.getVue().setSize(800,500);
                         controleur.getVue().setVisible(true);
@@ -117,14 +117,6 @@ public class Controleur_Menu implements ActionListener {
             }
             case "DECONNEXION" -> {
                 laVue.quitter();
-                SwingUtilities.invokeLater(new Runnable(){
-                    public void run(){
-                        Vue_Statistique fenetre=new Vue_Statistique();
-                        fenetre.setBounds(100, 100, 350, 200);
-                        fenetre.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        fenetre.setVisible(true);
-                    }
-                });
             }
             case "QUITTER" -> {
                 laVue.quitter();
