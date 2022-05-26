@@ -12,7 +12,6 @@ import DAO.DAO;
 import DAO.ListeDeDiffusion_DAO;
 import DAO.Locataire_DAO;
 import DAO.Maison_DAO;
-import DAO.Message_DAO;
 import DAO.Utilisateurs_DAO;
 import java.sql.Connection;
 

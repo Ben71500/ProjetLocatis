@@ -13,11 +13,12 @@ public class Campagne {
     private MyDate dateProchainMail;
     private MyTime tempsProchainMail;
     private int terminer;
-    private Message message;
+    private String objetMail;
+    private String messageMail;
     private List<ListeDeDiffusion> listes;
     private Utilisateur utilisateur;
 
-    public Campagne(int id, String titre, MyDate dateDebut, MyDate dateFin, MyTime heure, String frequence, Message message, List<ListeDeDiffusion> listes,Utilisateur utilisateur) {
+    public Campagne(int id, String titre, MyDate dateDebut, MyDate dateFin, MyTime heure, String frequence, String unObjet, String unMessage, List<ListeDeDiffusion> listes,Utilisateur utilisateur) {
         this.id = id;
         this.titre = titre;
         this.dateDebut = dateDebut;
@@ -27,12 +28,13 @@ public class Campagne {
         this.dateProchainMail = null;
         this.tempsProchainMail = null;
         this.terminer = 0;
-        this.message = message;
+        this.objetMail = unObjet;
+        this.messageMail = unMessage;
         this.listes = listes;
         this.utilisateur = utilisateur;
     }
     
-    public Campagne(int id, String titre, MyDate dateDebut, MyDate dateFin, MyTime heure, String frequence, Message message, List<ListeDeDiffusion> listes, MyDate dateProchainEmail, int terminer, Utilisateur utilisateur) {
+    public Campagne(int id, String titre, MyDate dateDebut, MyDate dateFin, MyTime heure, String frequence, String unObjet, String unMessage, List<ListeDeDiffusion> listes, MyDate dateProchainEmail, int terminer, Utilisateur utilisateur) {
         this.id = id;
         this.titre = titre;
         this.dateDebut = dateDebut;
@@ -41,7 +43,8 @@ public class Campagne {
         this.frequence = frequence;
         this.dateProchainMail = dateProchainEmail;
         this.terminer = terminer;
-        this.message = message;
+        this.objetMail = unObjet;
+        this.messageMail = unMessage;
         this.listes = listes;
         this.utilisateur = utilisateur;
     }
@@ -100,6 +103,18 @@ public class Campagne {
 
     public void setTerminer(int terminer) {
         this.terminer = terminer;
+    }
+
+    public String getObjetMail() {
+        return objetMail;
+    }
+
+    public String getMessageMail() {
+        return messageMail;
+    }
+
+    public List<ListeDeDiffusion> getListes() {
+        return listes;
     }
     
     

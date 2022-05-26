@@ -25,8 +25,6 @@ public class Modele_AjoutModif{
                 dao = new Appartement_DAO(connBdd);
             case "MAISON" ->
                 dao = new Maison_DAO(connBdd);
-            case "MESSAGE" ->
-                dao = new Message_DAO(connBdd);
             case "CAMPAGNE" ->
                 dao = new Campagne_DAO(connBdd);
         }
