@@ -21,9 +21,16 @@ public class ModifierMaison extends JFrame implements ActionListener {
     private JPanel panneau_boutons= new JPanel();
     
     private JLabel titre = new JLabel();
-    private JLabel adresse_label = new JLabel ("Adresse : ");
+    private JLabel numeroRue_label = new JLabel ("Numero de Rue : ");
+    private JLabel nomRue_label = new JLabel ("Nom de la rue : ");
+    private JLabel codePostal_label = new JLabel ("Code Postal : ");
+    private JLabel ville_label = new JLabel ("Ville  : ");
     
-    private JTextField adresse = new JTextField();
+    
+    private JTextField numeroRue = new JTextField();
+    private JTextField nom_rue = new JTextField();
+    private JTextField codePostal = new JTextField();
+    private JTextField ville = new JTextField();
     
     private JButton ajouter = new JButton("Ajouter");
     private JButton modifier = new JButton("Modifier");
@@ -64,7 +71,10 @@ public class ModifierMaison extends JFrame implements ActionListener {
         this.pack();
         
         this.uneMaison=maison;
-        adresse.setText(uneMaison.getAdresse());
+        numeroRue.setText(uneMaison.getNumeroRue());
+        nom_rue.setText(uneMaison.getNomRue());
+        codePostal.setText(uneMaison.getCodePostal());
+        ville.setText(uneMaison.getVille());
     }
     
     public void initialisation(){
@@ -81,8 +91,16 @@ public class ModifierMaison extends JFrame implements ActionListener {
         centre.add(this.panneau_boutons, BorderLayout.SOUTH);
         
         panneau_info.setLayout(new GridLayout(6,2));
-        panneau_info.add(this.adresse_label);
-        panneau_info.add(this.adresse);
+        panneau_info.add(this.numeroRue_label);
+        panneau_info.add(this.numeroRue);
+        panneau_info.add(this.nomRue_label);
+        panneau_info.add(this.nom_rue);
+        panneau_info.add(this.codePostal_label);
+        panneau_info.add(this.codePostal);
+        panneau_info.add(this.ville_label);
+        panneau_info.add(this.ville);
+        
+        
     }
     
     @Override
@@ -92,11 +110,11 @@ public class ModifierMaison extends JFrame implements ActionListener {
             if(e.getSource()==ajouter){
                 try{
                     verifierChamps();
-                    uneMaison=new Maison(0 ,adresse.getText());
+                    uneMaison=new Maison(0 ,numeroRue.getText(), nom_rue.getText(), codePostal.getText(), ville.getText());
                     Connection connBdd= ConnectionBDD.getInstance(new Connexion());
                     Maison_DAO nouvelleMaison = new Maison_DAO(connBdd);
                     nouvelleMaison.create(uneMaison);
-                    PopupInformation popup=new PopupInformation("La maison à l'adresse : "+uneMaison.getAdresse()+" a été ajouté.");
+                    PopupInformation popup=new PopupInformation("La maison au nom de rue : "+uneMaison.getNomRue()+" a été ajouté.");
                     reset();
                 }catch (EmptyFieldException ex) {}
             }
@@ -104,12 +122,11 @@ public class ModifierMaison extends JFrame implements ActionListener {
         if(e.getSource()==modifier){
             try {
                 verifierChamps();
-                uneMaison = new Maison(uneMaison.getID() ,adresse.getText());
-                System.out.println(adresse.getText());
+                uneMaison = new Maison(uneMaison.getID() ,numeroRue.getText(), nom_rue.getText(), codePostal.getText(), ville.getText());
                 Connection connBdd= ConnectionBDD.getInstance(new Connexion());
                 Maison_DAO nouvelleMaison = new Maison_DAO(connBdd);
                 nouvelleMaison.update(uneMaison);
-                PopupInformation popup=new PopupInformation("La maison à l'adresse : "+uneMaison.getAdresse()+" a été modifier.");
+                PopupInformation popup=new PopupInformation("La maison au nom de rue : "+uneMaison.getNomRue()+" a été modifier.");
                 this.dispose();
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run(){
@@ -136,12 +153,24 @@ public class ModifierMaison extends JFrame implements ActionListener {
     }
     
     public void reset(){
-        this.adresse.setText("");
+        this.numeroRue.setText("");
+        this.nom_rue.setText("");
+        this.codePostal.setText("");
+        this.ville.setText("");
     }
     
     public void verifierChamps() throws EmptyFieldException{
-        if(this.adresse.getText().equals("")){
-            throw new EmptyFieldException("une adresse");
+        if(this.numeroRue.getText().equals("")){
+            throw new EmptyFieldException("un numero de rue");
+        }
+        if(this.nom_rue.getText().equals("")){
+            throw new EmptyFieldException("un nom de rue");
+        }
+        if(this.codePostal.getText().equals("")){
+            throw new EmptyFieldException("un code postal");
+        }
+        if(this.ville.getText().equals("")){
+            throw new EmptyFieldException("une ville");
         }
     }
 }

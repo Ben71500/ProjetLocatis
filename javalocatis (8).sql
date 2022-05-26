@@ -36,6 +36,8 @@ CREATE TABLE IF NOT EXISTS `campagne` (
   `Heure` time NOT NULL,
   `frequence` varchar(20) NOT NULL,
   `ID_utilisateur` int(20) NOT NULL,
+  `Objet` varchar(20) NOT NULL,
+  `Contenu` varchar(64) NOT NULL,
   PRIMARY KEY (`ID_campagne`),
   UNIQUE KEY `ID_Campagne_IND` (`ID_campagne`),
   KEY `REF_Campa_Utili_IND` (`ID_utilisateur`)
@@ -171,21 +173,6 @@ CREATE TABLE IF NOT EXISTS `logement` (
   `NombreEtage` int(10) DEFAULT NULL,
   PRIMARY KEY (`ID_batiment`),
   UNIQUE KEY `ID_Logement_IND` (`ID_batiment`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `message`
---
-
-DROP TABLE IF EXISTS `message`;
-CREATE TABLE IF NOT EXISTS `message` (
-  `ID_message` int(60) NOT NULL AUTO_INCREMENT,
-  `Objet` varchar(20) NOT NULL,
-  `Contenu` varchar(64) NOT NULL,
-  PRIMARY KEY (`ID_message`),
-  UNIQUE KEY `ID_Message_IND` (`ID_message`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

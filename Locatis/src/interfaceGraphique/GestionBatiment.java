@@ -243,21 +243,27 @@ public class GestionBatiment extends JFrame implements ActionListener{
     }
     
     public String[][] devenirTableauMaison(ArrayList<Maison> liste){
-        String[][] unTableau = new String[liste.size()][2];
+        String[][] unTableau = new String[liste.size()][5];
         for(int i=0; i<liste.size();i++){
             unTableau [i][0]=liste.get(i).getID()+"";
-            unTableau [i][1]=liste.get(i).getAdresse();
+            unTableau [i][1]=liste.get(i).getNumeroRue();
+            unTableau [i][2]=liste.get(i).getNomRue();
+            unTableau [i][3]=liste.get(i).getCodePostal();
+            unTableau [i][4]=liste.get(i).getVille();
         }
         return unTableau;
     }
     
     public String[][] devenirTableauAppartement(ArrayList<Appartement> liste){
-        String[][] unTableau = new String[liste.size()][4];
+        String[][] unTableau = new String[liste.size()][7];
         for(int i=0; i<liste.size();i++){
             unTableau [i][0]=liste.get(i).getID()+"";
-            unTableau [i][1]=liste.get(i).getAdresse()+" ";
-            unTableau [i][2]=""+liste.get(i).getEtage();
-            unTableau [i][3]=liste.get(i).getApart()+"";
+            unTableau [i][1]=liste.get(i).getNumeroRue();
+            unTableau [i][2]=liste.get(i).getNomRue();
+            unTableau [i][3]=liste.get(i).getCodePostal();
+            unTableau [i][4]=liste.get(i).getVille();
+            unTableau [i][5]=""+liste.get(i).getEtage();
+            unTableau [i][6]=liste.get(i).getApart()+"";
         }
         return unTableau;
     }
