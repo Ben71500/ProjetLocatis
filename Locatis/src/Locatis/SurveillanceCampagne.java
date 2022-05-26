@@ -59,7 +59,7 @@ public class SurveillanceCampagne {
                     ListeDeDiffusion liste = dao.getListeDeDiffusionByIdCampagne(cmp.getId());
                     ArrayList<String> listeEmail = new ArrayList<>();
                     for(int j = 0; j < liste.getListe().size(); j++){
-                        listeEmail.add(liste.getListe().get(j).getMail());
+                        //listeEmail.add(liste.getListe().get(j).getMail());
                     }
                     cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();
@@ -91,7 +91,7 @@ public class SurveillanceCampagne {
                     ListeDeDiffusion liste = dao.getListeDeDiffusionByIdCampagne(cmp.getId());
                     ArrayList<String> listeEmail = new ArrayList<>();
                     for(int j = 0; j < liste.getListe().size(); j++){
-                        listeEmail.add(liste.getListe().get(j).getMail());
+                        //listeEmail.add(liste.getListe().get(j).getMail());
                     }
                     cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();
@@ -123,7 +123,7 @@ public class SurveillanceCampagne {
                     ListeDeDiffusion liste = dao.getListeDeDiffusionByIdCampagne(cmp.getId());
                     ArrayList<String> listeEmail = new ArrayList<>();
                     for(int j = 0; j < liste.getListe().size(); j++){
-                        listeEmail.add(liste.getListe().get(j).getMail());
+                        //listeEmail.add(liste.getListe().get(j).getMail());
                     }
                     cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();
@@ -155,7 +155,7 @@ public class SurveillanceCampagne {
                     ListeDeDiffusion liste = dao.getListeDeDiffusionByIdCampagne(cmp.getId());
                     ArrayList<String> listeEmail = new ArrayList<>();
                     for(int j = 0; j < liste.getListe().size(); j++){
-                        listeEmail.add(liste.getListe().get(j).getMail());
+                        //listeEmail.add(liste.getListe().get(j).getMail());
                     }
                     cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();

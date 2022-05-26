@@ -2,7 +2,6 @@ package Locatis;
 
 import java.io.File;
 import java.util.*;
-import javax.activation.*;
 import javax.mail.*;
 import javax.mail.internet.*;
 
