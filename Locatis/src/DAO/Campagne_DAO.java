@@ -66,11 +66,13 @@ public class Campagne_DAO extends DAO<Campagne>{
                     + "Date_Fin =" + obj.getDateFin().getDateSQL()+ " , "
                     + "Heure =" + obj.getHeure().getTimeSQL()+ " , "
                     + "frequence ='" + obj.getFrequence()+ "' , "
-                    + "DateProchainMail='" +obj.getDateProchainMail()+ "', "
-                    + "Terminer='" +obj.getTerminer()+ "', "
-                    + "ID_utilisateur =" + obj.getUtilisateur().getId()
+                    //Math : j'y ai mis en commentaires car ça lance une erreur si on modifie une campagne
+                    // A voire si tu en a besoin pour envoyer les mails :)
+                        /*+ "DateProchainMail='" +obj.getDateProchainMail()+ "', "
+                        + "Terminer='" +obj.getTerminer()+ "', "*/
+                    + "ID_utilisateur =" + obj.getUtilisateur().getId()+" , "
                     + "Objet='" + obj.getObjetMail()+ "' , "
-                    + "Contenu='" + obj.getMessageMail()+ "' , "
+                    + "Contenu='" + obj.getMessageMail()+ "'"
                     + " where  ID_campagne=" + obj.getId()
             );
         } catch (SQLException ex) {

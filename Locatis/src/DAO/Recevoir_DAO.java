@@ -21,9 +21,7 @@ public class Recevoir_DAO {
         try {
             boolean ok = true;
             Statement statement = this.connection.createStatement();
-            ListeDeDiffusion_DAO listeDAO = new ListeDeDiffusion_DAO(this.connection);
             for(int i=0;i<obj.size();i++){
-                listeDAO.create(obj.get(i));
                 ok= !statement.execute("insert into recevoir (ID_campagne, ID_listeDiff) values("
                         + idCampagne + " , "
                         + obj.get(i).getId() + " )"

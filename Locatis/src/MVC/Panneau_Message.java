@@ -56,5 +56,16 @@ public class Panneau_Message extends JPanel{
         return contenu.getText();
     }
     
-    
+    public void reset(){
+        objet.setText("");
+        contenu.setText("");
+    }
+
+    public void setObjet(String objetDuMail) {
+        this.objet.setText(objetDuMail);
+    }
+
+    public void setContenu(String messageDuMail) {
+        this.contenu.setText(messageDuMail);
+    }
 }

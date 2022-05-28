@@ -38,21 +38,31 @@ public class Modele_AjoutModif{
         dao.update(obj);
     }
     
-    public ArrayList<String> retournerListesDeDiffusion(){
+    /*public ArrayList<String> retournerListesDeDiffusion(){
         DAO listeDiffusionDAO = new ListeDeDiffusion_DAO(this.connBdd);
         ArrayList<ListeDeDiffusion> listesDeDiffusion = (ArrayList<ListeDeDiffusion>) listeDiffusionDAO.getAll();
         ArrayList<String> listeNomsListes = new ArrayList<>();
         for(int i=0;i<listesDeDiffusion.size();i++)
             listeNomsListes.add(listesDeDiffusion.get(i).getNom());
         return listeNomsListes;
+    }*/
+    
+    public ArrayList<ListeDeDiffusion> retournerListesDeDiffusion(){
+        DAO listeDiffusionDAO = new ListeDeDiffusion_DAO(this.connBdd);
+        ArrayList<ListeDeDiffusion> listesDeDiffusion = (ArrayList<ListeDeDiffusion>) listeDiffusionDAO.getAll();
+        /*ArrayList<String> listeNomsListes = new ArrayList<>();
+        for(int i=0;i<listesDeDiffusion.size();i++)
+            listeNomsListes.add(listesDeDiffusion.get(i).getNom());
+        return listeNomsListes;*/
+        return listesDeDiffusion;
     }
     
-    public ArrayList<String> retournerListesDeDiffusionSelectionnees(){
+    /*public ArrayList<ListeDeDiffusion> retournerListesDeDiffusionSelectionnees(){
         DAO listeDiffusionDAO = new ListeDeDiffusion_DAO(this.connBdd);
         ArrayList<ListeDeDiffusion> listesDeDiffusion = (ArrayList<ListeDeDiffusion>) listeDiffusionDAO.getAll();
         ArrayList<String> listeNomsListes = new ArrayList<>();
         for(int i=0;i<listesDeDiffusion.size();i++)
             listeNomsListes.add(listesDeDiffusion.get(i).getNom());
         return listeNomsListes;
-    }
+    }*/
 }
