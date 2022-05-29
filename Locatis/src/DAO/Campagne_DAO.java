@@ -17,8 +17,6 @@ public class Campagne_DAO extends DAO<Campagne>{
     public boolean create(Campagne obj) {
         try {
             Statement statement = this.connection.createStatement();
-            
-            
             statement.execute("insert into campagne (ID_campagne, Titre_campagne, Date_Debut, Date_Fin, Heure, frequence, ID_utilisateur, Objet, Contenu) values("
                     + obj.getId() + " , '"
                     + obj.getTitre() + "' , "
@@ -221,4 +219,56 @@ public class Campagne_DAO extends DAO<Campagne>{
         }
     }
     
+    public int getFinishCampagne(){
+        try{    
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select COUNT(ID_campagne) as nombre from campagne where END = 1");
+            res.next();
+            return res.getInt("nombre");
+        }
+        catch(SQLException ex){
+            return -1;
+        }
+
+    }
+    
+    public int getNotBeginCampagne(){
+        try{    
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select COUNT(ID_campagne) as nombre from campagne where Date_Debut < NOW()");
+            res.next();
+            return res.getInt("nombre");
+        }
+        catch(SQLException ex){
+            return -1;
+        }
+
+    }
+    
+    public int getNowCampagne(){
+        try{    
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select COUNT(ID_campagne) as nombre from campagne where END = 0");
+            res.next();
+            return res.getInt("nombre");
+        }
+        catch(SQLException ex){
+            return -1;
+        }
+
+    }
+    
+    public int getAllCampagne(){
+        try{    
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select COUNT(ID_campagne) as nombre from campagne");
+            res.next();
+            return res.getInt("nombre");
+        }
+        catch(SQLException ex){
+            return -1;
+        }
+
+    }
+
 }
