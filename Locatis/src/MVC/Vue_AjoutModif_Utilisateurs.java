@@ -5,6 +5,7 @@ import interfaceGraphique.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import javax.swing.border.Border;
 
 public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModif{
     
@@ -13,6 +14,7 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
     private JPanel centre = new JPanel();
     private JPanel panneau_info = new JPanel();
     private JPanel panneau_boutons= new JPanel();
+    private JPanel panneau_tableau= new JPanel();
     
     private JLabel titre = new JLabel();
     private JLabel login_label = new JLabel ("Login : ");
@@ -78,13 +80,14 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panneau.add(this.haut, BorderLayout.NORTH);
         panneau.add(this.centre, BorderLayout.CENTER);
+        panneau.add(this.panneau_boutons, BorderLayout.SOUTH);
           
         titre.setFont(new java.awt.Font("Tahoma", 1, 24));
         haut.add(this.titre);
         
-        centre.setLayout(new BorderLayout());
-        centre.add(this.panneau_info, BorderLayout.CENTER);
-        centre.add(this.panneau_boutons, BorderLayout.SOUTH);
+        centre.setLayout(new GridLayout(1,2));
+        centre.add(this.panneau_info);
+        centre.add(this.panneau_tableau);
         
         panneau_info.setLayout(new GridLayout(5,2));
         panneau_info.add(this.login_label);
@@ -101,6 +104,43 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         panneau_info.add(email);
         panneau_info.add(password_label);
         panneau_info.add(password);
+        
+        afficherTableau();
+    }
+    
+    public void afficherTableau(){
+        
+        panneau_tableau.setLayout(new GridLayout(6,2));
+        
+        ajouterCase("Administrateur");
+        ajouterCase("Création des utilisateurs, création des destinataires, gestion des droits. Création, planification et lancement des campagnes. Consultation des statistiques.");
+        ajouterCase("Gestionnaire 1");
+        ajouterCase("Création, planification et lancement des campagnes sur les locataires et utilisateurs. Consultation des statistiques.");
+        ajouterCase("Gestionnaire 2");
+        ajouterCase("Création, planification et lancement des campagnes sur les locataires, utilisateurs et gestionnaires. Consultation des statistiques.");
+        ajouterCase("Gestionnaire 3");
+        ajouterCase("Création, planification et lancement des campagnes sur les locataires et toutes les catégories d'utilisateurs. Consultation des statistiques.");
+        ajouterCase("Utilisateur 1");
+        ajouterCase("Consultation des statistiques.");
+        ajouterCase("Utilisateur 2");
+        ajouterCase("Consultation des statistiques. Planification et lancement d’une campagne.");
+    }
+    
+    public void ajouterCase(String s){
+        JTextPane txt = new JTextPane();
+        //txt.setEditable(false);
+        txt.setText(s);
+        
+        /*txt.setLineWrap(true);
+        txt.setWrapStyleWord(true);
+        txt.setOpaque(false);
+        System.out.println(txt.getAlignmentX());
+        System.out.println(txt.getAlignmentY());*/
+        
+        //txt.setAlignmentX(JTextArea.CENTER_ALIGNMENT);
+        //txt.setAlignmentY(JTextArea.CENTER_ALIGNMENT);
+        txt.setBorder(BorderFactory.createLineBorder(Color.black));
+        panneau_tableau.add(txt);
     }
     
     public String getCat(){
@@ -183,7 +223,7 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
     @Override
     public void afficherVue() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setBounds(100, 100, 350, 300);
+        this.setBounds(100, 100, 1000, 500);
         //controleur.getVue().setSize(500,500);
         this.setVisible(true);
     }
