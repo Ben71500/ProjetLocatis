@@ -6,6 +6,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModif{
     
@@ -95,8 +98,11 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         panneau_info.add(this.mdp_label);
         panneau_info.add(this.mdp);
         
-        this.categorie.addItem("Utilisateur");
-        this.categorie.addItem("Gestionnaire");
+        this.categorie.addItem("Utilisateur 1");
+        this.categorie.addItem("Utilisateur 2");
+        this.categorie.addItem("Gestionnaire 1");
+        this.categorie.addItem("Gestionnaire 2");
+        this.categorie.addItem("Gestionnaire 3");
         this.categorie.addItem("Administrateur");
         panneau_info.add(cat_label);
         panneau_info.add(categorie);
@@ -127,18 +133,52 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
     }
     
     public void ajouterCase(String s){
-        JTextPane txt = new JTextPane();
+        //JTextPane txt = new JTextPane();
         //txt.setEditable(false);
+        JTextArea txt = new JTextArea();
+        //JLabel txt = new JLabel();
+        
         txt.setText(s);
         
-        /*txt.setLineWrap(true);
+        //txt.setHorizontalAlignment((int) CENTER_ALIGNMENT);
+        
+        /*StyledDocument doc = txt.getStyledDocument();
+        SimpleAttributeSet centrer = new SimpleAttributeSet();
+	StyleConstants.setAlignment(centrer, StyleConstants.ALIGN_CENTER);
+        doc.setParagraphAttributes(0, s.length(), centrer, false);
+        */
+        
+        /*//Création d'un style
+		SimpleAttributeSet style_normal = new SimpleAttributeSet();
+		StyleConstants.setFontFamily(style_normal, "Calibri");
+		StyleConstants.setFontSize(style_normal, 14);
+
+		//Création du style pour l'affichage du titre
+		SimpleAttributeSet style_titre = new SimpleAttributeSet();
+		style_titre.addAttributes(style_normal);
+		StyleConstants.setForeground(style_titre, Color.BLUE);
+		StyleConstants.setUnderline(style_titre, true);
+		StyleConstants.setFontSize(style_titre, 18);
+		StyleConstants.setBold(style_titre, true);
+		
+		//Création du style qui permet de centrer le texte
+		SimpleAttributeSet centrer = new SimpleAttributeSet();
+		StyleConstants.setAlignment(centrer, StyleConstants.ALIGN_CENTER);
+        */
+        
+        txt.setLineWrap(true);
         txt.setWrapStyleWord(true);
         txt.setOpaque(false);
-        System.out.println(txt.getAlignmentX());
+        txt.setEditable(false);
+        txt.setFocusable(false);
+        
+        //txt.invalidate();
+        /*System.out.println(txt.getAlignmentX());
         System.out.println(txt.getAlignmentY());*/
         
         //txt.setAlignmentX(JTextArea.CENTER_ALIGNMENT);
         //txt.setAlignmentY(JTextArea.CENTER_ALIGNMENT);
+        
         txt.setBorder(BorderFactory.createLineBorder(Color.black));
         panneau_tableau.add(txt);
     }
@@ -146,8 +186,11 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
     public String getCat(){
         return switch (this.categorie.getSelectedItem()+"") {
             case "Administrateur" -> "adm";
-            case "Gestionnaire" -> "ges";
-            case "Utilisateur" -> "uti";
+            case "Gestionnaire 1" -> "ges1";
+            case "Gestionnaire 2" -> "ges2";
+            case "Gestionnaire 3" -> "ges3";
+            case "Utilisateur 1" -> "uti1";
+            case "Utilisateur 2" -> "uti2";
             default -> "";
         };
     }
@@ -223,7 +266,7 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
     @Override
     public void afficherVue() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setBounds(100, 100, 1000, 500);
+        this.setBounds(100, 100, 1000, 700);
         //controleur.getVue().setSize(500,500);
         this.setVisible(true);
     }

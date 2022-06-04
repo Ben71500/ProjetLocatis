@@ -10,10 +10,7 @@ import javax.swing.JLabel;
 
 public class Modele_Connexion {
     
-    public Utilisateur utilisateur;
-    
-    public Modele_Connexion(Utilisateur user){
-        this.utilisateur = user;
+    public Modele_Connexion(){
     }
     
     public Utilisateur trouverUser(String login, String mdp, JLabel message){

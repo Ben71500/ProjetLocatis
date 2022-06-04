@@ -23,7 +23,7 @@ public class Controleur_Menu implements ActionListener {
         uneVue.ajouterEcouteurBouton("Batiments", this);
         uneVue.ajouterEcouteurBouton("Campagnes", this);
         uneVue.ajouterEcouteurBouton("Statistiques", this);
-        uneVue.ajouterEcouteurBouton("Déconnexion", this);
+        uneVue.ajouterEcouteurBouton("Deconnexion", this);
         uneVue.ajouterEcouteurBouton("Quitter", this);
     }
 
@@ -115,8 +115,12 @@ public class Controleur_Menu implements ActionListener {
                     }
                 });
             }
-            case "DECONNEXION" -> {
+            case "SE DÉCONNECTER" -> {
                 laVue.quitter();
+                Controleur_Connexion controleur = new Controleur_Connexion(new Vue_Connexion(), new Modele_Connexion());
+                controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                controleur.getVue().setSize(500,300);
+                controleur.getVue().setVisible(true);
             }
             case "QUITTER" -> {
                 laVue.quitter();
