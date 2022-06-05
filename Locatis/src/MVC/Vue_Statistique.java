@@ -26,8 +26,11 @@ public class Vue_Statistique extends JFrame{
     private JToolBar barre = new JToolBar();
     
     public Vue_Statistique(){
+        this.add(panneau);
+        this.add(centre);
         panneau.add(barre);
         graphiqueDesCampagnesTerminer.setData("campagne");
         centre.add(graphiqueDesCampagnesTerminer.createDemoPanel());
+        this.pack();
     }
 }
