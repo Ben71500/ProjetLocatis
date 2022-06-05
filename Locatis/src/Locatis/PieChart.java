@@ -17,8 +17,8 @@ import org.jfree.ui.RefineryUtilities;
  
 public class PieChart extends ApplicationFrame {
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
-    String data;
-    String titre;
+    private String data;
+    private String titre;
    
    public PieChart( String titre ) {
         super(titre);
@@ -37,22 +37,25 @@ public class PieChart extends ApplicationFrame {
       DefaultPieDataset dataset = new DefaultPieDataset( );
       int total = 0;
       int value = 0;
-       switch(this.titre){
+       switch(this.data){
           case "age" :
                 Locataire_DAO loca = new Locataire_DAO(connBdd);
                 total = loca.selectAllOfLocataire();
                 value = loca.selectAgeBefore18();
-                dataset.setValue( "-18" , (value/total)*100);  
+                dataset.setValue( "-18 ans" , (value/total)*100);  
                 value = loca.selectAgeBetween19and35();
-                dataset.setValue( "19 - 35" , (value/total)*100);   
+                dataset.setValue( "19 - 35 ans" , (value/total)*100);   
                 value = loca.selectAgeBetween36and60();
-                dataset.setValue( "36 - 60" , (value/total)*100);  
+                dataset.setValue( "36 - 60 ans" , (value/total)*100);  
                 value = loca.selectAgeAfter61();
-                dataset.setValue( "61+" , (value/total)*100); 
+                dataset.setValue( "+61 ans" , (value/total)*100); 
                 break;
           case "campagne" : 
                 Campagne_DAO campagne = new Campagne_DAO(connBdd);
                 total = campagne.getAllCampagne();
+                if(total == 0){
+                    total = 1;
+                }
                 value = campagne.getFinishCampagne();
                 dataset.setValue( "Finis" ,(value/total)*100);  
                 value = campagne.getNowCampagne();
@@ -63,6 +66,9 @@ public class PieChart extends ApplicationFrame {
           case "logement" : 
                 Appartement_DAO appart = new Appartement_DAO(connBdd);
                 total = appart.getAllLogement();
+                if(total == 0){
+                    total = 1;
+                }
                 value = appart.getLogementFull();
                 dataset.setValue( "Occupé" , (value/total)*100);  
                 value = appart.getLogementEmpty();
@@ -78,7 +84,7 @@ public class PieChart extends ApplicationFrame {
          dataset,          // data    
          true,             // include legend   
          true, 
-         false);
+         true);
 
       return chart;
    }

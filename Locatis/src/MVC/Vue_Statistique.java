@@ -26,9 +26,15 @@ public class Vue_Statistique extends JFrame{
     private JToolBar barre = new JToolBar();
     
     public Vue_Statistique(){
+        panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        centre.setLayout(new GridLayout(1,3));
         this.add(panneau);
         this.add(centre);
         panneau.add(barre);
+        graphiqueParLogementOccuper.setData("logement");
+        centre.add(graphiqueParLogementOccuper.createDemoPanel());
+        graphiqueParTrancheAge.setData("age");
+        centre.add(graphiqueParTrancheAge.createDemoPanel());
         graphiqueDesCampagnesTerminer.setData("campagne");
         centre.add(graphiqueDesCampagnesTerminer.createDemoPanel());
         this.pack();

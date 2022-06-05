@@ -170,7 +170,10 @@ INSERT INTO `locataire_liste` (`ID_listeDiff`, `ID_locataire`) VALUES
 DROP TABLE IF EXISTS `logement`;
 CREATE TABLE IF NOT EXISTS `logement` (
   `ID_batiment` int(10) NOT NULL AUTO_INCREMENT,
-  `Adresse` varchar(30) NOT NULL,
+  `NumeroRue` varchar(30) NOT NULL,
+  `NomRue` varchar(30) NOT NULL,
+  `Ville` varchar(30) NOT NULL,
+  `CodePostal` varchar(30) NOT NULL,
   `NumeroAppartement` int(10) DEFAULT NULL,
   `NombreEtage` int(10) DEFAULT NULL,
   PRIMARY KEY (`ID_batiment`),
