@@ -14,12 +14,11 @@ import DAO.Locataire_DAO;
 import DAO.Maison_DAO;
 import DAO.Utilisateurs_DAO;
 import java.sql.Connection;
+import javax.swing.JPanel;
 
 public class Modele_Statistique {
-    private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
-    private DAO dao;
     
-    public Modele_Statistique() {
+    public Modele_Statistique(){
         
     }
 }

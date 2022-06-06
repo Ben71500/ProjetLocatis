@@ -104,6 +104,9 @@ public class Controleur_Menu implements ActionListener {
                     }
                 });
             }
+            case "ASSOCIER UN LOGEMENT" -> {
+                laVue.quitter();
+            }
             case "VOIR LES STATISTIQUES" -> {
                 laVue.quitter();
                 SwingUtilities.invokeLater(new Runnable(){

@@ -234,12 +234,17 @@ public class Locataire_DAO extends DAO<Locataire>{
     }
     
     public int selectAgeBefore18(){
+        String requete = "";
         try{
             Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select COUNT(ID_locataire) as nombre FROM Locataire where Age <= 18");
+            requete = "Select COUNT(ID_locataire) as nombre FROM Locataire where Age <= 18";
+            System.out.println(requete+"\n");
+            ResultSet res = statement.executeQuery(requete);
+            res.next();
             return res.getInt("nombre");
         }
         catch(SQLException ex){
+            System.out.println("error"+requete+"\n");
             return -1;
         }
     }

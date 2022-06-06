@@ -21,7 +21,7 @@ public class Vue_Menu extends JFrame {
     private JButton gestionBatiments = new JButton("Gestion des batiments");
     private JButton gestionCampagnes = new JButton("Gestion des campagnes");
     private JButton statistiques = new JButton("Voir les statistiques");
-    //private JButton importer = new JButton("Importer des données");
+    private JButton associer = new JButton("Associer un logement");
     
     private JButton deconnexion = new JButton("Se déconnecter");
     private JButton quitter = new JButton("Quitter");
@@ -79,8 +79,8 @@ public class Vue_Menu extends JFrame {
                 bouton = gestionCampagnes;
             case "STATISTIQUES" ->
                 bouton = statistiques;
-            //case "IMPORTER" ->
-            //    bouton = importer;
+            case "ASSOCIER" ->
+                bouton = associer;
             case "DECONNEXION" ->
                 bouton = deconnexion;
             case "QUITTER" ->
@@ -114,6 +114,7 @@ public class Vue_Menu extends JFrame {
         centre.add(this.gestionLocataires);
         centre.add(this.gestionUtilisateurs);
         centre.add(this.gestionBatiments);
+        centre.add(this.associer);
         centre.add(this.gestionListes);
         centre.add(this.gestionCampagnes);
         centre.add(this.statistiques);
