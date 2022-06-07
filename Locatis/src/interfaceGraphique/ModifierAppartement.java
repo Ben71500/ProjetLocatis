@@ -24,11 +24,17 @@ public class ModifierAppartement extends JFrame implements ActionListener {
     private JPanel panneau_boutons= new JPanel();
     
     private JLabel titre = new JLabel();
-    private JLabel adresse_label = new JLabel ("Adresse : ");
+    private JLabel numeroRue_label = new JLabel ("Numero de Rue : ");
+    private JLabel nomRue_label = new JLabel ("Nom de la rue : ");
+    private JLabel codePostal_label = new JLabel ("Code Postal : ");
+    private JLabel ville_label = new JLabel ("Ville  : ");
     private JLabel numeroEtage = new JLabel ("Numéro d'étage : ");
     private JLabel numeroAppart = new JLabel("Numéro d'appartement : ");
     
-    private JTextField adresse = new JTextField();
+    private JTextField numeroRue = new JTextField();
+    private JTextField nom_rue = new JTextField();
+    private JTextField codePostal = new JTextField();
+    private JTextField ville = new JTextField();
     private JTextField numEtage = new JTextField();
     private JTextField numApart = new JTextField();
     
@@ -71,7 +77,10 @@ public class ModifierAppartement extends JFrame implements ActionListener {
         this.pack();
         
         this.unAppartement=appart;
-        adresse.setText(unAppartement.getAdresse());
+        numeroRue.setText(unAppartement.getNumeroRue());
+        nom_rue.setText(unAppartement.getNomRue());
+        codePostal.setText(unAppartement.getCodePostal());
+        ville.setText(unAppartement.getVille());
         numEtage.setText(unAppartement.getEtage()+"");
         numApart.setText(unAppartement.getApart()+"");
     }
@@ -90,8 +99,14 @@ public class ModifierAppartement extends JFrame implements ActionListener {
         centre.add(this.panneau_boutons, BorderLayout.SOUTH);
         
         panneau_info.setLayout(new GridLayout(6,2));
-        panneau_info.add(this.adresse_label);
-        panneau_info.add(this.adresse);
+        panneau_info.add(this.numeroRue_label);
+        panneau_info.add(this.numeroRue);
+        panneau_info.add(this.nomRue_label);
+        panneau_info.add(this.nom_rue);
+        panneau_info.add(this.codePostal_label);
+        panneau_info.add(this.codePostal);
+        panneau_info.add(this.ville_label);
+        panneau_info.add(this.ville);
         panneau_info.add(this.numeroEtage);
         panneau_info.add(this.numEtage);
         panneau_info.add(this.numeroAppart);
@@ -105,11 +120,11 @@ public class ModifierAppartement extends JFrame implements ActionListener {
             if(e.getSource()==ajouter){
                 try{
                     verifierChamps();
-                    unAppartement=new Appartement(0 ,adresse.getText(), Integer.parseInt(numApart.getText()), Integer.parseInt(numEtage.getText()));
+                    unAppartement=new Appartement(0 ,numeroRue.getText(), nom_rue.getText(), codePostal.getText(), ville.getText(), Integer.parseInt(numApart.getText()), Integer.parseInt(numEtage.getText()));
                     Connection connBdd= ConnectionBDD.getInstance(new Connexion());
                     Appartement_DAO nouvelleAppartement = new Appartement_DAO(connBdd);
                     nouvelleAppartement.create(unAppartement);
-                    PopupInformation popup=new PopupInformation("L'appartement à l'adresse : "+unAppartement.getAdresse()+" au numéro d'étage : "+unAppartement.getEtage()+" et au numéro d'appartement : "+unAppartement.getApart()+ "a été ajouté.");
+                    PopupInformation popup=new PopupInformation("L'appartement au nom de rue : "+unAppartement.getNomRue()+" au numéro d'étage : "+unAppartement.getEtage()+" et au numéro d'appartement : "+unAppartement.getApart()+ "a été ajouté.");
                     reset();
                 }catch (EmptyFieldException ex) {}
             }
@@ -117,11 +132,11 @@ public class ModifierAppartement extends JFrame implements ActionListener {
         if(e.getSource()==modifier){
             try {
                 verifierChamps();
-                unAppartement = new Appartement(unAppartement.getID() ,adresse.getText(), Integer.parseInt(numApart.getText()), Integer.parseInt(numEtage.getText()));
+                unAppartement = new Appartement(unAppartement.getID() ,numeroRue.getText(), nom_rue.getText(), codePostal.getText(), ville.getText(), Integer.parseInt(numApart.getText()), Integer.parseInt(numEtage.getText()));
                 Connection connBdd= ConnectionBDD.getInstance(new Connexion());
                 Appartement_DAO nouvelleAppartement = new Appartement_DAO(connBdd);
                 nouvelleAppartement.update(unAppartement);
-                PopupInformation popup=new PopupInformation("L'appartement à l'adresse : "+unAppartement.getAdresse()+" au numéro d'étage : "+unAppartement.getEtage()+" et au numéro d'appartement : "+unAppartement.getApart()+ "a été modifié.");
+                PopupInformation popup=new PopupInformation("L'appartement au nom de rue : "+unAppartement.getNomRue()+" au numéro d'étage : "+unAppartement.getEtage()+" et au numéro d'appartement : "+unAppartement.getApart()+ "a été modifié.");
                 this.dispose();
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run(){
@@ -148,18 +163,30 @@ public class ModifierAppartement extends JFrame implements ActionListener {
     }
     
     public void reset(){
-        this.adresse.setText("");
+        this.numeroRue.setText("");
+        this.nom_rue.setText("");
+        this.codePostal.setText("");
+        this.ville.setText("");
         this.numEtage.setText("");
         this.numApart.setText("");
     }
     
     public void verifierChamps() throws EmptyFieldException{
-        if(this.adresse.getText().equals("")){
-            throw new EmptyFieldException("une adresse");
-        }else
+        if(this.numeroRue.getText().equals("")){
+            throw new EmptyFieldException("un numero de rue");
+        }
+        if(this.nom_rue.getText().equals("")){
+            throw new EmptyFieldException("un nom de rue");
+        }
+        if(this.codePostal.getText().equals("")){
+            throw new EmptyFieldException("un code postal");
+        }
+        if(this.ville.getText().equals("")){
+            throw new EmptyFieldException("une ville");
+        }
         if(this.numEtage.getText().equals("")){
             throw new EmptyFieldException("un numéro d'étage");
-        }else
+        }
         if(this.numApart.getText().equals("")){
             throw new EmptyFieldException("un numéro d'appart");
         }

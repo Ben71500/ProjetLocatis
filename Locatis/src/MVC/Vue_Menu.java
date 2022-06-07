@@ -1,14 +1,10 @@
 package MVC;
 
-import Locatis.*;
-import interfaceGraphique.*;
+import Locatis.Utilisateur;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
-import javax.swing.table.*;
 
 public class Vue_Menu extends JFrame {
 
@@ -25,7 +21,7 @@ public class Vue_Menu extends JFrame {
     private JButton gestionBatiments = new JButton("Gestion des batiments");
     private JButton gestionCampagnes = new JButton("Gestion des campagnes");
     private JButton statistiques = new JButton("Voir les statistiques");
-    private JButton importer = new JButton("Importer des données");
+    private JButton associer = new JButton("Associer un logement");
     
     private JButton deconnexion = new JButton("Se déconnecter");
     private JButton quitter = new JButton("Quitter");
@@ -47,15 +43,12 @@ public class Vue_Menu extends JFrame {
         titre.setFont(new java.awt.Font("Tahoma", 1, 24));
         haut.add(this.titre);
         
-        //Ajout des différents boutons
-        centre.setLayout(new GridLayout(7,1));
-        centre.add(this.gestionListes);
-        centre.add(this.gestionLocataires);
-        centre.add(this.gestionUtilisateurs);
-        centre.add(this.gestionBatiments);
-        centre.add(this.gestionCampagnes);
-        centre.add(this.statistiques);
-        centre.add(this.importer);
+        //Choix du menu correspondant à la catégorie de l'utilisateur
+        switch(this.userConnecte.getCat()){
+            case "adm" -> menuAdministrateurs();
+            case "ges1", "ges2", "ges3", "uti2" -> menuGestionnaires();
+            case "uti1" -> menuUtilisateurs1();
+        }
         
         panneau_boutons.setLayout(new GridLayout(1,2));
         panneau_boutons.add(deconnexion);
@@ -86,8 +79,8 @@ public class Vue_Menu extends JFrame {
                 bouton = gestionCampagnes;
             case "STATISTIQUES" ->
                 bouton = statistiques;
-            case "IMPORTER" ->
-                bouton = importer;
+            case "ASSOCIER" ->
+                bouton = associer;
             case "DECONNEXION" ->
                 bouton = deconnexion;
             case "QUITTER" ->
@@ -103,5 +96,27 @@ public class Vue_Menu extends JFrame {
     public void quitter() {
         //System.exit(0);
         this.dispose();
+    }
+    
+    public void menuUtilisateurs1(){
+        centre.setLayout(new GridLayout(1,1));
+        centre.add(this.statistiques);
+    }
+    
+    public void menuGestionnaires(){
+        centre.setLayout(new GridLayout(2,1));
+        centre.add(this.gestionCampagnes);
+        centre.add(this.statistiques);
+    }
+    
+    public void menuAdministrateurs(){
+        centre.setLayout(new GridLayout(6,1));
+        centre.add(this.gestionLocataires);
+        centre.add(this.gestionUtilisateurs);
+        centre.add(this.gestionBatiments);
+        centre.add(this.associer);
+        centre.add(this.gestionListes);
+        centre.add(this.gestionCampagnes);
+        centre.add(this.statistiques);
     }
 }

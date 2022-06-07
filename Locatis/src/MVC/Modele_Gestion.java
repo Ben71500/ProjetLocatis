@@ -23,7 +23,6 @@ public class  Modele_Gestion {
         switch(this.donnees){
             case "locataire" -> dao = new Locataire_DAO(this.connBdd);
             case "utilisateur" -> dao = new Utilisateurs_DAO(this.connBdd);
-            case "message" -> dao = new Message_DAO(this.connBdd);
             case "appartement" -> dao = new Appartement_DAO(this.connBdd);
             case "maison" -> dao = new Maison_DAO(this.connBdd);
             case "campagne" -> dao = new Campagne_DAO(this.connBdd);
@@ -60,7 +59,6 @@ public class  Modele_Gestion {
         switch(this.donnees){
             case "locataire": dao = new Locataire_DAO(this.connBdd); modeleLocataires(); break;
             case "utilisateur": dao = new Utilisateurs_DAO(this.connBdd); modeleUtilisateurs(); break;
-            case "message": dao = new Message_DAO(this.connBdd); modeleMessages(); break;
             case "appartement": dao = new Appartement_DAO(this.connBdd); modeleAppartement(); break;
             case "maison": dao = new Maison_DAO(this.connBdd); modeleMaison(); break;
             case "campagne": dao = new Campagne_DAO(this.connBdd); modeleCampagne(); break;
@@ -106,7 +104,7 @@ public class  Modele_Gestion {
         }
     }
     
-    public void modeleMessages(){
+    /*public void modeleMessages(){
         String[] tabEntetes = {"ID","Objet", "Contenu"};
         this.setEntetes(tabEntetes);
         
@@ -121,7 +119,7 @@ public class  Modele_Gestion {
             tableau [i][1] = unMessage.getObjet();
             tableau [i][2] = unMessage.getMessage();
         }
-    }
+    }*/
     
     public void modeleMaison(){
         String[] tabEntetes = {"ID","Numero Rue", "Nom Rue", "Ville", "Code Postal"};
@@ -158,11 +156,11 @@ public class  Modele_Gestion {
     }
     
     public void modeleCampagne(){
-        String[] tabEntetes = {"ID","Titre","Date de début", "Heure", "Date de fin", "Fréquence", "ID Utilisateur"};
+        String[] tabEntetes = {"ID","Titre","Date de début", "Heure", "Date de fin", "Fréquence", "Objet", "Contenu", "ID Utilisateur"};
         this.setEntetes(tabEntetes);
         //Campagne_DAO lesCampagnes = new Campagne_DAO(connBdd);
         liste = (ArrayList<Campagne>)dao.getAll();
-        this.tableau = new String[liste.size()][7];
+        this.tableau = new String[liste.size()][9];
         for(int i=0; i<liste.size();i++){
             Campagne uneCampagne = (Campagne) liste.get(i);
             tableau [i][0]= uneCampagne.getId()+"";
@@ -171,7 +169,10 @@ public class  Modele_Gestion {
             tableau [i][3]= uneCampagne.getHeure().getTimeSQL();
             tableau [i][4]= uneCampagne.getDateFin().getDateEcrite();
             tableau [i][5]= uneCampagne.getFrequence();
-            tableau [i][6]= uneCampagne.getUtilisateur().getId()+"";
+            tableau [i][6] = uneCampagne.getObjetMail();
+            tableau [i][7] = uneCampagne.getMessageMail();
+            tableau [i][8]= uneCampagne.getUtilisateur().getId()+"";
+            
         }
     }
     

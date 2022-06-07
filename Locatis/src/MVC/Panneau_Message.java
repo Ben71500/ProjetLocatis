@@ -1,6 +1,5 @@
 package MVC;
 
-import Locatis.Message;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.*;
@@ -16,7 +15,8 @@ public class Panneau_Message extends JPanel{
     private JTextField objet = new JTextField();
     private JTextArea contenu = new JTextArea();
     
-    private Message message;
+    private String objetMail;
+    private String messageMail;
     
     public Panneau_Message(){
         
@@ -33,8 +33,9 @@ public class Panneau_Message extends JPanel{
         centre.add(this.contenu, BorderLayout.CENTER);
     }
     
-    public Panneau_Message(Message message){
-        this.message = message;
+    public Panneau_Message(String obj, String msg){
+        this.objetMail = obj;
+        this.messageMail = msg;
         
         this.setLayout(new BorderLayout());
         this.add(this.haut, BorderLayout.NORTH);
@@ -46,12 +47,25 @@ public class Panneau_Message extends JPanel{
         centre.add(this.contenu_label, BorderLayout.NORTH);
         centre.add(this.contenu, BorderLayout.CENTER);
     }
-    
-    public Message getNouveauMessage(){
-        return new Message(0,objet.getText(),contenu.getText());
+
+    public String getObjet() {
+        return objet.getText();
+    }
+
+    public String getContenu() {
+        return contenu.getText();
     }
     
-    public Message getMessageModifie(){
-        return new Message(message.getId(),objet.getText(),contenu.getText());
+    public void reset(){
+        objet.setText("");
+        contenu.setText("");
+    }
+
+    public void setObjet(String objetDuMail) {
+        this.objet.setText(objetDuMail);
+    }
+
+    public void setContenu(String messageDuMail) {
+        this.contenu.setText(messageDuMail);
     }
 }

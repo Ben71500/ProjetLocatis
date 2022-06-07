@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 25 mai 2022 à 21:05
+-- Généré le : sam. 28 mai 2022 à 19:35
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -41,29 +41,31 @@ CREATE TABLE IF NOT EXISTS `campagne` (
   PRIMARY KEY (`ID_campagne`),
   UNIQUE KEY `ID_Campagne_IND` (`ID_campagne`),
   KEY `REF_Campa_Utili_IND` (`ID_utilisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `campagne`
 --
 
-INSERT INTO `campagne` (`ID_campagne`, `Titre_campagne`, `Date_Debut`, `Date_Fin`, `Heure`, `frequence`, `ID_utilisateur`) VALUES
-(1, 'titre', '2022-05-25', '2022-05-25', '00:00:00', 'Une seule fois', 3);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `contient`
---
-
-DROP TABLE IF EXISTS `contient`;
-CREATE TABLE IF NOT EXISTS `contient` (
-  `ID_campagne` int(64) NOT NULL,
-  `ID_message` int(60) NOT NULL,
-  PRIMARY KEY (`ID_campagne`,`ID_message`),
-  UNIQUE KEY `ID_CONTIENT_IND` (`ID_campagne`,`ID_message`),
-  KEY `REF_CONTI_Messa_IND` (`ID_message`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `campagne` (`ID_campagne`, `Titre_campagne`, `Date_Debut`, `Date_Fin`, `Heure`, `frequence`, `ID_utilisateur`, `Objet`, `Contenu`) VALUES
+(1, 'titre', '2022-05-25', '2022-05-25', '00:00:00', 'Une seule fois', 3, '', ''),
+(2, 'l2', '2022-05-26', '2022-12-26', '00:00:00', 'Quotidien', 3, 'o2', '222'),
+(3, 't3', '2022-05-28', '2024-05-18', '05:00:00', 'Mensuel', 3, 'obj3', 'txt3'),
+(4, 't4', '2022-05-28', '2022-05-28', '00:00:00', 'Une seule fois', 3, 'obj4', 'txt4'),
+(5, '5', '2022-05-28', '2022-05-28', '00:00:00', 'Une seule fois', 3, '5', '5'),
+(6, '66', '2022-05-28', '2022-05-28', '00:00:00', 'Une seule fois', 3, '6', '6'),
+(7, 't7', '2022-05-28', '2022-05-28', '00:00:00', 'Une seule fois', 3, 'o7', 'txt7'),
+(8, '8', '2022-05-28', '2022-05-28', '00:00:00', 'Une seule fois', 3, '8', '8'),
+(9, '9', '2022-05-28', '2022-05-28', '00:00:00', 'Une seule fois', 3, '9', '9'),
+(10, '10', '2022-05-28', '2022-05-28', '00:00:00', 'Une seule fois', 3, '10', '10'),
+(11, '11', '2022-05-28', '2022-05-28', '00:00:00', 'Une seule fois', 3, '11', '11'),
+(12, '12', '2022-05-28', '2022-05-28', '00:00:00', 'Une seule fois', 3, '12', '12'),
+(13, '13', '2022-05-28', '2022-05-28', '00:00:00', 'Une seule fois', 3, '13', '13'),
+(14, 'titre14', '2022-05-31', '2022-06-07', '02:10:00', 'Quotidien', 3, 'obj14', 'txt14'),
+(15, 't15', '2022-05-28', '2022-05-28', '00:00:00', 'Une seule fois', 3, 'o15', 't15'),
+(16, 'titre16', '2022-05-28', '2022-06-29', '04:00:00', 'Mensuel', 3, 'obj16', ' '),
+(17, 't17', '2022-05-30', '2022-10-26', '23:59:00', 'Mensuel', 3, 'obj17', '17'),
+(19, '18', '2022-05-28', '2022-05-28', '03:02:00', 'Une seule fois', 3, '18', '18');
 
 -- --------------------------------------------------------
 
@@ -168,7 +170,10 @@ INSERT INTO `locataire_liste` (`ID_listeDiff`, `ID_locataire`) VALUES
 DROP TABLE IF EXISTS `logement`;
 CREATE TABLE IF NOT EXISTS `logement` (
   `ID_batiment` int(10) NOT NULL AUTO_INCREMENT,
-  `Adresse` varchar(30) NOT NULL,
+  `NumeroRue` varchar(30) NOT NULL,
+  `NomRue` varchar(30) NOT NULL,
+  `Ville` varchar(30) NOT NULL,
+  `CodePostal` varchar(30) NOT NULL,
   `NumeroAppartement` int(10) DEFAULT NULL,
   `NombreEtage` int(10) DEFAULT NULL,
   PRIMARY KEY (`ID_batiment`),
@@ -189,6 +194,26 @@ CREATE TABLE IF NOT EXISTS `recevoir` (
   UNIQUE KEY `ID_RECEVOIR_IND` (`ID_campagne`,`ID_listeDiff`),
   KEY `REF_RECEV_Locat_IND` (`ID_listeDiff`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `recevoir`
+--
+
+INSERT INTO `recevoir` (`ID_campagne`, `ID_listeDiff`) VALUES
+(14, 1),
+(13, 2),
+(14, 2),
+(13, 3),
+(15, 3),
+(16, 3),
+(14, 5),
+(19, 5),
+(15, 7),
+(16, 7),
+(14, 8),
+(15, 8),
+(17, 8),
+(19, 8);
 
 -- --------------------------------------------------------
 

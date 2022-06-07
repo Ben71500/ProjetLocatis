@@ -232,4 +232,68 @@ public class Locataire_DAO extends DAO<Locataire>{
             return null;
         }
     }
+    
+    public int selectAgeBefore18(){
+        String requete = "";
+        try{
+            Statement statement = this.connection.createStatement();
+            requete = "Select COUNT(ID_locataire) as nombre FROM Locataire where Age <= 18";
+            System.out.println(requete+"\n");
+            ResultSet res = statement.executeQuery(requete);
+            res.next();
+            return res.getInt("nombre");
+        }
+        catch(SQLException ex){
+            System.out.println("error"+requete+"\n");
+            return -1;
+        }
+    }
+    
+    public int selectAgeBetween19and35(){
+        try{
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select COUNT(ID_locataire) as nombre FROM Locataire where Age <= 35 && Age >= 19");
+            res.next();
+            return res.getInt("nombre");
+        }
+        catch(SQLException ex){
+            return -1;
+        }
+    }
+    
+    public int selectAgeBetween36and60(){
+        try{
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select COUNT(ID_locataire) as nombre FROM Locataire where Age <= 60 && Age >= 36");
+            res.next();
+            return res.getInt("nombre");
+        }
+        catch(SQLException ex){
+            return -1;
+        }
+    }
+    
+    public int selectAgeAfter61(){
+        try{
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select COUNT(ID_locataire) as nombre FROM Locataire where Age > 60");
+            res.next();
+            return res.getInt("nombre");
+        }
+        catch(SQLException ex){
+            return -1;
+        }
+    }
+    
+    public int selectAllOfLocataire(){
+        try{
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select COUNT(ID_locataire) as nombre FROM Locataire");
+            res.next();
+            return res.getInt("nombre");
+        }
+        catch(SQLException ex){
+            return -1;
+        }
+    }
 }

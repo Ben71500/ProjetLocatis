@@ -16,16 +16,18 @@ public class Recevoir_DAO {
         this.connection = connection;
     }
     
-    /*
-    public boolean create(int idCampagne, Message obj) {
+    
+    public boolean create(int idCampagne, List<ListeDeDiffusion> obj) {
         try {
+            boolean ok = true;
             Statement statement = this.connection.createStatement();
-            Message_DAO messageDAO = new Message_DAO(this.connection);
-            messageDAO.create(obj);
-            return !statement.execute("insert into contient (ID_campagne, ID_message) values("
-                    + idCampagne + " , "
-                    + obj.getId() + " )"
-            );
+            for(int i=0;i<obj.size();i++){
+                ok= !statement.execute("insert into recevoir (ID_campagne, ID_listeDiff) values("
+                        + idCampagne + " , "
+                        + obj.get(i).getId() + " )"
+                );
+            }
+            return ok;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -35,28 +37,19 @@ public class Recevoir_DAO {
     public boolean delete(int idCampagne) {
         try {
             Statement statement = this.connection.createStatement();
-            return !statement.execute("idelete from contient where ID_campagne=" + idCampagne);
+            return !statement.execute("delete from recevoir where ID_campagne=" + idCampagne);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
     
-    public boolean update(int idCampagne, Message obj) {
-        try {
-            Statement statement = this.connection.createStatement();
-            Message_DAO messageDAO = new Message_DAO(this.connection);
-            messageDAO.create(obj);
-            return !statement.execute("update contient set "
-                    + "ID_campagne = "+ idCampagne + " , "
-                    + "ID_message = "+ obj.getId() + " )"
-            );
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return false;
-        }
+    public boolean update(int idCampagne, List<ListeDeDiffusion> obj) {
+        this.delete(idCampagne);
+        this.create(idCampagne, obj);
+        return true;
     }
-    */
+    
     
     public List<ListeDeDiffusion> getListes(int idCampagne){
         try{
@@ -73,5 +66,4 @@ public class Recevoir_DAO {
             return null;
         }
     }
-    
 }

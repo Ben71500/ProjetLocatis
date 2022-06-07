@@ -23,7 +23,7 @@ public class Controleur_Menu implements ActionListener {
         uneVue.ajouterEcouteurBouton("Batiments", this);
         uneVue.ajouterEcouteurBouton("Campagnes", this);
         uneVue.ajouterEcouteurBouton("Statistiques", this);
-        uneVue.ajouterEcouteurBouton("Déconnexion", this);
+        uneVue.ajouterEcouteurBouton("Deconnexion", this);
         uneVue.ajouterEcouteurBouton("Quitter", this);
     }
 
@@ -104,19 +104,26 @@ public class Controleur_Menu implements ActionListener {
                     }
                 });
             }
-            case "STATISTIQUES" -> {
+            case "ASSOCIER UN LOGEMENT" -> {
                 laVue.quitter();
             }
-            case "DECONNEXION" -> {
+            case "VOIR LES STATISTIQUES" -> {
                 laVue.quitter();
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run(){
-                        SeConnecter fenetre=new SeConnecter();
-                        fenetre.setBounds(100, 100, 350, 200);
-                        fenetre.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        fenetre.setVisible(true);
+                        Controleur_Statistique controleur = new Controleur_Statistique(new Vue_Statistique(), new Modele_Statistique(), userConnecte);
+                        controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        controleur.getVue().setSize(800,500);
+                        controleur.getVue().setVisible(true);
                     }
                 });
+            }
+            case "SE DÉCONNECTER" -> {
+                laVue.quitter();
+                Controleur_Connexion controleur = new Controleur_Connexion(new Vue_Connexion(), new Modele_Connexion());
+                controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                controleur.getVue().setSize(500,300);
+                controleur.getVue().setVisible(true);
             }
             case "QUITTER" -> {
                 laVue.quitter();

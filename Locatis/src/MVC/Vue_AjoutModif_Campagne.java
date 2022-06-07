@@ -57,7 +57,7 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     
     private Campagne campagne;
     
-    public Vue_AjoutModif_Campagne(ArrayList<String> liste){
+    public Vue_AjoutModif_Campagne(ArrayList<ListeDeDiffusion> liste){
         super("Ajouter une campagne");
         titre.setText("Ajouter une campagne");
         remplirListe(liste);
@@ -76,7 +76,7 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         panneau_message.revalidate();*/
     }
     
-    public Vue_AjoutModif_Campagne(ArrayList<String> liste, Campagne camp) {
+    public Vue_AjoutModif_Campagne(ArrayList<ListeDeDiffusion> liste, Campagne camp) {
         super("Modifier une campagne");
         titre.setText("Modifier une campagne");
         remplirListe(liste);
@@ -91,21 +91,17 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         
         this.campagne=camp;
         this.titreCampagne.setText(this.campagne.getTitre());
-        heure.setSelectedItem(this.campagne.getHeure().getHeure());
-        minute.setSelectedItem(this.campagne.getHeure().getMinute());
+        heure.setSelectedIndex(this.campagne.getHeure().getHeure());
+        minute.setSelectedIndex(this.campagne.getHeure().getMinute());
         Calendar calendarDebut = new GregorianCalendar(campagne.getDateDebut().getAnnee(), campagne.getDateDebut().getMois()-1 , campagne.getDateDebut().getJour());
         dateDebut.setCalendar(calendarDebut);
         
         Calendar calendarFin = new GregorianCalendar(campagne.getDateFin().getAnnee(), campagne.getDateFin().getMois()-1 , campagne.getDateFin().getJour());
         dateFin.setCalendar(calendarFin);
-        //dateDebut.setText(user.getLogin());
-        //dateFin.setText(user.getMotDePasse());
-        /*switch(user.getCat()){
-            case "usr" -> frequence.setSelectedIndex(0);
-            case "ges" ->frequence.setSelectedIndex(1);
-            case "adm" -> frequence.setSelectedIndex(2);
-        }*/
         frequence.setSelectedItem(campagne.getFrequence());
+        panneau_message.setObjet(campagne.getObjetMail());
+        panneau_message.setContenu(campagne.getMessageMail());
+        selectionnerListes();
     }
     
     public void initialisation(){
@@ -266,12 +262,21 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         heure.setSelectedIndex(0);
         minute.setSelectedIndex(0);
         listes.clearSelection();
+        this.panneau_message.reset();
+        dateDebut.setCalendar(Calendar.getInstance());
+        dateFin.setCalendar(Calendar.getInstance());
     }
     
     @Override
     public void verifierChamps() throws EmptyFieldException, PasDeLignesSelectionneesException{
         if(this.titreCampagne.getText().equals("")){
             throw new EmptyFieldException("un titre");
+        }else
+        if(this.panneau_message.getObjet().equals("")){
+            throw new EmptyFieldException("un objet");
+        }else
+        if(this.panneau_message.getContenu().equals("")){
+            throw new EmptyFieldException("un message");
         }else
         /*if(this.message.getText().equals("")){
             throw new EmptyFieldException("un message");
@@ -292,12 +297,12 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     @Override
     public Campagne getNouvelObjet() {
         return new Campagne(0, this.titreCampagne.getText(), this.getDateDebut(), this.getDateFin(), this.getHeure(),
-                this.frequence.getSelectedItem().toString(), this.panneau_message.getNouveauMessage(), this.listes.getSelectedValuesList(), null);
+                this.frequence.getSelectedItem().toString(), this.panneau_message.getObjet(), this.panneau_message.getContenu(), this.listes.getSelectedValuesList(), null);
     }
 
     @Override
     public Campagne getObjetModifie() {
-        return new Campagne(this.campagne.getId(), this.titreCampagne.getText(), this.getDateDebut(), this.getDateFin(), this.getHeure(), this.frequence.getSelectedItem().toString(), this.panneau_message.getMessageModifie(), this.listes.getSelectedValuesList(), null);
+        return new Campagne(this.campagne.getId(), this.titreCampagne.getText(), this.getDateDebut(), this.getDateFin(), this.getHeure(), this.frequence.getSelectedItem().toString(), this.panneau_message.getObjet(), this.panneau_message.getContenu(), this.listes.getSelectedValuesList(), null);
     }
 
     @Override
@@ -312,16 +317,8 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
             this.dateFin.setEnabled(true);
     }
     
-    /*public void remplirListe(ArrayList<ListeDeDiffusion> uneListe){
-        DefaultListModel<String> model = new DefaultListModel<>();
-        for(int i=0;i<uneListe.size();i++){
-            model.addElement(uneListe.get(i).toString());
-        }
-        listes = new JList<>(model);
-    }*/
-    
-    public void remplirListe(ArrayList<String> uneListe){
-        DefaultListModel<String> model = new DefaultListModel<>();
+    public void remplirListe(ArrayList<ListeDeDiffusion> uneListe){
+        DefaultListModel<ListeDeDiffusion> model = new DefaultListModel<>();
         for(int i=0;i<uneListe.size();i++){
             model.addElement(uneListe.get(i));
         }
@@ -339,5 +336,17 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     
     public void test(){
         System.out.println("test ok");
+    }
+    
+    public void selectionnerListes(){
+        int[] tableauIndices = new int[campagne.getListes().size()];
+        for(int i=0;i<campagne.getListes().size();i++){
+            for (int j=0; j<listes.getModel().getSize();j++){
+                if(campagne.getListes().get(i).toString().equals(listes.getModel().getElementAt(j).toString())){
+                    tableauIndices[i]=j;
+                }
+            }
+        }
+        listes.setSelectedIndices(tableauIndices);
     }
 }

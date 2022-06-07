@@ -132,4 +132,40 @@ public class Appartement_DAO extends DAO<Appartement>{
         return allAppartement;
     }
     
+    public int getLogementEmpty(){
+        try {
+           Statement statement = this.connection.createStatement();
+           ResultSet res = statement.executeQuery("Select COUNT(ID_batiment) as nombre from logement where ID_batiment NOT IN (Select ID_batiment from habiter)");
+           res.next();
+           return res.getInt("nombre");
+        }
+        catch(SQLException ex){
+            return -1;
+        }
+    }
+    
+    public int getLogementFull(){
+        try {
+           Statement statement = this.connection.createStatement();
+           ResultSet res = statement.executeQuery("Select COUNT(ID_batiment) as nombre from logement where ID_batiment IN (Select ID_batiment from habiter)");
+           res.next();
+           return res.getInt("nombre");
+        }
+        catch(SQLException ex){
+            return -1;
+        }
+    }
+    
+    public int getAllLogement(){
+        try {
+           Statement statement = this.connection.createStatement();
+           ResultSet res = statement.executeQuery("Select COUNT(ID_batiment) as nombre from logement");
+           res.next();
+           return res.getInt("nombre");
+        }
+        catch(SQLException ex){
+            return -1;
+        }
+    }
+    
 }
