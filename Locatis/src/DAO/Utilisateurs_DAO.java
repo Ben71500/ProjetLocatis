@@ -37,7 +37,7 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
                     + obj.getLogin() + "' , '"
                     + obj.getMotDePasse() + "' , '"
                     + obj.getCat() + "' , '"
-                    + obj.getEmail() + "' , '"
+                    + obj.getMail() + "' , '"
                     + obj.getPassword() + "')"
             );
         } catch (SQLException ex) {
@@ -64,7 +64,7 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
                     + "login='" + obj.getLogin()+ "' , "
                     + "Mdp='" + obj.getMotDePasse()+ "' , "
                     + "CAT='" + obj.getCat() +"' , "
-                    + "Email='" + obj.getEmail() + "' , '"
+                    + "Email='" + obj.getMail() + "' , '"
                     + "Password='" + obj.getPassword() + "' "
                     + "where  ID_utilisateur=" + obj.getId()
             );

@@ -70,14 +70,15 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         this.user=unUtilisateur;
         login.setText(user.getLogin());
         mdp.setText(user.getMotDePasse());
-        /*switch(user.getCat()){
-            case "usr" -> categorie.setSelectedIndex(0);
-            case "ges" ->categorie.setSelectedIndex(1);
-            case "adm" -> categorie.setSelectedIndex(2);
-        }*/
-        System.out.println(user.getCat());
-        categorie.setSelectedItem(user.getCat());
-        email.setText(user.getEmail());
+        switch(user.getCat()){
+            case "uti1" -> categorie.setSelectedItem("Utilisateur 1");
+            case "uti2" -> categorie.setSelectedItem("Utilisateur 2");
+            case "ges1" -> categorie.setSelectedItem("Gestionnaire 1");
+            case "ges2" -> categorie.setSelectedItem("Gestionnaire 2");
+            case "ges3" -> categorie.setSelectedItem("Gestionnaire 3");
+            case "adm" -> categorie.setSelectedItem("Administrateur");
+        }
+        email.setText(user.getMail());
         password.setText(user.getPassword());
     }
     
@@ -103,6 +104,7 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         
         this.categorie.addItem("Utilisateur 1");
         this.categorie.addItem("Utilisateur 2");
+        //if(this.utilisateur.)
         this.categorie.addItem("Gestionnaire 1");
         this.categorie.addItem("Gestionnaire 2");
         this.categorie.addItem("Gestionnaire 3");
