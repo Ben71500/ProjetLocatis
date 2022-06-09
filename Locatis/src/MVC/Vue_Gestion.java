@@ -1,5 +1,6 @@
 package MVC;
 
+import Locatis.Utilisateur;
 import interfaceGraphique.*;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -38,10 +39,12 @@ public class Vue_Gestion extends JFrame {
     private JButton inserer = new JButton("Insere");
     
     private String donnees;
+    private Utilisateur utilisateur;
 
-    public Vue_Gestion(String lesDonnees) {
+    public Vue_Gestion(String lesDonnees, Utilisateur user) {
         super("Gestion des "+lesDonnees+"s");
         this.donnees = lesDonnees;
+        this.utilisateur = user;
         
         panneau.setLayout(new BorderLayout());
         panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -63,11 +66,18 @@ public class Vue_Gestion extends JFrame {
         panneau_recherches.add(this.recherche);
         
         //Ajout des différents boutons
-        panneau_boutons.setLayout(new GridLayout(1,4));
-        panneau_boutons.add(ajouter);
-        panneau_boutons.add(modifier);
-        panneau_boutons.add(supprimer);
-        panneau_boutons.add(retour);
+        if(this.utilisateur.getCat().equals("uti2")){
+            panneau_boutons.setLayout(new GridLayout(1,2));
+            panneau_boutons.add(modifier);
+            panneau_boutons.add(retour);
+        }
+        else{
+            panneau_boutons.setLayout(new GridLayout(1,4));
+            panneau_boutons.add(ajouter);
+            panneau_boutons.add(modifier);
+            panneau_boutons.add(supprimer);
+            panneau_boutons.add(retour);
+        }
         
         if(lesDonnees.equals("locataire")){
             panneau_boutons.add(inserer);

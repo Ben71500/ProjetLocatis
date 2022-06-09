@@ -21,33 +21,33 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
     private Utilisateur userConnecte;
     private String typeDonnee;
 
-    public Controleur_Gestion(Vue_Gestion uneVue, Modele_Gestion unModele, Utilisateur user, String donnee) {
+    public Controleur_Gestion(Utilisateur user, String donnee) {
         this.userConnecte = user;
         this.typeDonnee = donnee;
-        this.laVue = uneVue;
-        this.leModele = unModele;
+        this.laVue = new Vue_Gestion(typeDonnee, userConnecte);
+        this.leModele = new Modele_Gestion(typeDonnee, userConnecte);
         this.leModele.initialiser();
         
         //laVue.setTable(leModele.getTable());
         laVue.definirTableau(leModele.getTableau(),leModele.getEntetes());
-        uneVue.ajouterEcouteurBouton("Ajouter", this);
-        uneVue.ajouterEcouteurBouton("Modifier", this);
-        uneVue.ajouterEcouteurBouton("Supprimer", this);
-        uneVue.ajouterEcouteurBouton("Retour", this);
+        laVue.ajouterEcouteurBouton("Ajouter", this);
+        laVue.ajouterEcouteurBouton("Modifier", this);
+        laVue.ajouterEcouteurBouton("Supprimer", this);
+        laVue.ajouterEcouteurBouton("Retour", this);
         if(donnee.equals("locataire")){
-            uneVue.ajouterEcouteurBouton("Insere", this);
+            laVue.ajouterEcouteurBouton("Insere", this);
         }
         if(donnee.equals("appartement")){
-            uneVue.ajouterEcouteurBouton("Appartement", this);
-            uneVue.ajouterEcouteurBouton("Maison", this);
-            uneVue.ajouterEcouteurBouton("Insere", this);
+            laVue.ajouterEcouteurBouton("Appartement", this);
+            laVue.ajouterEcouteurBouton("Maison", this);
+            laVue.ajouterEcouteurBouton("Insere", this);
         }
         if(donnee.equals("maison")){
-            uneVue.ajouterEcouteurBouton("Appartement", this);
-            uneVue.ajouterEcouteurBouton("Maison", this);
-            uneVue.ajouterEcouteurBouton("Insere", this);
+            laVue.ajouterEcouteurBouton("Appartement", this);
+            laVue.ajouterEcouteurBouton("Maison", this);
+            laVue.ajouterEcouteurBouton("Insere", this);
         }
-        uneVue.getRecherche().getDocument().addDocumentListener(effectuerRecherche());
+        laVue.getRecherche().getDocument().addDocumentListener(effectuerRecherche());
     }
 
     public Vue_Gestion getVue() {
@@ -139,7 +139,7 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
                     laVue.quitter();
                     SwingUtilities.invokeLater(new Runnable(){
                         public void run(){ 
-                            Controleur_Menu controleur = new Controleur_Menu(new Vue_Menu(userConnecte),new Modele_Gestion(typeDonnee), userConnecte);
+                            Controleur_Menu controleur = new Controleur_Menu(new Vue_Menu(userConnecte), userConnecte);
                             controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                             controleur.getVue().setBounds(100, 100, 350, 300);
                             controleur.getVue().setVisible(true);

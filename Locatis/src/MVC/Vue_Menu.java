@@ -46,8 +46,9 @@ public class Vue_Menu extends JFrame {
         //Choix du menu correspondant à la catégorie de l'utilisateur
         switch(this.userConnecte.getCat()){
             case "adm" -> menuAdministrateurs();
-            case "ges1", "ges2", "ges3", "uti2" -> menuGestionnaires();
+            case "ges1", "ges2", "ges3" -> menuGestionnaires();
             case "uti1" -> menuUtilisateurs1();
+            case "uti2" -> menuUtilisateurs2();
         }
         
         panneau_boutons.setLayout(new GridLayout(1,2));
@@ -103,9 +104,17 @@ public class Vue_Menu extends JFrame {
         centre.add(this.statistiques);
     }
     
-    public void menuGestionnaires(){
+    public void menuUtilisateurs2(){
         centre.setLayout(new GridLayout(2,1));
         centre.add(this.gestionCampagnes);
+        centre.add(this.statistiques);
+    }
+    
+    public void menuGestionnaires(){
+        centre.setLayout(new GridLayout(4,1));
+        centre.add(this.gestionCampagnes);
+        centre.add(this.gestionUtilisateurs);
+        centre.add(this.gestionListes);
         centre.add(this.statistiques);
     }
     

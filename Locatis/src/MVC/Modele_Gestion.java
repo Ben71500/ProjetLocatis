@@ -14,12 +14,14 @@ public class  Modele_Gestion {
     private String donnees;
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
     private DAO dao;
+    private Utilisateur utilisateur;
 
     /**
      * Constructeur du modèle
      */    
-    public Modele_Gestion(String lesDonnees) {
+    public Modele_Gestion(String lesDonnees, Utilisateur user) {
         this.donnees = lesDonnees;
+        this.utilisateur = user;
         switch(this.donnees){
             case "locataire" -> dao = new Locataire_DAO(this.connBdd);
             case "utilisateur" -> dao = new Utilisateurs_DAO(this.connBdd);
@@ -92,8 +94,16 @@ public class  Modele_Gestion {
         this.setEntetes(tabEntetes);
         
         //Récupération des utilisateurs dans une ArrayList
-        //Utilisateurs_DAO lesUtilisateurs= new Utilisateurs_DAO(connBdd);
-        liste=(ArrayList<Utilisateur>)dao.getAll();
+        
+        Utilisateurs_DAO userDAO = (Utilisateurs_DAO) dao ;
+        switch(this.utilisateur.getCat()){
+            case "ges1" ->
+                liste=(ArrayList<Utilisateur>)userDAO.getAllUtilisateurs();
+            case "ges2" ->
+                liste=(ArrayList<Utilisateur>)userDAO.getAllUtilisateursEtGestionnaires();
+            case "adm", "ges3" ->
+                liste=(ArrayList<Utilisateur>)userDAO.getAll();
+        }
         //On convertit cette ArrayList en tableau à deux dimensions
         this.tableau = new String[liste.size()][3];
         for(int i=0; i<liste.size();i++){

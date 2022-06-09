@@ -65,7 +65,7 @@ public class Controleur_Connexion implements ActionListener {
                 SwingUtilities.invokeLater(new Runnable(){
                     @Override
                     public void run(){
-                        Controleur_Menu controleur = new Controleur_Menu(new Vue_Menu(userConnecte),new Modele_Gestion("locataires"), userConnecte);
+                        Controleur_Menu controleur = new Controleur_Menu(new Vue_Menu(userConnecte), userConnecte);
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         controleur.getVue().setSize(800,500);
                         controleur.getVue().setVisible(true);

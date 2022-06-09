@@ -75,7 +75,10 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
             case "ges" ->categorie.setSelectedIndex(1);
             case "adm" -> categorie.setSelectedIndex(2);
         }*/
+        System.out.println(user.getCat());
         categorie.setSelectedItem(user.getCat());
+        email.setText(user.getEmail());
+        password.setText(user.getPassword());
     }
     
     public void initialisation(){

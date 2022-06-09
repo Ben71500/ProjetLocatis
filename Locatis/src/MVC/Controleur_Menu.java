@@ -9,13 +9,11 @@ import javax.swing.*;
 public class Controleur_Menu implements ActionListener {
 
     private final Vue_Menu laVue;
-    private final Modele_Gestion leModele;
     private Utilisateur userConnecte;
 
-    public Controleur_Menu(Vue_Menu uneVue, Modele_Gestion unModele, Utilisateur user) {
+    public Controleur_Menu(Vue_Menu uneVue, Utilisateur user) {
         this.userConnecte = user;
         this.laVue = uneVue;
-        this.leModele = unModele;
         
         uneVue.ajouterEcouteurBouton("Listes", this);
         uneVue.ajouterEcouteurBouton("Locataires", this);
@@ -30,10 +28,6 @@ public class Controleur_Menu implements ActionListener {
 
     public Vue_Menu getVue() {
         return laVue;
-    }
-
-    public Modele_Gestion getModele() {
-        return leModele;
     }
     
     public Utilisateur getUser(){
@@ -51,7 +45,7 @@ public class Controleur_Menu implements ActionListener {
                     @Override
                     public void run(){
                         //Controleur_Ajout_Listes controleur = new Controleur_Ajout_Listes(new Vue_Ajout_Listes(), new Modele_Ajout_Listes(), userConnecte);
-                        Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("liste"), new Modele_Gestion("liste"), userConnecte, "liste");
+                        Controleur_Gestion controleur = new Controleur_Gestion(userConnecte, "liste");
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         controleur.getVue().setSize(800,500);
                         controleur.getVue().setVisible(true);
@@ -64,7 +58,7 @@ public class Controleur_Menu implements ActionListener {
                 SwingUtilities.invokeLater(new Runnable(){
                     @Override
                     public void run(){
-                        Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("locataire"), new Modele_Gestion("locataire"), userConnecte, "locataire");
+                        Controleur_Gestion controleur = new Controleur_Gestion(userConnecte, "locataire");
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         controleur.getVue().setSize(800,500);
                         controleur.getVue().setVisible(true);
@@ -76,7 +70,7 @@ public class Controleur_Menu implements ActionListener {
                 SwingUtilities.invokeLater(new Runnable(){
                     @Override
                     public void run(){
-                        Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("utilisateur"), new Modele_Gestion("utilisateur"), userConnecte, "utilisateur");
+                        Controleur_Gestion controleur = new Controleur_Gestion(userConnecte, "utilisateur");
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         controleur.getVue().setSize(800,500);
                         controleur.getVue().setVisible(true);
@@ -87,7 +81,7 @@ public class Controleur_Menu implements ActionListener {
                 laVue.quitter();
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run(){
-                        Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("appartement"), new Modele_Gestion("appartement"), userConnecte, "appartement");                
+                        Controleur_Gestion controleur = new Controleur_Gestion(userConnecte, "appartement");                
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         controleur.getVue().setSize(800,500);
                         controleur.getVue().setVisible(true);
@@ -98,7 +92,7 @@ public class Controleur_Menu implements ActionListener {
                 laVue.quitter();
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run(){
-                        Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("campagne"), new Modele_Gestion("campagne"), userConnecte, "campagne");                
+                        Controleur_Gestion controleur = new Controleur_Gestion(userConnecte, "campagne");                
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         controleur.getVue().setSize(800,500);
                         controleur.getVue().setVisible(true);

@@ -67,16 +67,11 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         panneau_boutons.add(ajouter);
         panneau_boutons.add(retour);
         
-        
-        
         this.getContentPane().add(this.panneau);
         this.pack();
-        
-        /*panneau.revalidate();
-        panneau_message.revalidate();*/
     }
     
-    public Vue_AjoutModif_Campagne(ArrayList<ListeDeDiffusion> liste, Campagne camp) {
+    public Vue_AjoutModif_Campagne(ArrayList<ListeDeDiffusion> liste, Campagne camp, Utilisateur user) {
         super("Modifier une campagne");
         titre.setText("Modifier une campagne");
         remplirListe(liste);
@@ -102,6 +97,13 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         panneau_message.setObjet(campagne.getObjetMail());
         panneau_message.setContenu(campagne.getMessageMail());
         selectionnerListes();
+        
+        if(user.getCat().equals("uti2")){
+            titreCampagne.setEnabled(false);
+            panneau_message.getObjet().setEnabled(false);
+            panneau_message.getContenu().setEnabled(false);
+            listes.setEnabled(false);
+        }
     }
     
     public void initialisation(){
@@ -272,10 +274,10 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         if(this.titreCampagne.getText().equals("")){
             throw new EmptyFieldException("un titre");
         }else
-        if(this.panneau_message.getObjet().equals("")){
+        if(this.panneau_message.getObjetTexte().equals("")){
             throw new EmptyFieldException("un objet");
         }else
-        if(this.panneau_message.getContenu().equals("")){
+        if(this.panneau_message.getContenuTexte().equals("")){
             throw new EmptyFieldException("un message");
         }else
         /*if(this.message.getText().equals("")){
@@ -297,12 +299,12 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     @Override
     public Campagne getNouvelObjet() {
         return new Campagne(0, this.titreCampagne.getText(), this.getDateDebut(), this.getDateFin(), this.getHeure(),
-                this.frequence.getSelectedItem().toString(), this.panneau_message.getObjet(), this.panneau_message.getContenu(), this.listes.getSelectedValuesList(), null);
+                this.frequence.getSelectedItem().toString(), this.panneau_message.getObjetTexte(), this.panneau_message.getContenuTexte(), this.listes.getSelectedValuesList(), null);
     }
 
     @Override
     public Campagne getObjetModifie() {
-        return new Campagne(this.campagne.getId(), this.titreCampagne.getText(), this.getDateDebut(), this.getDateFin(), this.getHeure(), this.frequence.getSelectedItem().toString(), this.panneau_message.getObjet(), this.panneau_message.getContenu(), this.listes.getSelectedValuesList(), null);
+        return new Campagne(this.campagne.getId(), this.titreCampagne.getText(), this.getDateDebut(), this.getDateFin(), this.getHeure(), this.frequence.getSelectedItem().toString(), this.panneau_message.getObjetTexte(), this.panneau_message.getContenuTexte(), this.listes.getSelectedValuesList(), null);
     }
 
     @Override

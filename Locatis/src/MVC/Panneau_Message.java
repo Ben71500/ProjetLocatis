@@ -48,11 +48,19 @@ public class Panneau_Message extends JPanel{
         centre.add(this.contenu, BorderLayout.CENTER);
     }
 
-    public String getObjet() {
+    public JTextField getObjet() {
+        return objet;
+    }
+
+    public JTextArea getContenu() {
+        return contenu;
+    }
+
+    public String getObjetTexte() {
         return objet.getText();
     }
 
-    public String getContenu() {
+    public String getContenuTexte() {
         return contenu.getText();
     }
     

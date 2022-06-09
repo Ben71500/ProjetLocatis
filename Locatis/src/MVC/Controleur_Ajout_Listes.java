@@ -183,7 +183,7 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
                         laVue.quitter();
                         SwingUtilities.invokeLater(new Runnable(){
                             public void run(){
-                                Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("liste"),new Modele_Gestion("liste"), userConnecte, "liste");               
+                                Controleur_Gestion controleur = new Controleur_Gestion(userConnecte, "liste");               
                                 controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                                 controleur.getVue().setSize(500,500);
                                 controleur.getVue().setVisible(true);
@@ -216,7 +216,7 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
                     laVue.quitter();
                     SwingUtilities.invokeLater(new Runnable(){
                         public void run(){
-                            Controleur_Gestion controleur = new Controleur_Gestion(new Vue_Gestion("liste"),new Modele_Gestion("liste"), userConnecte, "liste");                
+                            Controleur_Gestion controleur = new Controleur_Gestion(userConnecte, "liste");                
                             controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                             controleur.getVue().setSize(500,500);
                             controleur.getVue().setVisible(true);
