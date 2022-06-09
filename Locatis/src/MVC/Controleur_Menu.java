@@ -22,6 +22,7 @@ public class Controleur_Menu implements ActionListener {
         uneVue.ajouterEcouteurBouton("Utilisateurs", this);
         uneVue.ajouterEcouteurBouton("Batiments", this);
         uneVue.ajouterEcouteurBouton("Campagnes", this);
+        uneVue.ajouterEcouteurBouton("Associer", this);
         uneVue.ajouterEcouteurBouton("Statistiques", this);
         uneVue.ajouterEcouteurBouton("Deconnexion", this);
         uneVue.ajouterEcouteurBouton("Quitter", this);
@@ -106,6 +107,14 @@ public class Controleur_Menu implements ActionListener {
             }
             case "ASSOCIER UN LOGEMENT" -> {
                 laVue.quitter();
+                SwingUtilities.invokeLater(new Runnable(){
+                    public void run(){
+                        Controleur_Association controleur = new Controleur_Association(new Vue_Association(), new Modele_Association(), userConnecte);
+                        controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        controleur.getVue().setSize(800,500);
+                        controleur.getVue().setVisible(true);
+                    }
+                });
             }
             case "VOIR LES STATISTIQUES" -> {
                 laVue.quitter();

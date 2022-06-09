@@ -110,7 +110,7 @@ public class Vue_Menu extends JFrame {
     }
     
     public void menuAdministrateurs(){
-        centre.setLayout(new GridLayout(6,1));
+        centre.setLayout(new GridLayout(7,1));
         centre.add(this.gestionLocataires);
         centre.add(this.gestionUtilisateurs);
         centre.add(this.gestionBatiments);
