@@ -1,25 +1,10 @@
 /*
-<<<<<<< HEAD
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package MVC;
 import javax.swing.*;
-/**
- *
- * @author benja
- */
-public class Vue_Statistique extends JFrame{
-    private JPanel panneau = new JPanel();
-    private JPanel haut = new JPanel();
-    private JPanel centre = new JPanel();
-    JToolBar toolBar = new JToolBar();
-=======
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package MVC;
 
 import Locatis.PieChart;
 import java.awt.BorderLayout;
@@ -155,5 +140,4 @@ public class Vue_Statistique extends JFrame{
         //System.exit(0);
         this.dispose();
     }
->>>>>>> 4533b175b6e44bcd50847eca196dc77f25b53e71
 }
