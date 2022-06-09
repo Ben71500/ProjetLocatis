@@ -41,18 +41,13 @@ public class PieChart extends ApplicationFrame {
           case "age" :
                 Locataire_DAO loca = new Locataire_DAO(connBdd);
                 total = loca.selectAllOfLocataire();
-                System.out.println("total for : "+total+"\n");
                 value = loca.selectAgeBefore18();
-                System.out.println("value for -18 : "+value+" : "+(value/total)*100+"\n");
                 dataset.setValue( "-18 ans" , (value/total)*100);  
                 value = loca.selectAgeBetween19and35();
-                System.out.println("value for 19 - 35 : "+value+" : "+(value/total)*100+"\n");
                 dataset.setValue( "19 - 35 ans" , (value/total)*100);   
                 value = loca.selectAgeBetween36and60();
-                System.out.println("value for 36 - 60 : "+value+" : "+(value/total)*100+"\n");
                 dataset.setValue( "36 - 60 ans" , (value/total)*100);  
                 value = loca.selectAgeAfter61();
-                System.out.println("value for 61+ : "+value+" : "+(value/total)*100+"\n");
                 dataset.setValue( "+61 ans" , (value/total)*100); 
                 break;
           case "campagne" : 
@@ -75,7 +70,6 @@ public class PieChart extends ApplicationFrame {
                     total = 1;
                 }
                 value = appart.getLogementFull();
-                System.out.println((double)(value/total)*100);
                 dataset.setValue( "Occupé" , (value/total)*100);  
                 value = appart.getLogementEmpty();
                 dataset.setValue( "Vide" , (value/total)*100);

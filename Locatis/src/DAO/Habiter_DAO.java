@@ -5,7 +5,9 @@
 package DAO;
 
 import DAO.DAO;
+import Locatis.Appartement;
 import Locatis.Habiter;
+import Locatis.Maison;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,6 +30,7 @@ public class Habiter_DAO extends DAO<Habiter>{
         try {
             Statement etat = this.connection.createStatement();
             String requeteProc ="Insert into habiter VALUES ('"+ obj.getID_batiment()+ "' , '"+ obj.getID_locataire()+ "' );";
+            System.out.println(requeteProc);
             etat.execute(requeteProc);
             return true;
         } catch (SQLException ex) {
@@ -40,7 +43,10 @@ public class Habiter_DAO extends DAO<Habiter>{
     public boolean delete(Habiter obj) {
         try {
             Statement etat = this.connection.createStatement();
-            return !etat.execute("delete from habiter where ID_batiment=" + obj.getID_batiment()+" AND ID_locataire = "+obj.getID_locataire());
+            String requeteProc = "delete from habiter where ID_batiment=" + obj.getID_batiment()+" AND ID_locataire = "+obj.getID_locataire();
+            System.out.println(requeteProc);
+            etat.execute(requeteProc);
+            return true;
         } catch (SQLException ex) {
             return false;
         }
@@ -124,4 +130,48 @@ public class Habiter_DAO extends DAO<Habiter>{
         }
         return allHabiter;
     }
+     
+     public List<Appartement> getAppartementByIdLocataire(int id){
+         List<Appartement> appartement = new ArrayList<>();
+         try {
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select * from logement where ID_batiment in (select ID_batiment from habiter where ID_locataire = "+id+") AND NumeroAppartement is not NULL;");
+            while (res.next()) {
+                    appartement.add(new Appartement(
+                        res.getInt("ID_batiment"),
+                        res.getString("NumeroRue"),
+                        res.getString("NomRue"),
+                        res.getString("Ville"),
+                        res.getString("CodePostal"),
+                        res.getInt("NumeroAppartement"),
+                        res.getInt("NombreEtage")
+                    )
+                );
+            }
+            return appartement;
+        } catch (SQLException ex) {
+            return appartement;
+        }
+     }
+     
+     public List<Maison> getMaisonByIdLocataire(int id){
+         List<Maison> maison = new ArrayList<>();
+         try {
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select * from logement where ID_batiment in (select ID_batiment from habiter where ID_locataire = "+id+") AND NumeroAppartement is NULL;");
+            while (res.next()) {
+                    maison.add(new Maison(
+                        res.getInt("ID_batiment"),
+                        res.getString("NumeroRue"),
+                        res.getString("NomRue"),
+                        res.getString("Ville"),
+                        res.getString("CodePostal")
+                    )
+                );
+            }
+            return maison;
+        } catch (SQLException ex) {
+            return maison;
+        }
+     }
 }

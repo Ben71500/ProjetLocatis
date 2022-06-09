@@ -31,7 +31,6 @@ public class Appartement_DAO extends DAO<Appartement>{
             Statement etat;
             etat = this.connection.createStatement();
             String requeteProc = "Insert into logement VALUES ('"+obj.getID()+"' , '"+obj.getNumeroRue()+"' , '"+obj.getNomRue()+"' , '"+obj.getVille()+"' , '"+obj.getCodePostal()+"' , '"+obj.getApart()+"' , '"+obj.getEtage()+"' );";
-            System.out.println(requeteProc);
             etat.execute(requeteProc);
             return true;
         } catch (SQLException ex) {

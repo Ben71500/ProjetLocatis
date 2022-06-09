@@ -43,21 +43,33 @@ public class Modele_Association {
         return listeAppartement;
     }
     
+    public ArrayList<Appartement> getListeAppartementByIdLocataire(int id){
+        Habiter_DAO habiter = new Habiter_DAO(connBdd);
+        listeAppartement = (ArrayList<Appartement>)habiter.getAppartementByIdLocataire(id);
+        return listeAppartement;
+    }
+    
     public ArrayList<Maison> getListMaison(){
         Maison_DAO maison = new Maison_DAO(connBdd);
         listeMaison = (ArrayList<Maison>)maison.getAll();
         return listeMaison;
     }
     
-    public void insertHabiter(Appartement appart, Locataire loca){
+    public ArrayList<Maison> getListMaisonByIdLocataire(int id){
+        Habiter_DAO habiter = new Habiter_DAO(connBdd);
+        listeMaison = (ArrayList<Maison>)habiter.getMaisonByIdLocataire(id);
+        return listeMaison;
+    }
+    
+    public void insertHabiter(int idBatiment, Locataire loca){
         Habiter_DAO nouvelHabitation=new Habiter_DAO(connBdd);
-        Habiter habitation = new Habiter(loca.getId(), appart.getID());
+        Habiter habitation = new Habiter(idBatiment, loca.getId());
         nouvelHabitation.create(habitation);
     }
     
-    public void removeHabiter(Appartement appart, Locataire loca){
+    public void removeHabiter(int idLogement,Locataire loca){
         Habiter_DAO nouvelHabitation=new Habiter_DAO(connBdd);
-        Habiter habitation = new Habiter(loca.getId(), appart.getID());
+        Habiter habitation = new Habiter(loca.getId(), idLogement);
         nouvelHabitation.delete(habitation);
     }
 }

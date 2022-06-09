@@ -8,6 +8,7 @@ import DAO.ConnectionBDD;
 import DAO.Connexion;
 import DAO.Habiter_DAO;
 import Locatis.Appartement;
+import Locatis.Batiment;
 import Locatis.Habiter;
 import Locatis.Locataire;
 import Locatis.Maison;
@@ -17,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -38,9 +40,11 @@ public class Controleur_Association implements ActionListener{
         this.laVue.ajouterEcouteurBouton("Ajouter", this);
         this.laVue.ajouterEcouteurBouton("Retirer", this);
         this.laVue.ajouterEcouteurBouton("Retour", this);
+        this.laVue.ajouterEcouteurBouton("listeloca", this);
         ArrayList<Locataire> listeLocataire= this.unModele.getListeLocataire();
         for(int i = 0; i < listeLocataire.size(); i++){
             this.laVue.getLocataireList().addItem(listeLocataire.get(i));
+            this.laVue.getLocataireListByLocataire().addItem(listeLocataire.get(i));
         }
         ArrayList<Appartement> listeAppartement = this.unModele.getListeAppartement();
         for(int i = 0; i < listeAppartement.size(); i++){
@@ -50,6 +54,7 @@ public class Controleur_Association implements ActionListener{
         for(int i = 0; i < listeMaison.size(); i++){
             this.laVue.getLogementList().addItem(listeMaison.get(i));
         }
+        remplirComboBoxRetirer();
         //this.laVue.pack();
     }
 
@@ -77,18 +82,28 @@ public class Controleur_Association implements ActionListener{
         this.user = user;
     }
     
-    
-    
-    
     @Override
     public void actionPerformed(ActionEvent e) {
-        JButton source = (JButton) e.getSource();
-        System.out.println("cc");
+        JComboBox cb = new JComboBox();
+        if(e.getSource().getClass().isInstance(cb)){
+            System.out.println("cc");
+            remplirComboBoxRetirer();
+        }
+        else{
+            JButton source = (JButton) e.getSource();
             switch (source.getText().toUpperCase()) {
                 case "AJOUTER" -> {
-                    Appartement batimentSelection = (Appartement) this.laVue.getLogementList().getSelectedItem();
+                    Batiment batimentSelection;
+                    if(this.laVue.getLogementList().getSelectedItem() instanceof Appartement){
+                        batimentSelection = (Appartement) this.laVue.getLogementList().getSelectedItem();
+                    }
+                    else{
+                        batimentSelection = (Maison) this.laVue.getLogementList().getSelectedItem();
+                        
+                    }
                     Locataire locataireSelection = (Locataire) this.laVue.getLocataireList().getSelectedItem();
-                    this.unModele.insertHabiter(batimentSelection, locataireSelection);
+                    this.unModele.insertHabiter(batimentSelection.getID(), locataireSelection);
+                    remplirComboBoxRetirer();
                 }
                 case "RETOUR" -> {
                     this.laVue.quitter();
@@ -101,6 +116,34 @@ public class Controleur_Association implements ActionListener{
                         }
                     });
                 }
+                case "RETIRER" -> {
+                    Batiment batimentSelection;
+                    Locataire locataireSelection = (Locataire) this.laVue.getLocataireListByLocataire().getSelectedItem();
+                    if(this.laVue.getLogementListByLocataire().getSelectedItem() instanceof Appartement){
+                        batimentSelection = (Appartement) this.laVue.getLogementListByLocataire().getSelectedItem();
+                    }
+                    else{
+                        batimentSelection = (Maison) this.laVue.getLogementListByLocataire().getSelectedItem();
+                        
+                    }
+                    this.unModele.removeHabiter(batimentSelection.getID(), locataireSelection);
+                    this.laVue.getLogementListByLocataire().removeItemAt(this.laVue.getLogementListByLocataire().getSelectedIndex());
+                }
+            }
+        }
+        
+    }
+    
+    public void remplirComboBoxRetirer(){
+        this.laVue.getLogementListByLocataire().removeAllItems();
+        Locataire loca = (Locataire) this.laVue.getLocataireListByLocataire().getSelectedItem();
+        ArrayList<Appartement> listeAppart = this.unModele.getListeAppartementByIdLocataire(loca.getId());
+        ArrayList<Maison> listeMaison = this.unModele.getListMaisonByIdLocataire(loca.getId());
+        for(int i = 0; i < listeAppart.size(); i++){
+            this.laVue.getLogementListByLocataire().addItem(listeAppart.get(i));
+        }
+        for(int i = 0; i < listeMaison.size(); i++){
+            this.laVue.getLogementListByLocataire().addItem(listeMaison.get(i));
         }
     }
     

@@ -26,7 +26,7 @@ public class Vue_Statistique extends JFrame{
     private JPanel centre = new JPanel();
     private JPanel bas = new JPanel();
     private PieChart graphiqueParTrancheAge = new PieChart("Tranche d'âge");
-    private PieChart graphiqueParLogementOccuper = new PieChart("Logement occuper");
+    private PieChart graphiqueParLogementOccuper = new PieChart("Logement occupé");
     private PieChart graphiqueDesCampagnesTerminer = new PieChart("Campagne en cours");
     private JButton retour = new JButton("Retour");
     

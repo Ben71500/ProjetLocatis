@@ -7,6 +7,7 @@ package MVC;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -22,10 +23,15 @@ public class Vue_Association extends JFrame{
     private JPanel panneau = new JPanel();
     private JPanel haut = new JPanel();
     private JPanel centre = new JPanel();
+    private JPanel centreHaut = new JPanel();
+    private JPanel centreBas = new JPanel();
     private JPanel bas = new JPanel();
     
     private JComboBox logementList = new JComboBox();
     private JComboBox locataireList = new JComboBox();
+    
+    private JComboBox logementListByLocataire = new JComboBox();
+    private JComboBox locataireListByLocataire = new JComboBox();
     
     private JButton ajouter = new JButton("Ajouter");
     private JButton retirer = new JButton("Retirer");
@@ -34,11 +40,21 @@ public class Vue_Association extends JFrame{
     private JLabel titre = new JLabel("Attribution de logement");
     
     public Vue_Association(){
-        this.haut.add(titre);
-        this.centre.setLayout(new GridLayout(2,2));
-        this.centre.add(logementList);
-        this.centre.add(locataireList);
-        this.centre.add(ajouter);
+        panneau.setLayout(new BorderLayout());
+        panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        this.titre.setFont(new java.awt.Font("Tahoma", 1, 24));
+        this.haut.add(this.titre);
+        this.centre.setLayout(new GridLayout(2,1));
+        this.centre.add(this.centreHaut);
+        this.centre.add(this.centreBas);
+        this.centreHaut.setLayout(new GridLayout(2,2));
+        this.centreHaut.add(locataireList);
+        this.centreHaut.add(logementList);
+        this.centreHaut.add(ajouter);
+        this.centreBas.setLayout(new GridLayout(2,2));
+        this.centreBas.add(locataireListByLocataire);
+        this.centreBas.add(logementListByLocataire);
+        this.centreBas.add(retirer);
         this.bas.add(retour);
         panneau.add(this.haut, BorderLayout.NORTH);
         panneau.add(this.centre, BorderLayout.CENTER);
@@ -107,6 +123,40 @@ public class Vue_Association extends JFrame{
         return retirer;
     }
 
+    public JPanel getCentreHaut() {
+        return centreHaut;
+    }
+
+    public void setCentreHaut(JPanel centreHaut) {
+        this.centreHaut = centreHaut;
+    }
+
+    public JPanel getCentreBas() {
+        return centreBas;
+    }
+
+    public void setCentreBas(JPanel centreBas) {
+        this.centreBas = centreBas;
+    }
+
+    public JComboBox getLogementListByLocataire() {
+        return logementListByLocataire;
+    }
+
+    public void setLogementListByLocataire(JComboBox logementListByLocataire) {
+        this.logementListByLocataire = logementListByLocataire;
+    }
+
+    public JComboBox getLocataireListByLocataire() {
+        return locataireListByLocataire;
+    }
+
+    public void setLocataireListByLocataire(JComboBox locataireListByLocataire) {
+        this.locataireListByLocataire = locataireListByLocataire;
+    }
+    
+    
+
     public void setRetirer(JButton retirer) {
         this.retirer = retirer;
     }
@@ -140,6 +190,10 @@ public class Vue_Association extends JFrame{
         };
         if(bouton != null)
             bouton.addActionListener(listener);
+        if(nomBouton.toUpperCase().equals("LISTELOGEMENT"))
+            this.logementListByLocataire.addActionListener(listener);
+        if(nomBouton.toUpperCase().equals("LISTELOCA"))
+            this.locataireListByLocataire.addActionListener(listener);
     }
     
     public void quitter() {
