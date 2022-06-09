@@ -21,7 +21,7 @@ public class Controleur_AjoutModif implements ActionListener{
         this.leModele = new Modele_AjoutModif(typeDonnee);
         switch(donnee){
             case "locataire" -> this.laVue = new Vue_AjoutModif_Locataires();
-            case "utilisateur" -> this.laVue = new Vue_AjoutModif_Utilisateurs();
+            case "utilisateur" -> this.laVue = new Vue_AjoutModif_Utilisateurs(user);
             case "campagne" -> this.laVue = new Vue_AjoutModif_Campagne(leModele.retournerListesDeDiffusion());
             case "maison" -> this.laVue = new Vue_AjoutModif_Maison();
             case "appartement" -> this.laVue = new Vue_AjoutModif_Appartement();
@@ -43,7 +43,7 @@ public class Controleur_AjoutModif implements ActionListener{
         this.leModele = new Modele_AjoutModif(donnee);
         switch(donnee){
             case "locataire" -> this.laVue = new Vue_AjoutModif_Locataires((Locataire) obj);
-            case "utilisateur" -> this.laVue = new Vue_AjoutModif_Utilisateurs((Utilisateur) obj);
+            case "utilisateur" -> this.laVue = new Vue_AjoutModif_Utilisateurs((Utilisateur) obj, user);
             case "campagne" -> this.laVue = new Vue_AjoutModif_Campagne(leModele.retournerListesDeDiffusion(), (Campagne) obj, userConnecte);
             case "maison" -> this.laVue = new Vue_AjoutModif_Maison((Maison) obj);
             case "appartement" -> this.laVue = new Vue_AjoutModif_Appartement((Appartement) obj);

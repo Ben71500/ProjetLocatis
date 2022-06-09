@@ -37,14 +37,16 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
     private JButton retour = new JButton("Retour");
     
     private Utilisateur user;
+    private Utilisateur userConnecte;
     
     private static final long serialVersionUID = 1L;
     private JPanel pan;
 
     
-    public Vue_AjoutModif_Utilisateurs(){
+    public Vue_AjoutModif_Utilisateurs(Utilisateur utilisateurConnecte){
         super("Ajouter un utilisateur");
         titre.setText("Ajouter un utilisateur");
+        this.userConnecte=utilisateurConnecte;
         initialisation();
         
         panneau_boutons.setLayout(new GridLayout(1,2));
@@ -55,9 +57,10 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         this.pack();
     }
     
-    public Vue_AjoutModif_Utilisateurs(Utilisateur unUtilisateur) {
+    public Vue_AjoutModif_Utilisateurs(Utilisateur unUtilisateur, Utilisateur utilisateurConnecte) {
         super("Modifier un locataire");
         titre.setText("Modifier un Locataire");
+        this.userConnecte=utilisateurConnecte;
         initialisation();
         
         panneau_boutons.setLayout(new GridLayout(1,2));
@@ -104,11 +107,13 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         
         this.categorie.addItem("Utilisateur 1");
         this.categorie.addItem("Utilisateur 2");
-        //if(this.utilisateur.)
-        this.categorie.addItem("Gestionnaire 1");
-        this.categorie.addItem("Gestionnaire 2");
-        this.categorie.addItem("Gestionnaire 3");
-        this.categorie.addItem("Administrateur");
+        if(!this.userConnecte.getCat().equals("ges1")){
+            this.categorie.addItem("Gestionnaire 1");
+            this.categorie.addItem("Gestionnaire 2");
+            this.categorie.addItem("Gestionnaire 3");
+            if(!this.userConnecte.getCat().equals("ges2"))
+                this.categorie.addItem("Administrateur");
+        }
         panneau_info.add(cat_label);
         panneau_info.add(categorie);
         panneau_info.add(email_label);
