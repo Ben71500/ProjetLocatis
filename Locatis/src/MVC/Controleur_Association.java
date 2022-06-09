@@ -109,7 +109,7 @@ public class Controleur_Association implements ActionListener{
                     this.laVue.quitter();
                     SwingUtilities.invokeLater(new Runnable(){
                         public void run(){ 
-                            Controleur_Menu controleur = new Controleur_Menu(new Vue_Menu(user),new Modele_Gestion("locataire"), user);
+                            Controleur_Menu controleur = new Controleur_Menu(new Vue_Menu(user), user);
                             controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                             controleur.getVue().setBounds(100, 100, 350, 300);
                             controleur.getVue().setVisible(true);

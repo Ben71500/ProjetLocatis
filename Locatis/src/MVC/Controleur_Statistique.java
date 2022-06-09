@@ -52,7 +52,7 @@ public class Controleur_Statistique implements ActionListener{
                     @Override
                     public void run(){
                         //Controleur_Ajout_Listes controleur = new Controleur_Ajout_Listes(new Vue_Ajout_Listes(), new Modele_Ajout_Listes(), userConnecte);
-                        Controleur_Menu controleur = new Controleur_Menu(new Vue_Menu(userConnecte),new Modele_Gestion("locataires"), userConnecte);
+                        Controleur_Menu controleur = new Controleur_Menu(new Vue_Menu(userConnecte), userConnecte);
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         controleur.getVue().setSize(800,500);
                         controleur.getVue().setVisible(true);
