@@ -23,18 +23,21 @@ public class Modele_Ajout_Listes {
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
     private ArrayList<Integer> listeCasesCochees = new ArrayList<>();
     private String donnees;
+    private Utilisateur utilisateur;
     /*private DAO dao;*/
 
     /**
      * Constructeur du modèle
      */    
-    public Modele_Ajout_Listes(String lesDonnees) {
+    public Modele_Ajout_Listes(String lesDonnees, Utilisateur user) {
         this.donnees = lesDonnees;
+        this.utilisateur = user;
         choisirModele();
     }
     
-    public Modele_Ajout_Listes(String lesDonnees, ArrayList<Integer> listeId) {
+    public Modele_Ajout_Listes(String lesDonnees, Utilisateur user, ArrayList<Integer> listeId) {
         this.donnees = lesDonnees;
+        this.utilisateur = user;
         this.listeCasesCochees = listeId;
         choisirModele();
     }
@@ -76,7 +79,15 @@ public class Modele_Ajout_Listes {
         
         //Récupération des utilisateurs dans une ArrayList
         Utilisateurs_DAO utilisateurs= new Utilisateurs_DAO(connBdd);
-        liste=(ArrayList<Utilisateur>)utilisateurs.getAll();
+        switch(this.utilisateur.getCat()){
+            case "ges1" ->
+                liste=(ArrayList<Utilisateur>)utilisateurs.getAllUtilisateurs();
+            case "ges2" ->
+                liste=(ArrayList<Utilisateur>)utilisateurs.getAllUtilisateursEtGestionnaires();
+            case "adm", "ges3" ->
+                liste=(ArrayList<Utilisateur>)utilisateurs.getAll();
+        }
+        
         //On convertit cette ArrayList en tableau à deux dimensions
         this.tableau = new Object[liste.size()][4];
         for(int i=0; i<liste.size();i++){

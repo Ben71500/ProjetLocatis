@@ -31,7 +31,7 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
     public Controleur_Ajout_Listes(Utilisateur user) {
         this.userConnecte = user;
         this.laVue = new Vue_Ajout_Listes("locataire");
-        this.leModele = new Modele_Ajout_Listes("locataire");
+        this.leModele = new Modele_Ajout_Listes("locataire", userConnecte);
         
         laVue.ajouterEcouteur("Ajouter", this);
         laVue.ajouterEcouteur("Selectionner tout", this);
@@ -67,7 +67,7 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
     public Controleur_Ajout_Listes(Utilisateur user, ListeDeDiffusion listeDiffusion) {
         this.userConnecte = user;
         this.laVue = new Vue_Ajout_Listes(listeDiffusion.getTypeListe(), listeDiffusion);
-        this.leModele = new Modele_Ajout_Listes(listeDiffusion.getTypeListe(), listeDiffusion.getListeId());
+        this.leModele = new Modele_Ajout_Listes(listeDiffusion.getTypeListe(), userConnecte, listeDiffusion.getListeId());
         laVue.ajouterEcouteur("Ajouter", this);
         laVue.ajouterEcouteur("Modifier", this);
         laVue.ajouterEcouteur("Selectionner tout", this);

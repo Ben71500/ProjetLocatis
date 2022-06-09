@@ -30,13 +30,14 @@ public class ListeDeDiffusion{
         this.liste = liste;
     }
     
-    public String getTypeListe() {
-        if(liste.get(0) instanceof Locataire)
-            return"locataire";
-        if(liste.get(0) instanceof Utilisateur)
-            return"utilisateur";
-        else
-            return "";
+    public String getTypeListe(){
+        if(liste.size()>0){
+            if(liste.get(0) instanceof Locataire)
+                return"locataire";
+            if(liste.get(0) instanceof Utilisateur)
+                return"utilisateur";
+        }
+        return "locataire";
     }
     
     public ArrayList<Integer> getListeId(){

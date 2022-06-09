@@ -131,11 +131,11 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         ajouterCase("Administrateur");
         ajouterCase("Création des utilisateurs, création des destinataires, gestion des droits. Création, planification et lancement des campagnes. Consultation des statistiques.");
         ajouterCase("Gestionnaire 1");
-        ajouterCase("Création, planification et lancement des campagnes sur les locataires et utilisateurs. Consultation des statistiques.");
+        ajouterCase("Création, planification et lancement des campagnes. Gestion des utilisateurs. Consultation des statistiques.");
         ajouterCase("Gestionnaire 2");
-        ajouterCase("Création, planification et lancement des campagnes sur les locataires, utilisateurs et gestionnaires. Consultation des statistiques.");
+        ajouterCase("Création, planification et lancement des campagnes. Gestion des utilisateurs et gestionnaires. Consultation des statistiques.");
         ajouterCase("Gestionnaire 3");
-        ajouterCase("Création, planification et lancement des campagnes sur les locataires et toutes les catégories d'utilisateurs. Consultation des statistiques.");
+        ajouterCase("Création, planification et lancement des campagnes. Gestion de toutes les catégories d'utilisateurs. Consultation des statistiques.");
         ajouterCase("Utilisateur 1");
         ajouterCase("Consultation des statistiques.");
         ajouterCase("Utilisateur 2");
