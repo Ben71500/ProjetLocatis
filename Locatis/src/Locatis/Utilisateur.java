@@ -35,7 +35,8 @@ public class Utilisateur implements Personne{
         this.login = login;
     }
 
-    public String getEmail() {
+    @Override
+    public String getMail(){
         return email;
     }
 

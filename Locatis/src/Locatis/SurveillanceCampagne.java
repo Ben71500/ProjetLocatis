@@ -59,11 +59,11 @@ public class SurveillanceCampagne {
                     ListeDeDiffusion liste = dao.getListeDeDiffusionByIdCampagne(cmp.getId());
                     ArrayList<String> listeEmail = new ArrayList<>();
                     for(int j = 0; j < liste.getListe().size(); j++){
-                        //listeEmail.add(liste.getListe().get(j).getMail());
+                        listeEmail.add(liste.getListe().get(j).getMail());
                     }
                     cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();
-                    mail.sendEmail(cmp.getUtilisateur().getEmail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), "coucou", cmp.getListeEmail());
+                    mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), "coucou", cmp.getListeEmail());
                     
                     cmp.setDateProchainMail(new MyDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
                     
@@ -95,7 +95,7 @@ public class SurveillanceCampagne {
                     }
                     cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();
-                    mail.sendEmail(cmp.getUtilisateur().getEmail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), "coucou", cmp.getListeEmail());
+                    mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), "coucou", cmp.getListeEmail());
                     
                     cmp.setDateProchainMail(new MyDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
                     
@@ -127,7 +127,7 @@ public class SurveillanceCampagne {
                     }
                     cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();
-                    mail.sendEmail(cmp.getUtilisateur().getEmail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), "coucou", cmp.getListeEmail());
+                    mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), "coucou", cmp.getListeEmail());
                     
                     cmp.setDateProchainMail(new MyDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
                     
@@ -159,7 +159,7 @@ public class SurveillanceCampagne {
                     }
                     cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();
-                    mail.sendEmail(cmp.getUtilisateur().getEmail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), "coucou", cmp.getListeEmail());
+                    mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), "coucou", cmp.getListeEmail());
                     
                     cmp.setDateProchainMail(new MyDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
                     

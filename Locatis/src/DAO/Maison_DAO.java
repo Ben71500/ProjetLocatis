@@ -6,6 +6,7 @@
 package DAO;
 
 import DAO.DAO;
+import Locatis.Appartement;
 import Locatis.Maison;
 import java.sql.Connection;
 import java.sql.Date;
@@ -49,6 +50,7 @@ public class Maison_DAO extends DAO<Maison>{
     public boolean delete(Maison obj) {
         try {
             Statement etat;
+            deleteAllLogementByIdLogementId(obj);
             etat = this.connection.createStatement();
             String requeteProc ="DELETE FROM logement where ID_batiment = "+obj.getID()+" ;";
             etat.execute(requeteProc);
@@ -134,5 +136,14 @@ public class Maison_DAO extends DAO<Maison>{
             return allMaison;
         }
         return allMaison;
+    }
+    
+    public boolean deleteAllLogementByIdLogementId(Maison obj){
+        try {
+            Statement etat = this.connection.createStatement();
+            return !etat.execute("delete from habiter where ID_batiment=" + obj.getID());
+        } catch (SQLException ex) {
+            return false;
+        }
     }
 }

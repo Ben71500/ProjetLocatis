@@ -63,6 +63,7 @@ public class Locataire_DAO extends DAO<Locataire>{
         try {
             Statement etat = this.connection.createStatement();
             //return !etat.execute("delete from locataire, habiter where ID_locataire=" + obj.getId());
+            deleteAllLogementByIdLocataire(obj);
             return !etat.execute("delete from locataire where ID_locataire=" + obj.getId()) /*&& !etat.execute("delete from habiter where ID_locataire="+obj.getId())*/;
         } catch (SQLException ex) {
             return false;
@@ -294,6 +295,15 @@ public class Locataire_DAO extends DAO<Locataire>{
         }
         catch(SQLException ex){
             return -1;
+        }
+    }
+    
+    public boolean deleteAllLogementByIdLocataire(Locataire obj){
+        try {
+            Statement etat = this.connection.createStatement();
+            return !etat.execute("delete from habiter where ID_locataire=" + obj.getId());
+        } catch (SQLException ex) {
+            return false;
         }
     }
 }
