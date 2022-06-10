@@ -19,7 +19,6 @@ public class Locataire_DAO extends DAO<Locataire>{
         super(connection);
     }
 
-    
     public Locataire selectByIdCampagne(int id) {
 
         try {
@@ -62,9 +61,9 @@ public class Locataire_DAO extends DAO<Locataire>{
     public boolean delete(Locataire obj) {
         try {
             Statement etat = this.connection.createStatement();
-            //return !etat.execute("delete from locataire, habiter where ID_locataire=" + obj.getId());
             deleteAllLogementByIdLocataire(obj);
-            return !etat.execute("delete from locataire where ID_locataire=" + obj.getId()) /*&& !etat.execute("delete from habiter where ID_locataire="+obj.getId())*/;
+            deleteAllListesByIdLocataire(obj);
+            return !etat.execute("delete from locataire where ID_locataire=" + obj.getId());
         } catch (SQLException ex) {
             return false;
         }
@@ -302,6 +301,16 @@ public class Locataire_DAO extends DAO<Locataire>{
         try {
             Statement etat = this.connection.createStatement();
             return !etat.execute("delete from habiter where ID_locataire=" + obj.getId());
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+    
+    public boolean deleteAllListesByIdLocataire(Locataire obj){
+        try {
+            Statement etat = this.connection.createStatement();
+            return !etat.execute("delete from locataire_liste where ID_locataire=" + obj.getId());
         } catch (SQLException ex) {
             return false;
         }

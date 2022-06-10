@@ -50,6 +50,7 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
     public boolean delete(Utilisateur uti) {
         try {
             Statement statement = this.connection.createStatement();
+            deleteAllListesByIdUtilisateur(uti);
             return !statement.execute("delete from utilisateur where ID_utilisateur=" + uti.getId());
         } catch (SQLException ex) {
             return false;
@@ -194,5 +195,14 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
             return allUtilisateurs;
         }
         return allUtilisateurs;
+    }
+    
+    public boolean deleteAllListesByIdUtilisateur(Utilisateur obj){
+        try {
+            Statement etat = this.connection.createStatement();
+            return !etat.execute("delete from utilisateur_liste where ID_utilisateur=" + obj.getId());
+        } catch (SQLException ex) {
+            return false;
+        }
     }
 }

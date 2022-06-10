@@ -68,7 +68,9 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     @Override
     public boolean delete(ListeDeDiffusion obj) {
         try {
-            deleteListe(obj.getId(), obj.getTypeListe()+"_liste");
+            deleteListe(obj.getId());
+            Recevoir_DAO recevoir = new Recevoir_DAO(this.connection);
+            recevoir.deleteByListe(obj.getId());
             Statement etat = this.connection.createStatement();
             return !etat.execute("delete from listediffusion where ID_listeDiff=" + obj.getId());
         } catch (SQLException ex) {
@@ -77,10 +79,10 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
         }
     }
     
-    public boolean deleteListe(int id, String table) {
+    public boolean deleteListe(int id) {
         try {
             Statement etat = this.connection.createStatement();
-            return !etat.execute("delete from "+table+" where ID_listeDiff=" + id);
+            return !etat.execute("delete from locataire_liste where ID_listeDiff=" + id) && !etat.execute("delete from utilisateur_liste where ID_listeDiff=" + id);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -95,7 +97,7 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
             String requeteProc ="update listediffusion set Nom_liste='"
                     +obj.getNom()+"' where ID_listeDiff="+obj.getId()+" ;";
             etat.execute(requeteProc);
-            deleteListe(obj.getId(), obj.getTypeListe()+"_liste");
+            deleteListe(obj.getId());
             switch(obj.getTypeListe()){
                 case "locataire" -> createListeLocataires (obj.getId(),obj.getListe());
                 case "utilisateur" -> createListeUtilisateurs (obj.getId(),obj.getListe());

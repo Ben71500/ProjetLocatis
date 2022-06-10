@@ -44,6 +44,16 @@ public class Recevoir_DAO {
         }
     }
     
+    public boolean deleteByListe(int idListe) {
+        try {
+            Statement statement = this.connection.createStatement();
+            return !statement.execute("delete from recevoir where ID_listeDiff=" + idListe);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+    
     public boolean update(int idCampagne, List<ListeDeDiffusion> obj) {
         this.delete(idCampagne);
         this.create(idCampagne, obj);
