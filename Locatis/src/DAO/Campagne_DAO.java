@@ -4,8 +4,10 @@ import Locatis.Campagne;
 import Locatis.ListeDeDiffusion;
 import Locatis.Locataire;
 import Locatis.Personne;
+import com.mysql.cj.result.LocalDateTimeValueFactory;
 import java.sql.*;
 import java.util.*;
+import java.time.*;
 
 public class Campagne_DAO extends DAO<Campagne>{
 
@@ -17,13 +19,14 @@ public class Campagne_DAO extends DAO<Campagne>{
     public boolean create(Campagne obj) {
         try {
             Statement statement = this.connection.createStatement();
-            statement.execute("insert into campagne (ID_campagne, Titre_campagne, Date_Debut, Date_Fin, Heure, frequence, ID_utilisateur, Objet, Contenu) values("
+            statement.execute("insert into campagne (ID_campagne, Titre_campagne, Date_Debut, Date_Fin, Heure, frequence, END, ID_utilisateur, Objet, Contenu) values("
                     + obj.getId() + " , '"
                     + obj.getTitre() + "' , "
                     + obj.getDateDebut().getDateSQL() + " , "
                     + obj.getDateFin().getDateSQL() + " , "
                     + obj.getHeure().getTimeSQL() + " , '"
                     + obj.getFrequence() + "' , "
+                    + "0, "
                     + obj.getUtilisateur().getId() + " , '"
                     + obj.getObjetMail() + "' , '"
                     + obj.getMessageMail() + "')"
@@ -157,7 +160,7 @@ public class Campagne_DAO extends DAO<Campagne>{
             Statement statement = this.connection.createStatement();
             Utilisateurs_DAO user = new Utilisateurs_DAO(this.connection);
             Recevoir_DAO recevoir = new Recevoir_DAO(this.connection);
-            ResultSet res = statement.executeQuery("Select * from campagne where Date_Fin > NOW() AND END != 1 AND Date_Debut < NOW() AND (DateProchainMail <= NOW() OR DateProchainMail = NULL)");
+            ResultSet res = statement.executeQuery("Select * from campagne where Date_Fin > NOW() AND Date_Debut < NOW() AND (DateProchainMail <= NOW() OR DateProchainMail is NULL)");
             while (res.next()) {
                 int idCampagne = res.getInt("ID_campagne");
                 allCampagnes.add(new Campagne(idCampagne,

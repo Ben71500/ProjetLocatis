@@ -35,6 +35,8 @@ CREATE TABLE IF NOT EXISTS `campagne` (
   `Date_Fin` date NOT NULL,
   `Heure` time NOT NULL,
   `frequence` varchar(20) NOT NULL,
+  `DateProchainMail` date NULL,
+  `End` int(1) NOT NULL,
   `ID_utilisateur` int(20) NOT NULL,
   `Objet` varchar(20) NOT NULL,
   `Contenu` varchar(64) NOT NULL,
