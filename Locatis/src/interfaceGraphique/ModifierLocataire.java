@@ -119,7 +119,7 @@ public class ModifierLocataire extends JFrame implements ActionListener {
         //anciennete.setDate(d);
        // anciennete.setDate(leLocataire.getAnciennete());
         //anciennete.setText(leLocataire.getAnciennete()+"");
-        Calendar calendar = new GregorianCalendar(leLocataire.getAnciennete().getAnnee(), leLocataire.getAnciennete().getMois()-1 , leLocataire.getAnciennete().getJour());
+        Calendar calendar = new GregorianCalendar(leLocataire.getDateDeNaissance().getAnnee(), leLocataire.getDateDeNaissance().getMois()-1 , leLocataire.getDateDeNaissance().getJour());
         anciennete.setCalendar(calendar);
         mail.setText(leLocataire.getMail());
         telephone.setText(leLocataire.getTelephone());
@@ -162,7 +162,7 @@ public class ModifierLocataire extends JFrame implements ActionListener {
             if(e.getSource()==ajouter){
                 try{
                     verifierChamps();
-                    MyDate arrivee = new MyDate(leLocataire.getAnciennete().getAnnee(),leLocataire.getAnciennete().getMois()-1,leLocataire.getAnciennete().getJour());
+                    MyDate arrivee = new MyDate(leLocataire.getDateDeNaissance().getAnnee(),leLocataire.getDateDeNaissance().getMois()-1,leLocataire.getDateDeNaissance().getJour());
                     leLocataire=new Locataire(0 ,nom.getText(), prenom.getText(), Integer.parseInt(age.getText()), arrivee, mail.getText(), telephone.getText());
                     Connection connBdd= ConnectionBDD.getInstance(new Connexion());
                     Locataire_DAO nouveauLocataire=new Locataire_DAO(connBdd);
@@ -177,7 +177,7 @@ public class ModifierLocataire extends JFrame implements ActionListener {
         if(e.getSource()==modifier){
             try {
                 verifierChamps();
-                MyDate arrivee = new MyDate(leLocataire.getAnciennete().getAnnee(),leLocataire.getAnciennete().getMois()-1,leLocataire.getAnciennete().getJour());
+                MyDate arrivee = new MyDate(leLocataire.getDateDeNaissance().getAnnee(),leLocataire.getDateDeNaissance().getMois()-1,leLocataire.getDateDeNaissance().getJour());
                 leLocataire = new Locataire(leLocataire.getId(),nom.getText(), prenom.getText(), Integer.parseInt(age.getText()), arrivee, mail.getText(), telephone.getText());
                 Connection connBdd= ConnectionBDD.getInstance(new Connexion());
                 Locataire_DAO nouveauLocataire=new Locataire_DAO(connBdd);

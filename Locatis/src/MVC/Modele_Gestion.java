@@ -69,7 +69,7 @@ public class  Modele_Gestion {
     }
 
     public void modeleLocataires(){
-        String[] tabEntetes = {"ID","Nom", "Prénom", "Age", "Ancienneté", "Mail", "Téléphone"};
+        String[] tabEntetes = {"ID","Nom", "Prénom", "Age", "Date de naissance", "Mail", "Téléphone"};
         this.setEntetes(tabEntetes);
         
         //Récupération des locataires dans une ArrayList
@@ -83,7 +83,7 @@ public class  Modele_Gestion {
             tableau [i][1]=leLocataire.getNom();
             tableau [i][2]=leLocataire.getPrenom();
             tableau [i][3]=leLocataire.getAge()+"";
-            tableau [i][4]=leLocataire.getAnciennete().getDateEcrite();
+            tableau [i][4]=leLocataire.getDateDeNaissance().getDateEcrite();
             tableau [i][5]=leLocataire.getMail();
             tableau [i][6]=leLocataire.getTelephone();
         }

@@ -268,7 +268,7 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
         laVue.afficherPanneauBoutonsRadios();
         switch (laVue.getCategorie()) {
             case "Age" -> leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadioSigne(), laVue.getNombre());
-            case "Anciennete" -> leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadioSigne(), laVue.getDateSaisie());
+            case "DateDeNaissance" -> leModele.getTri(laVue.getCategorie(), laVue.getBoutonRadioSigne(), laVue.getDateSaisie());
             default -> leModele.trierPar(laVue.getCategorie());
         }
         actualiser();

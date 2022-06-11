@@ -333,7 +333,7 @@ public class Vue_Ajout_Listes extends JFrame {
     
     public void afficherPanneauBoutonsRadios(){
         if(donnees.equals("locataire") && tri.getSelectedItem()!=null){
-            if(tri.getSelectedItem().equals("Age") || tri.getSelectedItem().equals("Ancienneté")){
+            if(tri.getSelectedItem().equals("Age") || tri.getSelectedItem().equals("Date de naissance")){
                 this.panneau_boutons_radios.setVisible(true);
                 this.panneau_boutons_radios.remove(3);
                 if(tri.getSelectedItem().equals("Age"))
@@ -382,8 +382,8 @@ public class Vue_Ajout_Listes extends JFrame {
     
     public String getCategorie(){
         if(tri.getSelectedItem()!=null){
-            if(tri.getSelectedItem().equals("Ancienneté"))
-                return "Anciennete";
+            if(tri.getSelectedItem().equals("Date de naissance"))
+                return "DateDeNaissance";
             else
                 return (String) tri.getSelectedItem();
         }
@@ -423,7 +423,7 @@ public class Vue_Ajout_Listes extends JFrame {
             tri.addItem("Nom");
             tri.addItem("Prénom");
             tri.addItem("Age");
-            tri.addItem("Ancienneté");
+            tri.addItem("Date de naissance");
         }
         else{
             tri.removeAllItems();

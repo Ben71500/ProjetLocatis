@@ -50,7 +50,7 @@ public class Modele_Ajout_Listes {
     }
     
     public void modeleLocataires(){
-        String[] tabEntetes = {"Case","ID","Nom", "Prénom", "Age", "Ancienneté", "Mail", "Téléphone","Logements"};
+        String[] tabEntetes = {"Case","ID","Nom", "Prénom", "Age", "Date de naissance", "Mail", "Téléphone","Logements"};
         this.setEntetes(tabEntetes);
         
         //Récupération des locataires dans une ArrayList
@@ -66,7 +66,7 @@ public class Modele_Ajout_Listes {
             tableau [i][2]=leLocataire.getNom();
             tableau [i][3]=leLocataire.getPrenom();
             tableau [i][4]=leLocataire.getAge();
-            tableau [i][5]=leLocataire.getAnciennete().getDateEcrite();
+            tableau [i][5]=leLocataire.getDateDeNaissance().getDateEcrite();
             tableau [i][6]=leLocataire.getMail();
             tableau [i][7]=leLocataire.getTelephone();
             tableau [i][8]=(List<Batiment>)locataires.getLocation(leLocataire.getId());
@@ -178,7 +178,7 @@ public class Modele_Ajout_Listes {
                 case "Nom" -> requete+="Nom";
                 case "Prénom" -> requete+="Prenom";
                 case "Age" -> requete+="Age";
-                case "Anciennete" -> requete+="Anciennete";
+                case "Date de naissance" -> requete+="DateDeNaissance";
                 case "Login" -> requete+="login";
                 case "Catégorie" -> requete+="CAT";
             }
@@ -191,7 +191,7 @@ public class Modele_Ajout_Listes {
     
     public void executerRequeteLocataire(String requete){
         //Récupération des locataires dans une ArrayList
-        String[] tabEntetes = {"Case","ID","Nom", "Prénom", "Age", "Ancienneté", "Mail", "Téléphone","Logements"};
+        String[] tabEntetes = {"Case","ID","Nom", "Prénom", "Age", "Date de naissance", "Mail", "Téléphone","Logements"};
         this.setEntetes(tabEntetes);
         Locataire_DAO lesLocataires= new Locataire_DAO(this.connBdd);
         
@@ -205,7 +205,7 @@ public class Modele_Ajout_Listes {
             tableau [i][2]=leLocataire.getNom();
             tableau [i][3]=leLocataire.getPrenom();
             tableau [i][4]=leLocataire.getAge();
-            tableau [i][5]=leLocataire.getAnciennete().getDateEcrite();
+            tableau [i][5]=leLocataire.getDateDeNaissance().getDateEcrite();
             tableau [i][6]=leLocataire.getMail();
             tableau [i][7]=leLocataire.getTelephone();
             tableau [i][8]=lesLocataires.getLocation(leLocataire.getId());
@@ -241,7 +241,7 @@ public class Modele_Ajout_Listes {
             tab [i][2]=leLocataire.getNom();
             tab [i][3]=leLocataire.getPrenom();
             tab [i][4]=leLocataire.getAge();
-            tab [i][5]=leLocataire.getAnciennete().getDateEcrite();
+            tab [i][5]=leLocataire.getDateDeNaissance().getDateEcrite();
             tab[i][6]=leLocataire.getMail();
             tab [i][7]=leLocataire.getTelephone();
         }

@@ -6,20 +6,21 @@ public class Locataire implements Personne{
     private String nom;
     private String prenom;
     private int age;
-    private MyDate anciennete;
+    private MyDate dateDeNaissance;
     private String mail;
     private String telephone;
 
-    public Locataire(int id, String nom, String prenom, int age, MyDate dateAnciennete, String mail, String telephone) {
+    public Locataire(int id, String nom, String prenom, int age, MyDate dateNaissance, String mail, String telephone) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.age = age;
-        this.anciennete = dateAnciennete;
+        this.dateDeNaissance = dateNaissance;
         this.mail = mail;
         this.telephone = telephone;
     }
     
+    @Override
     public String getMail(){
         return this.mail;
     }
@@ -61,12 +62,12 @@ public class Locataire implements Personne{
         this.age = age;
     }
 
-    public MyDate getAnciennete() {
-        return anciennete;
+    public MyDate getDateDeNaissance() {
+        return dateDeNaissance;
     }
 
-    public void setAnciennete(MyDate anciennete) {
-        this.anciennete = anciennete;
+    public void setDateDeNaissance(MyDate dateDeNaissance) {
+        this.dateDeNaissance = dateDeNaissance;
     }
     
     @Override

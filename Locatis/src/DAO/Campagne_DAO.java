@@ -209,7 +209,7 @@ public class Campagne_DAO extends DAO<Campagne>{
                         res.getString("Nom"),
                         res.getString("Prenom"),
                         res.getInt("Age"),
-                        this.getMyDate(res.getDate("Anciennete")),
+                        this.getMyDate(res.getDate("DateDeNaissance")),
                         res.getString("Mail"),
                         res.getString("Telephone")
                 ));

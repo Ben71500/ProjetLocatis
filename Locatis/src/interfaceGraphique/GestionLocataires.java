@@ -185,7 +185,7 @@ public class GestionLocataires extends JFrame implements ActionListener{
             unTableau [i][1]=liste.get(i).getNom();
             unTableau [i][2]=liste.get(i).getPrenom();
             unTableau [i][3]=liste.get(i).getAge()+"";
-            unTableau [i][4]=liste.get(i).getAnciennete().getDateSQL();
+            unTableau [i][4]=liste.get(i).getDateDeNaissance().getDateSQL();
             unTableau [i][5]=liste.get(i).getMail();
             unTableau [i][6]=liste.get(i).getTelephone();
         }

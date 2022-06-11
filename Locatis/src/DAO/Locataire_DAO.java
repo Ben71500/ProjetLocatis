@@ -29,7 +29,7 @@ public class Locataire_DAO extends DAO<Locataire>{
                     res.getString("Nom"),
                     res.getString("Prenom"),
                     res.getInt("Age"),
-                    this.getMyDate(res.getDate("Anciennete")),
+                    this.getMyDate(res.getDate("DateDeNaissance")),
                     res.getString("Mail"),
                     res.getString("Telephone")
             );
@@ -46,7 +46,7 @@ public class Locataire_DAO extends DAO<Locataire>{
                     + obj.getNom()+ "' , '"
                     + obj.getPrenom()+ "' , '"
                     + obj.getAge()+ "' , "
-                    + obj.getAnciennete().getDateSQL()+ " , '"
+                    + obj.getDateDeNaissance().getDateSQL()+ " , '"
                     + obj.getMail()+ "' , '"
                     + obj.getTelephone()+ "' );";
             etat.execute(requeteProc);
@@ -77,8 +77,8 @@ public class Locataire_DAO extends DAO<Locataire>{
             String requeteProc ="update locataire set Nom='"
                     +obj.getNom()+"' , Prenom='"
                     +obj.getPrenom()+"' , Age='"
-                    +obj.getAge()+"' , Anciennete="
-                    +obj.getAnciennete().getDateSQL()+" , Mail='"
+                    +obj.getAge()+"' , DateDeNaissance="
+                    +obj.getDateDeNaissance().getDateSQL()+" , Mail='"
                     +obj.getMail()+"' , Telephone='"
                     +obj.getTelephone()+"' where ID_locataire="
                     +obj.getId()+" ;";
@@ -100,7 +100,7 @@ public class Locataire_DAO extends DAO<Locataire>{
                     res.getString("Nom"),
                     res.getString("Prenom"),
                     res.getInt("Age"),
-                    this.getMyDate(res.getDate("Anciennete")),
+                    this.getMyDate(res.getDate("DateDeNaissance")),
                     res.getString("Mail"),
                     res.getString("Telephone")
             );
@@ -116,7 +116,7 @@ public class Locataire_DAO extends DAO<Locataire>{
             ResultSet res = statement.executeQuery("Select * from locataire where Nom='" + nom + "'");
             res.next();
 
-            return new Locataire(res.getInt("ID_locataire"), res.getString("Nom"), res.getString("Prenom"), res.getInt("Age"), this.getMyDate(res.getDate("Anciennete")), res.getString("Mail"), res.getString("Telephone"));
+            return new Locataire(res.getInt("ID_locataire"), res.getString("Nom"), res.getString("Prenom"), res.getInt("Age"), this.getMyDate(res.getDate("DateDeNaissance")), res.getString("Mail"), res.getString("Telephone"));
 
         } catch (SQLException ex) {
             return null;
@@ -136,7 +136,7 @@ public class Locataire_DAO extends DAO<Locataire>{
                         res.getString("Nom"),
                         res.getString("Prenom"),
                         res.getInt("Age"),
-                        this.getMyDate(res.getDate("Anciennete")),
+                        this.getMyDate(res.getDate("DateDeNaissance")),
                         res.getString("Mail"),
                         res.getString("Telephone")
                 ));
@@ -159,7 +159,7 @@ public class Locataire_DAO extends DAO<Locataire>{
                         res.getString("Nom"),
                         res.getString("Prenom"),
                         res.getInt("Age"),
-                        this.getMyDate(res.getDate("Anciennete")),
+                        this.getMyDate(res.getDate("DateDeNaissance")),
                         res.getString("Mail"),
                         res.getString("Telephone")
                 ));
@@ -182,7 +182,7 @@ public class Locataire_DAO extends DAO<Locataire>{
                         res.getString("Nom"),
                         res.getString("Prenom"),
                         res.getInt("Age"),
-                        this.getMyDate(res.getDate("Anciennete")),
+                        this.getMyDate(res.getDate("DateDeNaissance")),
                         res.getString("Mail"),
                         res.getString("Telephone")
                 ));
