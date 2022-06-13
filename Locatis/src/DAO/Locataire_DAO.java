@@ -227,6 +227,16 @@ public class Locataire_DAO extends DAO<Locataire>{
             return null;
         }
     }
+    
+    public int compterLocataire(List<Locataire> liste, int ageMin, int ageMax){
+        int nombre =0;
+        for(int i=0; i<liste.size();i++){
+            if(liste.get(i).getAge() >= ageMin && liste.get(i).getAge() < ageMax)
+                nombre++;
+        }
+        return nombre;
+    }
+    
     /*
     public int selectAgeBefore18(){
         String requete = "";
@@ -279,7 +289,7 @@ public class Locataire_DAO extends DAO<Locataire>{
             return -1;
         }
     }
-    
+    /*
     public int selectAllOfLocataire(){
         try{
             Statement statement = this.connection.createStatement();
