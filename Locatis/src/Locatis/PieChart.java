@@ -42,14 +42,14 @@ public class PieChart extends ApplicationFrame {
           case "age" :
                 Locataire_DAO loca = new Locataire_DAO(connBdd);
                 ArrayList<Locataire> liste = (ArrayList<Locataire>) loca.getAll();
-                value = loca.selectAgeBefore18(liste);
+                /*value = loca.selectAgeBefore18(liste);
                 dataset.setValue( "-18 ans" , (value/total)*100);  
                 value = loca.selectAgeBetween19and35(liste);
                 dataset.setValue( "19 - 35 ans" , (value/total)*100);   
                 value = loca.selectAgeBetween36and60(liste);
                 dataset.setValue( "36 - 60 ans" , (value/total)*100);  
                 value = loca.selectAgeAfter61(liste);
-                dataset.setValue( "+61 ans" , (value/total)*100); 
+                dataset.setValue( "+61 ans" , (value/total)*100); */
                 /*Locataire_DAO loca = new Locataire_DAO(connBdd);
                 total = loca.selectAllOfLocataire();
                 value = loca.selectAgeBefore18();
