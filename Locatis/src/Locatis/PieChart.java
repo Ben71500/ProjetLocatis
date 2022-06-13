@@ -5,6 +5,7 @@ import DAO.ConnectionBDD;
 import DAO.Connexion;
 import DAO.Locataire_DAO;
 import java.sql.Connection;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
@@ -40,7 +41,7 @@ public class PieChart extends ApplicationFrame {
        switch(this.data){
           case "age" :
                 Locataire_DAO loca = new Locataire_DAO(connBdd);
-                total = loca.selectAllOfLocataire();
+                ArrayList<Locataire> liste = (ArrayList<Locataire>) loca.getAll();
                 value = loca.selectAgeBefore18();
                 dataset.setValue( "-18 ans" , (value/total)*100);  
                 value = loca.selectAgeBetween19and35();
@@ -49,6 +50,16 @@ public class PieChart extends ApplicationFrame {
                 dataset.setValue( "36 - 60 ans" , (value/total)*100);  
                 value = loca.selectAgeAfter61();
                 dataset.setValue( "+61 ans" , (value/total)*100); 
+                /*Locataire_DAO loca = new Locataire_DAO(connBdd);
+                total = loca.selectAllOfLocataire();
+                value = loca.selectAgeBefore18();
+                dataset.setValue( "-18 ans" , (value/total)*100);  
+                value = loca.selectAgeBetween19and35();
+                dataset.setValue( "19 - 35 ans" , (value/total)*100);   
+                value = loca.selectAgeBetween36and60();
+                dataset.setValue( "36 - 60 ans" , (value/total)*100);  
+                value = loca.selectAgeAfter61();
+                dataset.setValue( "+61 ans" , (value/total)*100); */
                 break;
           case "campagne" : 
                 Campagne_DAO campagne = new Campagne_DAO(connBdd);

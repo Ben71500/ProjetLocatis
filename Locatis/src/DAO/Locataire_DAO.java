@@ -28,7 +28,6 @@ public class Locataire_DAO extends DAO<Locataire>{
             return new Locataire(res.getInt("ID_locataire"),
                     res.getString("Nom"),
                     res.getString("Prenom"),
-                    res.getInt("Age"),
                     this.getMyDate(res.getDate("DateDeNaissance")),
                     res.getString("Mail"),
                     res.getString("Telephone")
@@ -99,7 +98,6 @@ public class Locataire_DAO extends DAO<Locataire>{
             return new Locataire(res.getInt("ID_locataire"),
                     res.getString("Nom"),
                     res.getString("Prenom"),
-                    res.getInt("Age"),
                     this.getMyDate(res.getDate("DateDeNaissance")),
                     res.getString("Mail"),
                     res.getString("Telephone")
@@ -116,7 +114,7 @@ public class Locataire_DAO extends DAO<Locataire>{
             ResultSet res = statement.executeQuery("Select * from locataire where Nom='" + nom + "'");
             res.next();
 
-            return new Locataire(res.getInt("ID_locataire"), res.getString("Nom"), res.getString("Prenom"), res.getInt("Age"), this.getMyDate(res.getDate("DateDeNaissance")), res.getString("Mail"), res.getString("Telephone"));
+            return new Locataire(res.getInt("ID_locataire"), res.getString("Nom"), res.getString("Prenom"), this.getMyDate(res.getDate("DateDeNaissance")), res.getString("Mail"), res.getString("Telephone"));
 
         } catch (SQLException ex) {
             return null;
@@ -135,7 +133,6 @@ public class Locataire_DAO extends DAO<Locataire>{
                         res.getInt("ID_locataire"),
                         res.getString("Nom"),
                         res.getString("Prenom"),
-                        res.getInt("Age"),
                         this.getMyDate(res.getDate("DateDeNaissance")),
                         res.getString("Mail"),
                         res.getString("Telephone")
@@ -158,7 +155,6 @@ public class Locataire_DAO extends DAO<Locataire>{
                         res.getInt("ID_locataire"),
                         res.getString("Nom"),
                         res.getString("Prenom"),
-                        res.getInt("Age"),
                         this.getMyDate(res.getDate("DateDeNaissance")),
                         res.getString("Mail"),
                         res.getString("Telephone")
@@ -181,7 +177,6 @@ public class Locataire_DAO extends DAO<Locataire>{
                         res.getInt("ID_locataire"),
                         res.getString("Nom"),
                         res.getString("Prenom"),
-                        res.getInt("Age"),
                         this.getMyDate(res.getDate("DateDeNaissance")),
                         res.getString("Mail"),
                         res.getString("Telephone")
@@ -232,7 +227,7 @@ public class Locataire_DAO extends DAO<Locataire>{
             return null;
         }
     }
-    
+    /*
     public int selectAgeBefore18(){
         String requete = "";
         try{
@@ -295,7 +290,7 @@ public class Locataire_DAO extends DAO<Locataire>{
         catch(SQLException ex){
             return -1;
         }
-    }
+    }*/
     
     public boolean deleteAllLogementByIdLocataire(Locataire obj){
         try {

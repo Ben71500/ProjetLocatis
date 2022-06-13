@@ -21,14 +21,12 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
     private JLabel titre = new JLabel();
     private JLabel nom_label = new JLabel ("Nom : ");
     private JLabel prenom_label = new JLabel ("Prénom : ");
-    private JLabel age_label = new JLabel("Age : ");
     private JLabel dateDeNaissance_label = new JLabel("Date de naissance : ");
     private JLabel mail_label = new JLabel("Adresse mail : ");
     private JLabel telephone_label = new JLabel("Numéro de téléphone : ");
     
     private JTextField nom = new JTextField();
     private JTextField prenom = new JTextField();
-    private JTextField age = new JTextField();
     private JDateChooser dateDeNaissance = new JDateChooser();
     private JTextField mail = new JTextField();
     private JTextField telephone = new JTextField();
@@ -67,7 +65,6 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
         this.leLocataire=loca;
         nom.setText(leLocataire.getNom());
         prenom.setText(leLocataire.getPrenom());
-        age.setText(leLocataire.getAge()+"");
         
         Calendar calendar = new GregorianCalendar(leLocataire.getDateDeNaissance().getAnnee(), leLocataire.getDateDeNaissance().getMois()-1 , leLocataire.getDateDeNaissance().getJour());
         dateDeNaissance.setCalendar(calendar);
@@ -88,13 +85,11 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
         centre.add(this.panneau_info, BorderLayout.CENTER);
         centre.add(this.panneau_boutons, BorderLayout.SOUTH);
         
-        panneau_info.setLayout(new GridLayout(6,2));
+        panneau_info.setLayout(new GridLayout(5,2));
         panneau_info.add(this.nom_label);
         panneau_info.add(this.nom);
         panneau_info.add(this.prenom_label);
         panneau_info.add(this.prenom);
-        panneau_info.add(this.age_label);
-        panneau_info.add(this.age);
         panneau_info.add(this.dateDeNaissance_label);
         
         this.dateDeNaissance.setCalendar(Calendar.getInstance());
@@ -168,7 +163,6 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
     public void reset(){
         this.nom.setText("");
         this.prenom.setText("");
-        this.age.setText("");
         this.dateDeNaissance.setCalendar(Calendar.getInstance());
         this.mail.setText("");
         this.telephone.setText("");
@@ -181,9 +175,6 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
         }else
         if(this.prenom.getText().equals("")){
             throw new EmptyFieldException("un prénom");
-        }else
-        if(this.age.getText().equals("")){
-            throw new EmptyFieldException("un age");
         }else
         /*if(this.dateDeNaissance.getCalendar().equals(null)){
             throw new EmptyFieldException("une dateDeNaissance");
@@ -203,12 +194,12 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
 
     @Override
     public Locataire getNouvelObjet() {
-        return new Locataire(0, this.nom.getText(), this.prenom.getText(), Integer.parseInt(this.age.getText()), this.getDateDeNaissance(), this.mail.getText(), this.telephone.getText());
+        return new Locataire(0, this.nom.getText(), this.prenom.getText(), this.getDateDeNaissance(), this.mail.getText(), this.telephone.getText());
     }
 
     @Override
     public Locataire getObjetModifie() {
-        return new Locataire(this.leLocataire.getId(), this.nom.getText(), this.prenom.getText(), Integer.parseInt(this.age.getText()), this.getDateDeNaissance(), this.mail.getText(), this.telephone.getText());           
+        return new Locataire(this.leLocataire.getId(), this.nom.getText(), this.prenom.getText(), this.getDateDeNaissance(), this.mail.getText(), this.telephone.getText());           
     }
 
     @Override

@@ -163,7 +163,7 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
                             while (fichierCSV.hasNextLine()){
                                 String ligne = fichierCSV.nextLine();
                                 String[] ligneSeparer = ligne.split(",");
-                                Locataire loca = new Locataire(0, ligneSeparer[0], ligneSeparer[1], Integer.parseInt(ligneSeparer[2]), new MyDate(ligneSeparer[3]), ligneSeparer[4], ligneSeparer[5]);
+                                Locataire loca = new Locataire(0, ligneSeparer[0], ligneSeparer[1], new MyDate(ligneSeparer[2]), ligneSeparer[3], ligneSeparer[4]);
                                 listeLoca.add(loca);
                             }
                             leModele.insererViaCSVLocataire(listeLoca);

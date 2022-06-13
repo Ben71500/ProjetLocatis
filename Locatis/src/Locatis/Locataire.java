@@ -1,20 +1,20 @@
 package Locatis;
 
+import java.time.LocalDate;
+
 public class Locataire implements Personne{
     
     private int id;
     private String nom;
     private String prenom;
-    private int age;
     private MyDate dateDeNaissance;
     private String mail;
     private String telephone;
 
-    public Locataire(int id, String nom, String prenom, int age, MyDate dateNaissance, String mail, String telephone) {
+    public Locataire(int id, String nom, String prenom, MyDate dateNaissance, String mail, String telephone) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
-        this.age = age;
         this.dateDeNaissance = dateNaissance;
         this.mail = mail;
         this.telephone = telephone;
@@ -55,11 +55,23 @@ public class Locataire implements Personne{
     }
 
     public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+        MyDate aujourdhui = new MyDate(LocalDate.now());
+        if(aujourdhui.getAnnee() < dateDeNaissance.getAnnee())
+            return -1;
+        else{
+            if(aujourdhui.getMois() > dateDeNaissance.getMois()){
+                return aujourdhui.getAnnee()-dateDeNaissance.getAnnee();
+            }else{
+                if(aujourdhui.getMois() < dateDeNaissance.getMois()){
+                    return aujourdhui.getAnnee()-dateDeNaissance.getAnnee()-1;
+                }else{
+                    if(aujourdhui.getJour() >= dateDeNaissance.getJour())
+                        return aujourdhui.getAnnee()-dateDeNaissance.getAnnee();
+                    else
+                        return aujourdhui.getAnnee()-dateDeNaissance.getAnnee()-1;
+                }
+            }
+        }
     }
 
     public MyDate getDateDeNaissance() {

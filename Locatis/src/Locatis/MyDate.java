@@ -38,9 +38,9 @@ public class MyDate {
     }
     
     public MyDate(LocalDate d){
-            this.jour = d.getDayOfMonth();
-            this.annee = d.getYear();
-            this.mois = d.getMonthValue();
+        this.jour = d.getDayOfMonth();
+        this.annee = d.getYear();
+        this.mois = d.getMonthValue();
     }
     
     public MyDate(int uneAnnee, int unMois, int unJour){
