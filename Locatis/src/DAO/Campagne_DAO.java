@@ -67,8 +67,8 @@ public class Campagne_DAO extends DAO<Campagne>{
                     + "Date_Fin =" + obj.getDateFin().getDateSQL()+ " , "
                     + "Heure =" + obj.getHeure().getTimeSQL()+ " , "
                     + "frequence ='" + obj.getFrequence()+ "' , "
-                    + "DateProchainMail=" +obj.getDateProchainMail().getDateSQL()+ ", "
-                    + "END='" +obj.getTerminer()+ "', "
+                    /*+ "DateProchainMail=" +obj.getDateProchainMail().getDateSQL()+ ", "
+                    + "END='" +obj.getTerminer()+ "', "*/
                     + "ID_utilisateur =" + obj.getUtilisateur().getId()+" , "
                     + "Objet='" + obj.getObjetMail()+ "' , "
                     + "Contenu='" + obj.getMessageMail()+ "'"

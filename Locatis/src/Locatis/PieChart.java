@@ -39,52 +39,51 @@ public class PieChart extends ApplicationFrame {
       double total = 0.0;
       double value = 0.0;
        switch(this.data){
-          case "age" :
-                Locataire_DAO loca = new Locataire_DAO(connBdd);
-                ArrayList<Locataire> liste = (ArrayList<Locataire>) loca.getAll();
-                /*value = loca.selectAgeBefore18(liste);
-                dataset.setValue( "-18 ans" , (value/total)*100);  
-                value = loca.selectAgeBetween19and35(liste);
-                dataset.setValue( "19 - 35 ans" , (value/total)*100);   
-                value = loca.selectAgeBetween36and60(liste);
-                dataset.setValue( "36 - 60 ans" , (value/total)*100);  
-                value = loca.selectAgeAfter61(liste);
-                dataset.setValue( "+61 ans" , (value/total)*100); */
-                /*Locataire_DAO loca = new Locataire_DAO(connBdd);
-                total = loca.selectAllOfLocataire();
-                value = loca.selectAgeBefore18();
-                dataset.setValue( "-18 ans" , (value/total)*100);  
-                value = loca.selectAgeBetween19and35();
-                dataset.setValue( "19 - 35 ans" , (value/total)*100);   
-                value = loca.selectAgeBetween36and60();
-                dataset.setValue( "36 - 60 ans" , (value/total)*100);  
-                value = loca.selectAgeAfter61();
-                dataset.setValue( "+61 ans" , (value/total)*100); */
-                break;
-          case "campagne" : 
-                Campagne_DAO campagne = new Campagne_DAO(connBdd);
-                total = campagne.getAllCampagne();
-                if(total == 0){
-                    total = 1;
-                }
-                value = campagne.getFinishCampagne();
-                dataset.setValue( "Finis" ,(value/total)*100);  
-                value = campagne.getNowCampagne();
-                dataset.setValue( "En Cours" , (value/total)*100);
-                value = campagne.getNotBeginCampagne();
-                dataset.setValue( "Non commencé" , (value/total)*100);
-                break;
-          case "logement" : 
-                Appartement_DAO appart = new Appartement_DAO(connBdd);
-                total = appart.getAllLogement();
-                if(total == 0){
-                    total = 1;
-                }
-                value = appart.getLogementFull();
-                dataset.setValue( "Occupé" , (value/total)*100);  
-                value = appart.getLogementEmpty();
-                dataset.setValue( "Vide" , (value/total)*100);
-                break;
+          case "age" -> {
+              Locataire_DAO loca = new Locataire_DAO(connBdd);
+              ArrayList<Locataire> liste = (ArrayList<Locataire>) loca.getAll();
+              total = liste.size();
+              value = loca.compterLocataire(liste, 0, 19);
+              if(value !=0){
+                  dataset.setValue( "-18 ans" , (value/total)*100);
+              }
+              value = loca.compterLocataire(liste, 19, 36);
+              if(value !=0){
+                  dataset.setValue( "19 - 35 ans" , (value/total)*100);
+              }
+              value = loca.compterLocataire(liste, 36, 61);
+              if(value !=0){
+                  dataset.setValue( "36 - 60 ans" , (value/total)*100);
+              }
+              value = loca.compterLocataire(liste, 61, 150);
+              if(value !=0){
+                  dataset.setValue( "+61 ans" , (value/total)*100);
+              }
+            }
+          case "campagne" -> {
+              Campagne_DAO campagne = new Campagne_DAO(connBdd);
+              total = campagne.getAllCampagne();
+              if(total == 0){
+                  total = 1;
+              }
+              value = campagne.getFinishCampagne();
+              dataset.setValue( "Finis" ,(value/total)*100);
+              value = campagne.getNowCampagne();
+              dataset.setValue( "En Cours" , (value/total)*100);
+              value = campagne.getNotBeginCampagne();
+              dataset.setValue( "Non commencé" , (value/total)*100);
+            }
+          case "logement" -> {
+              Appartement_DAO appart = new Appartement_DAO(connBdd);
+              total = appart.getAllLogement();
+              if(total == 0){
+                  total = 1;
+              }
+              value = appart.getLogementFull();
+              dataset.setValue( "Occupé" , (value/total)*100);
+              value = appart.getLogementEmpty();
+              dataset.setValue( "Vide" , (value/total)*100);
+            }
       }
       return dataset;
    }
