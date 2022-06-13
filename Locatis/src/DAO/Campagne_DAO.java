@@ -206,7 +206,6 @@ public class Campagne_DAO extends DAO<Campagne>{
                         res.getInt("ID_locataire"),
                         res.getString("Nom"),
                         res.getString("Prenom"),
-                        res.getInt("Age"),
                         this.getMyDate(res.getDate("DateDeNaissance")),
                         res.getString("Mail"),
                         res.getString("Telephone")
