@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
 import java.sql.Time;
+import java.time.LocalDate;
 
 
 /**
@@ -82,9 +83,19 @@ public abstract class DAO<T> {
     public abstract List<T> getAll();
     
     protected MyDate getMyDate(Date d){
-        int jour = d.toLocalDate().getDayOfMonth();
-        int annee = d.toLocalDate().getYear();
-        int mois = d.toLocalDate().getMonthValue();
+        int jour;
+        int annee;
+        int mois;
+        try{
+            jour = d.toLocalDate().getDayOfMonth();
+            annee = d.toLocalDate().getYear();
+            mois = d.toLocalDate().getMonthValue();
+        }catch(NullPointerException ex){
+            LocalDate dateNow = LocalDate.now();
+            jour = dateNow.getDayOfMonth();
+            annee = dateNow.getYear();
+            mois = dateNow.getMonthValue();
+        }
         return new MyDate(annee, mois, jour);
     }
     

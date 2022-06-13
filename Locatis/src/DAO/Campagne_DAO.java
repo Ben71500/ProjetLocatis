@@ -161,7 +161,7 @@ public class Campagne_DAO extends DAO<Campagne>{
             Utilisateurs_DAO user = new Utilisateurs_DAO(this.connection);
             Recevoir_DAO recevoir = new Recevoir_DAO(this.connection);
             ResultSet res = statement.executeQuery("Select * from campagne where Date_Fin > NOW() AND Date_Debut < NOW() AND (DateProchainMail <= NOW() OR DateProchainMail is NULL)");
-            while (res.next()) {
+            while (res.next()){
                 int idCampagne = res.getInt("ID_campagne");
                 allCampagnes.add(new Campagne(idCampagne,
                     res.getString("Titre_campagne"),
@@ -173,7 +173,7 @@ public class Campagne_DAO extends DAO<Campagne>{
                     res.getString("Contenu"),
                     recevoir.getListes(idCampagne),
                     this.getMyDate(res.getDate("DateProchainMail")),
-                    res.getInt("Terminer"),
+                    res.getInt("END"),
                     user.selectById(res.getInt("ID_utilisateur"))
                 ));
             }

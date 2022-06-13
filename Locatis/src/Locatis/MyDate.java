@@ -6,6 +6,7 @@
 package Locatis;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -23,9 +24,17 @@ public class MyDate {
     }
     
     public MyDate(Date d){
-        this.jour = d.toLocalDate().getDayOfMonth();
-        this.annee = d.toLocalDate().getYear();
-        this.mois = d.toLocalDate().getMonthValue();
+        if(d != null){
+            this.jour = d.toLocalDate().getDayOfMonth();
+            this.annee = d.toLocalDate().getYear();
+            this.mois = d.toLocalDate().getMonthValue();
+        }
+        else{
+            LocalDate todaysDate = LocalDate.now();
+            this.jour = todaysDate.getDayOfMonth();
+            this.annee = todaysDate.getYear();
+            this.mois = todaysDate.getMonthValue();
+        }
     }
     
     public MyDate(int uneAnnee, int unMois, int unJour){
