@@ -10,7 +10,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -154,8 +156,8 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
 //        liste.add("c");
 //        remplirListe(liste);
         
-        remplirComboBox(heure, 24);
-        remplirComboBox(minute, 60);
+        /*remplirComboBox(heure, LocalDateTime.now().getHour(), 24);*/
+        remplirComboBox(minute, 0, 60);
         
         panneau_heure.add(this.heure);
         panneau_heure.add(this.heure2_label);
@@ -199,6 +201,16 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
                     if(dateFin.getCalendar().before(dateDebut.getCalendar()))
                         dateFin.setDate(dateDebut.getDate());
                     dateFin.setMinSelectableDate(dateDebut.getDate());
+                    LocalDate debutDate = LocalDate.of(getDateDebut().getAnnee(), getDateDebut().getMois(), getDateDebut().getJour());
+                    if(LocalDate.now().isEqual(debutDate)){
+     
+                        heure.removeAllItems();
+                        remplirComboBox(heure, LocalDateTime.now().getHour(), 24);
+                        
+                    }else{
+                        heure.removeAllItems();
+                        remplirComboBox(heure, 0, 24);
+                    }
                 }
         });
         
@@ -280,15 +292,14 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         if(this.panneau_message.getContenuTexte().equals("")){
             throw new EmptyFieldException("un message");
         }else
-        /*if(this.message.getText().equals("")){
-            throw new EmptyFieldException("un message");
-        }else*/
         if(this.listes.getSelectedIndices().length==0)
             throw new PasDeLignesSelectionneesException("une liste de diffusion");
-        /*else
-        if(this.dateFin.getText().equals("")){
-            throw new EmptyFieldException("un prénom");
-        }*/
+        else
+        if(this.dateDebut.getCalendar() == null)
+            throw new EmptyFieldException("une date de début");
+        else
+        if(this.dateFin.getCalendar() == null)
+            throw new EmptyFieldException("une date de fin");
     }
     
     @Override
@@ -327,8 +338,8 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         listes = new JList<>(model);
     }
     
-    public void remplirComboBox(JComboBox comboBox, int n){
-        for(int i=0;i<n;i++){
+    public void remplirComboBox(JComboBox comboBox, int min, int max){
+        for(int i=min;i<max;i++){
             if(i<10)
                 comboBox.addItem("0"+i);
             else

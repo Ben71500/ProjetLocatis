@@ -4,6 +4,8 @@ import Locatis.*;
 import interfaceGraphique.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.JComboBox;
 
@@ -106,6 +108,8 @@ public class Controleur_AjoutModif implements ActionListener{
                         ex.afficherErreur();
                     }catch (PasDeLignesSelectionneesException ex){
                         ex.afficherErreur();
+                    }catch (ValeurIncorrecteException ex) {
+                        ex.afficherErreur();
                     }
                 }
                 case "MODIFIER" -> {
@@ -131,6 +135,8 @@ public class Controleur_AjoutModif implements ActionListener{
                     } catch (EmptyFieldException ex) {
                         ex.afficherErreur();
                     }catch (PasDeLignesSelectionneesException ex){
+                        ex.afficherErreur();
+                    } catch (ValeurIncorrecteException ex) {
                         ex.afficherErreur();
                     }
                 }

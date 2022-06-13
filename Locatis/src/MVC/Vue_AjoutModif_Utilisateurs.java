@@ -4,6 +4,7 @@ import Locatis.*;
 import interfaceGraphique.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.text.SimpleAttributeSet;
@@ -27,10 +28,10 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
     private JLabel password_label = new JLabel("Password (Email) : ");
     
     private JTextField login = new JTextField();
-    private JTextField mdp = new JTextField();
+    private JPasswordField mdp = new JPasswordField();
     private JComboBox categorie = new JComboBox();
     private JTextField email = new JTextField();
-    private JTextField password = new JTextField();
+    private JPasswordField password = new JPasswordField();
     
     private JButton ajouter = new JButton("Ajouter");
     private JButton modifier = new JButton("Modifier");
@@ -239,23 +240,23 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
     }
     
     @Override
-    public void verifierChamps() throws EmptyFieldException{
+    public void verifierChamps() throws EmptyFieldException, ValeurIncorrecteException{
         if(this.login.getText().equals("")){
             throw new EmptyFieldException("un nom");
         }else
-        if(this.mdp.getText().equals("")){
+        if(new String(this.mdp.getPassword()).equals("")){
             throw new EmptyFieldException("un prénom");
+        }else
+        if(this.email.getText().equals("")){
+            throw new EmptyFieldException("un email");
+        }else
+        if(new String(this.password.getPassword()).equals(""))
+            throw new EmptyFieldException("un password");
+        else
+        if(!Pattern.compile("[\\S]+@.+\\.[a-z]+").matcher(email.getText()).matches()){
+            throw new ValeurIncorrecteException("une adresse mail");
         }
-        else{
-            if(this.email.getText().equals("")){
-                throw new EmptyFieldException("un email");
-            }
-            else{
-                if(this.password.getText().equals("")){
-                    throw new EmptyFieldException("un password");
-                }
-            }
-        }
+        
     }
     
     @Override
@@ -265,12 +266,12 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
 
     @Override
     public Utilisateur getNouvelObjet() {
-        return new Utilisateur(0, this.login.getText(), this.mdp.getText(), this.getCat(), this.email.getText(), this.password.getText());
+        return new Utilisateur(0, this.login.getText(), new String(this.mdp.getPassword()), this.getCat(), this.email.getText(), new String(this.password.getPassword()));
     }
 
     @Override
     public Utilisateur getObjetModifie() {
-        return new Utilisateur(this.user.getId(), this.login.getText(), this.mdp.getText(), this.getCat(), this.email.getText(), this.password.getText());
+        return new Utilisateur(this.user.getId(), this.login.getText(), new String(this.mdp.getPassword()), this.getCat(), this.email.getText(), new String(this.password.getPassword()));
     }
 
     @Override

@@ -4,6 +4,7 @@ import Locatis.*;
 import interfaceGraphique.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
 import javax.swing.*;
 
 public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif{
@@ -138,25 +139,33 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
     }
     
     @Override
-    public void verifierChamps() throws EmptyFieldException{
+    public void verifierChamps() throws EmptyFieldException, ValeurIncorrecteException{
         if(this.numeroRue.getText().equals("")){
             throw new EmptyFieldException("un numéro de rue");
-        }
-        
+        }else
         if(this.nomRue.getText().equals("")){
             throw new EmptyFieldException("un nom de rue");
-        }
-        
+        }else        
         if(this.ville.getText().equals("")){
             throw new EmptyFieldException("une ville");
-        }
-        
+        }else        
         if(this.codePostal.getText().equals("")){
             throw new EmptyFieldException("un code postal");
-        }
-        
+        }else
+        if(!Pattern.compile("[0-9]{5}").matcher(codePostal.getText()).matches()){
+            throw new ValeurIncorrecteException("un code postal");
+        }else
         if(this.nombreEtage.getText().equals("")){
-            throw new EmptyFieldException("un prénom");
+            throw new EmptyFieldException("un numéro d'étage");
+        }else
+        if(!Pattern.compile("[0-9]+").matcher(nombreEtage.getText()).matches()){
+            throw new ValeurIncorrecteException("un numéro d'étage");
+        }else
+        if(this.numeroAppart.getText().equals("")){
+            throw new EmptyFieldException("un numéro d'appartement");
+        }else
+        if(!Pattern.compile("[0-9]+").matcher(numeroAppart.getText()).matches()){
+            throw new ValeurIncorrecteException("un numéro d'appartement");
         }
     }
     

@@ -185,27 +185,27 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
     }
     
     @Override
-    public void verifierChamps() throws EmptyFieldException{
+    public void verifierChamps() throws EmptyFieldException, ValeurIncorrecteException{
         if(this.nom.getText().equals("")){
             throw new EmptyFieldException("un nom");
         }else
         if(this.prenom.getText().equals("")){
             throw new EmptyFieldException("un prénom");
         }else
-        /*if(this.dateDeNaissance.getCalendar().equals(null)){
-            throw new EmptyFieldException("une dateDeNaissance");
-        }else*/
+        if(this.dateDeNaissance.getCalendar() == null){
+            throw new EmptyFieldException("une date de naissance");
+        }else
         if(this.mail.getText().equals("")){
             throw new EmptyFieldException("une adresse mail");
         }else
         if(this.telephone.getText().equals("")){
             throw new EmptyFieldException("un numéro de téléphone");
         }else
-        if(!Pattern.compile(".+@.+\\.[a-z]+").matcher(mail.getText()).matches()){
-            throw new EmptyFieldException("une adresse mail valide");
+        if(!Pattern.compile("[\\S]+@.+\\.[a-z]+").matcher(mail.getText()).matches()){
+            throw new ValeurIncorrecteException("une adresse mail");
         }else
         if(!Pattern.compile("[0-9]{10}").matcher(telephone.getText()).matches()){
-            throw new EmptyFieldException("un numéro de téléphone valide");
+            throw new ValeurIncorrecteException("un numéro de téléphone");
         }
     }
     

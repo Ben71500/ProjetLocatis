@@ -4,6 +4,7 @@ import Locatis.*;
 import interfaceGraphique.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
 import javax.swing.*;
 
 public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
@@ -130,18 +131,21 @@ public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
     }
     
     @Override
-    public void verifierChamps() throws EmptyFieldException{
+    public void verifierChamps() throws EmptyFieldException, ValeurIncorrecteException{
         if(this.numeroRue.getText().equals("")){
             throw new EmptyFieldException("un numéro de rue");
-        }
+        }else
         if(this.nomRue.getText().equals("")){
             throw new EmptyFieldException("un nom de rue");
-        }
+        }else
         if(this.ville.getText().equals("")){
             throw new EmptyFieldException("une ville");
-        }
+        }else
         if(this.codePostal.getText().equals("")){
             throw new EmptyFieldException("un code postal");
+        }else
+        if(!Pattern.compile("[0-9]{5}").matcher(codePostal.getText()).matches()){
+            throw new ValeurIncorrecteException("un code postal");
         }
     }
     
