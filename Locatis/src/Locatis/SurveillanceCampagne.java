@@ -50,10 +50,9 @@ public class SurveillanceCampagne {
     }
     
     public void envoieQuotidient(Campagne cmp){
-        LocalDate date = LocalDate.of(cmp.getDateDebut().getAnnee(), cmp.getDateDebut().getMois(), cmp.getDateDebut().getJour());
-        date.plusDays(1);
+        LocalDate date = LocalDate.of(cmp.getDateProchainMail().getAnnee(), cmp.getDateProchainMail().getMois(), cmp.getDateProchainMail().getJour());
         if(cmp.getDateDebut().getJour() == date.getDayOfMonth()){
-            LocalTime time = LocalTime.of(cmp.getDateDebut().getAnnee(), cmp.getDateDebut().getMois(), cmp.getDateDebut().getJour());
+            LocalTime time = LocalTime.of(cmp.getHeure().getHeure(), cmp.getHeure().getMinute());
             if(time.getHour() < LocalTime.now().getHour() || (cmp.getHeure().getHeure() <= LocalTime.now().getHour() && cmp.getHeure().getMinute() <= LocalTime.now().getMinute())){
                 try{
                     Campagne_DAO dao = new Campagne_DAO(connBdd);
@@ -72,6 +71,7 @@ public class SurveillanceCampagne {
                     if(date.isAfter(dateFin)){
                         cmp.setTerminer(1);
                     }
+                    cmp.setDateProchainMail(new MyDate(date));
                     dao.update(cmp);
                     
                 }catch(Exception ex){
