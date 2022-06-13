@@ -255,4 +255,12 @@ public class  Modele_Gestion {
         dao.delete(this.getSelection(n));
         this.liste.remove(n);
     }
+    
+    public ArrayList<Campagne> getListeCampagne(int idLocataire){
+        ListeDeDiffusion_DAO listDao = new ListeDeDiffusion_DAO(connBdd);
+        ArrayList<Integer> listIdListDiff = new ArrayList<>();
+        listIdListDiff = (ArrayList<Integer>) listDao.searchListLocataireByIdLocataire(idLocataire);
+        Campagne_DAO cmpDao = new Campagne_DAO(connBdd);
+        return (ArrayList <Campagne>) cmpDao.getIdCampagneByListeDeDiffusionBy(listIdListDiff);
+    }
 }

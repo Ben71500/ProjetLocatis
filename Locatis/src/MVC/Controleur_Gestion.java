@@ -17,7 +17,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
-public class Controleur_Gestion extends KeyAdapter implements ActionListener {
+public class Controleur_Gestion extends KeyAdapter implements ActionListener, MouseListener{
 
     private final Vue_Gestion laVue;
     private final Modele_Gestion leModele;
@@ -39,13 +39,7 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
         laVue.ajouterEcouteurBouton("Retour", this);
         if(donnee.equals("locataire")){
             laVue.ajouterEcouteurBouton("Insere", this);
-            MouseListener mouseListener = new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    if(e.getClickCount() == 2){
-                        Locataire loca = (Locataire) leModele.getSelection(laVue.getLigne());
-                    }
-                } 
-            };
+            this.laVue.getTable().addMouseListener(this);
         }
         if(donnee.equals("appartement")){
             laVue.ajouterEcouteurBouton("Appartement", this);
@@ -229,5 +223,36 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
             @Override
             public void changedUpdate(DocumentEvent e) {}
         };
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if (e.getClickCount() == 2) {
+            Locataire loca = (Locataire) leModele.getSelection(laVue.getLigne());
+            SwingUtilities.invokeLater(new Runnable(){
+                    public void run(){
+                        Controleur_dialog_locataire controleur = new Controleur_dialog_locataire(loca, userConnecte, new Vue_dialog_locataire(userConnecte), new Modele_dialog_locataire());
+                        controleur.getLaVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        controleur.getLaVue().setSize(800,500);
+                        controleur.getLaVue().setVisible(true);
+                    }
+                });
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
     }
 }

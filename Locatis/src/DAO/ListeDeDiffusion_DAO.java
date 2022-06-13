@@ -226,6 +226,20 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
         return allUtilisateurs;
     }
     
+    public List<Integer> searchListLocataireByIdLocataire(int id){
+        List<Integer> allList = new ArrayList<>();
+        try {//distinct
+            Statement statement = this.connection.createStatement();
+            ResultSet res = statement.executeQuery("Select ID_listeDiff from locataire_liste where ID_locataire="+id);
+            while (res.next()) {
+                allList.add(res.getInt("ID_listeDiff"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+        return allList;
+    }
     /*public List<Personne> getAllPersonnes(int id) {
 
         List<Personne> allPersonnes = new ArrayList<>();

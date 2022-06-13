@@ -17,7 +17,18 @@ public class Campagne {
     private String messageMail;
     private List<ListeDeDiffusion> listes;
     private Utilisateur utilisateur;
+    private int idUtilisateur;
 
+    public Campagne(String titre, MyDate dateDebut, MyDate dateFin, MyTime heure, String frequence, String unObjet, int utilisateur) {
+        this.titre = titre;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.heure = heure;
+        this.frequence = frequence;
+        this.objetMail = unObjet;
+        this.idUtilisateur = utilisateur;
+    }
+    
     public Campagne(int id, String titre, MyDate dateDebut, MyDate dateFin, MyTime heure, String frequence, String unObjet, String unMessage, List<ListeDeDiffusion> listes,Utilisateur utilisateur) {
         this.id = id;
         this.titre = titre;

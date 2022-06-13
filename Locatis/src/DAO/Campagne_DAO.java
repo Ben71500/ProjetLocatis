@@ -270,5 +270,42 @@ public class Campagne_DAO extends DAO<Campagne>{
         }
 
     }
+    
+    public List<Campagne> getIdCampagneByListeDeDiffusionBy(ArrayList<Integer> listeId){
+        List<Campagne> listeCampagne = new ArrayList<>();
+        try {
+            ArrayList<Integer> listeIdCampagne = new ArrayList<>();
+            Statement statement = this.connection.createStatement();
+            String condition = "";
+            for(int j = 0; j < listeId.size(); j++){
+                if(j == 0){
+                    condition += "where ID_listeDiff = "+listeId.get(j);
+                }
+                else{
+                    condition += " OR ID_listeDiff = "+listeId.get(j);
+                }
+            }
+            ResultSet res = statement.executeQuery("Select ID_campagne from recevoir "+condition+" ");
+            while (res.next()) {
+                    listeIdCampagne.add(res.getInt("ID_campagne"));
+            }
+            for(int j = 0; j < listeIdCampagne.size(); j++){
+                if(j == 0){
+                    condition += "where ID_campagne = "+listeIdCampagne.get(j);
+                }
+                else{
+                    condition += " OR ID_campagne = "+listeIdCampagne.get(j);
+                }
+            }
+            for(int i = 0; i < listeIdCampagne.size(); i++){
+                listeCampagne.add(this.selectById(listeIdCampagne.get(i)));
+            }
+            
+            return listeCampagne;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return listeCampagne;
+        }
+    }
 
 }

@@ -160,6 +160,7 @@ public class SurveillanceCampagne {
                     for(int j = 0; j < liste.getListe().size(); j++){
                         listeEmail.add(liste.getListe().get(j).getMail());
                     }
+                    listeEmail.add(cmp.getUtilisateur().getMail());
                     cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();
                     mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), cmp.getObjetMail(), cmp.getListeEmail());
