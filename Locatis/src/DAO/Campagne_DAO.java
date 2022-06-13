@@ -67,10 +67,8 @@ public class Campagne_DAO extends DAO<Campagne>{
                     + "Date_Fin =" + obj.getDateFin().getDateSQL()+ " , "
                     + "Heure =" + obj.getHeure().getTimeSQL()+ " , "
                     + "frequence ='" + obj.getFrequence()+ "' , "
-                    //Math : j'y ai mis en commentaires car ça lance une erreur si on modifie une campagne
-                    // A voire si tu en a besoin pour envoyer les mails :)
-                        /*+ "DateProchainMail='" +obj.getDateProchainMail()+ "', "
-                        + "Terminer='" +obj.getTerminer()+ "', "*/
+                    + "DateProchainMail=" +obj.getDateProchainMail().getDateSQL()+ ", "
+                    + "END='" +obj.getTerminer()+ "', "
                     + "ID_utilisateur =" + obj.getUtilisateur().getId()+" , "
                     + "Objet='" + obj.getObjetMail()+ "' , "
                     + "Contenu='" + obj.getMessageMail()+ "'"
@@ -189,9 +187,9 @@ public class Campagne_DAO extends DAO<Campagne>{
         try {
             Statement statement = this.connection.createStatement();
             ArrayList<Integer> listIdList = new ArrayList<>();
-            ResultSet res = statement.executeQuery("Select ID_listDiff from recevoir where ID_campagne = "+id);
+            ResultSet res = statement.executeQuery("Select ID_listeDiff from recevoir where ID_campagne = "+id);
             while (res.next()) {
-                listIdList.add(res.getInt("ID_listDiff"));
+                listIdList.add(res.getInt("ID_listeDiff"));
             }
             String condition = "";
             for(int j = 0; j < listIdList.size(); j++){
@@ -202,7 +200,7 @@ public class Campagne_DAO extends DAO<Campagne>{
                     condition += " OR ID_listeDiff = "+listIdList.get(j);
                 }
             }
-            res = statement.executeQuery("Select DISTINCT(*) from locataire where ID_locataire in ( Select ID_locataire FROM locataire_liste "+condition+" )");
+            res = statement.executeQuery("Select DISTINCT(ID_locataire), Nom, Prenom, Age, DateDeNaissance, Mail, Telephone from locataire where ID_locataire in ( Select ID_locataire FROM locataire_liste "+condition+" )");
             while (res.next()) {
                         listeLocataire.add(new Locataire(
                         res.getInt("ID_locataire"),

@@ -51,6 +51,39 @@ public class SurveillanceCampagne {
     
     public void envoieQuotidient(Campagne cmp){
         LocalDate date = LocalDate.of(cmp.getDateProchainMail().getAnnee(), cmp.getDateProchainMail().getMois(), cmp.getDateProchainMail().getJour());
+        if(cmp.getDateProchainMail().getJour() == date.getDayOfMonth()){
+            LocalTime time = LocalTime.of(cmp.getHeure().getHeure(), cmp.getHeure().getMinute());
+            if(time.getHour() < LocalTime.now().getHour() || (cmp.getHeure().getHeure() <= LocalTime.now().getHour() && cmp.getHeure().getMinute() <= LocalTime.now().getMinute())){
+                try{
+                    Campagne_DAO dao = new Campagne_DAO(connBdd);
+                    ListeDeDiffusion liste = dao.getListeDeDiffusionByIdCampagne(cmp.getId());
+                    ArrayList<String> listeEmail = new ArrayList<>();
+                    for(int j = 0; j < liste.getListe().size(); j++){
+                        listeEmail.add(liste.getListe().get(j).getMail());
+                    }
+                    cmp.setListeEmail(listeEmail);
+                    Mailer mail = new Mailer();
+                    mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), cmp.getObjetMail(), cmp.getListeEmail());
+                    
+                    cmp.setDateProchainMail(new MyDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
+                    
+                    LocalDate dateFin = LocalDate.of(cmp.getDateFin().getAnnee(), cmp.getDateFin().getMois(), cmp.getDateFin().getJour());
+                    if(date.isAfter(dateFin)){
+                        cmp.setTerminer(1);
+                    }
+                    date = date.plusDays(1);
+                    cmp.setDateProchainMail(new MyDate(date));
+                    dao.update(cmp);
+                    
+                }catch(Exception ex){
+                    System.out.println(ex.getMessage());
+                }
+            }
+        }
+    }
+    
+    public void envoieHebdomadaire(Campagne cmp){
+        LocalDate date = LocalDate.of(cmp.getDateProchainMail().getAnnee(), cmp.getDateProchainMail().getMois(), cmp.getDateProchainMail().getJour());
         if(cmp.getDateDebut().getJour() == date.getDayOfMonth()){
             LocalTime time = LocalTime.of(cmp.getHeure().getHeure(), cmp.getHeure().getMinute());
             if(time.getHour() < LocalTime.now().getHour() || (cmp.getHeure().getHeure() <= LocalTime.now().getHour() && cmp.getHeure().getMinute() <= LocalTime.now().getMinute())){
@@ -63,7 +96,7 @@ public class SurveillanceCampagne {
                     }
                     cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();
-                    mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), "coucou", cmp.getListeEmail());
+                    mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), cmp.getObjetMail(), cmp.getListeEmail());
                     
                     cmp.setDateProchainMail(new MyDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
                     
@@ -71,6 +104,7 @@ public class SurveillanceCampagne {
                     if(date.isAfter(dateFin)){
                         cmp.setTerminer(1);
                     }
+                    date = date.plusDays(7);
                     cmp.setDateProchainMail(new MyDate(date));
                     dao.update(cmp);
                     
@@ -81,54 +115,21 @@ public class SurveillanceCampagne {
         }
     }
     
-    public void envoieHebdomadaire(Campagne cmp){
-        LocalDate date = LocalDate.of(cmp.getDateDebut().getAnnee(), cmp.getDateDebut().getMois(), cmp.getDateDebut().getJour());
-        date.plusDays(7);
-        if(cmp.getDateDebut().getJour() == date.getDayOfMonth()){
-            LocalTime time = LocalTime.of(cmp.getDateDebut().getAnnee(), cmp.getDateDebut().getMois(), cmp.getDateDebut().getJour());
-            if(time.getHour() < LocalTime.now().getHour() || (cmp.getHeure().getHeure() <= LocalTime.now().getHour() && cmp.getHeure().getMinute() <= LocalTime.now().getMinute())){
-                try{
-                    Campagne_DAO dao = new Campagne_DAO(connBdd);
-                    ListeDeDiffusion liste = dao.getListeDeDiffusionByIdCampagne(cmp.getId());
-                    ArrayList<String> listeEmail = new ArrayList<>();
-                    for(int j = 0; j < liste.getListe().size(); j++){
-                        //listeEmail.add(liste.getListe().get(j).getMail());
-                    }
-                    cmp.setListeEmail(listeEmail);
-                    Mailer mail = new Mailer();
-                    mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), "coucou", cmp.getListeEmail());
-                    
-                    cmp.setDateProchainMail(new MyDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
-                    
-                    LocalDate dateFin = LocalDate.of(cmp.getDateFin().getAnnee(), cmp.getDateFin().getMois(), cmp.getDateFin().getJour());
-                    if(date.isAfter(dateFin)){
-                        cmp.setTerminer(1);
-                    }
-                    dao.update(cmp);
-                    
-                }catch(Exception ex){
-                    System.out.println(ex.getMessage());
-                }
-            }
-        }
-    }
-    
     public void envoieMensuel(Campagne cmp){
-        LocalDate date = LocalDate.of(cmp.getDateDebut().getAnnee(), cmp.getDateDebut().getMois(), cmp.getDateDebut().getJour());
-        date.plusMonths(1);
+        LocalDate date = LocalDate.of(cmp.getDateProchainMail().getAnnee(), cmp.getDateProchainMail().getMois(), cmp.getDateProchainMail().getJour());
         if(cmp.getDateDebut().getJour() == date.getDayOfMonth()){
-            LocalTime time = LocalTime.of(cmp.getDateDebut().getAnnee(), cmp.getDateDebut().getMois(), cmp.getDateDebut().getJour());
+            LocalTime time = LocalTime.of(cmp.getHeure().getHeure(), cmp.getHeure().getMinute());
             if(time.getHour() < LocalTime.now().getHour() || (cmp.getHeure().getHeure() <= LocalTime.now().getHour() && cmp.getHeure().getMinute() <= LocalTime.now().getMinute())){
                 try{
                     Campagne_DAO dao = new Campagne_DAO(connBdd);
                     ListeDeDiffusion liste = dao.getListeDeDiffusionByIdCampagne(cmp.getId());
                     ArrayList<String> listeEmail = new ArrayList<>();
                     for(int j = 0; j < liste.getListe().size(); j++){
-                        //listeEmail.add(liste.getListe().get(j).getMail());
+                        listeEmail.add(liste.getListe().get(j).getMail());
                     }
                     cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();
-                    mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), "coucou", cmp.getListeEmail());
+                    mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), cmp.getObjetMail(), cmp.getListeEmail());
                     
                     cmp.setDateProchainMail(new MyDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
                     
@@ -136,6 +137,8 @@ public class SurveillanceCampagne {
                     if(date.isAfter(dateFin)){
                         cmp.setTerminer(1);
                     }
+                    date = date.plusMonths(1);
+                    cmp.setDateProchainMail(new MyDate(date));
                     dao.update(cmp);
                     
                 }catch(Exception ex){
@@ -146,21 +149,20 @@ public class SurveillanceCampagne {
     }
     
     public void envoieAnnuel(Campagne cmp){
-        LocalDate date = LocalDate.of(cmp.getDateDebut().getAnnee(), cmp.getDateDebut().getMois(), cmp.getDateDebut().getJour());
-        date.plusYears(1);
+        LocalDate date = LocalDate.of(cmp.getDateProchainMail().getAnnee(), cmp.getDateProchainMail().getMois(), cmp.getDateProchainMail().getJour());
         if(cmp.getDateDebut().getJour() == date.getDayOfMonth()){
-            LocalTime time = LocalTime.of(cmp.getDateDebut().getAnnee(), cmp.getDateDebut().getMois(), cmp.getDateDebut().getJour());
+            LocalTime time = LocalTime.of(cmp.getHeure().getHeure(), cmp.getHeure().getMinute());
             if(time.getHour() < LocalTime.now().getHour() || (cmp.getHeure().getHeure() <= LocalTime.now().getHour() && cmp.getHeure().getMinute() <= LocalTime.now().getMinute())){
                 try{
                     Campagne_DAO dao = new Campagne_DAO(connBdd);
                     ListeDeDiffusion liste = dao.getListeDeDiffusionByIdCampagne(cmp.getId());
                     ArrayList<String> listeEmail = new ArrayList<>();
                     for(int j = 0; j < liste.getListe().size(); j++){
-                        //listeEmail.add(liste.getListe().get(j).getMail());
+                        listeEmail.add(liste.getListe().get(j).getMail());
                     }
                     cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();
-                    mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), "coucou", cmp.getListeEmail());
+                    mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), cmp.getObjetMail(), cmp.getListeEmail());
                     
                     cmp.setDateProchainMail(new MyDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
                     
@@ -168,6 +170,8 @@ public class SurveillanceCampagne {
                     if(date.isAfter(dateFin)){
                         cmp.setTerminer(1);
                     }
+                    date = date.plusYears(1);
+                    cmp.setDateProchainMail(new MyDate(date));
                     dao.update(cmp);
                     
                 }catch(Exception ex){
