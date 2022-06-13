@@ -160,6 +160,10 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
                       file = choose.getSelectedFile();
                       System.out.println(file.getAbsolutePath());
                     }
+                    else
+                    {
+                       break;
+                    }
                     try{
                         Scanner fichierCSV = new Scanner(file);
                         if(typeDonnee.equals("locataire")){

@@ -14,6 +14,7 @@ import Locatis.Locataire;
 import Locatis.Maison;
 import Locatis.Utilisateur;
 import com.sun.jdi.connect.spi.Connection;
+import interfaceGraphique.EmptyFieldException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -93,17 +94,26 @@ public class Controleur_Association implements ActionListener{
             JButton source = (JButton) e.getSource();
             switch (source.getText().toUpperCase()) {
                 case "AJOUTER" -> {
-                    Batiment batimentSelection;
-                    if(this.laVue.getLogementList().getSelectedItem() instanceof Appartement){
-                        batimentSelection = (Appartement) this.laVue.getLogementList().getSelectedItem();
-                    }
-                    else{
-                        batimentSelection = (Maison) this.laVue.getLogementList().getSelectedItem();
+                    try{    
+                        Batiment batimentSelection;
+                        if(this.laVue.getLogementList().getSelectedItem() != null){
+                            if(this.laVue.getLogementList().getSelectedItem() instanceof Appartement){
+                                batimentSelection = (Appartement) this.laVue.getLogementList().getSelectedItem();
+                            }
+                            else{
+                                batimentSelection = (Maison) this.laVue.getLogementList().getSelectedItem();
+
+                            }
+                            Locataire locataireSelection = (Locataire) this.laVue.getLocataireList().getSelectedItem();
+                            this.unModele.insertHabiter(batimentSelection.getID(), locataireSelection);
+                            remplirComboBoxRetirer();
+                        }
+                        else{
+                            throw new EmptyFieldException("Logement");
+                        }
+                    }catch(EmptyFieldException ex){
                         
                     }
-                    Locataire locataireSelection = (Locataire) this.laVue.getLocataireList().getSelectedItem();
-                    this.unModele.insertHabiter(batimentSelection.getID(), locataireSelection);
-                    remplirComboBoxRetirer();
                 }
                 case "RETOUR" -> {
                     this.laVue.quitter();
@@ -117,17 +127,26 @@ public class Controleur_Association implements ActionListener{
                     });
                 }
                 case "RETIRER" -> {
-                    Batiment batimentSelection;
-                    Locataire locataireSelection = (Locataire) this.laVue.getLocataireListByLocataire().getSelectedItem();
-                    if(this.laVue.getLogementListByLocataire().getSelectedItem() instanceof Appartement){
-                        batimentSelection = (Appartement) this.laVue.getLogementListByLocataire().getSelectedItem();
-                    }
-                    else{
-                        batimentSelection = (Maison) this.laVue.getLogementListByLocataire().getSelectedItem();
+                    try{    
+                        Batiment batimentSelection;
+                        if(this.laVue.getLogementListByLocataire().getSelectedItem() != null){
+                            Locataire locataireSelection = (Locataire) this.laVue.getLocataireListByLocataire().getSelectedItem();
+                            if(this.laVue.getLogementListByLocataire().getSelectedItem() instanceof Appartement){
+                                batimentSelection = (Appartement) this.laVue.getLogementListByLocataire().getSelectedItem();
+                            }
+                            else{
+                                batimentSelection = (Maison) this.laVue.getLogementListByLocataire().getSelectedItem();
+
+                            }
+                            this.unModele.removeHabiter(batimentSelection.getID(), locataireSelection);
+                            this.laVue.getLogementListByLocataire().removeItemAt(this.laVue.getLogementListByLocataire().getSelectedIndex());
+                        }
+                        else{
+                            throw new EmptyFieldException("Logement");
+                        }
+                    }catch(EmptyFieldException ex){
                         
                     }
-                    this.unModele.removeHabiter(batimentSelection.getID(), locataireSelection);
-                    this.laVue.getLogementListByLocataire().removeItemAt(this.laVue.getLogementListByLocataire().getSelectedIndex());
                 }
             }
         }
