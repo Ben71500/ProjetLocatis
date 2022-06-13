@@ -5,6 +5,9 @@ import interfaceGraphique.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.*;
 import java.util.Scanner;
@@ -36,6 +39,13 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener {
         laVue.ajouterEcouteurBouton("Retour", this);
         if(donnee.equals("locataire")){
             laVue.ajouterEcouteurBouton("Insere", this);
+            MouseListener mouseListener = new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    if(e.getClickCount() == 2){
+                        Locataire loca = (Locataire) leModele.getSelection(laVue.getLigne());
+                    }
+                } 
+            };
         }
         if(donnee.equals("appartement")){
             laVue.ajouterEcouteurBouton("Appartement", this);
