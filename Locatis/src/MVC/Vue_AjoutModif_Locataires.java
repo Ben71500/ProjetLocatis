@@ -8,7 +8,10 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 
 public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
     
@@ -92,14 +95,27 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
         panneau_info.add(this.prenom);
         panneau_info.add(this.dateDeNaissance_label);
         
-        this.dateDeNaissance.setCalendar(Calendar.getInstance());
+        
+        Calendar calendarDebut = new GregorianCalendar(2000, 0, 1);
+        dateDeNaissance.setCalendar(calendarDebut);
         JTextFieldDateEditor editor = (JTextFieldDateEditor) this.dateDeNaissance.getDateEditor();
         editor.setEditable(false);
+        this.dateDeNaissance.setMaxSelectableDate(Calendar.getInstance().getTime());
         
         panneau_info.add(this.dateDeNaissance);        
         panneau_info.add(this.mail_label);
         panneau_info.add(this.mail);
         panneau_info.add(this.telephone_label);
+        
+        // Formater un numéro de téléphone
+      /*try {
+         MaskFormatter formatter = new MaskFormatter("##########");
+         //formatter.setPlaceholderCharacter('#');formatter.setPlaceholder("");
+         telephone = new JFormattedTextField(formatter);
+         
+      } catch(Exception e) {
+         e.printStackTrace();
+      }*/
         panneau_info.add(this.telephone);
     }
     
@@ -184,6 +200,12 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
         }else
         if(this.telephone.getText().equals("")){
             throw new EmptyFieldException("un numéro de téléphone");
+        }else
+        if(!Pattern.compile(".+@.+\\.[a-z]+").matcher(mail.getText()).matches()){
+            throw new EmptyFieldException("une adresse mail valide");
+        }else
+        if(!Pattern.compile("[0-9]{10}").matcher(telephone.getText()).matches()){
+            throw new EmptyFieldException("un numéro de téléphone valide");
         }
     }
     
@@ -194,6 +216,7 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
 
     @Override
     public Locataire getNouvelObjet() {
+        
         return new Locataire(0, this.nom.getText(), this.prenom.getText(), this.getDateDeNaissance(), this.mail.getText(), this.telephone.getText());
     }
 
