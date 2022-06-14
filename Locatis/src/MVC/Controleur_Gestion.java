@@ -188,6 +188,7 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
                         }
                         else{
                             ArrayList<Appartement> listeAppartement = new ArrayList<>();
+                            System.out.println(fichierCSV.hasNextLine());
                             while (fichierCSV.hasNextLine()){
                                 String ligne = fichierCSV.nextLine();
                                 String[] ligneSeparer = ligne.split(",");
