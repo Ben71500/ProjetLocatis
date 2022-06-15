@@ -15,4 +15,6 @@ public class PieChartTest {
     private PieChart graphiqueParTrancheAge = new PieChart("Tranche d'âge");
     private PieChart graphiqueParLogementOccuper = new PieChart("Logement occupé");
     private PieChart graphiqueDesCampagnesTerminer = new PieChart("Campagne en cours");
+    
+    
 }

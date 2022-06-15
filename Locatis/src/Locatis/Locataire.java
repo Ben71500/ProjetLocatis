@@ -2,6 +2,10 @@ package Locatis;
 
 import java.time.LocalDate;
 
+/**
+ *
+ * 
+ */
 public class Locataire implements Personne{
     
     private int id;
@@ -11,6 +15,15 @@ public class Locataire implements Personne{
     private String mail;
     private String telephone;
 
+    /**
+     *
+     * @param id
+     * @param nom
+     * @param prenom
+     * @param dateNaissance
+     * @param mail
+     * @param telephone
+     */
     public Locataire(int id, String nom, String prenom, MyDate dateNaissance, String mail, String telephone) {
         this.id = id;
         this.nom = nom;
@@ -20,40 +33,76 @@ public class Locataire implements Personne{
         this.telephone = telephone;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public String getMail(){
         return this.mail;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getTelephone(){
         return this.telephone;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     *
+     * @param nom
+     */
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPrenom() {
         return prenom;
     }
 
+    /**
+     *
+     * @param prenom
+     */
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAge() {
         MyDate aujourdhui = new MyDate(LocalDate.now());
         if(aujourdhui.getAnnee() < dateDeNaissance.getAnnee())
@@ -74,10 +123,18 @@ public class Locataire implements Personne{
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public MyDate getDateDeNaissance() {
         return dateDeNaissance;
     }
 
+    /**
+     *
+     * @param dateDeNaissance
+     */
     public void setDateDeNaissance(MyDate dateDeNaissance) {
         this.dateDeNaissance = dateDeNaissance;
     }
