@@ -11,7 +11,9 @@ import DAO.Connexion;
 import Locatis.Appartement;
 import Locatis.MyDate;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -31,6 +33,27 @@ public class AppartementDAOTest {
         Appartement_DAO daoTest = new Appartement_DAO(connBdd);
         Appartement AppartementTest = new Appartement("12", "rue des Test", "TestVille", "71100", 2, 10);
         Assert.assertEquals(true, daoTest.create(AppartementTest));
+        try{    
+            Thread.sleep(500);
+        }catch(InterruptedException ex){
+            
+        }
+    }
+    
+    /**
+     * Test de la methode insertById de l'objet Locataire_DAO
+     * @throws SQLException 
+     */
+    @Test (timeout=1000)
+    public void testSelectById() throws SQLException{
+        Appartement_DAO daoTest = new Appartement_DAO(connBdd);
+        Statement etat = this.connBdd.createStatement();
+        ResultSet res = etat.executeQuery("Select LAST_INSERT_ID() as ID_Appartement from logement");
+            res.next();
+            int id=res.getInt("ID_Appartement");
+        //int id = daoTest.selectByName("NomTest").getId();
+        int idAppartementTest = daoTest.selectById(id).getID();
+        Assert.assertEquals(id, idAppartementTest);
         try{    
             Thread.sleep(500);
         }catch(InterruptedException ex){

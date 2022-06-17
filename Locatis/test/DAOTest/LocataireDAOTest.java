@@ -11,14 +11,12 @@ import DAO.Locataire_DAO;
 import Locatis.Locataire;
 import Locatis.MyDate;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import org.junit.Test;
 import org.junit.Assert;
 import java.sql.SQLException;
+import java.sql.Statement;
 
-/**
- *
- * @author benja
- */
 public class LocataireDAOTest {
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
     
@@ -31,6 +29,23 @@ public class LocataireDAOTest {
         Locataire_DAO daoTest = new Locataire_DAO(connBdd);
         Locataire locataireTest = new Locataire(0, "NomTest", "PrenomTest", new MyDate(2002, 8, 16), "test@gmail.com", "0771773740");
         Assert.assertEquals(true, daoTest.create(locataireTest));
+        try{    
+            Thread.sleep(500);
+        }catch(InterruptedException ex){
+            
+        }
+    }
+    
+    /**
+     * Test de la methode insertById de l'objet Locataire_DAO
+     * @throws SQLException 
+     */
+    @Test (timeout=1000)
+    public void testSelectById() throws SQLException{
+        Locataire_DAO daoTest = new Locataire_DAO(connBdd);
+        int id = daoTest.selectByName("NomTest").getId();
+        int idLocataireTest = daoTest.selectById(id).getId();
+        Assert.assertEquals(id, idLocataireTest);
         try{    
             Thread.sleep(500);
         }catch(InterruptedException ex){
