@@ -22,7 +22,7 @@ public class Recevoir_DAO {
             boolean ok = true;
             Statement statement = this.connection.createStatement();
             for(int i=0;i<obj.size();i++){
-                ok= !statement.execute("insert into recevoir (ID_campagne, ID_listeDiff) values("
+                ok = ok && !statement.execute("insert into recevoir (ID_campagne, ID_listeDiff) values("
                         + idCampagne + " , "
                         + obj.get(i).getId() + " )"
                 );
@@ -55,9 +55,7 @@ public class Recevoir_DAO {
     }
     
     public boolean update(int idCampagne, List<ListeDeDiffusion> obj) {
-        this.delete(idCampagne);
-        this.create(idCampagne, obj);
-        return true;
+        return this.delete(idCampagne) && this.create(idCampagne, obj);
     }
     
     

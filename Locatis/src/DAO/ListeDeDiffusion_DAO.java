@@ -21,16 +21,16 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     public boolean create(ListeDeDiffusion obj) {
         try {
             Statement etat = this.connection.createStatement();
-            String requeteProc ="Insert into listediffusion VALUES ('"+ obj.getId()+ "' , '"+ obj.getNom()+ "' );";
-            etat.execute(requeteProc);
+            String requeteProc = "Insert into listediffusion VALUES ('"+ obj.getId()+ "' , '"+ obj.getNom()+ "' );";
+            boolean b = !etat.execute(requeteProc);
             ResultSet res = etat.executeQuery("Select LAST_INSERT_ID() as ID_listeDiff from listediffusion");
             res.next();
             int id=res.getInt("ID_listeDiff");
             switch(obj.getTypeListe()){
-                case "locataire" -> createListeLocataires (id,obj.getListe());
-                case "utilisateur" -> createListeUtilisateurs (id,obj.getListe());
+                case "locataire" -> b = b && createListeLocataires (id,obj.getListe());
+                case "utilisateur" -> b = b && createListeUtilisateurs (id,obj.getListe());
             }
-            return true;
+            return b;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -40,11 +40,12 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     public boolean createListeLocataires(int id, ArrayList<Personne> liste) {
         try {
             Statement etat = this.connection.createStatement();
+            Boolean b = true;
             for(int i=0; i<liste.size();i++){
                 String requete ="Insert into locataire_liste VALUES ("+ id + " , "+ liste.get(i).getId()+ " );";
-                etat.execute(requete);
+                b = b && !etat.execute(requete);
             }
-            return true;
+            return b;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -54,11 +55,12 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     public boolean createListeUtilisateurs(int id, ArrayList<Personne> liste) {
         try {
             Statement etat = this.connection.createStatement();
+            Boolean b = true;
             for(int i=0; i<liste.size();i++){
                 String requete ="Insert into utilisateur_liste VALUES ("+ id + " , "+ liste.get(i).getId()+ " );";
-                etat.execute(requete);
+                b = b && !etat.execute(requete);
             }
-            return true;
+            return b;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -70,9 +72,9 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
         try {
             deleteListe(obj.getId());
             Recevoir_DAO recevoir = new Recevoir_DAO(this.connection);
-            recevoir.deleteByListe(obj.getId());
+            Boolean b = recevoir.deleteByListe(obj.getId());
             Statement etat = this.connection.createStatement();
-            return !etat.execute("delete from listediffusion where ID_listeDiff=" + obj.getId());
+            return b && !etat.execute("delete from listediffusion where ID_listeDiff=" + obj.getId());
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -96,13 +98,13 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
             etat = this.connection.createStatement();
             String requeteProc ="update listediffusion set Nom_liste='"
                     +obj.getNom()+"' where ID_listeDiff="+obj.getId()+" ;";
-            etat.execute(requeteProc);
+            Boolean b = !etat.execute(requeteProc);
             deleteListe(obj.getId());
             switch(obj.getTypeListe()){
-                case "locataire" -> createListeLocataires (obj.getId(),obj.getListe());
-                case "utilisateur" -> createListeUtilisateurs (obj.getId(),obj.getListe());
+                case "locataire" -> b = b && createListeLocataires (obj.getId(),obj.getListe());
+                case "utilisateur" -> b = b && createListeUtilisateurs (obj.getId(),obj.getListe());
             }
-            return true;
+            return b;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -133,6 +135,19 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return null;
+        }
+    }
+    
+    public int getLastInsertId(){
+        try{
+            Statement etat = this.connection.createStatement();
+            ResultSet res = etat.executeQuery("Select LAST_INSERT_ID() as ID_Liste from listeDiffusion");
+            res.next();
+            int id = res.getInt("ID_Liste");
+            return id;
+        }catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return 0;
         }
     }
 

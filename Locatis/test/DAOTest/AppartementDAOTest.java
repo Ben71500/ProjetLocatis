@@ -7,14 +7,13 @@ import Locatis.Appartement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 
 public class AppartementDAOTest {
+    
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
     private Appartement appartTest = new Appartement("12", "rue des Test", "TestVille", "71100", 2, 10);
     

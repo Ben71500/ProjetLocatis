@@ -19,7 +19,7 @@ public class Campagne_DAO extends DAO<Campagne>{
     public boolean create(Campagne obj) {
         try {
             Statement statement = this.connection.createStatement();
-            statement.execute("insert into campagne (ID_campagne, Titre_campagne, Date_Debut, Date_Fin, Heure, frequence, END, ID_utilisateur, Objet, Contenu) values("
+            boolean b = !statement.execute("insert into campagne (ID_campagne, Titre_campagne, Date_Debut, Date_Fin, Heure, frequence, END, ID_utilisateur, Objet, Contenu) values("
                     + obj.getId() + " , '"
                     + obj.getTitre() + "' , "
                     + obj.getDateDebut().getDateSQL() + " , "
@@ -35,8 +35,7 @@ public class Campagne_DAO extends DAO<Campagne>{
             ResultSet res = statement.executeQuery("Select LAST_INSERT_ID() as ID_campagne from campagne");
             res.next();
             int id=res.getInt("ID_campagne");
-            recevoir.create(id, obj.getListes());
-            return true;
+            return recevoir.create(id, obj.getListes()) && b;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -48,8 +47,8 @@ public class Campagne_DAO extends DAO<Campagne>{
         try {
             Statement statement = this.connection.createStatement();
             Recevoir_DAO recevoir = new Recevoir_DAO(this.connection);
-            recevoir.delete(obj.getId());
-            return !statement.execute("delete from campagne where ID_campagne=" + obj.getId());
+            boolean b = recevoir.delete(obj.getId());
+            return !statement.execute("delete from campagne where ID_campagne=" + obj.getId()) && b;
         } catch (SQLException ex) {
             return false;
         }
@@ -60,7 +59,7 @@ public class Campagne_DAO extends DAO<Campagne>{
         try {
             Statement statement = this.connection.createStatement();
             Recevoir_DAO recevoir = new Recevoir_DAO(this.connection);
-            recevoir.update(obj.getId(), obj.getListes());
+            Boolean b = recevoir.update(obj.getId(), obj.getListes());
             return !statement.execute("update campagne set "
                     + "Titre_campagne ='" + obj.getTitre()+ "' , "
                     + "Date_Debut =" + obj.getDateDebut().getDateSQL()+ " , "
@@ -73,7 +72,7 @@ public class Campagne_DAO extends DAO<Campagne>{
                     + "Objet='" + obj.getObjetMail()+ "' , "
                     + "Contenu='" + obj.getMessageMail()+ "'"
                     + " where  ID_campagne=" + obj.getId()
-            );
+            ) && b;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -101,6 +100,7 @@ public class Campagne_DAO extends DAO<Campagne>{
                     user.selectById(res.getInt("ID_utilisateur"))
             );
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
             return null;
         }
     }
@@ -119,6 +119,19 @@ public class Campagne_DAO extends DAO<Campagne>{
                     res.getString("Contenu"), recevoir.getListes(idCampagne), user.selectById(res.getInt("ID_utilisateur")));
         } catch (SQLException ex) {
             return null;
+        }
+    }
+    
+    public int getLastInsertId(){
+        try{
+            Statement etat = this.connection.createStatement();
+            ResultSet res = etat.executeQuery("Select LAST_INSERT_ID() as ID_Campagne from campagne");
+            res.next();
+            int id = res.getInt("ID_Campagne");
+            return id;
+        }catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return 0;
         }
     }
 

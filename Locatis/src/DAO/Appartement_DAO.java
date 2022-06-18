@@ -22,8 +22,7 @@ public class Appartement_DAO extends DAO<Appartement>{
             Statement etat;
             etat = this.connection.createStatement();
             String requeteProc = "Insert into logement VALUES ('"+obj.getID()+"' , '"+obj.getNumeroRue()+"' , '"+obj.getNomRue()+"' , '"+obj.getVille()+"' , '"+obj.getCodePostal()+"' , '"+obj.getApart()+"' , '"+obj.getEtage()+"' );";
-            etat.execute(requeteProc);
-            return true;
+            return !etat.execute(requeteProc);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -37,8 +36,7 @@ public class Appartement_DAO extends DAO<Appartement>{
             deleteAllLogementByIdLogementId(obj);
             etat = this.connection.createStatement();
             String requeteProc = "DELETE FROM logement where ID_batiment = "+obj.getID()+" ;";
-            etat.execute(requeteProc);
-            return true;
+            return !etat.execute(requeteProc);
         } catch (SQLException ex) {
             return false;
         }
@@ -50,8 +48,7 @@ public class Appartement_DAO extends DAO<Appartement>{
             Statement etat;
             etat = this.connection.createStatement();
             String requeteProc ="update logement set NumeroRue ='"+obj.getNumeroRue()+"' , NomRue ='"+obj.getNomRue()+"' , Ville ='"+obj.getVille()+"' , CodePostal ='"+obj.getCodePostal()+"' ,NumeroAppartement='"+obj.getApart()+"' , NombreEtage='"+obj.getEtage()+"' where ID_batiment="+obj.getID()+" ;";
-            etat.execute(requeteProc);
-            return true;
+            return !etat.execute(requeteProc);
         } catch (SQLException ex) {
             return false;
         }
