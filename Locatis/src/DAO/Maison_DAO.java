@@ -37,7 +37,6 @@ public class Maison_DAO extends DAO<Maison>{
                     + obj.getNomRue()+"' , '"
                     + obj.getVille()+ "' , '"
                     + obj.getCodePostal()+ "')";
-            System.out.println(requeteProc);
             etat.execute(requeteProc);
             return true;
         } catch (SQLException ex) {

@@ -174,7 +174,7 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
                                 Locataire loca = new Locataire(0, ligneSeparer[0], ligneSeparer[1], new MyDate(ligneSeparer[2]), ligneSeparer[3], ligneSeparer[4]);
                                 listeLoca.add(loca);
                             }
-                            leModele.insererViaCSVLocataire(listeLoca);
+                            leModele.insererViaCSV(listeLoca);
                         }
                         else if(typeDonnee.equals("maison")){
                             ArrayList<Maison> listeMaison = new ArrayList<>();
@@ -184,7 +184,7 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
                                 Maison maison = new Maison(ligneSeparer[0], ligneSeparer[1], ligneSeparer[2], ligneSeparer[3]);
                                 listeMaison.add(maison);
                             }
-                            leModele.insererViaCSVMaison(listeMaison);
+                            leModele.insererViaCSV(listeMaison);
                         }
                         else{
                             ArrayList<Appartement> listeAppartement = new ArrayList<>();
@@ -195,7 +195,7 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
                                 Appartement appartement = new Appartement(ligneSeparer[0], ligneSeparer[1], ligneSeparer[2], ligneSeparer[3], Integer.parseInt(ligneSeparer[4]), Integer.parseInt(ligneSeparer[5]));
                                 listeAppartement.add(appartement);
                             }
-                            leModele.insererViaCSVAppartement(listeAppartement);
+                            leModele.insererViaCSV(listeAppartement);
                         }
                     }catch(Exception ex){
                         System.out.println("erreur");
