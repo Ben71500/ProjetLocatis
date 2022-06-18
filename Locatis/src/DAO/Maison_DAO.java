@@ -138,6 +138,18 @@ public class Maison_DAO extends DAO<Maison>{
         return allMaison;
     }
     
+    public int getLastInsertId(){
+        try{
+            Statement etat = this.connection.createStatement();
+            ResultSet res = etat.executeQuery("Select LAST_INSERT_ID() as ID_Appartement from logement");
+            res.next();
+            return res.getInt("ID_Appartement");
+        }catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return 0;
+        }
+    }
+    
     public boolean deleteAllLogementByIdLogementId(Maison obj){
         try {
             Statement etat = this.connection.createStatement();

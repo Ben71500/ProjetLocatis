@@ -65,7 +65,7 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
                     + "login='" + obj.getLogin()+ "' , "
                     + "Mdp='" + obj.getMotDePasse()+ "' , "
                     + "CAT='" + obj.getCat() +"' , "
-                    + "Email='" + obj.getMail() + "' , '"
+                    + "Email='" + obj.getMail() + "' , "
                     + "Password='" + obj.getPassword() + "' "
                     + "where  ID_utilisateur=" + obj.getId()
             );

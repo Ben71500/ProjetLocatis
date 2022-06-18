@@ -9,9 +9,23 @@ import java.sql.Connection;
 import org.junit.Test;
 import org.junit.Assert;
 import java.sql.SQLException;
+import org.junit.After;
+import org.junit.Before;
 
 public class LocataireDAOTest {
+    
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
+    private Locataire locataireTest = new Locataire(0, "NomTest", "PrenomTest", new MyDate(2002, 8, 16), "test@gmail.com", "0771773740");
+    private Locataire_DAO daoTest = new Locataire_DAO(connBdd);
+    
+    /**
+     * 
+     * @throws SQLException 
+     */
+    @Before
+    public void setUp() throws SQLException{
+        connBdd.setAutoCommit(false);
+    }
     
     /**
      * Test de la methode create de l'objet Locataire_DAO
@@ -19,14 +33,7 @@ public class LocataireDAOTest {
      */
     @Test(timeout=1000)
     public void testCreate() throws SQLException{
-        Locataire_DAO daoTest = new Locataire_DAO(connBdd);
-        Locataire locataireTest = new Locataire(0, "NomTest", "PrenomTest", new MyDate(2002, 8, 16), "test@gmail.com", "0771773740");
         Assert.assertEquals(true, daoTest.create(locataireTest));
-        try{    
-            Thread.sleep(500);
-        }catch(InterruptedException ex){
-            System.out.println(ex.getMessage());
-        }
     }
     
     /**
@@ -35,15 +42,10 @@ public class LocataireDAOTest {
      */
     @Test (timeout=1000)
     public void testSelectById() throws SQLException{
-        Locataire_DAO daoTest = new Locataire_DAO(connBdd);
+        daoTest.create(locataireTest);
         int id = daoTest.selectByName("NomTest").getId();
         int idLocataireTest = daoTest.selectById(id).getId();
         Assert.assertEquals(id, idLocataireTest);
-        try{    
-            Thread.sleep(500);
-        }catch(InterruptedException ex){
-            System.out.println(ex.getMessage());
-        }
     }
     
     /**
@@ -52,15 +54,10 @@ public class LocataireDAOTest {
      */
     @Test(timeout=1000)
     public void testUpdate() throws SQLException{
-        Locataire_DAO daoTest = new Locataire_DAO(connBdd);
+        daoTest.create(locataireTest);
         int idLocataireTest = daoTest.selectByName("NomTest").getId();
         Locataire locataireModifierTest = new Locataire(idLocataireTest, "NomTestModif", "PrenomTestModif", new MyDate(2002, 8, 16), "testModifier@gmail.com", "0771773740");
         Assert.assertEquals(true, daoTest.update(locataireModifierTest));
-        try{    
-            Thread.sleep(500);
-        }catch(InterruptedException ex){
-            System.out.println(ex.getMessage());
-        }
     }
     
     /**
@@ -69,9 +66,18 @@ public class LocataireDAOTest {
      */
     @Test(timeout=1000)
     public void testRemove() throws SQLException{
-        Locataire_DAO daoTest = new Locataire_DAO(connBdd);
-        int idLocataireTest = daoTest.selectByName("NomTestModif").getId();
+        daoTest.create(locataireTest);
+        int idLocataireTest = daoTest.selectByName("NomTest").getId();
         Locataire locataireModifierSupprimerTest = new Locataire(idLocataireTest, "NomTestModif", "PrenomTestModif", new MyDate(2002, 8, 16), "testModifier@gmail.com", "0771773740");
         Assert.assertEquals(true, daoTest.delete(locataireModifierSupprimerTest));
+    }
+    
+    /**
+     * 
+     * @throws SQLException 
+     */
+    @After
+    public void tearDown() throws SQLException {
+        connBdd.rollback();
     }
 }
