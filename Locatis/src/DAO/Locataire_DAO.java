@@ -1,10 +1,10 @@
 package DAO;
 
 import DAO.DAO;
-import Locatis.Appartement;
-import Locatis.Batiment;
-import Locatis.Locataire;
-import Locatis.Maison;
+import Objets_Locatis.Appartement;
+import Objets_Locatis.Batiment;
+import Objets_Locatis.Locataire;
+import Objets_Locatis.Maison;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -3,7 +3,7 @@ package DAOTest;
 import DAO.Appartement_DAO;
 import DAO.ConnectionBDD;
 import DAO.Connexion;
-import Locatis.Appartement;
+import Objets_Locatis.Appartement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import org.junit.After;

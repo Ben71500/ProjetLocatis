@@ -1,7 +1,7 @@
 package DAO;
 
-import Locatis.MyDate;
-import Locatis.MyTime;
+import Objets_Locatis.MyDate;
+import Objets_Locatis.MyTime;
 import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;

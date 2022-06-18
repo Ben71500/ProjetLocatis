@@ -1,6 +1,6 @@
 package DAO;
 
-import Locatis.ListeDeDiffusion;
+import Objets_Locatis.ListeDeDiffusion;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

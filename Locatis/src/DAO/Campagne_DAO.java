@@ -1,9 +1,9 @@
 package DAO;
 
-import Locatis.Campagne;
-import Locatis.ListeDeDiffusion;
-import Locatis.Locataire;
-import Locatis.Personne;
+import Objets_Locatis.Campagne;
+import Objets_Locatis.ListeDeDiffusion;
+import Objets_Locatis.Locataire;
+import Objets_Locatis.Personne;
 import com.mysql.cj.result.LocalDateTimeValueFactory;
 import java.sql.*;
 import java.util.*;

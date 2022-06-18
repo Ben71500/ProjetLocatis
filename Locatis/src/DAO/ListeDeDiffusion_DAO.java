@@ -1,9 +1,9 @@
 package DAO;
 
-import Locatis.ListeDeDiffusion;
-import Locatis.Locataire;
-import Locatis.Personne;
-import Locatis.Utilisateur;
+import Objets_Locatis.ListeDeDiffusion;
+import Objets_Locatis.Locataire;
+import Objets_Locatis.Personne;
+import Objets_Locatis.Utilisateur;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

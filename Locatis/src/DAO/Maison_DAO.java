@@ -6,8 +6,8 @@
 package DAO;
 
 import DAO.DAO;
-import Locatis.Appartement;
-import Locatis.Maison;
+import Objets_Locatis.Appartement;
+import Objets_Locatis.Maison;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;

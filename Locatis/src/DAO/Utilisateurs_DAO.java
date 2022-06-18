@@ -3,7 +3,7 @@ package DAO;
 import DAO.Connexion;
 import DAO.ConnectionBDD;
 import DAO.DAO;
-import Locatis.Utilisateur;
+import Objets_Locatis.Utilisateur;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
