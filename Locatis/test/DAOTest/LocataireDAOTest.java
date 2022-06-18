@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAOTest;
 
 import DAO.ConnectionBDD;
@@ -11,11 +6,9 @@ import DAO.Locataire_DAO;
 import Locatis.Locataire;
 import Locatis.MyDate;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import org.junit.Test;
 import org.junit.Assert;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class LocataireDAOTest {
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
@@ -32,7 +25,7 @@ public class LocataireDAOTest {
         try{    
             Thread.sleep(500);
         }catch(InterruptedException ex){
-            
+            System.out.println(ex.getMessage());
         }
     }
     
@@ -49,7 +42,7 @@ public class LocataireDAOTest {
         try{    
             Thread.sleep(500);
         }catch(InterruptedException ex){
-            
+            System.out.println(ex.getMessage());
         }
     }
     
@@ -66,7 +59,7 @@ public class LocataireDAOTest {
         try{    
             Thread.sleep(500);
         }catch(InterruptedException ex){
-            
+            System.out.println(ex.getMessage());
         }
     }
     

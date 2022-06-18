@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 import DAO.DAO;
@@ -13,13 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-/**
- *
- * @author benja
- */
 public class Appartement_DAO extends DAO<Appartement>{
     
     public Appartement_DAO(Connection connection) {
@@ -39,7 +29,7 @@ public class Appartement_DAO extends DAO<Appartement>{
             return false;
         }
     }
-
+    
     @Override
     public boolean delete(Appartement obj) {
         try {
@@ -53,7 +43,7 @@ public class Appartement_DAO extends DAO<Appartement>{
             return false;
         }
     }
-
+    
     @Override
     public boolean update(Appartement obj) {
         try {
@@ -67,10 +57,9 @@ public class Appartement_DAO extends DAO<Appartement>{
         }
         
     }
-
+    
     @Override
     public Appartement selectById(int id) {
-
         try {
             Statement statement = this.connection.createStatement();
             ResultSet res = statement.executeQuery("Select * from logement where ID_batiment=" + id +" AND NumeroAppartement IS NOT NULL");
@@ -86,6 +75,18 @@ public class Appartement_DAO extends DAO<Appartement>{
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return null;
+        }
+    }
+
+    public int getLastInsertId(){
+        try{
+            Statement etat = this.connection.createStatement();
+            ResultSet res = etat.executeQuery("Select LAST_INSERT_ID() as ID_Appartement from logement");
+            res.next();
+            return res.getInt("ID_Appartement");
+        }catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return 0;
         }
     }
 
@@ -176,6 +177,5 @@ public class Appartement_DAO extends DAO<Appartement>{
         } catch (SQLException ex) {
             return false;
         }
-    }
-    
+    }   
 }
