@@ -3,8 +3,8 @@ package Objets_Locatis;
 import java.time.LocalDate;
 
 /**
- *
- * 
+ * Classe dérivée de Personne décrivant un locataire.
+ * @author Benjamin Mathilde
  */
 public class Locataire implements Personne{
     
