@@ -8,15 +8,29 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author Benjamin
+ */
 public class Recevoir_DAO {
     
     private Connection connection;
 
+    /**
+     * Constructeur de l'objet Recevoir_DAO
+     * @param connection
+     */
     public Recevoir_DAO(Connection connection) {
         this.connection = connection;
     }
     
-    
+    /**
+     * Méthode qui crée un lien entre une campagne et une liste de diffusion dans la table recevoir
+     * @exception SQLException si la requête n'aboutie pas retourne retourne false
+     * @param idCampagne : id d'une camapagne
+     * @param obj : List de liste de diffusion
+     * @return boolean
+     */
     public boolean create(int idCampagne, List<ListeDeDiffusion> obj) {
         try {
             boolean ok = true;
@@ -34,6 +48,12 @@ public class Recevoir_DAO {
         }
     }
     
+    /**
+     * Méthode qui supprime un lien entre une campagne et une liste de diffusion dans la table recevoir
+     * @exception SQLException si la requête n'aboutie pas retourne retourne false
+     * @param idCampagne : id d'une camapagne
+     * @return boolean
+     */
     public boolean delete(int idCampagne) {
         try {
             Statement statement = this.connection.createStatement();
@@ -44,6 +64,12 @@ public class Recevoir_DAO {
         }
     }
     
+    /**
+     * Méthode qui supprime un lien entre une campagne et une liste de diffusion dans la table recevoir
+     * @exception SQLException si la requête n'aboutie pas retourne retourne false
+     * @param idListe : id d'une liste de diffusion
+     * @return boolean
+     */
     public boolean deleteByListe(int idListe) {
         try {
             Statement statement = this.connection.createStatement();
@@ -54,11 +80,22 @@ public class Recevoir_DAO {
         }
     }
     
+    /**
+     *
+     * @param idCampagne
+     * @param obj
+     * @return
+     */
     public boolean update(int idCampagne, List<ListeDeDiffusion> obj) {
         return this.delete(idCampagne) && this.create(idCampagne, obj);
     }
     
-    
+    /**
+     * Méthode qui recupére une liste de diffusion par un id de campagne 
+     * @exception SQLException si la requête n'aboutie pas retourne retourne null
+     * @param idCampagne : id d'une campagne
+     * @return List<ListeDeDiffusion>
+     */
     public List<ListeDeDiffusion> getListes(int idCampagne){
         try{
             Statement statement = this.connection.createStatement();

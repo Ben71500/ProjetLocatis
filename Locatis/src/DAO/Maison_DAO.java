@@ -18,14 +18,24 @@ import java.util.List;
 
 /**
  *
- * @author benja
+ * @author Benjamin Mathilde
  */
 public class Maison_DAO extends DAO<Maison>{
     
+    /**
+     * Constructeur de l'objet Utilisateur_DAO
+     * @param connection
+     */
     public Maison_DAO(Connection connection) {
         super(connection);
     }
 
+    /**
+     * Méthode qui crée une Maison en base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param Maison
+     * @return
+     */
     @Override
     public boolean create(Maison obj) {
         try {
@@ -45,6 +55,12 @@ public class Maison_DAO extends DAO<Maison>{
         }
     }
 
+    /**
+     * Méthode qui supprime une Maison en base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param Maison
+     * @return boolean
+     */
     @Override
     public boolean delete(Maison obj) {
         try {
@@ -59,11 +75,16 @@ public class Maison_DAO extends DAO<Maison>{
         }
     }
 
+    /**
+     * Méthode qui modifie une Maison en base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param Maison
+     * @return boolean
+     */
     @Override
     public boolean update(Maison obj) {
         try {
             Statement statement = this.connection.createStatement();
-            System.out.println("Coucou");
             String sql = "update logement set "
                     + "NumeroRue='" + obj.getNumeroRue()
                     + "' , NomRue='" + obj.getNomRue()
@@ -71,7 +92,6 @@ public class Maison_DAO extends DAO<Maison>{
                     + "' , CodePostal='" + obj.getCodePostal()
                     + "' where  ID_batiment=" + obj.getID();
             statement.execute(sql);
-            System.out.println(sql);
             return true;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -80,6 +100,12 @@ public class Maison_DAO extends DAO<Maison>{
         
     }
 
+    /**
+     * Méthode qui selectionne une Maison par son identifiant de base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne null
+     * @param id : id Maison
+     * @return Maison
+     */
     @Override
     public Maison selectById(int id) {
 
@@ -98,6 +124,13 @@ public class Maison_DAO extends DAO<Maison>{
         }
     }
 
+    /**
+     * Méthode qui récupére une maison par sont adresse dans la base de donnée
+     * @deprecated
+     * @exception SQLException si la requête n'aboutie pas retourne null
+     * @param adresse
+     * @return Maison
+     */
     @Override
     public Maison selectByName(String adresse) {
         try {
@@ -116,6 +149,11 @@ public class Maison_DAO extends DAO<Maison>{
         }
     }
 
+    /**
+     * Méthode qui récupére la totalité des appartements dans une List de maison
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Maison incrémenter
+     * @return List<Maison>
+     */
     @Override
     public List<Maison> getAll() {
 
@@ -137,6 +175,11 @@ public class Maison_DAO extends DAO<Maison>{
         return allMaison;
     }
     
+    /**
+     * Méthode qui récupére une maison par le dernier id insérer dans la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne 0
+     * @return int
+     */
     public int getLastInsertId(){
         try{
             Statement etat = this.connection.createStatement();
@@ -149,6 +192,12 @@ public class Maison_DAO extends DAO<Maison>{
         }
     }
     
+    /**
+     * Méthode qui supprime les maisons de la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param Maison
+     * @return boolean
+     */
     public boolean deleteAllLogementByIdLogementId(Maison obj){
         try {
             Statement etat = this.connection.createStatement();

@@ -13,30 +13,26 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author Benjamin Mathilde
+ */
 public class Locataire_DAO extends DAO<Locataire>{
     
+    /**
+     * Consturcteur de l'objet Locataire_DAO
+     * @param connection
+     */
     public Locataire_DAO(Connection connection) {
         super(connection);
     }
-
-    public Locataire selectByIdCampagne(int id) {
-
-        try {
-            Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from locataire where ID_locataire=" + id);
-            res.next();
-            return new Locataire(res.getInt("ID_locataire"),
-                    res.getString("Nom"),
-                    res.getString("Prenom"),
-                    this.getMyDate(res.getDate("DateDeNaissance")),
-                    res.getString("Mail"),
-                    res.getString("Telephone")
-            );
-        } catch (SQLException ex) {
-            return null;
-        }
-    }
     
+    /**
+     * Méthode qui crée un locataire dans la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne retourne false
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean create(Locataire obj) {
         try {
@@ -56,6 +52,12 @@ public class Locataire_DAO extends DAO<Locataire>{
         }
     }
 
+    /**
+     * Méthode qui supprime un locataire dans la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne retourne false
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean delete(Locataire obj) {
         try {
@@ -68,6 +70,11 @@ public class Locataire_DAO extends DAO<Locataire>{
         }
     }
 
+    /**
+     * Méthode qui modifie un locataire dans la base de donnée
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean update(Locataire obj) {
         try {
@@ -88,6 +95,12 @@ public class Locataire_DAO extends DAO<Locataire>{
         } 
     }
 
+    /**
+     * Méthode qui récupére un Locataire par rapport à un id
+     * @exception SQLException si la requête n'aboutie pas retourne retourne null
+     * @param id : id de locataire
+     * @return Locataire
+     */
     @Override
     public Locataire selectById(int id) {
 
@@ -107,6 +120,12 @@ public class Locataire_DAO extends DAO<Locataire>{
         }
     }
 
+    /**
+     * Méthode qui retourne un locataire par son nom
+     * @exception SQLException si la requête n'aboutie pas retourne retourne null
+     * @param nom
+     * @return Locataire
+     */
     @Override
     public Locataire selectByName(String nom) {
         try {
@@ -121,6 +140,11 @@ public class Locataire_DAO extends DAO<Locataire>{
         }
     }
 
+    /**
+     * Méthode qui récupére tous les locataires de la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Locataire incrémenter
+     * @return List<Locataire>
+     */
     @Override
     public List<Locataire> getAll() {
 
@@ -144,6 +168,12 @@ public class Locataire_DAO extends DAO<Locataire>{
         return allLocataire;
     }
     
+    /**
+     * Méthode qui retourne la liste des locataire contenant la sous chaine donné
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Locataire incrémenter
+     * @param texte : nom locataire
+     * @return List<Locataire>
+     */
     public List<Locataire> getSearch(String texte) {
 
         List<Locataire> allLocataire = new ArrayList<>();
@@ -166,6 +196,12 @@ public class Locataire_DAO extends DAO<Locataire>{
         return allLocataire;
     }
     
+    /**
+     * Méthode qui execute une requete et retourne une liste de Locataire en fonction
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Locataire incrémenter
+     * @param requete :  requete sql pour la selection des Locataires
+     * @return List<Locataire>
+     */
     public List<Locataire> getRequete(String requete) {
 
         List<Locataire> allLocataire = new ArrayList<>();
@@ -188,6 +224,12 @@ public class Locataire_DAO extends DAO<Locataire>{
         return allLocataire;
     }
     
+    /**
+     * Méthode qui retourne la liste des batiments d'un locataire par son id
+     * @exception SQLException si la requête n'aboutie pas retourne retourne null
+     * @param id : id locataire
+     * @return List<Batiment>
+     */
     public List<Batiment> getLocation(int id){
         List<Batiment> allBatiments = new ArrayList<>();
         try {
@@ -203,6 +245,12 @@ public class Locataire_DAO extends DAO<Locataire>{
         }
     }
     
+    /**
+     * Méthode qui récupére un batiment par rapport a sont id
+     * @exception SQLException si la requête n'aboutie pas retourne retourne null
+     * @param id : id Batiment
+     * @return Batiment
+     */
     public Batiment selectBatimentById(int id){
         try {
             Statement statement = this.connection.createStatement();
@@ -228,6 +276,13 @@ public class Locataire_DAO extends DAO<Locataire>{
         }
     }
     
+    /**
+     * Méthode qui compte le nombre de locataire compris entre deux age
+     * @param liste : liste de locataire
+     * @param ageMin : age minimum
+     * @param ageMax : age maximum
+     * @return int
+     */
     public int compterLocataire(List<Locataire> liste, int ageMin, int ageMax){
         int nombre =0;
         for(int i=0; i<liste.size();i++){
@@ -237,71 +292,12 @@ public class Locataire_DAO extends DAO<Locataire>{
         return nombre;
     }
     
-    /*
-    public int selectAgeBefore18(){
-        String requete = "";
-        try{
-            Statement statement = this.connection.createStatement();
-            requete = "Select COUNT(ID_locataire) as nombre FROM Locataire where Age <= 18";
-            System.out.println(requete+"\n");
-            ResultSet res = statement.executeQuery(requete);
-            res.next();
-            return res.getInt("nombre");
-        }
-        catch(SQLException ex){
-            System.out.println("error"+requete+"\n");
-            return -1;
-        }
-    }
-    
-    public int selectAgeBetween19and35(){
-        try{
-            Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select COUNT(ID_locataire) as nombre FROM Locataire where Age <= 35 && Age >= 19");
-            res.next();
-            return res.getInt("nombre");
-        }
-        catch(SQLException ex){
-            return -1;
-        }
-    }
-    
-    public int selectAgeBetween36and60(){
-        try{
-            Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select COUNT(ID_locataire) as nombre FROM Locataire where Age <= 60 && Age >= 36");
-            res.next();
-            return res.getInt("nombre");
-        }
-        catch(SQLException ex){
-            return -1;
-        }
-    }
-    
-    public int selectAgeAfter61(){
-        try{
-            Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select COUNT(ID_locataire) as nombre FROM Locataire where Age > 60");
-            res.next();
-            return res.getInt("nombre");
-        }
-        catch(SQLException ex){
-            return -1;
-        }
-    }
-    /*
-    public int selectAllOfLocataire(){
-        try{
-            Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select COUNT(ID_locataire) as nombre FROM Locataire");
-            res.next();
-            return res.getInt("nombre");
-        }
-        catch(SQLException ex){
-            return -1;
-        }
-    }*/
-    
+    /**
+     * Méthode qui supprime le lien entre les batiments d'un locataire
+     * @exception SQLException si la requête n'aboutie pas retourne retourne false
+     * @param obj
+     * @return boolean
+     */
     public boolean deleteAllLogementByIdLocataire(Locataire obj){
         try {
             Statement etat = this.connection.createStatement();
@@ -312,6 +308,12 @@ public class Locataire_DAO extends DAO<Locataire>{
         }
     }
     
+    /**
+     * Méthode qui supprime le locataire des liste de diffusions 
+     * @exception SQLException si la requête n'aboutie pas retourne retourne false
+     * @param obj
+     * @return boolean
+     */
     public boolean deleteAllListesByIdLocataire(Locataire obj){
         try {
             Statement etat = this.connection.createStatement();

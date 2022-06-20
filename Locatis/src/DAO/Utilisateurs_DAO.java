@@ -32,8 +32,8 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
     /**
      * Méthode qui augmente les droit d'un utilisateur dans la base de donnée
      * @exception SQLException si la requête n'aboutie pas retourne false
-     * @param cat
-     * @param id
+     * @param cat : catégorie utilisateur
+     * @param id : id utilisateur
      */
     public void augmenterLesDroits(String cat, int id){
         try {
@@ -139,7 +139,7 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
     /**
      * Méthode qui selectionne un Utilisateur par son login de base de donnée
      * @exception SQLException si la requête n'aboutie pas retourne null
-     * @param login
+     * @param login : login de l'utilisateur
      * @return Utilisateur
      */
     @Override
@@ -241,7 +241,7 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
     /**
      * Méthode qui execute une requete et retourne une liste d'Utilisateur en fonction
      * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Utilisateur incrémenter
-     * @param requete
+     * @param requete :  requete sql pour la selection des Utilisateurs
      * @return List<Utilisateur>
      */
     public List<Utilisateur> getRequete(String requete) {
