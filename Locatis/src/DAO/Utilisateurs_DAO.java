@@ -8,16 +8,33 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class permettant de se connecter à la base de donnée pour la table Utilisateur et d'effectuer divers action sur la table
+ * @author Benjamin Mathilde
+ */
 public class Utilisateurs_DAO extends DAO<Utilisateur> {
     
+    /**
+     * Constructeur de l'objet Utilisateur_DAO
+     */
     public Utilisateurs_DAO() {
         super(ConnectionBDD.getInstance(new Connexion()));
     }
     
+    /**
+     * Constructeur de l'objet Utilisateur_DAO
+     * @param connection
+     */
     public Utilisateurs_DAO(Connection connection) {
         super(connection);
     }
     
+    /**
+     * Méthode qui augmente les droit d'un utilisateur dans la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param cat
+     * @param id
+     */
     public void augmenterLesDroits(String cat, int id){
         try {
             Statement statement = this.connection.createStatement();
@@ -28,6 +45,12 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
         }
     }
 
+    /**
+     * Méthode qui crée un Utilisateur en base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param Utilisateur
+     * @return boolean
+     */
     @Override
     public boolean create(Utilisateur obj) {
         try {
@@ -46,6 +69,12 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
         }
     }
 
+    /**
+     * Méthode qui supprime un Utilisateur en base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param Utilisateur
+     * @return boolean
+     */
     @Override
     public boolean delete(Utilisateur uti) {
         try {
@@ -57,6 +86,12 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
         }
     }
 
+    /**
+     * Méthode qui modifie un Utilisateur en base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean update(Utilisateur obj) {
         try {
@@ -75,6 +110,12 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
         
     }
 
+    /**
+     * Méthode qui selectionne un Utilisateur par son identifiant de base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne null
+     * @param id
+     * @return Utilisateur
+     */
     @Override
     public Utilisateur selectById(int id) {
 
@@ -95,6 +136,12 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
         }
     }
 
+    /**
+     * Méthode qui selectionne un Utilisateur par son login de base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne null
+     * @param login
+     * @return Utilisateur
+     */
     @Override
     public Utilisateur selectByName(String login) {
         try {
@@ -109,6 +156,11 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
         }
     }
 
+    /**
+     * Méthode qui récupére l'intégralité des Utilisateur générale de la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Utilisateur incrémenter
+     * @return List<Utilisateur>
+     */
     @Override
     public List<Utilisateur> getAll() {
 
@@ -132,6 +184,11 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
         return allUtilisateurs;
     }
     
+    /**
+     * Méthode qui selectionne tout les Utilisateur de grade utilisateur 1 et 2 de la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Utilisateur incrémenter
+     * @return List<Utilisateur>
+     */
     public List<Utilisateur> getAllUtilisateurs() {
 
         List<Utilisateur> allUtilisateurs = new ArrayList<>();
@@ -154,6 +211,11 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
         return allUtilisateurs;
     }
     
+    /**
+     * Méthode qui selectionne tout les grades d'Utilisateur diffèrent du grade administrateur de la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Utilisateur incrémenter
+     * @return List<Utilisateur>
+     */
     public List<Utilisateur> getAllUtilisateursEtGestionnaires() {
 
         List<Utilisateur> allUtilisateurs = new ArrayList<>();
@@ -176,6 +238,12 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
         return allUtilisateurs;
     }
     
+    /**
+     * Méthode qui execute une requete et retourne une liste d'Utilisateur en fonction
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Utilisateur incrémenter
+     * @param requete
+     * @return List<Utilisateur>
+     */
     public List<Utilisateur> getRequete(String requete) {
 
         List<Utilisateur> allUtilisateurs = new ArrayList<>();
@@ -197,6 +265,12 @@ public class Utilisateurs_DAO extends DAO<Utilisateur> {
         return allUtilisateurs;
     }
     
+    /**
+     * Méthode qui supprime l'Utilisateur d'une liste de diffusion
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param obj
+     * @return boolean
+     */
     public boolean deleteAllListesByIdUtilisateur(Utilisateur obj){
         try {
             Statement etat = this.connection.createStatement();

@@ -10,12 +10,26 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class permettant de se connecter à la base de donnée pour la table Appartement et d'effectuer divers action sur la table
+ * @author Benjamin Mathilde
+ */
 public class Appartement_DAO extends DAO<Appartement>{
     
+    /**
+     * Constructeur de l'objet Appartement_DAO
+     * @param connection
+     */
     public Appartement_DAO(Connection connection) {
         super(connection);
     }
 
+    /**
+     * Méthode qui ajoute un appartement dans la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean create(Appartement obj) {
         try {
@@ -29,6 +43,12 @@ public class Appartement_DAO extends DAO<Appartement>{
         }
     }
     
+    /**
+     * Méthode qui supprime un appartement de la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean delete(Appartement obj) {
         try {
@@ -42,6 +62,12 @@ public class Appartement_DAO extends DAO<Appartement>{
         }
     }
     
+    /**
+     * Méthode qui modifie un appartement de la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean update(Appartement obj) {
         try {
@@ -55,6 +81,12 @@ public class Appartement_DAO extends DAO<Appartement>{
         
     }
     
+    /**
+     * Méthode qui récupére un appartement par sont id dans la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne null
+     * @param id
+     * @return Appartement
+     */
     @Override
     public Appartement selectById(int id) {
         try {
@@ -75,6 +107,11 @@ public class Appartement_DAO extends DAO<Appartement>{
         }
     }
 
+    /**
+     * Méthode qui récupére un appartement par le dernier id insérer dans la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne 0
+     * @return int
+     */
     public int getLastInsertId(){
         try{
             Statement etat = this.connection.createStatement();
@@ -87,6 +124,13 @@ public class Appartement_DAO extends DAO<Appartement>{
         }
     }
 
+    /**
+     * Méthode qui récupére un appartement par sont adresse dans la base de donnée
+     * @deprecated
+     * @exception SQLException si la requête n'aboutie pas retourne null
+     * @param adresse
+     * @return Appartement
+     */
     @Override
     public Appartement selectByName(String adresse) {
         try {
@@ -107,6 +151,11 @@ public class Appartement_DAO extends DAO<Appartement>{
         }
     }
 
+    /**
+     * Méthode qui récupére la totalité des appartements dans une List d'appartement
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Appartement incrémenter
+     * @return List<Appartement>
+     */
     @Override
     public List<Appartement> getAll() {
 
@@ -131,6 +180,11 @@ public class Appartement_DAO extends DAO<Appartement>{
         return allAppartement;
     }
     
+    /**
+     * Méthode qui récupére les logements vide dans la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne -1
+     * @return int
+     */
     public int getLogementEmpty(){
         try {
            Statement statement = this.connection.createStatement();
@@ -143,6 +197,11 @@ public class Appartement_DAO extends DAO<Appartement>{
         }
     }
     
+    /**
+     * Méthode qui récupére les logements occupés de la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne -1
+     * @return int
+     */
     public int getLogementFull(){
         try {
            Statement statement = this.connection.createStatement();
@@ -155,6 +214,11 @@ public class Appartement_DAO extends DAO<Appartement>{
         }
     }
     
+    /**
+     * Méthode qui récupére le nombre total de logement de la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne -1
+     * @return int
+     */
     public int getAllLogement(){
         try {
            Statement statement = this.connection.createStatement();
@@ -167,6 +231,12 @@ public class Appartement_DAO extends DAO<Appartement>{
         }
     }
     
+    /**
+     * Méthode qui supprime les logements de la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param obj
+     * @return boolean
+     */
     public boolean deleteAllLogementByIdLogementId(Appartement obj){
         try {
             Statement etat = this.connection.createStatement();
