@@ -1,5 +1,4 @@
 package Objets_Locatis;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,7 +7,6 @@ import java.util.List;
  */
 public class Campagne {
     
-    private ArrayList<String> listeEmail;
     private int id;
     private String titre;
     private MyDate dateDebut;
@@ -161,14 +159,6 @@ public class Campagne {
     public MyDate getDateProchainMail() {
         return dateProchainMail;
     }
-    
-    /**
-     *
-     * @return la liste des adresses mail des destinataires de la campagne
-     */
-    public ArrayList<String> getListeEmail() {
-        return listeEmail;
-    }
 
     /**
      *
@@ -176,14 +166,6 @@ public class Campagne {
      */
     public Utilisateur getUtilisateur() {
         return utilisateur;
-    }
-    
-    /**
-     * Méthode qui permet de modifier la liste des adresses mail
-     * @param listeEmail : nouvelle liste des adresses mail des destinataires
-     */
-    public void setListeEmail(ArrayList<String> listeEmail) {
-        this.listeEmail = listeEmail;
     }
     
     /**

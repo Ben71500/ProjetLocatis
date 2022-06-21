@@ -16,13 +16,13 @@ public class Locataire implements Personne{
     private String telephone;
 
     /**
-     *
-     * @param id
-     * @param nom
-     * @param prenom
-     * @param dateNaissance
-     * @param mail
-     * @param telephone
+     * Constructeur d'un locataire.
+     * @param id : id du locataire (entier)
+     * @param nom : nom du locataire (chaîne de caractères)
+     * @param prenom : prenom du locataire (chaîne de caractères)
+     * @param dateNaissance : date de naissance du locataire (date)
+     * @param mail : adresse mail du locataire (chaîne de caractères)
+     * @param telephone : numéro de téléphone du locataire (chaîne de caractères)
      */
     public Locataire(int id, String nom, String prenom, MyDate dateNaissance, String mail, String telephone) {
         this.id = id;
@@ -35,24 +35,7 @@ public class Locataire implements Personne{
     
     /**
      *
-     * @return
-     */
-    @Override
-    public String getMail(){
-        return this.mail;
-    }
-    
-    /**
-     *
-     * @return
-     */
-    public String getTelephone(){
-        return this.telephone;
-    }
-
-    /**
-     *
-     * @return
+     * @return l'id du locataire
      */
     @Override
     public int getId() {
@@ -61,15 +44,7 @@ public class Locataire implements Personne{
 
     /**
      *
-     * @param id
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     *
-     * @return
+     * @return le nom du locataire
      */
     public String getNom() {
         return nom;
@@ -77,31 +52,40 @@ public class Locataire implements Personne{
 
     /**
      *
-     * @param nom
-     */
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    /**
-     *
-     * @return
+     * @return le prénom du locataire
      */
     public String getPrenom() {
         return prenom;
     }
-
+    
     /**
      *
-     * @param prenom
+     * @return la date de naissance du locataire
      */
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
+    public MyDate getDateDeNaissance() {
+        return dateDeNaissance;
     }
-
+    
     /**
      *
-     * @return
+     * @return l'adresse mail du locataire
+     */
+    @Override
+    public String getMail(){
+        return this.mail;
+    }
+    
+    /**
+     *
+     * @return le numéro de téléphone du locataire
+     */
+    public String getTelephone(){
+        return this.telephone;
+    }
+    
+    /**
+     * Méthode qui calcule l'age du locataire à partir de sa date de naissance
+     * @return l'age du locataire
      */
     public int getAge() {
         MyDate aujourdhui = new MyDate(LocalDate.now());
@@ -123,22 +107,6 @@ public class Locataire implements Personne{
         }
     }
 
-    /**
-     *
-     * @return
-     */
-    public MyDate getDateDeNaissance() {
-        return dateDeNaissance;
-    }
-
-    /**
-     *
-     * @param dateDeNaissance
-     */
-    public void setDateDeNaissance(MyDate dateDeNaissance) {
-        this.dateDeNaissance = dateDeNaissance;
-    }
-    
     @Override
     public String toString(){
         return this.getId()+" - "+this.getPrenom()+" "+this.getNom();
