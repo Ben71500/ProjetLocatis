@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Objets_Locatis;
 
 import java.sql.Connection;
@@ -36,11 +31,11 @@ public class SurveillanceCampagne {
                 List<Campagne> listeCampagne = campagne.getAllSurveillance();
                 for(int i = 0; i < listeCampagne.size(); i++){
                     switch(listeCampagne.get(i).getFrequence()){
-                        case "une seule fois" : break;
-                        case "Quotidien" : envoieQuotidient(listeCampagne.get(i)); break;
-                        case "Hebdomadaire" : envoieHebdomadaire(listeCampagne.get(i)); break;
-                        case "Mensuel" : envoieMensuel(listeCampagne.get(i)); break;
-                        case "Annuel" :  envoieAnnuel(listeCampagne.get(i)); break;
+                        case "une seule fois" -> {}
+                        case "Quotidien" -> envoieQuotidient(listeCampagne.get(i));
+                        case "Hebdomadaire" -> envoieHebdomadaire(listeCampagne.get(i));
+                        case "Mensuel" -> envoieMensuel(listeCampagne.get(i));
+                        case "Annuel" -> envoieAnnuel(listeCampagne.get(i));
                     }
                 }
             }catch(Exception ex){
@@ -56,11 +51,8 @@ public class SurveillanceCampagne {
             if(time.getHour() < LocalTime.now().getHour() || (cmp.getHeure().getHeure() <= LocalTime.now().getHour() && cmp.getHeure().getMinute() <= LocalTime.now().getMinute())){
                 try{
                     Campagne_DAO dao = new Campagne_DAO(connBdd);
-                    ListeDeDiffusion liste = dao.getListeDeDiffusionByIdCampagne(cmp.getId());
-                    ArrayList<String> listeEmail = new ArrayList<>();
-                    for(int j = 0; j < liste.getListe().size(); j++){
-                        listeEmail.add(liste.getListe().get(j).getMail());
-                    }
+                    Recevoir_DAO recevoir = new Recevoir_DAO(connBdd);
+                    ArrayList<String> listeEmail = recevoir.getListeEmails(cmp.getId());
                     cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();
                     mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), cmp.getObjetMail(), cmp.getListeEmail());
@@ -69,7 +61,7 @@ public class SurveillanceCampagne {
                     
                     LocalDate dateFin = LocalDate.of(cmp.getDateFin().getAnnee(), cmp.getDateFin().getMois(), cmp.getDateFin().getJour());
                     if(date.isAfter(dateFin)){
-                        cmp.setTerminer(1);
+                        cmp.setTerminee(1);
                     }
                     date = date.plusDays(1);
                     cmp.setDateProchainMail(new MyDate(date));
@@ -89,11 +81,8 @@ public class SurveillanceCampagne {
             if(time.getHour() < LocalTime.now().getHour() || (cmp.getHeure().getHeure() <= LocalTime.now().getHour() && cmp.getHeure().getMinute() <= LocalTime.now().getMinute())){
                 try{
                     Campagne_DAO dao = new Campagne_DAO(connBdd);
-                    ListeDeDiffusion liste = dao.getListeDeDiffusionByIdCampagne(cmp.getId());
-                    ArrayList<String> listeEmail = new ArrayList<>();
-                    for(int j = 0; j < liste.getListe().size(); j++){
-                        listeEmail.add(liste.getListe().get(j).getMail());
-                    }
+                    Recevoir_DAO recevoir = new Recevoir_DAO(connBdd);
+                    ArrayList<String> listeEmail = recevoir.getListeEmails(cmp.getId());
                     cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();
                     mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), cmp.getObjetMail(), cmp.getListeEmail());
@@ -102,7 +91,7 @@ public class SurveillanceCampagne {
                     
                     LocalDate dateFin = LocalDate.of(cmp.getDateFin().getAnnee(), cmp.getDateFin().getMois(), cmp.getDateFin().getJour());
                     if(date.isAfter(dateFin)){
-                        cmp.setTerminer(1);
+                        cmp.setTerminee(1);
                     }
                     date = date.plusDays(7);
                     cmp.setDateProchainMail(new MyDate(date));
@@ -122,11 +111,8 @@ public class SurveillanceCampagne {
             if(time.getHour() < LocalTime.now().getHour() || (cmp.getHeure().getHeure() <= LocalTime.now().getHour() && cmp.getHeure().getMinute() <= LocalTime.now().getMinute())){
                 try{
                     Campagne_DAO dao = new Campagne_DAO(connBdd);
-                    ListeDeDiffusion liste = dao.getListeDeDiffusionByIdCampagne(cmp.getId());
-                    ArrayList<String> listeEmail = new ArrayList<>();
-                    for(int j = 0; j < liste.getListe().size(); j++){
-                        listeEmail.add(liste.getListe().get(j).getMail());
-                    }
+                    Recevoir_DAO recevoir = new Recevoir_DAO(connBdd);
+                    ArrayList<String> listeEmail = recevoir.getListeEmails(cmp.getId());
                     cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();
                     mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), cmp.getObjetMail(), cmp.getListeEmail());
@@ -135,7 +121,7 @@ public class SurveillanceCampagne {
                     
                     LocalDate dateFin = LocalDate.of(cmp.getDateFin().getAnnee(), cmp.getDateFin().getMois(), cmp.getDateFin().getJour());
                     if(date.isAfter(dateFin)){
-                        cmp.setTerminer(1);
+                        cmp.setTerminee(1);
                     }
                     date = date.plusMonths(1);
                     cmp.setDateProchainMail(new MyDate(date));
@@ -155,12 +141,14 @@ public class SurveillanceCampagne {
             if(time.getHour() < LocalTime.now().getHour() || (cmp.getHeure().getHeure() <= LocalTime.now().getHour() && cmp.getHeure().getMinute() <= LocalTime.now().getMinute())){
                 try{
                     Campagne_DAO dao = new Campagne_DAO(connBdd);
-                    ListeDeDiffusion liste = dao.getListeDeDiffusionByIdCampagne(cmp.getId());
+                    /*ListeDeDiffusion liste = dao.getListeDeDiffusionByIdCampagne(cmp.getId());
                     ArrayList<String> listeEmail = new ArrayList<>();
                     for(int j = 0; j < liste.getListe().size(); j++){
                         listeEmail.add(liste.getListe().get(j).getMail());
                     }
-                    listeEmail.add(cmp.getUtilisateur().getMail());
+                    listeEmail.add(cmp.getUtilisateur().getMail());*/
+                    Recevoir_DAO recevoir = new Recevoir_DAO(connBdd);
+                    ArrayList<String> listeEmail = recevoir.getListeEmails(cmp.getId());
                     cmp.setListeEmail(listeEmail);
                     Mailer mail = new Mailer();
                     mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), cmp.getObjetMail(), cmp.getListeEmail());
@@ -169,7 +157,7 @@ public class SurveillanceCampagne {
                     
                     LocalDate dateFin = LocalDate.of(cmp.getDateFin().getAnnee(), cmp.getDateFin().getMois(), cmp.getDateFin().getJour());
                     if(date.isAfter(dateFin)){
-                        cmp.setTerminer(1);
+                        cmp.setTerminee(1);
                     }
                     date = date.plusYears(1);
                     cmp.setDateProchainMail(new MyDate(date));

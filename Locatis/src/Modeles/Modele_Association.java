@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Modeles;
 
 import DAO.Appartement_DAO;
@@ -11,7 +7,6 @@ import DAO.Habiter_DAO;
 import DAO.Locataire_DAO;
 import DAO.Maison_DAO;
 import Objets_Locatis.Appartement;
-import Objets_Locatis.Habiter;
 import Objets_Locatis.Locataire;
 import Objets_Locatis.Maison;
 import com.sun.jdi.connect.spi.Connection;
@@ -63,13 +58,15 @@ public class Modele_Association {
     
     public void insertHabiter(int idBatiment, Locataire loca){
         Habiter_DAO nouvelHabitation=new Habiter_DAO(connBdd);
-        Habiter habitation = new Habiter(idBatiment, loca.getId());
-        nouvelHabitation.create(habitation);
+        //Habiter habitation = new Habiter(idBatiment, loca.getId());
+        //nouvelHabitation.create(habitation);
+        nouvelHabitation.create(idBatiment, loca.getId());
     }
     
-    public void removeHabiter(int idLogement,Locataire loca){
+    public void removeHabiter(int idLogement, Locataire loca){
         Habiter_DAO nouvelHabitation=new Habiter_DAO(connBdd);
-        Habiter habitation = new Habiter(loca.getId(), idLogement);
-        nouvelHabitation.delete(habitation);
+        /*Habiter habitation = new Habiter(loca.getId(), idLogement);
+        nouvelHabitation.delete(habitation);*/
+        nouvelHabitation.delete(idLogement, loca.getId());
     }
 }

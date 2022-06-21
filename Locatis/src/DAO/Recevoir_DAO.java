@@ -81,10 +81,10 @@ public class Recevoir_DAO {
     }
     
     /**
-     *
-     * @param idCampagne
-     * @param obj
-     * @return
+     * Méthode qui met à jour la table recevoir : elle supprime toutes les listes d'une campagne et les ajoute avec la liste à jour
+     * @param idCampagne : id de la campagne qui a été mise à jour
+     * @param obj : nouvelles listes de listes de diffusion
+     * @return true si tout s'est bien passé
      */
     public boolean update(int idCampagne, List<ListeDeDiffusion> obj) {
         return this.delete(idCampagne) && this.create(idCampagne, obj);
@@ -110,5 +110,22 @@ public class Recevoir_DAO {
             System.out.println(ex.getMessage());
             return null;
         }
+    }
+    
+    /**
+     * Méthode qui retourne la liste des emails de toutes les listes de diffusion d'une campagne
+     * @param idCampagne : id de la campagne
+     * @return la liste des emails
+     */
+    public ArrayList<String> getListeEmails(int idCampagne){
+        ArrayList<ListeDeDiffusion> lesListes = (ArrayList<ListeDeDiffusion>) this.getListes(idCampagne);
+        ArrayList<String> listeEmails = new ArrayList<>();
+        for(int i=0; i<lesListes.size(); i++){
+            for(int j=0; j<lesListes.get(i).getListe().size(); j++){
+                if(!listeEmails.contains(lesListes.get(i).getListe().get(j).getMail()))
+                    listeEmails.add(lesListes.get(i).getListe().get(j).getMail());
+            }
+        }
+        return listeEmails;
     }
 }

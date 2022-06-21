@@ -3,6 +3,10 @@ package Main;
 import Vues.Vue_Connexion;
 import Modeles.Modele_Connexion;
 import Controleurs.Controleur_Connexion;
+import DAO.ConnectionBDD;
+import DAO.Connexion;
+import DAO.Recevoir_DAO;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class Test {
@@ -21,6 +25,10 @@ public class Test {
                 /*Controleur_Gestion controleur = new Controleur_Gestion(new AutreVue(),new Modele_Gestion());                
                 controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 controleur.getVue().setVisible(true);*/
+                /*Recevoir_DAO r= new Recevoir_DAO(ConnectionBDD.getInstance(new Connexion()));
+                ArrayList<String> liste = r.getListeEmails(92);
+                for(int i=0;i<liste.size();i++)
+                    System.out.println(liste.get(i));*/
             }
         });
     }

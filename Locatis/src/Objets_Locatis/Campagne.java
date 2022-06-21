@@ -17,7 +17,7 @@ public class Campagne {
     private String frequence;
     private MyDate dateProchainMail;
     private MyTime tempsProchainMail;
-    private int terminer;
+    private int terminee;
     private String objetMail;
     private String messageMail;
     private List<ListeDeDiffusion> listes;
@@ -45,7 +45,7 @@ public class Campagne {
         this.frequence = frequence;
         this.dateProchainMail = null;
         this.tempsProchainMail = null;
-        this.terminer = 0;
+        this.terminee = 0;
         this.objetMail = unObjet;
         this.messageMail = unMessage;
         this.listes = listes;
@@ -75,7 +75,7 @@ public class Campagne {
         this.heure = heure;
         this.frequence = frequence;
         this.dateProchainMail = dateProchainEmail;
-        this.terminer = terminer;
+        this.terminee = terminer;
         this.objetMail = unObjet;
         this.messageMail = unMessage;
         this.listes = listes;
@@ -196,10 +196,10 @@ public class Campagne {
     
     /**
      * Méthode qui permet de modifier l'état de la campagne (terminée ou non)
-     * @param terminer : entier qui vaut 0 ou 1
+     * @param terminee : entier qui vaut 0 ou 1
      */
-    public void setTerminer(int terminer) {
-        this.terminer = terminer;
+    public void setTerminee(int terminee) {
+        this.terminee = terminee;
     }
 
     /**

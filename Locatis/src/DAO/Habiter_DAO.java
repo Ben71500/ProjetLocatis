@@ -1,12 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
-import DAO.DAO;
 import Objets_Locatis.Appartement;
-import Objets_Locatis.Habiter;
 import Objets_Locatis.Maison;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -19,14 +13,29 @@ import java.util.List;
  *
  * @author Benjamin
  */
-public class Habiter_DAO extends DAO<Habiter>{
+public class Habiter_DAO{
+    
+    private Connection connection;
     
     public Habiter_DAO(Connection connection) {
-        super(connection);
+        this.connection = connection;
     }
     
-    @Override
-    public boolean create(Habiter obj) {
+    
+    public boolean create(int idBatiment, int idLocataire) {
+        try {
+            Statement etat = this.connection.createStatement();
+            String requeteProc ="Insert into habiter VALUES ('"+ idLocataire + "' , '"+ idBatiment + "' );";
+            System.out.println(requeteProc);
+            etat.execute(requeteProc);
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+    
+    /*public boolean create(Habiter obj) {
         try {
             Statement etat = this.connection.createStatement();
             String requeteProc ="Insert into habiter VALUES ('"+ obj.getID_batiment()+ "' , '"+ obj.getID_locataire()+ "' );";
@@ -37,9 +46,20 @@ public class Habiter_DAO extends DAO<Habiter>{
             System.out.println(ex.getMessage());
             return false;
         }
+    }*/
+    
+    
+    public boolean delete(int idBatiment, int idLocataire) {
+        try {
+            Statement etat = this.connection.createStatement();
+            String requeteProc = "delete from habiter where ID_batiment=" + idBatiment+" AND ID_locataire = "+idLocataire;
+            return !etat.execute(requeteProc);
+        } catch (SQLException ex) {
+            return false;
+        }
     }
 
-    @Override
+    /*@Override
     public boolean delete(Habiter obj) {
         try {
             Statement etat = this.connection.createStatement();
@@ -50,9 +70,9 @@ public class Habiter_DAO extends DAO<Habiter>{
         } catch (SQLException ex) {
             return false;
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean update(Habiter obj) {
         try {
             Statement etat;
@@ -63,9 +83,9 @@ public class Habiter_DAO extends DAO<Habiter>{
         } catch (SQLException ex) {
             return false;
         } 
-    }
+    }*/
 
-    @Override
+    /*@Override
     public Habiter selectById(int id) {
 
         try {
@@ -78,9 +98,9 @@ public class Habiter_DAO extends DAO<Habiter>{
         } catch (SQLException ex) {
             return null;
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public Habiter selectByName(String nom) {
         try {
             Statement statement = this.connection.createStatement();
@@ -92,9 +112,9 @@ public class Habiter_DAO extends DAO<Habiter>{
         } catch (SQLException ex) {
             return null;
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public List<Habiter> getAll() {
 
         List<Habiter> allHabiter = new ArrayList<>();
@@ -111,9 +131,9 @@ public class Habiter_DAO extends DAO<Habiter>{
             return allHabiter;
         }
         return allHabiter;
-    }
+    }*/
     
-     public List<Habiter> getSearch(String texte) {
+     /*public List<Habiter> getSearch(String texte) {
 
         List<Habiter> allHabiter = new ArrayList<>();
         try {
@@ -129,9 +149,9 @@ public class Habiter_DAO extends DAO<Habiter>{
             return allHabiter;
         }
         return allHabiter;
-    }
+    }*/
      
-     public List<Appartement> getAppartementByIdLocataire(int id){
+    public List<Appartement> getAppartementByIdLocataire(int id){
          List<Appartement> appartement = new ArrayList<>();
          try {
             Statement statement = this.connection.createStatement();

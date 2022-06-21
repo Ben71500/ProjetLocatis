@@ -1,18 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controleurs;
 
 import DAO.ConnectionBDD;
 import DAO.Connexion;
-import DAO.Habiter_DAO;
 import Modeles.Modele_Association;
 import Vues.Vue_Association;
 import Vues.Vue_Menu;
 import Objets_Locatis.Appartement;
 import Objets_Locatis.Batiment;
-import Objets_Locatis.Habiter;
 import Objets_Locatis.Locataire;
 import Objets_Locatis.Maison;
 import Objets_Locatis.Utilisateur;
