@@ -116,9 +116,9 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
     
     /**
-     *
-     * @param id
-     * @return
+     * Méthode qui supprime les liens entre une liste et ses Utilisateurs / Locataire dans la base de donnée
+     * @param id : id de la liste de diffusion
+     * @return boolean
      */
     public boolean deleteListe(int id) {
         try {
@@ -131,9 +131,10 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
 
     /**
-     *
+     * Méthode qui modifie une liste dans la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne retourne false
      * @param obj
-     * @return
+     * @return boolean
      */
     @Override
     public boolean update(ListeDeDiffusion obj) {
@@ -156,9 +157,10 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
 
     /**
-     *
-     * @param id
-     * @return
+     * Méthode qui récupére une liste de diffusion grâce a son id dans la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne retourne null
+     * @param id : id de la liste de diffusion
+     * @return ListeDeDiffusion
      */
     @Override
     public ListeDeDiffusion selectById(int id) {
@@ -188,8 +190,9 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
     
     /**
-     *
-     * @return
+     * Méthode qui récupére le dernier id insérer dans la table listeDiffusion
+     * @exception SQLException si la requête n'aboutie pas retourne retourne 0
+     * @return int
      */
     public int getLastInsertId(){
         try{
@@ -205,9 +208,10 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
 
     /**
-     *
-     * @param nom
-     * @return
+     * Méthode qui récupére une liste de diffusion par son nom dans la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne retourne null
+     * @param nom : nom de la liste de diffusion
+     * @return ListeDeDiffusion
      */
     @Override
     public ListeDeDiffusion selectByName(String nom) {
@@ -236,8 +240,9 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
 
     /**
-     *
-     * @return
+     * Méthode qui récupére toute les liste de diffusion de la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste de liste de diffusion incrémenter
+     * @return List<ListeDeDiffusion>
      */
     @Override
     public List<ListeDeDiffusion> getAll() {
@@ -270,9 +275,10 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
     
     /**
-     *
-     * @param id
-     * @return
+     * Méthode qui récupére tous les locataire de la base de donnée avec l'id d'une liste de diffusion
+     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste de personne incrémenter
+     * @param id : id d'une liste de diffusion
+     * @return List<Personne>
      */
     public List<Personne> getAllLocataires(int id) {
 
@@ -292,9 +298,10 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
     
     /**
-     *
-     * @param id
-     * @return
+     * Méthode qui récupére tous les utilisateurs de la base de donnée avec l'id d'une liste de diffusion
+     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste d'utilisateurs incrémenter
+     * @param id : id d'une liste de diffusion
+     * @return List<Utilisateur>
      */
     public List<Personne> getAllUtilisateurs(int id) {
 
@@ -314,9 +321,10 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
     
     /**
-     *
-     * @param id
-     * @return
+     * Méthode qui récupére tous les id des liste de diffusions auquel l'id locataire et associé
+     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste d'entier incrémenter
+     * @param id : id locataire
+     * @return List<Integer>
      */
     public List<Integer> searchListLocataireByIdLocataire(int id){
         List<Integer> allList = new ArrayList<>();
