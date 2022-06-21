@@ -12,8 +12,8 @@ import org.jfree.data.general.PieDataset;
 import org.jfree.ui.ApplicationFrame;
  
 /**
- *
- * @author benja
+ * Classe PieChart dérivée de ApplicationFrame
+ * @author Benjamin Mathilde
  */
 public class PieChart extends ApplicationFrame {
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
@@ -21,8 +21,8 @@ public class PieChart extends ApplicationFrame {
     private String titre;
    
     /**
-     *
-     * @param titre
+     * Constructeur de l'objet PieChart
+     * @param titre :  Titre du graphique
      */
     public PieChart( String titre ) {
         super(titre);
@@ -30,7 +30,7 @@ public class PieChart extends ApplicationFrame {
    }
 
     /**
-     *
+     * Récupére la chaine qui identifie le type de donné du graphique
      * @return
      */
     public String getData() {
@@ -38,7 +38,7 @@ public class PieChart extends ApplicationFrame {
     }
 
     /**
-     *
+     * On change le type de donné du graphique
      * @param data
      */
     public void setData(String data) {
@@ -46,8 +46,8 @@ public class PieChart extends ApplicationFrame {
     }
    
     /**
-     *
-     * @return
+     * Méthode qui crée un calcule le pourcentage selon le type de donnée de l'objet
+     * @return PieDataset
      */
     public PieDataset createDataset() {
       DefaultPieDataset dataset = new DefaultPieDataset( );
@@ -104,9 +104,9 @@ public class PieChart extends ApplicationFrame {
    }
    
     /**
-     *
+     * Méthode qui crée le graphique visuellement
      * @param dataset
-     * @return
+     * @return JFreeChart
      */
     public JFreeChart createChart( PieDataset dataset) {
       JFreeChart chart = ChartFactory.createPieChart(      
@@ -120,8 +120,8 @@ public class PieChart extends ApplicationFrame {
    }
    
     /**
-     *
-     * @return
+     * Méthode qui lance la création du graphique
+     * @return JPanel
      */
     public JPanel createDemoPanel() {
       JFreeChart chart = createChart(createDataset());  
