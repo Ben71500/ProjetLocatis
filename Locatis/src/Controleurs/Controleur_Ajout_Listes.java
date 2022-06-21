@@ -24,12 +24,20 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+/**
+ * Classe controleur de l'interface Ajout Listes implementant l'inteface ActionListener
+ * @author Benjamin Mathilde
+ */
 public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListener{
     
     private final Vue_Ajout_Listes laVue;
     private final Modele_Ajout_Listes leModele;
     private Utilisateur userConnecte;
 
+    /**
+     * Constructeur de l'objet Controleur_Ajout_Listes pour la partie Ajout d'une liste
+     * @param user : Utilisateur en cours d'utilisation
+     */
     public Controleur_Ajout_Listes(Utilisateur user) {
         this.userConnecte = user;
         this.laVue = new Vue_Ajout_Listes("locataire");
@@ -66,6 +74,11 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
         });
     }
     
+    /**
+     * Constructeur de l'obet Controoleur_Ajout_Listes pour la partie modification
+     * @param user : Utilsateur en cours d'utilisation
+     * @param listeDiffusion : liste de diffusion a modifier
+     */
     public Controleur_Ajout_Listes(Utilisateur user, ListeDeDiffusion listeDiffusion) {
         this.userConnecte = user;
         this.laVue = new Vue_Ajout_Listes(listeDiffusion.getTypeListe(), listeDiffusion);
@@ -103,19 +116,34 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
         
     }
     
+    /**
+     *
+     * @return Vue_Ajout_Listes
+     */
     public Vue_Ajout_Listes getVue() {
         return laVue;
     }
 
+    /**
+     *
+     * @return Modele_Ajout_Listes
+     */
     public Modele_Ajout_Listes getModele() {
         return leModele;
     }
     
+    /**
+     *
+     * @return Utilisateur
+     */
     public Utilisateur getUser(){
         return this.userConnecte;
     }
 
-    //Méthode de la classe abstraite KeyAdapter
+    /**
+     * Méthode de la classe abstraite KeyAdapter
+     * @param e 
+     */
     @Override
     public void actionPerformed(ActionEvent e){
         
@@ -229,6 +257,11 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
         }
     }
     
+    /**
+     * Méthode qui effectue une recherche dans le tableau pour trouver les objets 
+     * contenant une similitude avec la chaine saisie dans le label de la vue du controleur
+     * @return DocumentListener
+     */
     public DocumentListener effectuerRecherche(){
         return new DocumentListener() {
             @Override
@@ -253,6 +286,9 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
         };
     }
     
+    /**
+     * Méthode qui actualise l'interface des listes de diffusion
+     */
     public void actualiser(){
         
         laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
@@ -266,6 +302,9 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
         laVue.getRecherche().setText("");
     }
     
+    /**
+     * Méthode qui trie le tableau contenant les locataires avec diffèrent critère ( Age / Date de naissance)
+     */
     public void trierTableau(){
         laVue.afficherPanneauBoutonsRadios();
         switch (laVue.getCategorie()) {

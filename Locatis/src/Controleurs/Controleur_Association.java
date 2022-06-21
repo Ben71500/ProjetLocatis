@@ -21,8 +21,8 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 /**
- *
- * @author Benjamin
+ * Classe Controleur_Association implementant l'inteface ActionListener
+ * @author Benjamin Mathilde
  */
 public class Controleur_Association implements ActionListener{
 
@@ -31,6 +31,12 @@ public class Controleur_Association implements ActionListener{
     private Utilisateur user;
     private java.sql.Connection connBdd= ConnectionBDD.getInstance(new Connexion());
     
+    /**
+     * Constructeur de l'objet Controleur_Association
+     * @param laVue : vue du controleur
+     * @param unModele : modele du controleur
+     * @param user : Utilisateur en cours d'utilisation
+     */
     public Controleur_Association(Vue_Association laVue, Modele_Association unModele, Utilisateur user){
         this.laVue = laVue;
         this.unModele = unModele;
@@ -56,30 +62,34 @@ public class Controleur_Association implements ActionListener{
         //this.laVue.pack();
     }
 
+    /**
+     *
+     * @return Vue_Association
+     */
     public Vue_Association getVue() {
         return laVue;
     }
 
-    public void setVue(Vue_Association laVue) {
-        this.laVue = laVue;
-    }
-
+    /**
+     *
+     * @return Modele_Association
+     */
     public Modele_Association getModele() {
         return unModele;
     }
 
-    public void setModele(Modele_Association unModele) {
-        this.unModele = unModele;
-    }
-
+    /**
+     *
+     * @return Utilisateur
+     */
     public Utilisateur getUser() {
         return user;
     }
-
-    public void setUser(Utilisateur user) {
-        this.user = user;
-    }
     
+    /**
+     * Méthode de la classe abstraite KeyAdapter
+     * @param e 
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         JComboBox cb = new JComboBox();
@@ -150,6 +160,9 @@ public class Controleur_Association implements ActionListener{
         
     }
     
+    /**
+     * Méthode qui vide et remplie les ComboBox pour mettre les logements associé au Locataire
+     */
     public void remplirComboBoxRetirer(){
         this.laVue.getLogementListByLocataire().removeAllItems();
         Locataire loca = (Locataire) this.laVue.getLocataireListByLocataire().getSelectedItem();

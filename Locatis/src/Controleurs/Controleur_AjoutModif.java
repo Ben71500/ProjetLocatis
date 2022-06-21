@@ -21,6 +21,10 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.JComboBox;
 
+/**
+ * Class controleur de l'interface Ajout et modification d'element implementant l'inteface ActionListener
+ * @author Benjamin Mathilde
+ */
 public class Controleur_AjoutModif implements ActionListener{
     
     //private final Vue_AjoutModif_Locataires laVue;
@@ -29,6 +33,11 @@ public class Controleur_AjoutModif implements ActionListener{
     private Utilisateur userConnecte;
     private String typeDonnee;
 
+    /**
+     * Constructeur de l'objet Controleur_AjoutModif pour la partie Ajouter
+     * @param user : Utilisateur en cours d'utilisation
+     * @param donnee : les données 
+     */
     public Controleur_AjoutModif(Utilisateur user, String donnee){
         this.userConnecte = user;
         this.typeDonnee = donnee;
@@ -51,7 +60,13 @@ public class Controleur_AjoutModif implements ActionListener{
         }
     }
     
-        public Controleur_AjoutModif(Utilisateur user, String donnee, Object obj){
+    /**
+     * Constructeur de l'objet Controleur _AjoutModif pour la partie Modifier
+     * @param user : Utilisateur en cours d'utilisation
+     * @param donnee : Les données 
+     * @param obj : Objet à modifier
+     */
+    public Controleur_AjoutModif(Utilisateur user, String donnee, Object obj){
         this.userConnecte = user;
         this.typeDonnee = donnee;
         this.leModele = new Modele_AjoutModif(donnee);
@@ -74,19 +89,34 @@ public class Controleur_AjoutModif implements ActionListener{
         }
     }
 
+    /**
+     *
+     * @return Vue_AjoutModif
+     */
     public Vue_AjoutModif getVue() {
         return laVue;
     }
 
+    /**
+     *
+     * @return Modele_AjoutModif
+     */
     public Modele_AjoutModif getModele() {
         return leModele;
     }
     
+    /**
+     *
+     * @return Utilisateur
+     */
     public Utilisateur getUser(){
         return this.userConnecte;
     }
 
-    //Méthode de la classe abstraite KeyAdapter
+    /**
+     * Méthode de la classe abstraite KeyAdapter
+     * @param e 
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         

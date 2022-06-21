@@ -27,6 +27,10 @@ import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
+/**
+ * Classe de l'interface gestion des objets dérivant de KeyAdapter et implémentant ActionListener et MousListener
+ * @author Benjamin Mathilde
+ */
 public class Controleur_Gestion extends KeyAdapter implements ActionListener, MouseListener{
 
     private final Vue_Gestion laVue;
@@ -34,6 +38,11 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
     private Utilisateur userConnecte;
     private String typeDonnee;
 
+    /**
+     * Constructeur de l'objet Controleur_Gestion
+     * @param user : Utilisateur en cours d'utilisation
+     * @param donnee : les données
+     */
     public Controleur_Gestion(Utilisateur user, String donnee) {
         this.userConnecte = user;
         this.typeDonnee = donnee;
@@ -64,19 +73,34 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
         laVue.getRecherche().getDocument().addDocumentListener(effectuerRecherche());
     }
 
+    /**
+     *
+     * @return Vue_Gestion
+     */
     public Vue_Gestion getVue() {
         return laVue;
     }
 
+    /**
+     *
+     * @return Modele_Gestion
+     */
     public Modele_Gestion getModele() {
         return leModele;
     }
     
+    /**
+     *
+     * @return Utilisateur
+     */
     public Utilisateur getUser(){
         return this.userConnecte;
     }
 
-    //Méthode de la classe abstraite KeyAdapter
+    /**
+     * Méthode de la classe abstraite ActionListener
+     * @param e 
+     */
     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == this.laVue.getButtonRadioAppart() || e.getSource() == this.laVue.getButtonRadioMaison()){
@@ -216,6 +240,10 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
         }
     }
     
+    /**
+     *
+     * @return
+     */
     public DocumentListener effectuerRecherche(){
         return new DocumentListener() {
             @Override

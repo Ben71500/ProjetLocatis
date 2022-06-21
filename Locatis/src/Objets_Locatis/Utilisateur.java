@@ -42,28 +42,12 @@ public class Utilisateur implements Personne{
 
     /**
      *
-     * @param id
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     *
      * @return String
      */
     public String getLogin() {
         return login;
     }
-
-    /**
-     *
-     * @param login
-     */
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
+    
     /**
      *
      * @return String
@@ -79,22 +63,6 @@ public class Utilisateur implements Personne{
      */
     public String getPassword() {
         return password;
-    }
-
-    /**
-     *
-     * @param email
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    
-    /**
-     *
-     * @param password
-     */
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     /**
@@ -119,14 +87,6 @@ public class Utilisateur implements Personne{
      */
     public String getCat() {
         return cat;
-    }
-
-    /**
-     *
-     * @param cat
-     */
-    public void setCat(String cat) {
-        this.cat = cat;
     }
     
     /**
