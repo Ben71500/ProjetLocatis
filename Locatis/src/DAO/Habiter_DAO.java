@@ -11,17 +11,27 @@ import java.util.List;
 
 /**
  *
- * @author Benjamin
+ * @author Benjamin Mathilde
  */
 public class Habiter_DAO{
     
     private Connection connection;
     
+    /**
+     *
+     * @param connection
+     */
     public Habiter_DAO(Connection connection) {
         this.connection = connection;
     }
     
-    
+    /**
+     * Méthode qui insére le lien entre un batiment et un locataire
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param idBatiment : id d'un batiment
+     * @param idLocataire : id d'un locataire
+     * @return boolean
+     */
     public boolean create(int idBatiment, int idLocataire) {
         try {
             Statement etat = this.connection.createStatement();
@@ -35,20 +45,13 @@ public class Habiter_DAO{
         }
     }
     
-    /*public boolean create(Habiter obj) {
-        try {
-            Statement etat = this.connection.createStatement();
-            String requeteProc ="Insert into habiter VALUES ('"+ obj.getID_batiment()+ "' , '"+ obj.getID_locataire()+ "' );";
-            System.out.println(requeteProc);
-            etat.execute(requeteProc);
-            return true;
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return false;
-        }
-    }*/
-    
-    
+    /**
+     * Méthode qui supprime le lien entre un batiment et un locataire
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param idBatiment : id batiment
+     * @param idLocataire : id locataire
+     * @return boolean
+     */
     public boolean delete(int idBatiment, int idLocataire) {
         try {
             Statement etat = this.connection.createStatement();
@@ -59,98 +62,12 @@ public class Habiter_DAO{
         }
     }
 
-    /*@Override
-    public boolean delete(Habiter obj) {
-        try {
-            Statement etat = this.connection.createStatement();
-            String requeteProc = "delete from habiter where ID_batiment=" + obj.getID_batiment()+" AND ID_locataire = "+obj.getID_locataire();
-            System.out.println(requeteProc);
-            etat.execute(requeteProc);
-            return true;
-        } catch (SQLException ex) {
-            return false;
-        }
-    }*/
-
-    /*@Override
-    public boolean update(Habiter obj) {
-        try {
-            Statement etat;
-            etat = this.connection.createStatement();
-            String requeteProc ="update locataire set ID_locaire='"+obj.getID_locataire()+"' where ID_batiment="+obj.getID_batiment()+" ;";
-            etat.execute(requeteProc);
-            return true;
-        } catch (SQLException ex) {
-            return false;
-        } 
-    }*/
-
-    /*@Override
-    public Habiter selectById(int id) {
-
-        try {
-            Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from locataire where ID_locataire=" + id);
-            res.next();
-            return new Habiter(res.getInt("ID_batiment"),
-                    res.getInt("ID_locataire")
-            );
-        } catch (SQLException ex) {
-            return null;
-        }
-    }*/
-
-    /*@Override
-    public Habiter selectByName(String nom) {
-        try {
-            Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from locataire where Nom='" + nom + "'");
-            res.next();
-
-            return new Habiter(res.getInt("ID_batiment"), res.getInt("ID_locataire"));
-
-        } catch (SQLException ex) {
-            return null;
-        }
-    }*/
-
-    /*@Override
-    public List<Habiter> getAll() {
-
-        List<Habiter> allHabiter = new ArrayList<>();
-        try {
-            Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from locataire");
-            while (res.next()) {
-                        allHabiter.add(new Habiter(
-                        res.getInt("ID_batiment"),
-                        res.getInt("ID_locataire")
-                ));
-            }
-        } catch (SQLException ex) {
-            return allHabiter;
-        }
-        return allHabiter;
-    }*/
-    
-     /*public List<Habiter> getSearch(String texte) {
-
-        List<Habiter> allHabiter = new ArrayList<>();
-        try {
-            Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from locataire where Nom like'%" + texte + "%'");
-            while (res.next()) {
-                        allHabiter.add(new Habiter(
-                        res.getInt("ID_batiment"),
-                        res.getInt("ID_locataire")
-                ));
-            }
-        } catch (SQLException ex) {
-            return allHabiter;
-        }
-        return allHabiter;
-    }*/
-     
+    /**
+     * Méthode qui récupére tous les appartement d'un locataire
+     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste d'appartement incrémenter
+     * @param id : id locataire
+     * @return List<Appartement>
+     */
     public List<Appartement> getAppartementByIdLocataire(int id){
          List<Appartement> appartement = new ArrayList<>();
          try {
@@ -174,7 +91,13 @@ public class Habiter_DAO{
         }
      }
      
-     public List<Maison> getMaisonByIdLocataire(int id){
+    /**
+     * Méthode qui récupére toute les maisons d'un locataire
+     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste de maison incrémenter
+     * @param id ; id locataire
+     * @return List<Maison>
+     */
+    public List<Maison> getMaisonByIdLocataire(int id){
          List<Maison> maison = new ArrayList<>();
          try {
             Statement statement = this.connection.createStatement();
