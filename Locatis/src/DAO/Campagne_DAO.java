@@ -9,12 +9,26 @@ import java.sql.*;
 import java.util.*;
 import java.time.*;
 
+/**
+ * Class permettant de se connecter à la base de donnée pour la table campagne et d'effectuer divers action sur la table
+ * @author Benjamin Mathilde
+ */
 public class Campagne_DAO extends DAO<Campagne>{
 
+    /**
+     * Constructeur de l'objet Campagne_DAO
+     * @param connection
+     */
     public Campagne_DAO(Connection connection) {
         super(connection);
     }
 
+    /**
+     * Méthode qui insére en base de donnée une campagne
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean create(Campagne obj) {
         try {
@@ -42,6 +56,12 @@ public class Campagne_DAO extends DAO<Campagne>{
         }
     }
 
+    /**
+     * Méthode qui supprime une campagne de la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean delete(Campagne obj) {
         try {
@@ -54,6 +74,12 @@ public class Campagne_DAO extends DAO<Campagne>{
         }
     }
 
+    /**
+     * Méthode qui modifie une campagne dans la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean update(Campagne obj) {
         try {
@@ -79,6 +105,12 @@ public class Campagne_DAO extends DAO<Campagne>{
         }
     }
     
+    /**
+     * Méthode qui modifie l'état d'une campagne après l'envoie d'un mail
+     * @exception SQLException si la requête n'aboutie pas retourne false
+     * @param obj
+     * @return boolean
+     */
     public boolean updateEtatCampagne(Campagne obj) {
         try {
             Statement statement = this.connection.createStatement();
@@ -95,6 +127,12 @@ public class Campagne_DAO extends DAO<Campagne>{
         }
     }
 
+    /**
+     * Méthode qui récupére une campagne grâce à l'id
+     * @exception SQLException si la requête n'aboutie pas retourne null
+     * @param id :  id de la campagne
+     * @return Campagne
+     */
     @Override
     public Campagne selectById(int id) {
         try {
@@ -121,6 +159,12 @@ public class Campagne_DAO extends DAO<Campagne>{
         }
     }
 
+    /**
+     * Méthode qui récupére une campagne par son nom
+     * @exception SQLException si la requête n'aboutie pas retourne null
+     * @param campagne : nom de la campagne
+     * @return Campagne
+     */
     @Override
     public Campagne selectByName(String campagne) {
         try {
@@ -138,6 +182,11 @@ public class Campagne_DAO extends DAO<Campagne>{
         }
     }
     
+    /**
+     * Méthode qui récupére une maison par le dernier id insérer dans la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne 0
+     * @return int
+     */
     public int getLastInsertId(){
         try{
             Statement etat = this.connection.createStatement();
@@ -151,6 +200,11 @@ public class Campagne_DAO extends DAO<Campagne>{
         }
     }
 
+    /**
+     * Méthode qui récupére toute les campagnes de la base de donnée
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Campagne incrémenter
+     * @return List<Camapagne>
+     */
     @Override
     public List<Campagne> getAll() {
         List<Campagne> allCampagnes = new ArrayList<>();
@@ -181,6 +235,11 @@ public class Campagne_DAO extends DAO<Campagne>{
         return allCampagnes;
     }   
     
+    /**
+     * Méthode qui récupére uniquement les campagne en cours nécéssitant l'envoie d'un mail 
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Campagne incrémenter
+     * @return List<Campagne>
+     */
     public List<Campagne> getAllSurveillance() {
         List<Campagne> allCampagnes = new ArrayList<>();
         try {
@@ -211,6 +270,12 @@ public class Campagne_DAO extends DAO<Campagne>{
         return allCampagnes;
     }
     
+    /**
+     * Méthode qui récupére toute les listes de diffusion pour n'en faire qu'une seule hors de la base de donnée par rapport à une campagne
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste de liste de diffusion incrémenter
+     * @param id : id camapagne
+     * @return ListeDeDiffusion
+     */
     public ListeDeDiffusion getListeDeDiffusionByIdCampagne(int id){
         ArrayList<Personne> listeLocataire = new ArrayList<>();
         try {
@@ -248,6 +313,11 @@ public class Campagne_DAO extends DAO<Campagne>{
         }
     }
     
+    /**
+     * Méthode qui récupére le nombre de campagne finis
+     * @exception SQLException si la requête n'aboutie pas retourne retourne -1
+     * @return int
+     */
     public int getFinishCampagne(){
         try{    
             Statement statement = this.connection.createStatement();
@@ -261,6 +331,10 @@ public class Campagne_DAO extends DAO<Campagne>{
 
     }
     
+    /**
+     *
+     * @return
+     */
     public int getNotBeginCampagne(){
         try{    
             Statement statement = this.connection.createStatement();
@@ -274,6 +348,11 @@ public class Campagne_DAO extends DAO<Campagne>{
 
     }
     
+    /**
+     * Méthode qui récupére le nombre de campagnes en cours 
+     * @exception SQLException si la requête n'aboutie pas retourne retourne -1
+     * @return int 
+     */
     public int getNowCampagne(){
         try{    
             Statement statement = this.connection.createStatement();
@@ -287,6 +366,11 @@ public class Campagne_DAO extends DAO<Campagne>{
 
     }
     
+    /**
+     * Méthode qui retourne le nombre total des campagnes
+     * @exception SQLException si la requête n'aboutie pas retourne retourne -1
+     * @return int
+     */
     public int getAllCampagne(){
         try{    
             Statement statement = this.connection.createStatement();
@@ -300,6 +384,12 @@ public class Campagne_DAO extends DAO<Campagne>{
 
     }
     
+    /**
+     * Méthode qui récupére la liste des campagnes auquelle une liste de diffusion est associé
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Campagne incrémenter
+     * @param listeId : id liste de diffusion
+     * @return List<Campagne>
+     */
     public List<Campagne> getIdCampagneByListeDeDiffusionBy(ArrayList<Integer> listeId){
         List<Campagne> listeCampagne = new ArrayList<>();
         try {

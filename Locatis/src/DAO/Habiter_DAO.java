@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Class permettant de se connecter à la base de donnée pour la table Habiter et d'effectuer divers action sur la table
  * @author Benjamin Mathilde
  */
 public class Habiter_DAO{
