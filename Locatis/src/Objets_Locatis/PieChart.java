@@ -1,9 +1,5 @@
 package Objets_Locatis;
-import DAO.Appartement_DAO;
-import DAO.Campagne_DAO;
-import DAO.ConnectionBDD;
-import DAO.Connexion;
-import DAO.Locataire_DAO;
+import DAO.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 import javax.swing.JPanel;
@@ -14,27 +10,46 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RefineryUtilities;
  
+/**
+ *
+ * @author benja
+ */
 public class PieChart extends ApplicationFrame {
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
     private String data;
     private String titre;
    
-   public PieChart( String titre ) {
+    /**
+     *
+     * @param titre
+     */
+    public PieChart( String titre ) {
         super(titre);
         this.titre = titre;
    }
 
+    /**
+     *
+     * @return
+     */
     public String getData() {
         return data;
     }
 
+    /**
+     *
+     * @param data
+     */
     public void setData(String data) {
         this.data = data;
     }
    
-   public PieDataset createDataset() {
+    /**
+     *
+     * @return
+     */
+    public PieDataset createDataset() {
       DefaultPieDataset dataset = new DefaultPieDataset( );
       double total = 0.0;
       double value = 0.0;
@@ -88,7 +103,12 @@ public class PieChart extends ApplicationFrame {
       return dataset;
    }
    
-   public JFreeChart createChart( PieDataset dataset) {
+    /**
+     *
+     * @param dataset
+     * @return
+     */
+    public JFreeChart createChart( PieDataset dataset) {
       JFreeChart chart = ChartFactory.createPieChart(      
          this.titre,   // chart title 
          dataset,          // data    
@@ -99,7 +119,11 @@ public class PieChart extends ApplicationFrame {
       return chart;
    }
    
-   public JPanel createDemoPanel() {
+    /**
+     *
+     * @return
+     */
+    public JPanel createDemoPanel() {
       JFreeChart chart = createChart(createDataset());  
       return new ChartPanel( chart ); 
    }

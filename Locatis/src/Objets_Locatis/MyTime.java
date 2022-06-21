@@ -2,29 +2,54 @@ package Objets_Locatis;
 
 import java.sql.Time;
 
+/**
+ * Classe décrivant un temps
+ * @author Benjamin Mathilde
+ */
 public class MyTime {
     
     private int heure;
     private int minute;
 
+    /**
+     * Constructeur de l'objet MyTime
+     * @param heure
+     * @param minute
+     */
     public MyTime(int heure, int minute) {
         this.heure = heure;
         this.minute = minute;
     }
     
+    /**
+     * Constructeur qui transforme un objet Time en MyTime
+     * @param t
+     */
     public MyTime(Time t){
         this.heure = t.toLocalTime().getHour();
         this.minute = t.toLocalTime().getMinute();
     }
 
+    /**
+     *
+     * @return int
+     */
     public int getHeure() {
         return heure;
     }
 
+    /**
+     *
+     * @return int 
+     */
     public int getMinute() {
         return minute;
     }
     
+    /**
+     * Méthode qui normalise un objet MyTime en string pour l'insérer en SQL
+     * @return String
+     */
     public String getTimeSQL(){
         String s="'";
         if(this.heure<10)

@@ -12,40 +12,74 @@ public class MyDate {
     private int mois;
     private int jour;
     
+    /**
+     * Constructeur qui transforme un objet Date en objet MyDate
+     * @param uneDate : objet Date
+     */
     public MyDate(String uneDate){
         this.annee = Integer.parseInt(uneDate.substring(0, 4));
         this.mois = Integer.parseInt(uneDate.substring(5, 7));
         this.jour = Integer.parseInt(uneDate.substring(8, 10));
     }
     
+    /**
+     * Constructeur qui transforme un objet LocalDate en objet MyDate
+     * @param d : Objet LocalDate
+     */
     public MyDate(LocalDate d){
         this.jour = d.getDayOfMonth();
         this.annee = d.getYear();
         this.mois = d.getMonthValue();
     }
     
+    /**
+     * Constructeur de l'objet MyDate 
+     * @param uneAnnee : l'annee
+     * @param unMois : le mois
+     * @param unJour  : le jour
+     */
     public MyDate(int uneAnnee, int unMois, int unJour){
         this.annee = uneAnnee;
         this.mois = unMois;
         this.jour = unJour;
     }
 
+    /**
+     * 
+     * @return int
+     */
     public int getAnnee() {
         return annee;
     }
 
+    /**
+     *
+     * @return int
+     */
     public int getMois() {
         return mois;
     }
 
+    /**
+     *
+     * @return int
+     */
     public int getJour() {
         return jour;
     }
     
+    /**
+     * Méthode qui permet davoir une chaine normalisé pour l'insértion en base de donnée
+     * @return String
+     */
     public String getDateSQL(){
         return "'"+this.annee+"-"+this.mois+"-"+this.jour+"'";
     }
     
+    /**
+     * Méthode qui retranscrit l'objet MyDate en date écrite
+     * @return String
+     */
     public String getDateEcrite(){
         String date = jour + " ";
         switch(mois){
