@@ -16,6 +16,7 @@ import org.jfree.ui.ApplicationFrame;
  * @author Benjamin Mathilde
  */
 public class PieChart extends ApplicationFrame {
+    
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
     private String data;
     private String titre;
@@ -46,7 +47,7 @@ public class PieChart extends ApplicationFrame {
     }
    
     /**
-     * Méthode qui crée un calcule le pourcentage selon le type de donnée de l'objet
+     * Méthode qui calcule le pourcentage selon le type de donnée de l'objet
      * @return PieDataset
      */
     public PieDataset createDataset() {

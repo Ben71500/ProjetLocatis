@@ -10,7 +10,6 @@ import Objets_Locatis.Batiment;
 import Objets_Locatis.Locataire;
 import Objets_Locatis.Maison;
 import Objets_Locatis.Utilisateur;
-import com.sun.jdi.connect.spi.Connection;
 import Exceptions.EmptyFieldException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 /**
- * Classe Controleur_Association implementant l'inteface ActionListener
+ * Classe Controleur_Association implementant l'interface ActionListener
  * @author Benjamin Mathilde
  */
 public class Controleur_Association implements ActionListener{
@@ -59,7 +58,6 @@ public class Controleur_Association implements ActionListener{
             this.laVue.getLogementList().addItem(listeMaison.get(i));
         }
         remplirComboBoxRetirer();
-        //this.laVue.pack();
     }
 
     /**
@@ -68,22 +66,6 @@ public class Controleur_Association implements ActionListener{
      */
     public Vue_Association getVue() {
         return laVue;
-    }
-
-    /**
-     *
-     * @return Modele_Association
-     */
-    public Modele_Association getModele() {
-        return unModele;
-    }
-
-    /**
-     *
-     * @return Utilisateur
-     */
-    public Utilisateur getUser() {
-        return user;
     }
     
     /**
@@ -94,7 +76,6 @@ public class Controleur_Association implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         JComboBox cb = new JComboBox();
         if(e.getSource().getClass().isInstance(cb)){
-            System.out.println("cc");
             remplirComboBoxRetirer();
         }
         else{
@@ -109,7 +90,6 @@ public class Controleur_Association implements ActionListener{
                             }
                             else{
                                 batimentSelection = (Maison) this.laVue.getLogementList().getSelectedItem();
-
                             }
                             Locataire locataireSelection = (Locataire) this.laVue.getLocataireList().getSelectedItem();
                             this.unModele.insertHabiter(batimentSelection.getID(), locataireSelection);
@@ -143,7 +123,6 @@ public class Controleur_Association implements ActionListener{
                             }
                             else{
                                 batimentSelection = (Maison) this.laVue.getLogementListByLocataire().getSelectedItem();
-
                             }
                             this.unModele.removeHabiter(batimentSelection.getID(), locataireSelection);
                             this.laVue.getLogementListByLocataire().removeItemAt(this.laVue.getLogementListByLocataire().getSelectedIndex());
@@ -157,11 +136,10 @@ public class Controleur_Association implements ActionListener{
                 }
             }
         }
-        
     }
     
     /**
-     * Méthode qui vide et remplie les ComboBox pour mettre les logements associé au Locataire
+     * Méthode qui vide et remplie les ComboBox pour mettre les logements associés aux Locataires
      */
     public void remplirComboBoxRetirer(){
         this.laVue.getLogementListByLocataire().removeAllItems();
@@ -175,5 +153,4 @@ public class Controleur_Association implements ActionListener{
             this.laVue.getLogementListByLocataire().addItem(listeMaison.get(i));
         }
     }
-    
 }

@@ -48,14 +48,6 @@ public class Controleur_Menu implements ActionListener {
     public Vue_Menu getVue() {
         return laVue;
     }
-    
-    /**
-     *
-     * @return Utilisateur
-     */
-    public Utilisateur getUser(){
-        return this.userConnecte;
-    }
 
     /**
      * Méthode de la classe abstraite KeyAdapter
@@ -70,14 +62,12 @@ public class Controleur_Menu implements ActionListener {
                 SwingUtilities.invokeLater(new Runnable(){
                     @Override
                     public void run(){
-                        //Controleur_Ajout_Listes controleur = new Controleur_Ajout_Listes(new Vue_Ajout_Listes(), new Modele_Ajout_Listes(), userConnecte);
                         Controleur_Gestion controleur = new Controleur_Gestion(userConnecte, "liste");
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         controleur.getVue().setSize(800,500);
                         controleur.getVue().setVisible(true);
                     }
                 });
-                
             }
             case "GESTION DES LOCATAIRES" -> {
                 laVue.quitter();

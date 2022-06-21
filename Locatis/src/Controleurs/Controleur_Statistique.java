@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controleurs;
 
 import Modeles.Modele_Statistique;
@@ -51,22 +47,6 @@ public class Controleur_Statistique implements ActionListener{
     }
 
     /**
-     *
-     * @return Modele_Statistique
-     */
-    public Modele_Statistique getModele() {
-        return leModele;
-    }
-    
-    /**
-     *
-     * @return Utilisateur
-     */
-    public Utilisateur getUser(){
-        return this.userConnecte;
-    }
-
-    /**
      * Méthode de la classe abstraite ActionListener
      * @param e 
      */
@@ -79,14 +59,12 @@ public class Controleur_Statistique implements ActionListener{
                 SwingUtilities.invokeLater(new Runnable(){
                     @Override
                     public void run(){
-                        //Controleur_Ajout_Listes controleur = new Controleur_Ajout_Listes(new Vue_Ajout_Listes(), new Modele_Ajout_Listes(), userConnecte);
                         Controleur_Menu controleur = new Controleur_Menu(new Vue_Menu(userConnecte), userConnecte);
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         controleur.getVue().setSize(800,500);
                         controleur.getVue().setVisible(true);
                     }
                 });
-                
             }
         }
     }

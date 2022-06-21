@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controleurs;
 
 import Modeles.Modele_dialog_locataire;
@@ -20,6 +15,7 @@ import javax.swing.JButton;
  * @author Benjamin Mathilde
  */
 public class Controleur_dialog_locataire implements ActionListener{
+    
     private Utilisateur userConnecte;
     private Vue_dialog_locataire laVue;
     private Modele_dialog_locataire leModele;
@@ -43,6 +39,14 @@ public class Controleur_dialog_locataire implements ActionListener{
         this.laVue.getLabel().setText(contenueLabel);
         this.laVue.ajouterEcouteurBouton("retour", this);
     }
+    
+    /**
+     *
+     * @return Vue_dialog_locataire
+     */
+    public Vue_dialog_locataire getLaVue() {
+        return laVue;
+    }
 
     /**
      * Méthode de la classe abstraite ActionListener
@@ -54,34 +58,7 @@ public class Controleur_dialog_locataire implements ActionListener{
         switch (source.getText().toUpperCase()) {
             case "RETOUR" -> {
                 laVue.quitter();
-                
             }
         }
     }
-
-    /**
-     *
-     * @return Utilisateur
-     */
-    public Utilisateur getUserConnecte() {
-        return userConnecte;
-    }
-
-    /**
-     *
-     * @return Vue_dialog_locataire
-     */
-    public Vue_dialog_locataire getLaVue() {
-        return laVue;
-    }
-
-    /**
-     *
-     * @return Modele_dialog_locataire
-     */
-    public Modele_dialog_locataire getLeModele() {
-        return leModele;
-    }
-    
-    
 }

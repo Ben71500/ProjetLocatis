@@ -4,13 +4,12 @@ import Objets_Locatis.Campagne;
 import Objets_Locatis.ListeDeDiffusion;
 import Objets_Locatis.Locataire;
 import Objets_Locatis.Personne;
-import com.mysql.cj.result.LocalDateTimeValueFactory;
 import java.sql.*;
-import java.util.*;
-import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Class permettant de se connecter à la base de donnée pour la table campagne et d'effectuer divers action sur la table
+ * Classe permettant de se connecter à la base de données pour la table campagne et d'effectuer divers actions sur la table
  * @author Benjamin Mathilde
  */
 public class Campagne_DAO extends DAO<Campagne>{
@@ -244,7 +243,7 @@ public class Campagne_DAO extends DAO<Campagne>{
             Statement statement = this.connection.createStatement();
             Utilisateurs_DAO user = new Utilisateurs_DAO(this.connection);
             Recevoir_DAO recevoir = new Recevoir_DAO(this.connection);
-            ResultSet res = statement.executeQuery("Select * from campagne where Date_Fin > NOW() AND Date_Debut < NOW() AND (DateProchainMail <= NOW() OR DateProchainMail is NULL)");
+            ResultSet res = statement.executeQuery("Select * from campagne where Date_Fin >= DATE(NOW()) AND Date_Debut <= DATE(NOW()) AND (DateProchainMail <= DATE(NOW()) OR DateProchainMail is NULL)");
             while (res.next()){
                 int idCampagne = res.getInt("ID_campagne");
                 allCampagnes.add(new Campagne(idCampagne,

@@ -1,11 +1,12 @@
 package Objets_Locatis;
 
-import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 
 public class Mailer {
+    
     public void sendEmail(String mailSender, String passwordSender, String object, String message, ArrayList<String> listeMailTo){
         Properties properties = System.getProperties();
         properties.put("mail.smtp.host", "smtp.gmail.com");
@@ -14,6 +15,7 @@ public class Mailer {
         properties.put("mail.smtp.auth", "true");
         
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+            @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(mailSender, passwordSender);
             }

@@ -20,15 +20,6 @@ public class MyTime {
         this.heure = heure;
         this.minute = minute;
     }
-    
-    /**
-     * Constructeur qui transforme un objet Time en MyTime
-     * @param t
-     */
-    public MyTime(Time t){
-        this.heure = t.toLocalTime().getHour();
-        this.minute = t.toLocalTime().getMinute();
-    }
 
     /**
      *

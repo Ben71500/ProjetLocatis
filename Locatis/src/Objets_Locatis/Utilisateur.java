@@ -1,7 +1,7 @@
 package Objets_Locatis;
 
 /**
- * Classe qui représente un Utilisateur dérivée de Personne 
+ * Classe qui représente un Utilisateur dérivé de Personne 
  * @author Benjamin Mathilde
  */
 public class Utilisateur implements Personne{
@@ -15,12 +15,12 @@ public class Utilisateur implements Personne{
     
     /**
      * Constructeur de l'objet Utilisateur
-     * @param unId : un id
-     * @param unLogin : un login
-     * @param mdp : un mot de passe
-     * @param cat : une catégorie
-     * @param email : un email
-     * @param password : un password
+     * @param unId : l'id de l'utilisateur
+     * @param unLogin : le login permettant de se cconnecter au logiciel
+     * @param mdp : le mot de passe permettant de se cconnecter au logiciel
+     * @param cat : la catégorie de l'utilisateur
+     * @param email : l'email qui servira à envoyer des mails
+     * @param password : le password de l'adresse email pour envoyer des mails
      */
     public Utilisateur(int unId, String unLogin, String mdp, String cat, String email, String password){
         this.id=unId;
@@ -52,6 +52,22 @@ public class Utilisateur implements Personne{
      *
      * @return String
      */
+    public String getMotDePasse() {
+        return motDePasse;
+    }
+    
+    /**
+     *
+     * @return String
+     */
+    public String getCat() {
+        return cat;
+    }
+    
+    /**
+     *
+     * @return String
+     */
     @Override
     public String getMail(){
         return email;
@@ -65,34 +81,7 @@ public class Utilisateur implements Personne{
         return password;
     }
 
-    /**
-     *
-     * @return String
-     */
-    public String getMotDePasse() {
-        return motDePasse;
-    }
-
-    /**
-     *
-     * @param motDePasse
-     */
-    public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse;
-    }
-
-    /**
-     *
-     * @return String
-     */
-    public String getCat() {
-        return cat;
-    }
-    
-    /**
-     * Méthode qui affiche en chaîne de caractére un Utilisateur
-     * @return 
-     */
+    @Override
     public String toString(){
         return this.getId()+" : "+this.getLogin();
     }

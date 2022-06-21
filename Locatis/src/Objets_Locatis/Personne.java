@@ -8,13 +8,13 @@ public interface Personne {
     
     /**
      *
-     * @return int
+     * @return int : l'id de la personne
      */
     public int getId();
 
     /**
      *
-     * @return String
+     * @return String : l'adresse mail de la personne
      */
     public String getMail();
 }

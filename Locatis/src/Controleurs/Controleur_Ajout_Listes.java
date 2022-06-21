@@ -68,6 +68,7 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
         });
         laVue.definirTableau(leModele.getTableau(),leModele.getEntetes());
         laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
+            @Override
             public void tableChanged(TableModelEvent e) {
                 leModele.cocher(e.getFirstRow());
             }
@@ -75,7 +76,7 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
     }
     
     /**
-     * Constructeur de l'obet Controoleur_Ajout_Listes pour la partie modification
+     * Constructeur de l'objet Controleur_Ajout_Listes pour la partie modification
      * @param user : Utilsateur en cours d'utilisation
      * @param listeDiffusion : liste de diffusion a modifier
      */
@@ -113,7 +114,6 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
                 leModele.cocher(e.getFirstRow());
             }
         });
-        
     }
     
     /**
@@ -122,22 +122,6 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
      */
     public Vue_Ajout_Listes getVue() {
         return laVue;
-    }
-
-    /**
-     *
-     * @return Modele_Ajout_Listes
-     */
-    public Modele_Ajout_Listes getModele() {
-        return leModele;
-    }
-    
-    /**
-     *
-     * @return Utilisateur
-     */
-    public Utilisateur getUser(){
-        return this.userConnecte;
     }
 
     /**
@@ -169,13 +153,9 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
                     trierTableau();
                 }
         }else
-            if(e.getSource() == this.laVue.getTri()){
-                trierTableau();
-            }else
-        
-        
-        
-        {
+        if(e.getSource() == this.laVue.getTri()){
+            trierTableau();
+        }else{
             JButton source = (JButton) e.getSource();
             switch (source.getText().toUpperCase()) {
                 case "AJOUTER" -> {
@@ -195,12 +175,6 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
                     }catch (PasDeCaseCocheeException ex) {
                         ex.afficherErreur();
                     }
-                    /*SwingUtilities.invokeLater(new Runnable(){
-                        public void run(){
-                            /*Controleur_AjoutModif controleur = new Controleur_AjoutModif(userConnecte);                
-                            controleur.getVue().afficherVue();
-                        }
-                    });*/
                 }
                 case "MODIFIER" -> {
                     try{
@@ -219,20 +193,11 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
                                 controleur.getVue().setVisible(true);
                             }
                         });
-                        /*laVue.reset();
-                        leModele.decocherTout();
-                        actualiser();*/
                     }catch (EmptyFieldException ex) {
                         ex.afficherErreur();
                     }catch (PasDeCaseCocheeException ex) {
                         ex.afficherErreur();
                     }
-                    /*SwingUtilities.invokeLater(new Runnable(){
-                        public void run(){
-                            /*Controleur_AjoutModif controleur = new Controleur_AjoutModif(userConnecte);                
-                            controleur.getVue().afficherVue();
-                        }
-                    });*/
                 }
                 case "SELECTIONNER TOUT" -> {
                     leModele.cocherTout();
@@ -303,7 +268,7 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
     }
     
     /**
-     * Méthode qui trie le tableau contenant les locataires avec diffèrent critère ( Age / Date de naissance)
+     * Méthode qui trie le tableau contenant les locataires avec diffèrents critères ( Age / Date de naissance)
      */
     public void trierTableau(){
         laVue.afficherPanneauBoutonsRadios();

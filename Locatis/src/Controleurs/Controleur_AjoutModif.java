@@ -22,12 +22,11 @@ import javax.swing.*;
 import javax.swing.JComboBox;
 
 /**
- * Class controleur de l'interface Ajout et modification d'element implementant l'inteface ActionListener
+ * Classe controleur de l'interface Ajout et modification d'éléments implementant l'inteface ActionListener
  * @author Benjamin Mathilde
  */
 public class Controleur_AjoutModif implements ActionListener{
-    
-    //private final Vue_AjoutModif_Locataires laVue;
+
     private Vue_AjoutModif laVue;
     private Modele_AjoutModif leModele;
     private Utilisateur userConnecte;
@@ -61,7 +60,7 @@ public class Controleur_AjoutModif implements ActionListener{
     }
     
     /**
-     * Constructeur de l'objet Controleur _AjoutModif pour la partie Modifier
+     * Constructeur de l'objet Controleur_AjoutModif pour la partie Modifier
      * @param user : Utilisateur en cours d'utilisation
      * @param donnee : Les données 
      * @param obj : Objet à modifier
@@ -84,7 +83,6 @@ public class Controleur_AjoutModif implements ActionListener{
         laVue.ajouterEcouteurBouton("Retour", this);
         
         if(donnee.equals("campagne")){
-            /*laVue.getFrequence().addActionListener(this);*/
             laVue.ajouterEcouteurBouton("Frequence", this);
         }
     }
@@ -98,22 +96,6 @@ public class Controleur_AjoutModif implements ActionListener{
     }
 
     /**
-     *
-     * @return Modele_AjoutModif
-     */
-    public Modele_AjoutModif getModele() {
-        return leModele;
-    }
-    
-    /**
-     *
-     * @return Utilisateur
-     */
-    public Utilisateur getUser(){
-        return this.userConnecte;
-    }
-
-    /**
      * Méthode de la classe abstraite KeyAdapter
      * @param e 
      */
@@ -122,15 +104,7 @@ public class Controleur_AjoutModif implements ActionListener{
         
         JComboBox cb = new JComboBox();
         if(e.getSource().getClass().isInstance(cb)){
-            cb=(JComboBox) e.getSource();
-            String newSelection = (String) cb.getSelectedItem();
             this.laVue.afficherVue();
-            /*if(cb.getSelectedItem().toString().equals("Une seule fois")){
-                System.out.println("ok");
-                this.laVue=(Vue_AjoutModif_Campagne)laVue.test();*/
-                //laVue.test();
-                //Vue_AjoutModif_Campagne vue = (Vue_AjoutModif_Campagne)laVue;
-            //}
         }else{
             JButton source = (JButton) e.getSource();
             switch (source.getText().toUpperCase()) {

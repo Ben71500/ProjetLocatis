@@ -12,7 +12,7 @@ import java.awt.event.KeyListener;
 import javax.swing.*;
 
 /**
- * Classe de l'interface de connexion implementant l'inteface ActionListener
+ * Classe de l'interface de connexion implementant l'interface ActionListener
  * @author Benjamin Mathilde
  */
 public class Controleur_Connexion implements ActionListener {
@@ -40,14 +40,6 @@ public class Controleur_Connexion implements ActionListener {
      */
     public Vue_Connexion getVue() {
         return laVue;
-    }
-
-    /**
-     *
-     * @return Modele_Connexion
-     */
-    public Modele_Connexion getModele() {
-        return leModele;
     }
 
     /**
@@ -84,7 +76,7 @@ public class Controleur_Connexion implements ActionListener {
     }
     
     /**
-     * Méthode qui vérifie la saisie des champs et change l'inteface à l'utilisateur
+     * Méthode qui vérifie la saisie des champs et change l'interface à l'utilisateur
      */
     public void seConnecter(){
         try{

@@ -50,7 +50,6 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
         this.leModele = new Modele_Gestion(typeDonnee, userConnecte);
         this.leModele.initialiser();
         
-        //laVue.setTable(leModele.getTable());
         laVue.definirTableau(leModele.getTableau(),leModele.getEntetes());
         laVue.ajouterEcouteurBouton("Ajouter", this);
         laVue.ajouterEcouteurBouton("Modifier", this);
@@ -82,22 +81,6 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
     }
 
     /**
-     *
-     * @return Modele_Gestion
-     */
-    public Modele_Gestion getModele() {
-        return leModele;
-    }
-    
-    /**
-     *
-     * @return Utilisateur
-     */
-    public Utilisateur getUser(){
-        return this.userConnecte;
-    }
-
-    /**
      * Méthode de la classe abstraite ActionListener
      * @param e 
      */
@@ -111,7 +94,6 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
                 laVue.setDonnees("appartement");
                 laVue.setTitre("Les appartements");
                 laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
-                
             }
             else if(this.laVue.getButtonRadioMaison().isSelected()){
                     this.typeDonnee = "maison";
@@ -122,8 +104,7 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
                     laVue.changerTableau(leModele.getTableau(),leModele.getEntetes());
             }
         }
-        else
-        {
+        else{
             JButton source = (JButton) e.getSource();
             switch (source.getText().toUpperCase()) {
                 case "AJOUTER" -> {
@@ -282,13 +263,13 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
         if (e.getClickCount() == 2) {
             Locataire loca = (Locataire) leModele.getSelection(laVue.getLigne());
             SwingUtilities.invokeLater(new Runnable(){
-                    public void run(){
-                        Controleur_dialog_locataire controleur = new Controleur_dialog_locataire(loca, userConnecte, new Vue_dialog_locataire(userConnecte), new Modele_dialog_locataire());
-                        controleur.getLaVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        controleur.getLaVue().setSize(800,500);
-                        controleur.getLaVue().setVisible(true);
-                    }
-                });
+                public void run(){
+                    Controleur_dialog_locataire controleur = new Controleur_dialog_locataire(loca, userConnecte, new Vue_dialog_locataire(userConnecte), new Modele_dialog_locataire());
+                    controleur.getLaVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    controleur.getLaVue().setSize(800,500);
+                    controleur.getLaVue().setVisible(true);
+                }
+            });
         }
     }
 
