@@ -62,10 +62,10 @@ public class Campagne {
      * @param unMessage : texte des mails de la campagne (chaîne de caractères)
      * @param listes : listes des personnes qui recevront les mails (liste de listes de diffusion)
      * @param dateProchainEmail : date d'envoi du prochain mail de la camapgne (date)
-     * @param terminer : entier qui vaut 1 si la campagne est terminée et 0 sinon (entier)
+     * @param terminee : entier qui vaut 1 si la campagne est terminée et 0 sinon (entier)
      * @param utilisateur : utilisateur qui gère la campagne, cad celui qui la créé ou qui l'a modifié en dernier (Utilisateur)
      */
-    public Campagne(int id, String titre, MyDate dateDebut, MyDate dateFin, MyTime heure, String frequence, String unObjet, String unMessage, List<ListeDeDiffusion> listes, MyDate dateProchainEmail, int terminer, Utilisateur utilisateur) {
+    public Campagne(int id, String titre, MyDate dateDebut, MyDate dateFin, MyTime heure, String frequence, String unObjet, String unMessage, List<ListeDeDiffusion> listes, MyDate dateProchainEmail, int terminee, Utilisateur utilisateur) {
         this.id = id;
         this.titre = titre;
         this.dateDebut = dateDebut;
@@ -73,7 +73,7 @@ public class Campagne {
         this.heure = heure;
         this.frequence = frequence;
         this.dateProchainMail = dateProchainEmail;
-        this.terminee = terminer;
+        this.terminee = terminee;
         this.objetMail = unObjet;
         this.messageMail = unMessage;
         this.listes = listes;
@@ -158,6 +158,14 @@ public class Campagne {
      */
     public MyDate getDateProchainMail() {
         return dateProchainMail;
+    }
+    
+    /**
+     *
+     * @return un entier qui vaut 1 si la campagne est terminée et 0 sinon
+     */
+    public int getTerminee() {
+        return terminee;
     }
 
     /**

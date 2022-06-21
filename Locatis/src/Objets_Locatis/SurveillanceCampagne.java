@@ -54,10 +54,11 @@ public class SurveillanceCampagne {
                     Recevoir_DAO recevoir = new Recevoir_DAO(connBdd);
                     ArrayList<String> listeEmail = recevoir.getListeEmails(cmp.getId());
                     Mailer mail = new Mailer();
-                    mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getTitre(), cmp.getObjetMail(), listeEmail);
+                    mail.sendEmail(cmp.getUtilisateur().getMail(), cmp.getUtilisateur().getPassword(), cmp.getObjetMail(), cmp.getMessageMail(), listeEmail);
                     
                     cmp.setDateProchainMail(new MyDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
-                    
+                    MyDate d1=new MyDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+                    System.out.println("d1: "+d1.getDateEcrite());
                     LocalDate dateFin = LocalDate.of(cmp.getDateFin().getAnnee(), cmp.getDateFin().getMois(), cmp.getDateFin().getJour());
                     if(date.isAfter(dateFin)){
                         cmp.setTerminee(1);
@@ -69,7 +70,9 @@ public class SurveillanceCampagne {
                         case "Annuel" -> date = date.plusYears(1);
                     }
                     cmp.setDateProchainMail(new MyDate(date));
-                    dao.update(cmp);
+                    MyDate d2=new MyDate(date);
+                    System.out.println("d2: "+d2.getDateEcrite());
+                    dao.updateEtatCampagne(cmp);
                     
                 /*}catch(Exception ex){
                     System.out.println("2 "+ex.getMessage());

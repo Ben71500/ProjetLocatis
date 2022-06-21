@@ -78,6 +78,22 @@ public class Campagne_DAO extends DAO<Campagne>{
             return false;
         }
     }
+    
+    public boolean updateEtatCampagne(Campagne obj) {
+        try {
+            Statement statement = this.connection.createStatement();
+            Recevoir_DAO recevoir = new Recevoir_DAO(this.connection);
+            Boolean b = recevoir.update(obj.getId(), obj.getListes());
+            return !statement.execute("update campagne set "
+                    +"DateProchainMail=" +obj.getDateProchainMail().getDateSQL()+ ", "
+                    + "END=" +obj.getTerminee()
+                    + " where  ID_campagne=" + obj.getId()
+            ) && b;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
 
     @Override
     public Campagne selectById(int id) {

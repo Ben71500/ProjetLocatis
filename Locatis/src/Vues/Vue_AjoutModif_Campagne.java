@@ -162,6 +162,7 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
 //        remplirListe(liste);
         
         /*remplirComboBox(heure, LocalDateTime.now().getHour(), 24);*/
+        remplirComboBox(heure, 0, 24);
         remplirComboBox(minute, 0, 60);
         
         panneau_heure.add(this.heure);
@@ -206,7 +207,7 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
                     if(dateFin.getCalendar().before(dateDebut.getCalendar()))
                         dateFin.setDate(dateDebut.getDate());
                     dateFin.setMinSelectableDate(dateDebut.getDate());
-                    LocalDate debutDate = LocalDate.of(getDateDebut().getAnnee(), getDateDebut().getMois(), getDateDebut().getJour());
+                    /*LocalDate debutDate = LocalDate.of(getDateDebut().getAnnee(), getDateDebut().getMois(), getDateDebut().getJour());
                     if(LocalDate.now().isEqual(debutDate)){
      
                         heure.removeAllItems();
@@ -215,7 +216,7 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
                     }else{
                         heure.removeAllItems();
                         remplirComboBox(heure, 0, 24);
-                    }
+                    }*/
                 }
         });
         
