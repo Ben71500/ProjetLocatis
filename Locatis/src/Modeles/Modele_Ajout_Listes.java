@@ -15,6 +15,10 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe modèle de l'interface d'ajouts et de modifications des listes de diffusion
+ * @author Benjamin Mathilde
+ */
 public class Modele_Ajout_Listes {
     
     private Object[][] tableau;
@@ -24,10 +28,11 @@ public class Modele_Ajout_Listes {
     private ArrayList<Integer> listeCasesCochees = new ArrayList<>();
     private String donnees;
     private Utilisateur utilisateur;
-    /*private DAO dao;*/
 
     /**
-     * Constructeur du modèle
+     * Constructeur du modèle en cas d'ajout d'une liste
+     * @param lesDonnees : type de données que contient la liste
+     * @param user : utilisateur qui utilise l'interface
      */    
     public Modele_Ajout_Listes(String lesDonnees, Utilisateur user) {
         this.donnees = lesDonnees;
@@ -35,6 +40,12 @@ public class Modele_Ajout_Listes {
         choisirModele();
     }
     
+    /**
+     * Constructeur du modèle en cas de modification d'une liste
+     * @param lesDonnees : type de données que contient la liste
+     * @param user : utilisateur qui utilise l'interface
+     * @param listeId : liste des id des personnes déjà cochées dans la liste
+     */
     public Modele_Ajout_Listes(String lesDonnees, Utilisateur user, ArrayList<Integer> listeId) {
         this.donnees = lesDonnees;
         this.utilisateur = user;
@@ -42,6 +53,9 @@ public class Modele_Ajout_Listes {
         choisirModele();
     }
     
+    /**
+     * Méthode qui définit le modèle en fonction du type de personne
+     */
     public void choisirModele(){
         switch(this.donnees){
             case "locataire" -> modeleLocataires();
@@ -49,6 +63,9 @@ public class Modele_Ajout_Listes {
         }
     }
     
+    /**
+     * Méthode qui permet de générer un tableau des locataires
+     */
     public void modeleLocataires(){
         String[] tabEntetes = {"Case","ID","Nom", "Prénom", "Age", "Date de naissance", "Mail", "Téléphone","Logements"};
         this.setEntetes(tabEntetes);
@@ -61,7 +78,7 @@ public class Modele_Ajout_Listes {
         tableau = new Object[liste.size()][9];
         for(int i=0; i<liste.size();i++){
             Locataire leLocataire = (Locataire) liste.get(i);
-            tableau [i][0]= listeCasesCochees.contains(leLocataire.getId());
+            tableau [i][0]= listeCasesCochees.contains(leLocataire.getId());//case à cocher
             tableau [i][1]=leLocataire.getId();
             tableau [i][2]=leLocataire.getNom();
             tableau [i][3]=leLocataire.getPrenom();
@@ -73,12 +90,17 @@ public class Modele_Ajout_Listes {
         }
     }
     
+    /**
+     * Méthode qui permet de générer un tableau des utilisateurs
+     */
     public void modeleUtilisateurs(){
         String[] tabEntetes = {"Case", "ID","Login", "Catégorie"};
         this.setEntetes(tabEntetes);
         
         //Récupération des utilisateurs dans une ArrayList
         Utilisateurs_DAO utilisateurs= new Utilisateurs_DAO(connBdd);
+        //on affiche dans le tableau les utilisateurs en fonction de leurs catégorie
+        //et de la catégorie de l'utilisateur qui utilise l'interface
         switch(this.utilisateur.getCat()){
             case "ges1" ->
                 liste=(ArrayList<Utilisateur>)utilisateurs.getAllUtilisateurs();
@@ -92,41 +114,57 @@ public class Modele_Ajout_Listes {
         this.tableau = new Object[liste.size()][4];
         for(int i=0; i<liste.size();i++){
             Utilisateur user=(Utilisateur) liste.get(i);
-            tableau [i][0]= listeCasesCochees.contains(user.getId());
+            tableau [i][0]= listeCasesCochees.contains(user.getId());//case à cocher
             tableau [i][1]=user.getId();
             tableau [i][2]=user.getLogin();
             tableau [i][3]=user.getCat();
         }
     }
     
+    /**
+     *
+     * @return la liste des id des personnes dont la case est cochée
+     */
     public ArrayList<Integer> getListeCasesCochees() {
         return listeCasesCochees;
     }
 
+    /**
+     * Méthode qui permet de changer le type de peresonne
+     * @param donnees : type de personnes
+     */
     public void setDonnees(String donnees) {
         this.donnees = donnees;
     }
 
+    /**
+     * Méthode qui permet de changer l'entête du tableau
+     * @param entetes : tableau avec le nom de chaque colonne du tableau
+     */
     public void setEntetes(String[] entetes) {
         this.entetes = entetes;
     }
 
+    /**
+     *
+     * @return le tableau avec les données
+     */
     public Object[][] getTableau() {
         return tableau;
     }
 
+    /**
+     *
+     * @return le tableau des entêtes
+     */
     public String[] getEntetes() {
         return entetes;
     }
-
-    public List getListe() {
-        return liste;
-    }
     
-    public Object getSelection(int nb){
-        return liste.get(nb);
-    }
-    
+    /**
+     * Méthode qui permet de cocher une case si elle ne l'est pas et de décocher une case si elle est cochée
+     * @param ligne : le numéro de ligne de la case
+     */
     public void cocher(int ligne){
         int id=(int) tableau[ligne][1];
         if(listeCasesCochees.contains(id)){
@@ -136,6 +174,9 @@ public class Modele_Ajout_Listes {
         }
     }
     
+    /**
+     * Méthode qui permet de cocher toutes les cases
+     */
     public void cocherTout(){
         for (Object[] tableau1 : tableau) {
             tableau1[0] = true;
@@ -145,6 +186,9 @@ public class Modele_Ajout_Listes {
         }
     }
     
+    /**
+     * Méthode qui permet de décocher toutes les cases
+     */
     public void decocherTout(){
         for (Object[] tableau1 : tableau) {
             tableau1[0] = false;
@@ -154,21 +198,21 @@ public class Modele_Ajout_Listes {
         }
     }
     
-    
-    ///////////////////
+    /**
+     * Méthode qui génère une requête SQL permettant de filtrer avec des valeurs
+     * @param categorie : type de données à trier
+     * @param signe : <, > ou =
+     * @param nombre : nombre du tri
+     */
     public void getTri(String categorie, String signe, String nombre){
         String requete = "Select * from "+this.donnees+" where "+categorie+" "+signe+" "+nombre;
         executerRequeteLocataire(requete);
     }
     
-    /*public void getAll(){
-        String requete = "Select * from "+this.donnees;
-        switch(this.donnees){
-            case "locataire" : executerRequeteLocataire(requete);
-            case "utilisateur" : executerRequeteUtilisateur(requete);
-        }
-    }*/
-    
+    /**
+     * Méthode qui génère une requête SQL permettant de trier par catégorie
+     * @param categorie : type de données à trier
+     */
     public void trierPar(String categorie){
         String requete = "Select * from "+this.donnees;
         if(!categorie.equals("Tous") && !categorie.equals("")){
@@ -189,6 +233,10 @@ public class Modele_Ajout_Listes {
         }
     }
     
+    /**
+     * Méthode qui permet de récupérer des locataires triés grâce à une requête
+     * @param requete : requête SQL
+     */
     public void executerRequeteLocataire(String requete){
         //Récupération des locataires dans une ArrayList
         String[] tabEntetes = {"Case","ID","Nom", "Prénom", "Age", "Date de naissance", "Mail", "Téléphone","Logements"};
@@ -212,6 +260,10 @@ public class Modele_Ajout_Listes {
         }
     }
     
+    /**
+     * Méthode qui permet de récupérer des utilisateurs triés grâce à une requête
+     * @param requete : requête SQL
+     */
     public void executerRequeteUtilisateur(String requete){
         String[] tabEntetes = {"Case", "ID","Login", "Catégorie"};
         this.setEntetes(tabEntetes);
@@ -230,62 +282,30 @@ public class Modele_Ajout_Listes {
         }
     }
     
-    
-    /*
-    public Object getNouveauTableau(){
-        Object[][] tab = new Object[liste.size()][8];
-        for(int i=0; i<liste.size();i++){
-            Locataire leLocataire = (Locataire) liste.get(i);
-            tab [i][0]= tableau[i][0];
-            tab [i][1]=leLocataire.getId();
-            tab [i][2]=leLocataire.getNom();
-            tab [i][3]=leLocataire.getPrenom();
-            tab [i][4]=leLocataire.getAge();
-            tab [i][5]=leLocataire.getDateDeNaissance().getDateEcrite();
-            tab[i][6]=leLocataire.getMail();
-            tab [i][7]=leLocataire.getTelephone();
-        }
-        return tab;
-    }*/
-    
+    /**
+     * Méthode qui permet de créer une liste de diffusion
+     * @param nom : nom de la liste
+     */
     public void ajouter(String nom){
         ListeDeDiffusion_DAO lesListes= new ListeDeDiffusion_DAO(this.connBdd);
         lesListes.create(new ListeDeDiffusion(0,nom,this.convertirEnListePersonnes()));
-        /*switch(this.donnees){
-            case "locataire" -> lesListes.create(new ListeDeDiffusion(0,nom,this.convertirEnListeLocataires()));
-            case "utilisateur" -> lesListes.create(new ListeDeDiffusion(0,nom,this.convertirEnListeUtilisateurs()));
-        }*/
     }
     
+    /**
+     * Méthode qui permet de modifier une liste de diffusion
+     * @param listeDiffusion : liste à modifier
+     */
     public void modifier(ListeDeDiffusion listeDiffusion){
         ListeDeDiffusion_DAO lesListes= new ListeDeDiffusion_DAO(this.connBdd);
         listeDiffusion.setListe(this.convertirEnListePersonnes());
-        /*switch(this.donnees){
-            case "locataire" -> listeDiffusion.setListe(this.convertirEnListeLocataires());
-            case "utilisateur" -> listeDiffusion.setListe(this.convertirEnListeUtilisateurs());
-        }*/
         lesListes.update(listeDiffusion);
     }
     
-    /*private  ArrayList<Personne> convertirEnListeLocataires(){
-        ArrayList<Personne> listeLocataires = new ArrayList<>();
-        Locataire_DAO lesLocataires= new Locataire_DAO(this.connBdd);
-        for(int i=0;i<this.listeCasesCochees.size();i++)
-            listeLocataires.add(lesLocataires.selectById(this.listeCasesCochees.get(i)));
-        return listeLocataires;
-    }
-    
-    private  ArrayList<Personne> convertirEnListeUtilisateurs(){
-        ArrayList<Personne> listeUtilisateurs = new ArrayList<>();
-        Utilisateurs_DAO lesUtilisateurs= new Utilisateurs_DAO(this.connBdd);
-        for(int i=0;i<this.listeCasesCochees.size();i++)
-            listeUtilisateurs.add(lesUtilisateurs.selectById(this.listeCasesCochees.get(i)));
-        return listeUtilisateurs;
-    }*/
-    
-    private  ArrayList<Personne> convertirEnListePersonnes(){
+    /**
+     * Méthode qui permet de convertir la liste d'id en liste de personnes
+     */
+    private ArrayList<Personne> convertirEnListePersonnes(){
         ArrayList<Personne> listePersonnes = new ArrayList<>();
-        //Utilisateurs_DAO lesUtilisateurs= new Utilisateurs_DAO(this.connBdd);
         DAO dao;
         switch(this.donnees){
             case "locataire" -> dao = new Locataire_DAO(this.connBdd);

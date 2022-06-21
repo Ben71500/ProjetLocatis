@@ -2,7 +2,6 @@ package Controleurs;
 
 import Modeles.Modele_Association;
 import Modeles.Modele_Connexion;
-import Modeles.Modele_Statistique;
 import Vues.Vue_Association;
 import Vues.Vue_Connexion;
 import Vues.Vue_Menu;
@@ -130,7 +129,7 @@ public class Controleur_Menu implements ActionListener {
                 laVue.quitter();
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run(){
-                        Controleur_Statistique controleur = new Controleur_Statistique(new Vue_Statistique(), new Modele_Statistique(), userConnecte);
+                        Controleur_Statistique controleur = new Controleur_Statistique(new Vue_Statistique(), userConnecte);
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         controleur.getVue().setSize(800,500);
                         controleur.getVue().setVisible(true);

@@ -1,6 +1,5 @@
 package Controleurs;
 
-import Modeles.Modele_Statistique;
 import Vues.Vue_Menu;
 import Vues.Vue_Statistique;
 import Objets_Locatis.Utilisateur;
@@ -15,18 +14,15 @@ import javax.swing.*;
 public class Controleur_Statistique implements ActionListener{
 
     private final Vue_Statistique laVue;
-    private final Modele_Statistique leModele;
     private Utilisateur userConnecte;
 
     /**
      * Constructeur de l'objet Controleur_Statistique
      * @param uneVue : vue du controleur
-     * @param unModele : modele du controleur
      * @param user : Utilisateur en cours d'utilisation
      */
-    public Controleur_Statistique(Vue_Statistique uneVue, Modele_Statistique unModele, Utilisateur user) {
+    public Controleur_Statistique(Vue_Statistique uneVue, Utilisateur user) {
         laVue = uneVue;
-        leModele = unModele;
         userConnecte = user;
         this.laVue.getGraphiqueDesCampagnesTerminer().setData("campagne");
         this.laVue.getGraphiqueParLogementOccuper().setData("logement");

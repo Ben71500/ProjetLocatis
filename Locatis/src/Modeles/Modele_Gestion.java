@@ -11,6 +11,10 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe modèle de l'interface de gestion des données
+ * @author Benjamin Mathilde
+ */
 public class  Modele_Gestion {
     
     private String[][] tableau;
@@ -23,6 +27,8 @@ public class  Modele_Gestion {
 
     /**
      * Constructeur du modèle
+     * @param lesDonnees : type de données
+     * @param user : utilisateur qui utilise l'interface
      */    
     public Modele_Gestion(String lesDonnees, Utilisateur user) {
         this.donnees = lesDonnees;
@@ -37,32 +43,53 @@ public class  Modele_Gestion {
         }
     }
 
-    public void setDonnees(String donnees) {
-        this.donnees = donnees;
-    }
-    
-    public void setEntetes(String[] entetes) {
-        this.entetes = entetes;
-    }
-
+    /**
+     *
+     * @return le tableau des données
+     */
     public String[][] getTableau() {
         return tableau;
     }
 
+    /**
+     *
+     * @return le tableau des entetes
+     */
     public String[] getEntetes() {
         return entetes;
     }
-
-    public List getListe() {
-        return liste;
-    }
     
+    /**
+     *
+     * @param nb : le numéro de la ligne de l'objet
+     * @return l'objet sélectionné
+     */
     public Object getSelection(int nb){
         return liste.get(nb);
     }
     
+    /**
+     *
+     * @param donnees : type de données
+     */
+    public void setDonnees(String donnees) {
+        this.donnees = donnees;
+    }
+    
+    /**
+     *
+     * @param entetes : tableau d'entetes
+     */
+    public void setEntetes(String[] entetes) {
+        this.entetes = entetes;
+    }
+
+    
+    /**
+     * Méthode qui permet de définir l'objet dao et de
+     * définir le tableau des données en fonction du type des données
+     */
     public void initialiser(){
-        // Patch appliqué car probléme avec les button radio 
         switch(this.donnees){
             case "locataire": dao = new Locataire_DAO(this.connBdd); modeleLocataires(); break;
             case "utilisateur": dao = new Utilisateurs_DAO(this.connBdd); modeleUtilisateurs(); break;
@@ -73,12 +100,13 @@ public class  Modele_Gestion {
         }
     }
 
+    /**
+     * Méthode qui permet de définir le tableau des locataires
+     */
     public void modeleLocataires(){
         String[] tabEntetes = {"ID","Nom", "Prénom", "Age", "Date de naissance", "Mail", "Téléphone"};
         this.setEntetes(tabEntetes);
-        
         //Récupération des locataires dans une ArrayList
-        //Locataire_DAO lesLocataires= new Locataire_DAO(this.connBdd);
         liste=(ArrayList<Locataire>)dao.getAll();
         //On convertit cette ArrayList en tableau à deux dimensions
         tableau = new String[liste.size()][7];
@@ -94,13 +122,15 @@ public class  Modele_Gestion {
         }
     }
     
+    /**
+     * Méthode qui permet de définir le tableau des utilisateurs
+     */
     public void modeleUtilisateurs(){
         String[] tabEntetes = {"ID","Login", "Catégorie"};
         this.setEntetes(tabEntetes);
-        
         //Récupération des utilisateurs dans une ArrayList
-        
         Utilisateurs_DAO userDAO = (Utilisateurs_DAO) dao ;
+        //Les droits ne sont pas les mêmes en fonction de la catégorie de l'utilisateur connecté
         switch(this.utilisateur.getCat()){
             case "ges1" ->
                 liste=(ArrayList<Utilisateur>)userDAO.getAllUtilisateurs();
@@ -119,27 +149,12 @@ public class  Modele_Gestion {
         }
     }
     
-    /*public void modeleMessages(){
-        String[] tabEntetes = {"ID","Objet", "Contenu"};
-        this.setEntetes(tabEntetes);
-        
-        //Récupération des messages dans une ArrayList
-        //Message_DAO lesMessages= new Message_DAO(connBdd);
-        liste=(ArrayList<Message>)dao.getAll();
-        //On convertit cette ArrayList en tableau à deux dimensions
-        this.tableau = new String[liste.size()][3];
-        for(int i=0; i<liste.size();i++){
-            Message unMessage=(Message) liste.get(i);
-            tableau [i][0] = unMessage.getId()+"";
-            tableau [i][1] = unMessage.getObjet();
-            tableau [i][2] = unMessage.getMessage();
-        }
-    }*/
-    
+    /**
+     * Méthode qui permet de définir le tableau des maisons
+     */
     public void modeleMaison(){
         String[] tabEntetes = {"ID","Numero Rue", "Nom Rue", "Ville", "Code Postal"};
         this.setEntetes(tabEntetes);
-        //Maison_DAO lesMaison = new Maison_DAO(connBdd);
         liste = (ArrayList<Maison>)dao.getAll();
         this.tableau = new String[liste.size()][6];
         for(int i=0; i<liste.size();i++){
@@ -152,10 +167,12 @@ public class  Modele_Gestion {
         }
     }
     
+    /**
+     * Méthode qui permet de définir le tableau des appartements
+     */
     public void modeleAppartement(){
         String[] tabEntetes = {"ID","Numero Rue", "Nom Rue", "Ville", "Code Postal", "Numéro étage", "Numéro appartement"};
         this.setEntetes(tabEntetes);
-        //Appartement_DAO lesApparts = new Appartement_DAO(connBdd);
         liste = (ArrayList<Appartement>)dao.getAll();
         this.tableau = new String[liste.size()][8];
         for(int i=0; i<liste.size();i++){
@@ -170,10 +187,12 @@ public class  Modele_Gestion {
         }
     }
     
+    /**
+     * Méthode qui permet de définir le tableau des campagnes
+     */
     public void modeleCampagne(){
         String[] tabEntetes = {"ID","Titre","Date de début", "Heure", "Date de fin", "Fréquence", "Objet", "Contenu", "ID Utilisateur"};
         this.setEntetes(tabEntetes);
-        //Campagne_DAO lesCampagnes = new Campagne_DAO(connBdd);
         liste = (ArrayList<Campagne>)dao.getAll();
         this.tableau = new String[liste.size()][9];
         for(int i=0; i<liste.size();i++){
@@ -187,14 +206,15 @@ public class  Modele_Gestion {
             tableau [i][6] = uneCampagne.getObjetMail();
             tableau [i][7] = uneCampagne.getMessageMail();
             tableau [i][8]= uneCampagne.getUtilisateur().getId()+"";
-            
         }
     }
     
+    /**
+     * Méthode qui permet de définir le tableau des listes de diffusion
+     */
     public void modeleListe(){
         String[] tabEntetes = {"ID","Nom"};
         this.setEntetes(tabEntetes);
-        
         //Récupération des listes dans une ArrayList
         liste=(ArrayList<ListeDeDiffusion>)dao.getAll();
         //On convertit cette ArrayList en tableau à deux dimensions
@@ -206,66 +226,22 @@ public class  Modele_Gestion {
         }
     }
     
-    public void insererViaCSVLocataire(ArrayList<Locataire> loca_liste){
-        Locataire_DAO loca_dao = new Locataire_DAO(connBdd);
-        for (int i = 0; i < loca_liste.size(); i++){
-            loca_dao.create(loca_liste.get(i));
-        }
-    }
-    
-    public void insererViaCSVMaison(ArrayList<Maison> maison_liste){
-        Maison_DAO maison_dao = new Maison_DAO(connBdd);
-        for (int i = 0; i < maison_liste.size(); i++){
-            maison_dao.create(maison_liste.get(i));
-        }
-    }
-    
-    public void insererViaCSVAppartement(ArrayList<Appartement> appartement_liste){
-        Appartement_DAO appartement_dao = new Appartement_DAO(connBdd);
-        for (int i = 0; i < appartement_liste.size(); i++){
-            appartement_dao.create(appartement_liste.get(i));
-        }
-    }
-    
-    //à tester
+    /**
+     * Méthode qui permet d'insérer des données via CSV
+     * @param liste_csv : liste de données
+     */
     public void insererViaCSV(List liste_csv){
         for (int i = 0; i < liste_csv.size(); i++){
             dao.create(liste_csv.get(i));
         }
     }
     
+    /**
+     * Méthode qui permet de supprimer un élément
+     * @param n : numéro de la ligne de l'élément
+     */
     public void supprimer(int n){
-        /*switch(this.donnees){
-            case "locataires" -> {
-                Locataire_DAO locDao=new Locataire_DAO(connBdd);
-                locDao.delete((Locataire) this.getSelection(n));
-            }
-            case "utilisateurs" -> {
-                Utilisateurs_DAO userDao=new Utilisateurs_DAO(connBdd);
-                userDao.delete((Utilisateur) this.getSelection(n));
-            }
-            case "appartements" -> {
-                Appartement_DAO appartementDao=new Appartement_DAO(connBdd);
-                appartementDao.delete((Appartement) this.getSelection(n));
-            }
-            case "maisons" -> {
-                Maison_DAO maisonDao=new Maison_DAO(connBdd);
-                maisonDao.delete((Maison) this.getSelection(n));
-            }
-            case "campagnes" -> {
-                Campagne_DAO campagneDao=new Campagne_DAO(connBdd);
-                campagneDao.delete((Campagne) this.getSelection(n));
-            }
-        }*/
         dao.delete(this.getSelection(n));
         this.liste.remove(n);
-    }
-    
-    public ArrayList<Campagne> getListeCampagne(int idLocataire){
-        ListeDeDiffusion_DAO listDao = new ListeDeDiffusion_DAO(connBdd);
-        ArrayList<Integer> listIdListDiff = new ArrayList<>();
-        listIdListDiff = (ArrayList<Integer>) listDao.searchListLocataireByIdLocataire(idLocataire);
-        Campagne_DAO cmpDao = new Campagne_DAO(connBdd);
-        return (ArrayList <Campagne>) cmpDao.getIdCampagneByListeDeDiffusionBy(listIdListDiff);
     }
 }
