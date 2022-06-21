@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Class permettant de se connecter à la base de donnée pour la table Logement pour les attribut n'ayant pas de numéro d'étage et d'effectuer divers action sur la table
  * @author Benjamin Mathilde
  */
 public class Maison_DAO extends DAO<Maison>{
