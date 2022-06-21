@@ -14,22 +14,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 /**
- *
- * @author benja
+ * Classe de l'objet Controleur_dialog_locataire implementant ActionListener
+ * @author Benjamin Mathilde
  */
 public class Controleur_dialog_locataire implements ActionListener{
     private Utilisateur userConnecte;
     private Vue_dialog_locataire laVue;
     private Modele_dialog_locataire leModele;
     
-    
+    /**
+     * Constructeur de l'objet Controleur_dialog_locataire
+     * @param loca : Locataire selectionné
+     * @param user : Utiliseur en cours d'utilisation
+     * @param laVue : vue du controleur
+     * @param leModele : modele du controleur
+     */
     public Controleur_dialog_locataire(Locataire loca, Utilisateur user, Vue_dialog_locataire laVue, Modele_dialog_locataire leModele){
         this.laVue = laVue;
         this.leModele = leModele;
@@ -43,6 +44,10 @@ public class Controleur_dialog_locataire implements ActionListener{
         this.laVue.ajouterEcouteurBouton("retour", this);
     }
 
+    /**
+     * Méthode de la classe abstraite ActionListener
+     * @param e 
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton source = (JButton) e.getSource();
@@ -54,28 +59,28 @@ public class Controleur_dialog_locataire implements ActionListener{
         }
     }
 
+    /**
+     *
+     * @return Utilisateur
+     */
     public Utilisateur getUserConnecte() {
         return userConnecte;
     }
 
-    public void setUserConnecte(Utilisateur userConnecte) {
-        this.userConnecte = userConnecte;
-    }
-
+    /**
+     *
+     * @return Vue_dialog_locataire
+     */
     public Vue_dialog_locataire getLaVue() {
         return laVue;
     }
 
-    public void setLaVue(Vue_dialog_locataire laVue) {
-        this.laVue = laVue;
-    }
-
+    /**
+     *
+     * @return Modele_dialog_locataire
+     */
     public Modele_dialog_locataire getLeModele() {
         return leModele;
-    }
-
-    public void setLeModele(Modele_dialog_locataire leModele) {
-        this.leModele = leModele;
     }
     
     

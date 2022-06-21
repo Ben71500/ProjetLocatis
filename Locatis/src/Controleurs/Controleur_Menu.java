@@ -12,11 +12,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+/**
+ * Classe Controleur_menu implementant l'interface ActionListener
+ * @author Benjamin Mathilde
+ */
 public class Controleur_Menu implements ActionListener {
 
     private final Vue_Menu laVue;
     private Utilisateur userConnecte;
 
+    /**
+     * Constructeur de l'objet Controleur_Menu
+     * @param uneVue : vue du controleur
+     * @param user : Utilisateur en cours d'utilisation
+     */
     public Controleur_Menu(Vue_Menu uneVue, Utilisateur user) {
         this.userConnecte = user;
         this.laVue = uneVue;
@@ -32,15 +41,26 @@ public class Controleur_Menu implements ActionListener {
         uneVue.ajouterEcouteurBouton("Quitter", this);
     }
 
+    /**
+     *
+     * @return Vue_Menu
+     */
     public Vue_Menu getVue() {
         return laVue;
     }
     
+    /**
+     *
+     * @return Utilisateur
+     */
     public Utilisateur getUser(){
         return this.userConnecte;
     }
 
-    //Méthode de la classe abstraite KeyAdapter
+    /**
+     * Méthode de la classe abstraite KeyAdapter
+     * @param e 
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton source = (JButton) e.getSource();

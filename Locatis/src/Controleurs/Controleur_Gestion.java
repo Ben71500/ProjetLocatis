@@ -28,7 +28,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
 /**
- * Classe de l'interface gestion des objets dérivant de KeyAdapter et implémentant ActionListener et MousListener
+ * Classe de l'interface gestion des objets dérivant de KeyAdapter et implémentant ActionListener et MouseListener
  * @author Benjamin Mathilde
  */
 public class Controleur_Gestion extends KeyAdapter implements ActionListener, MouseListener{
@@ -241,8 +241,9 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
     }
     
     /**
-     *
-     * @return
+     * Méthode qui effectue une recherche dans le tableau pour trouver les objets 
+     * contenant une similitude avec la chaine saisie dans le label de la vue du controleur
+     * @return DocumentListener
      */
     public DocumentListener effectuerRecherche(){
         return new DocumentListener() {
@@ -272,6 +273,10 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
     public void mouseClicked(MouseEvent e) {
     }
 
+    /**
+     * Méthode de la classe abstraite MouseListener
+     * @param e 
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getClickCount() == 2) {

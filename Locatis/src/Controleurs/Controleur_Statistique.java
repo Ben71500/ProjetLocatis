@@ -12,12 +12,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+/**
+ * Classe de l'objet Conroleur_Statistique implementant l'interface ActionListener
+ * @author Benjamin Mathilde
+ */
 public class Controleur_Statistique implements ActionListener{
 
     private final Vue_Statistique laVue;
     private final Modele_Statistique leModele;
     private Utilisateur userConnecte;
 
+    /**
+     * Constructeur de l'objet Controleur_Statistique
+     * @param uneVue : vue du controleur
+     * @param unModele : modele du controleur
+     * @param user : Utilisateur en cours d'utilisation
+     */
     public Controleur_Statistique(Vue_Statistique uneVue, Modele_Statistique unModele, Utilisateur user) {
         laVue = uneVue;
         leModele = unModele;
@@ -32,18 +42,34 @@ public class Controleur_Statistique implements ActionListener{
         this.laVue.ajouterEcouteur("retour", this);
     }
     
+    /**
+     *
+     * @return Vue_Statistique
+     */
     public Vue_Statistique getVue() {
         return laVue;
     }
 
+    /**
+     *
+     * @return Modele_Statistique
+     */
     public Modele_Statistique getModele() {
         return leModele;
     }
     
+    /**
+     *
+     * @return Utilisateur
+     */
     public Utilisateur getUser(){
         return this.userConnecte;
     }
 
+    /**
+     * Méthode de la classe abstraite ActionListener
+     * @param e 
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton source = (JButton) e.getSource();
