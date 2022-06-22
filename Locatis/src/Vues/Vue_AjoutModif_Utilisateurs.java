@@ -8,6 +8,10 @@ import java.awt.event.ActionListener;
 import java.util.regex.Pattern;
 import javax.swing.*;
 
+/**
+ * Classe implémentant l'interface Vue_AjoutModif et qui décrit la vue permettant d'ajouter ou de modifier un utilisateur
+ * @author Benjamin Mathilde
+ */
 public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModif{
     
     private JPanel panneau = new JPanel();
@@ -37,10 +41,10 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
     private Utilisateur user;
     private Utilisateur userConnecte;
     
-    private static final long serialVersionUID = 1L;
-    private JPanel pan;
-
-    
+    /**
+     * Constructeur de la vue en cas d'ajout
+     * @param utilisateurConnecte : l'utilisateur qui utilise l'interface
+     */
     public Vue_AjoutModif_Utilisateurs(Utilisateur utilisateurConnecte){
         super("Ajouter un utilisateur");
         titre.setText("Ajouter un utilisateur");
@@ -55,6 +59,11 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         this.pack();
     }
     
+    /**
+     * Constructeur de la vue en cas de modification
+     * @param unUtilisateur : l'utilisateur à modifier
+     * @param utilisateurConnecte : l'utilisateur qui utilise l'interface
+     */
     public Vue_AjoutModif_Utilisateurs(Utilisateur unUtilisateur, Utilisateur utilisateurConnecte) {
         super("Modifier un locataire");
         titre.setText("Modifier un Locataire");
@@ -69,6 +78,7 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         this.pack();
         
         this.user=unUtilisateur;
+        //Remplissage des champs par les informations de l'utilisateur
         login.setText(user.getLogin());
         mdp.setText(user.getMotDePasse());
         switch(user.getCat()){
@@ -83,6 +93,9 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         password.setText(user.getPassword());
     }
     
+    /**
+     * Méthode qui permet d'ajouter les éléments communs de la vue
+     */
     public void initialisation(){
         panneau.setLayout(new BorderLayout());
         panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -103,6 +116,7 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         panneau_info.add(this.mdp_label);
         panneau_info.add(this.mdp);
         
+        //les catégories disponibles dépendent des droits de l'utilisateur connecté
         this.categorie.addItem("Utilisateur 1");
         this.categorie.addItem("Utilisateur 2");
         if(!this.userConnecte.getCat().equals("ges1")){
@@ -122,10 +136,11 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         afficherTableau();
     }
     
+    /**
+     * Méthode qui permet d'afficher un tableau décrivant les catégories et leurs droits
+     */
     public void afficherTableau(){
-        
         panneau_tableau.setLayout(new GridLayout(6,2));
-        
         ajouterCase("Administrateur");
         ajouterCase("Création des utilisateurs, création des destinataires, gestion des droits. Création, planification et lancement des campagnes. Consultation des statistiques.");
         ajouterCase("Gestionnaire 1");
@@ -140,57 +155,25 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         ajouterCase("Consultation des statistiques. Planification et lancement d’une campagne.");
     }
     
+    /**
+     * Méthode qui permt d'ajouter une case au tableau
+     * @param s : texte affiché dans cette case
+     */
     public void ajouterCase(String s){
-        //JTextPane txt = new JTextPane();
-        //txt.setEditable(false);
-        JTextArea txt = new JTextArea();
-        //JLabel txt = new JLabel();
-        
-        txt.setText(s);
-        
-        //txt.setHorizontalAlignment((int) CENTER_ALIGNMENT);
-        
-        /*StyledDocument doc = txt.getStyledDocument();
-        SimpleAttributeSet centrer = new SimpleAttributeSet();
-	StyleConstants.setAlignment(centrer, StyleConstants.ALIGN_CENTER);
-        doc.setParagraphAttributes(0, s.length(), centrer, false);
-        */
-        
-        /*//Création d'un style
-		SimpleAttributeSet style_normal = new SimpleAttributeSet();
-		StyleConstants.setFontFamily(style_normal, "Calibri");
-		StyleConstants.setFontSize(style_normal, 14);
-
-		//Création du style pour l'affichage du titre
-		SimpleAttributeSet style_titre = new SimpleAttributeSet();
-		style_titre.addAttributes(style_normal);
-		StyleConstants.setForeground(style_titre, Color.BLUE);
-		StyleConstants.setUnderline(style_titre, true);
-		StyleConstants.setFontSize(style_titre, 18);
-		StyleConstants.setBold(style_titre, true);
-		
-		//Création du style qui permet de centrer le texte
-		SimpleAttributeSet centrer = new SimpleAttributeSet();
-		StyleConstants.setAlignment(centrer, StyleConstants.ALIGN_CENTER);
-        */
-        
+        JTextArea txt = new JTextArea(s);
         txt.setLineWrap(true);
         txt.setWrapStyleWord(true);
         txt.setOpaque(false);
         txt.setEditable(false);
         txt.setFocusable(false);
-        
-        //txt.invalidate();
-        /*System.out.println(txt.getAlignmentX());
-        System.out.println(txt.getAlignmentY());*/
-        
-        //txt.setAlignmentX(JTextArea.CENTER_ALIGNMENT);
-        //txt.setAlignmentY(JTextArea.CENTER_ALIGNMENT);
-        
         txt.setBorder(BorderFactory.createLineBorder(Color.black));
         panneau_tableau.add(txt);
     }
     
+    /**
+     * Méthode qui retourne la catégorie qui sera mise dans la base de données en fonction de l'item sélectionné
+     * @return la catégorie
+     */
     public String getCat(){
         return switch (this.categorie.getSelectedItem()+"") {
             case "Administrateur" -> "adm";
@@ -203,12 +186,6 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
         };
     }
     
-    /**
-     * Ajouter un écouteur à un bouton désigné par son nom
-     *
-     * @param nomBouton le nom du bouton sur lequel l'écouteur doit être ajouté
-     * @param listener l'écouteur à ajouter
-     */
     @Override
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
         JButton bouton;
@@ -275,7 +252,6 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
     public void afficherVue() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setBounds(100, 100, 1000, 700);
-        //controleur.getVue().setSize(500,500);
         this.setVisible(true);
     }
 }

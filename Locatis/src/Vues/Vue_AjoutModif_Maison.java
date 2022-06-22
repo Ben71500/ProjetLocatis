@@ -8,6 +8,10 @@ import java.awt.event.ActionListener;
 import java.util.regex.Pattern;
 import javax.swing.*;
 
+/**
+ * Classe implémentant l'interface Vue_AjoutModif et qui décrit la vue permettant d'ajouter ou de modifier une maison
+ * @author Benjamin Mathilde
+ */
 public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
     
     private JPanel panneau = new JPanel();
@@ -22,7 +26,6 @@ public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
     private JLabel ville_label = new JLabel ("Ville : ");
     private JLabel codePostal_label = new JLabel ("Code Postal : ");
     
-    
     private JTextField numeroRue = new JTextField();
     private JTextField nomRue = new JTextField();
     private JTextField ville = new JTextField();
@@ -34,10 +37,9 @@ public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
     
     private Maison maison;
     
-    private static final long serialVersionUID = 1L;
-    private JPanel pan;
-
-    
+    /**
+     * Constructeur de la vue en cas d'ajout
+     */
     public Vue_AjoutModif_Maison(){
         super("Ajouter une maison");
         titre.setText("Ajouter une maison");
@@ -51,6 +53,10 @@ public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
         this.pack();
     }
     
+    /**
+     * Constructeur de la vue en cas de modification
+     * @param uneMaison : la maison à modifier
+     */
     public Vue_AjoutModif_Maison(Maison uneMaison) {
         super("Modifier une maison");
         titre.setText("Modifier une maison");
@@ -64,12 +70,16 @@ public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
         this.pack();
         
         this.maison = uneMaison;
+        //Remplissage des champs par les informations de la maison
         numeroRue.setText(maison.getNumeroRue());
         nomRue.setText(maison.getNomRue());
         ville.setText(maison.getVille());
         codePostal.setText(maison.getCodePostal());
     }
     
+    /**
+     * Méthode qui permet d'ajouter les éléments communs de la vue
+     */
     public void initialisation(){
         panneau.setLayout(new BorderLayout());
         panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -84,27 +94,16 @@ public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
         centre.add(this.panneau_boutons, BorderLayout.SOUTH);
         
         panneau_info.setLayout(new GridLayout(4,2));
-        
         panneau_info.add(this.numero_Rue_label);
         panneau_info.add(this.numeroRue);
-        
         panneau_info.add(this.nom_Rue_label);
         panneau_info.add(this.nomRue);
-        
         panneau_info.add(this.ville_label);
         panneau_info.add(this.ville);
-        
         panneau_info.add(this.codePostal_label);
-        panneau_info.add(this.codePostal);
-        
+        panneau_info.add(this.codePostal);   
     }
     
-    /**
-     * Ajouter un écouteur à un bouton désigné par son nom
-     *
-     * @param nomBouton le nom du bouton sur lequel l'écouteur doit être ajouté
-     * @param listener l'écouteur à ajouter
-     */
     @Override
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
         JButton bouton;
@@ -133,6 +132,7 @@ public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
     
     @Override
     public void verifierChamps() throws EmptyFieldException, ValeurIncorrecteException{
+        //Vérification que les champs ne soient pas vides
         if(this.numeroRue.getText().equals("")){
             throw new EmptyFieldException("un numéro de rue");
         }else
@@ -145,6 +145,7 @@ public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
         if(this.codePostal.getText().equals("")){
             throw new EmptyFieldException("un code postal");
         }else
+        //Vérification que le code postal soit bien composé de 5 chiffres
         if(!Pattern.compile("[0-9]{5}").matcher(codePostal.getText()).matches()){
             throw new ValeurIncorrecteException("un code postal");
         }
@@ -169,7 +170,6 @@ public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
     public void afficherVue() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setBounds(100, 100, 350, 300);
-        //controleur.getVue().setSize(500,500);
         this.setVisible(true);
     }
 }

@@ -13,6 +13,10 @@ import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 import javax.swing.*;
 
+/**
+ * Classe implémentant l'interface Vue_AjoutModif et qui décrit la vue permettant d'ajouter ou de modifier un locataire
+ * @author Benjamin Mathilde
+ */
 public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
     
     private JPanel panneau = new JPanel();
@@ -40,6 +44,9 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
     
     private Locataire leLocataire;
     
+    /**
+     * Constructeur de la vue en cas d'ajout
+     */
     public Vue_AjoutModif_Locataires(){
         super("Ajouter un locataire");
         titre.setText("Ajouter un locataire");
@@ -53,6 +60,10 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
         this.pack();
     }
     
+    /**
+     * Constructeur de la vue en cas de modification
+     * @param loca : le locataire à modifier
+     */
     public Vue_AjoutModif_Locataires(Locataire loca) {
         super("Modifier un locataire");
         titre.setText("Modifier un Locataire");
@@ -75,6 +86,9 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
         telephone.setText(leLocataire.getTelephone());
     }
     
+    /**
+     * Méthode qui permet d'ajouter les éléments communs de la vue
+     */
     public void initialisation(){
         panneau.setLayout(new BorderLayout());
         panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -95,7 +109,6 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
         panneau_info.add(this.prenom);
         panneau_info.add(this.dateDeNaissance_label);
         
-        
         Calendar calendarDebut = new GregorianCalendar(2000, 0, 1);
         dateDeNaissance.setCalendar(calendarDebut);
         JTextFieldDateEditor editor = (JTextFieldDateEditor) this.dateDeNaissance.getDateEditor();
@@ -107,56 +120,17 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
         panneau_info.add(this.mail);
         panneau_info.add(this.telephone_label);
         
-        // Formater un numéro de téléphone
-      /*try {
-         MaskFormatter formatter = new MaskFormatter("##########");
-         //formatter.setPlaceholderCharacter('#');formatter.setPlaceholder("");
-         telephone = new JFormattedTextField(formatter);
-         
-      } catch(Exception e) {
-         e.printStackTrace();
-      }*/
         panneau_info.add(this.telephone);
     }
     
-    /*public int getID(){
-        return this.leLocataire.getId();
-    }
-    
-    public String getNom(){
-        return this.nom.getText();
-    }
-    
-    public String getPrenom(){
-        return this.prenom.getText();
-    }
-    
-    public int getAge(){
-        return Integer.parseInt(this.age.getText());
-    }*/
-    
+    /**
+     * Méthode qui retourne la date de naissance en objet MyDate
+     * @return MyDate
+     */
     public MyDate getDateDeNaissance(){
         return new MyDate(this.dateDeNaissance.getCalendar().get(Calendar.YEAR), this.dateDeNaissance.getCalendar().get(Calendar.MONTH)+1, this.dateDeNaissance.getCalendar().get(Calendar.DAY_OF_MONTH));
     }
-    
-    /*public String getMail(){
-        return this.mail.getText();
-    }
-    
-    public String getTelephone(){
-        return this.telephone.getText();
-    }*/
-    
-    /*public String getDonnees() {
-        return donnees;
-    }*/
 
-    /**
-     * Ajouter un écouteur à un bouton désigné par son nom
-     *
-     * @param nomBouton le nom du bouton sur lequel l'écouteur doit être ajouté
-     * @param listener l'écouteur à ajouter
-     */
     @Override
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
         JButton bouton;
@@ -186,6 +160,7 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
     
     @Override
     public void verifierChamps() throws EmptyFieldException, ValeurIncorrecteException{
+        //Vérification que les champs ne soient pas vides
         if(this.nom.getText().equals("")){
             throw new EmptyFieldException("un nom");
         }else
@@ -201,9 +176,11 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
         if(this.telephone.getText().equals("")){
             throw new EmptyFieldException("un numéro de téléphone");
         }else
+        //Vérification de la validité de l'adresse mail
         if(!Pattern.compile("[\\S]+@.+\\.[a-z]+").matcher(mail.getText()).matches()){
             throw new ValeurIncorrecteException("une adresse mail");
         }else
+        //Vérification de la validité du numéro de téléphone : 10 chiffres
         if(!Pattern.compile("[0-9]{10}").matcher(telephone.getText()).matches()){
             throw new ValeurIncorrecteException("un numéro de téléphone");
         }
@@ -216,7 +193,6 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
 
     @Override
     public Locataire getNouvelObjet() {
-        
         return new Locataire(0, this.nom.getText(), this.prenom.getText(), this.getDateDeNaissance(), this.mail.getText(), this.telephone.getText());
     }
 
@@ -229,7 +205,6 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
     public void afficherVue() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setBounds(100, 100, 350, 300);
-        //controleur.getVue().setSize(500,500);
         this.setVisible(true);
     }
 }

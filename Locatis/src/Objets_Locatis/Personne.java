@@ -1,7 +1,7 @@
 package Objets_Locatis;
 
 /**
- * Class abstraite Personne
+ * Interface Personne
  * @author Benjamin Mathilde
  */
 public interface Personne {

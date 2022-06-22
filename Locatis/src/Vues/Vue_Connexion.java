@@ -12,11 +12,9 @@ public class Vue_Connexion extends JFrame {
     private JPanel haut = new JPanel();
     private JPanel centre = new JPanel();
     private JPanel bas = new JPanel();
-    private JPanel panneau_boutons = new JPanel();
     private JPanel panneau_infos = new JPanel();
     
     private JLabel titre = new JLabel("Connectez-vous !");
-    
     private JLabel login_label = new JLabel("Login : ");
     private JLabel mdp_label = new JLabel("Mot de Passe : ");
     private JLabel messageErreur = new JLabel();
@@ -108,7 +106,6 @@ public class Vue_Connexion extends JFrame {
     }
 
     public void quitter() {
-        //System.exit(0);
         this.dispose();
     }
 }

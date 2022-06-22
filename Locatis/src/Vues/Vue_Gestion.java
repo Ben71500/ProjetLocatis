@@ -14,7 +14,6 @@ public class Vue_Gestion extends JFrame {
     private JPanel panneau = new JPanel();
     private JPanel haut = new JPanel();
     private JPanel centre = new JPanel();
-    //private JPanel panneau_info = new JPanel();
     private JPanel panneau_boutons = new JPanel();
     private JPanel panneau_recherches = new JPanel();
     
@@ -156,14 +155,6 @@ public class Vue_Gestion extends JFrame {
         this.table = new JTable(tableau);
         table.setSelectionMode(SINGLE_SELECTION);
         table.setRowSorter(sort);
-        //Dimension preferredSize = new Dimension(1000,1000);
-        //table.setSize(900, 400);
-        /*table.sizeColumnsToFit(500);
-        table.setPreferredSize(1000);
-        table.get*/
-        //table.setPreferredSize(preferredSize);
-        //panneau_info.setPreferredSize(preferredSize);
-        //panneau_info.add(new JScrollPane(table), BorderLayout.CENTER);
         centre.add(new JScrollPane(this.table), BorderLayout.CENTER);
     }
     
@@ -217,7 +208,6 @@ public class Vue_Gestion extends JFrame {
     }
 
     public void quitter() {
-        //System.exit(0);
         this.dispose();
     }
     

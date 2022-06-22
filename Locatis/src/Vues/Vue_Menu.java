@@ -95,7 +95,6 @@ public class Vue_Menu extends JFrame {
     }
 
     public void quitter() {
-        //System.exit(0);
         this.dispose();
     }
     
