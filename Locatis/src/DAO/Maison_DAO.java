@@ -1,10 +1,7 @@
 package DAO;
 
-import DAO.DAO;
-import Objets_Locatis.Appartement;
 import Objets_Locatis.Maison;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class permettant de se connecter à la base de donnée pour la table Logement pour les attribut n'ayant pas de numéro d'étage et d'effectuer divers action sur la table
+ * Classe permettant de se connecter à la base de données pour la table Logement pour
+ * les attributs n'ayant pas de numéro d'étage et d'effectuer divers actions sur la table
  * @author Benjamin Mathilde
  */
 public class Maison_DAO extends DAO<Maison>{
@@ -26,7 +24,7 @@ public class Maison_DAO extends DAO<Maison>{
     }
 
     /**
-     * Méthode qui crée une Maison en base de donnée
+     * Méthode qui crée une Maison dans la base de données
      * @exception SQLException si la requête n'aboutie pas retourne false
      * @param Maison
      * @return
@@ -42,8 +40,7 @@ public class Maison_DAO extends DAO<Maison>{
                     + obj.getNomRue()+"' , '"
                     + obj.getVille()+ "' , '"
                     + obj.getCodePostal()+ "')";
-            etat.execute(requeteProc);
-            return true;
+            return !etat.execute(requeteProc);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -51,7 +48,7 @@ public class Maison_DAO extends DAO<Maison>{
     }
 
     /**
-     * Méthode qui supprime une Maison en base de donnée
+     * Méthode qui supprime une Maison dans la base de données
      * @exception SQLException si la requête n'aboutie pas retourne false
      * @param Maison
      * @return boolean
@@ -63,15 +60,14 @@ public class Maison_DAO extends DAO<Maison>{
             deleteAllLogementByIdLogementId(obj);
             etat = this.connection.createStatement();
             String requeteProc ="DELETE FROM logement where ID_batiment = "+obj.getID()+" ;";
-            etat.execute(requeteProc);
-            return true;
+            return !etat.execute(requeteProc);
         } catch (SQLException ex) {
             return false;
         }
     }
 
     /**
-     * Méthode qui modifie une Maison en base de donnée
+     * Méthode qui modifie une Maison dans la base de données
      * @exception SQLException si la requête n'aboutie pas retourne false
      * @param Maison
      * @return boolean
@@ -86,24 +82,21 @@ public class Maison_DAO extends DAO<Maison>{
                     + "' , Ville='" + obj.getVille()
                     + "' , CodePostal='" + obj.getCodePostal()
                     + "' where  ID_batiment=" + obj.getID();
-            statement.execute(sql);
-            return true;
+            return !statement.execute(sql);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
         }
-        
     }
 
     /**
-     * Méthode qui selectionne une Maison par son identifiant de base de donnée
+     * Méthode qui sélectionne une Maison par son identifiant dans la base de données
      * @exception SQLException si la requête n'aboutie pas retourne null
      * @param id : id Maison
      * @return Maison
      */
     @Override
     public Maison selectById(int id) {
-
         try {
             Statement statement = this.connection.createStatement();
             ResultSet res = statement.executeQuery("Select * from logement where ID_batiment=" + id +" AND NumeroAppartement IS NULL");
@@ -120,33 +113,8 @@ public class Maison_DAO extends DAO<Maison>{
     }
 
     /**
-     * Méthode qui récupére une maison par sont adresse dans la base de donnée
-     * @deprecated
-     * @exception SQLException si la requête n'aboutie pas retourne null
-     * @param adresse
-     * @return Maison
-     */
-    @Override
-    public Maison selectByName(String adresse) {
-        try {
-            Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from logement where Adresse='" + adresse + "' AND NumeroAppartement IS NULL");
-            res.next();
-            return new Maison(res.getInt("ID_batiment"),
-                    res.getString("NumeroRue"),
-                    res.getString("NomRue"),
-                    res.getString("Ville"),
-                    res.getString("CodePostal")
-            );
-
-        } catch (SQLException ex) {
-            return null;
-        }
-    }
-
-    /**
-     * Méthode qui récupére la totalité des appartements dans une List de maison
-     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Maison incrémenter
+     * Méthode qui récupère la totalité des appartements dans une List de maisons
+     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste de Maisons incrémentées
      * @return List<Maison>
      */
     @Override
@@ -157,7 +125,7 @@ public class Maison_DAO extends DAO<Maison>{
             Statement statement = this.connection.createStatement();
             ResultSet res = statement.executeQuery("Select ID_batiment, NumeroRue, NomRue, Ville, CodePostal from logement where NumeroAppartement IS NULL ;");
             while (res.next()) {
-                        allMaison.add(new Maison(res.getInt("ID_batiment"),
+                    allMaison.add(new Maison(res.getInt("ID_batiment"),
                     res.getString("NumeroRue"),
                     res.getString("NomRue"),
                     res.getString("Ville"),
@@ -171,10 +139,11 @@ public class Maison_DAO extends DAO<Maison>{
     }
     
     /**
-     * Méthode qui récupére une maison par le dernier id insérer dans la base de donnée
+     * Méthode qui récupère une maison par le dernier id inséré dans la base de données
      * @exception SQLException si la requête n'aboutie pas retourne 0
      * @return int
      */
+    @Override
     public int getLastInsertId(){
         try{
             Statement etat = this.connection.createStatement();
@@ -188,7 +157,7 @@ public class Maison_DAO extends DAO<Maison>{
     }
     
     /**
-     * Méthode qui supprime les maisons de la base de donnée
+     * Méthode qui supprime les maisons de la base de données
      * @exception SQLException si la requête n'aboutie pas retourne false
      * @param Maison
      * @return boolean

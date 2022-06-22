@@ -54,7 +54,7 @@ public class UtilisateurDAOTest {
     @Test (timeout=1000)
     public void testSelectById() throws SQLException{
         daoTest.create(utilisateurTest);
-        int id = daoTest.selectByName("testLogin").getId();
+        int id = daoTest.getLastInsertId();
         int idUtilisateur = daoTest.selectById(id).getId();
         Assert.assertEquals(id, idUtilisateur);
     }
@@ -66,7 +66,7 @@ public class UtilisateurDAOTest {
     @Test(timeout=1000)
     public void updateTest() throws SQLException{
         daoTest.create(utilisateurTest);
-        int idUti = daoTest.selectByName("testLogin").getId();
+        int idUti = daoTest.getLastInsertId();
         Utilisateur utilisateurTestModif = new Utilisateur(idUti, "testModifLogin", "mdpTest", "uti", "testModif@gmail.com", "testMailMdp");
         Assert.assertEquals(true, daoTest.update(utilisateurTest));
     }
@@ -78,7 +78,7 @@ public class UtilisateurDAOTest {
     @Test(timeout=1000)
     public void deleteTest() throws SQLException{
         daoTest.create(utilisateurTest);
-        int idUti = daoTest.selectByName("testLogin").getId();
+        int idUti = daoTest.getLastInsertId();
         Utilisateur utilisateurASupprimer = new Utilisateur(idUti, "testModifLogin", "mdpTest", "uti", "testModif@gmail.com", "testMailMdp");
         Assert.assertEquals(true, daoTest.delete(utilisateurTest));
     }

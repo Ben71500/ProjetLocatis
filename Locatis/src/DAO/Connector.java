@@ -114,5 +114,4 @@ public abstract class Connector {
         }
         return Objects.equals(this.PWD, anotherConnector.PWD);
     }
-
 }

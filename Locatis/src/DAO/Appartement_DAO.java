@@ -33,7 +33,8 @@ public class Appartement_DAO extends DAO<Appartement>{
         try {
             Statement etat;
             etat = this.connection.createStatement();
-            String requeteProc = "Insert into logement VALUES ('"+obj.getID()+"' , '"+obj.getNumeroRue()+"' , '"+obj.getNomRue()+"' , '"+obj.getVille()+"' , '"+obj.getCodePostal()+"' , '"+obj.getApart()+"' , '"+obj.getEtage()+"' );";
+            String requeteProc = "Insert into logement VALUES ('"+obj.getID()+"' , '"+obj.getNumeroRue()+"' , '"+
+                obj.getNomRue()+"' , '"+obj.getVille()+"' , '"+obj.getCodePostal()+"' , '"+obj.getApart()+"' , '"+obj.getEtage()+"' );";
             return !etat.execute(requeteProc);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -51,10 +52,10 @@ public class Appartement_DAO extends DAO<Appartement>{
     public boolean delete(Appartement obj) {
         try {
             Statement etat;
-            deleteAllLogementByIdLogementId(obj);
+            Boolean b = deleteAllLogementByIdLogementId(obj);
             etat = this.connection.createStatement();
             String requeteProc = "DELETE FROM logement where ID_batiment = "+obj.getID()+" ;";
-            return !etat.execute(requeteProc);
+            return !etat.execute(requeteProc) && b;
         } catch (SQLException ex) {
             return false;
         }
@@ -110,6 +111,7 @@ public class Appartement_DAO extends DAO<Appartement>{
      * @exception SQLException si la requête n'aboutie pas retourne 0
      * @return int
      */
+    @Override
     public int getLastInsertId(){
         try{
             Statement etat = this.connection.createStatement();
@@ -119,33 +121,6 @@ public class Appartement_DAO extends DAO<Appartement>{
         }catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return 0;
-        }
-    }
-
-    /**
-     * Méthode qui récupére un appartement par son adresse dans la base de données
-     * @deprecated
-     * @exception SQLException si la requête n'aboutie pas retourne null
-     * @param adresse
-     * @return Appartement
-     */
-    @Override
-    public Appartement selectByName(String adresse) {
-        try {
-            Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from logement where Adresse='" + adresse + "' AND NumeroAppartement IS NOT NULL");
-            res.next();
-
-            return new Appartement(res.getInt("ID_batiment"),
-                    res.getString("NumeroRue"),
-                    res.getString("NomRue"),
-                    res.getString("Ville"),
-                    res.getString("CodePostal"),
-                    res.getInt("NumeroAppartement"),
-                    res.getInt("NombreEtage")
-            );
-        } catch (SQLException ex) {
-            return null;
         }
     }
 
@@ -230,7 +205,7 @@ public class Appartement_DAO extends DAO<Appartement>{
     }
     
     /**
-     * Méthode qui supprime les logements de la base de données
+     * Méthode qui supprime les logements de la table habiter
      * @exception SQLException si la requête n'aboutie pas retourne false
      * @param obj
      * @return boolean

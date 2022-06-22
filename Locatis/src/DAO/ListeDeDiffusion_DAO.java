@@ -1,9 +1,7 @@
 package DAO;
 
 import Objets_Locatis.ListeDeDiffusion;
-import Objets_Locatis.Locataire;
 import Objets_Locatis.Personne;
-import Objets_Locatis.Utilisateur;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class permettant de se connecter à la base de donnée pour la table Liste de diffusion et d'effectuer divers action sur la table
+ * Classe permettant de se connecter à la base de données pour la table Liste
+ * de diffusion et d'effectuer divers actions sur la table
  * @author Benjamin Mathilde
  */
 public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
@@ -52,10 +51,10 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
     
     /**
-     * Méthode qui crée une liste de locataire dans la base de donnée
+     * Méthode qui crée une liste de locataires dans la base de données
      * @exception SQLException si la requête n'aboutie pas retourne retourne false
      * @param id : id de la liste de diffusion
-     * @param liste : Liste de Personne
+     * @param liste : Liste de Personnes
      * @return boolean
      */
     public boolean createListeLocataires(int id, ArrayList<Personne> liste) {
@@ -74,10 +73,10 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
     
     /**
-     * Méthode qui crée une liste d'utilisateur dans la base de donnée
+     * Méthode qui crée une liste d'utilisateurs dans la base de données
      * @exception SQLException si la requête n'aboutie pas retourne retourne false
      * @param id : id de la liste de diffusion
-     * @param liste : Liste de Personne
+     * @param liste : Liste de Personnes
      * @return boolean
      */
     public boolean createListeUtilisateurs(int id, ArrayList<Personne> liste) {
@@ -96,7 +95,7 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
 
     /**
-     * Méthode qui supprime une liste de diffusion dans la base de donnée
+     * Méthode qui supprime une liste de diffusion dans la base de données
      * @exception SQLException si la requête n'aboutie pas retourne retourne false
      * @param obj
      * @return boolean
@@ -116,7 +115,7 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
     
     /**
-     * Méthode qui supprime les liens entre une liste et ses Utilisateurs / Locataire dans la base de donnée
+     * Méthode qui supprime les liens entre une liste et ses Utilisateurs / Locataires dans la base de données
      * @param id : id de la liste de diffusion
      * @return boolean
      */
@@ -131,8 +130,8 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
 
     /**
-     * Méthode qui modifie une liste dans la base de donnée
-     * @exception SQLException si la requête n'aboutie pas retourne retourne false
+     * Méthode qui modifie une liste dans la base de données
+     * @exception SQLException si la requête n'aboutie pas retourne false
      * @param obj
      * @return boolean
      */
@@ -157,7 +156,7 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
 
     /**
-     * Méthode qui récupére une liste de diffusion grâce a son id dans la base de donnée
+     * Méthode qui récupére une liste de diffusion grâce à son id dans la base de données
      * @exception SQLException si la requête n'aboutie pas retourne retourne null
      * @param id : id de la liste de diffusion
      * @return ListeDeDiffusion
@@ -190,10 +189,11 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
     
     /**
-     * Méthode qui récupére le dernier id insérer dans la table listeDiffusion
-     * @exception SQLException si la requête n'aboutie pas retourne retourne 0
+     * Méthode qui récupère le dernier id inséré dans la table listeDiffusion
+     * @exception SQLException si la requête n'aboutie pas retourne 0
      * @return int
      */
+    @Override
     public int getLastInsertId(){
         try{
             Statement etat = this.connection.createStatement();
@@ -208,40 +208,8 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
 
     /**
-     * Méthode qui récupére une liste de diffusion par son nom dans la base de donnée
-     * @exception SQLException si la requête n'aboutie pas retourne retourne null
-     * @param nom : nom de la liste de diffusion
-     * @return ListeDeDiffusion
-     */
-    @Override
-    public ListeDeDiffusion selectByName(String nom) {
-        try {
-            Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from listediffusion where Nom_liste='" + nom + "'");
-            res.next();
-            ArrayList<Personne> locataires = (ArrayList<Personne>) this.getAllLocataires(res.getInt("ID_listeDiff"));
-            if(!locataires.isEmpty()){  
-                return new ListeDeDiffusion(res.getInt("ID_listeDiff"),
-                        res.getString("Nom_liste"),
-                        locataires
-                );
-            }else{
-                ArrayList<Personne> utilisateurs = (ArrayList<Personne>) this.getAllUtilisateurs(res.getInt("ID_listeDiff"));
-                return new ListeDeDiffusion(res.getInt("ID_listeDiff"),
-                        res.getString("Nom_liste"),
-                        utilisateurs
-                );
-            }
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return null;
-        }
-    }
-
-    /**
-     * Méthode qui récupére toute les liste de diffusion de la base de donnée
-     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste de liste de diffusion incrémenter
+     * Méthode qui récupère toutes les listes de diffusion de la base de données
+     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste de listes de diffusion incrémentées
      * @return List<ListeDeDiffusion>
      */
     @Override
@@ -275,15 +243,15 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
     
     /**
-     * Méthode qui récupére tous les locataire de la base de donnée avec l'id d'une liste de diffusion
-     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste de personne incrémenter
+     * Méthode qui récupère tous les locataires de la base de données avec l'id d'une liste de diffusion
+     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste de personnes incrémentées
      * @param id : id d'une liste de diffusion
      * @return List<Personne>
      */
     public List<Personne> getAllLocataires(int id) {
 
         List<Personne> allLocataires = new ArrayList<>();
-        try {//distinct
+        try {
             Statement statement = this.connection.createStatement();
             ResultSet res = statement.executeQuery("Select ID_locataire from locataire_liste where ID_listeDiff="+id);
             Locataire_DAO locataires = new Locataire_DAO(this.connection);
@@ -298,15 +266,15 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
     
     /**
-     * Méthode qui récupére tous les utilisateurs de la base de donnée avec l'id d'une liste de diffusion
-     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste d'utilisateurs incrémenter
+     * Méthode qui récupère tous les utilisateurs de la base de données avec l'id d'une liste de diffusion
+     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste d'utilisateurs incrémentés
      * @param id : id d'une liste de diffusion
      * @return List<Utilisateur>
      */
     public List<Personne> getAllUtilisateurs(int id) {
 
         List<Personne> allUtilisateurs = new ArrayList<>();
-        try {//distinct
+        try {
             Statement statement = this.connection.createStatement();
             ResultSet res = statement.executeQuery("Select ID_utilisateur from utilisateur_liste where ID_listeDiff="+id);
             Utilisateurs_DAO utilisateurs = new Utilisateurs_DAO(this.connection);
@@ -321,14 +289,14 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
     
     /**
-     * Méthode qui récupére tous les id des liste de diffusions auquel l'id locataire et associé
-     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste d'entier incrémenter
+     * Méthode qui récupère tous les id des listes de diffusion auxquels l'id locataire est associé
+     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste d'entiers incrémentés
      * @param id : id locataire
      * @return List<Integer>
      */
     public List<Integer> searchListLocataireByIdLocataire(int id){
         List<Integer> allList = new ArrayList<>();
-        try {//distinct
+        try {
             Statement statement = this.connection.createStatement();
             ResultSet res = statement.executeQuery("Select ID_listeDiff from locataire_liste where ID_locataire="+id);
             while (res.next()) {

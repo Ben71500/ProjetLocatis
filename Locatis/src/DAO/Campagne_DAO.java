@@ -23,7 +23,7 @@ public class Campagne_DAO extends DAO<Campagne>{
     }
 
     /**
-     * Méthode qui insére en base de donnée une campagne
+     * Méthode qui insère dans la base de données une campagne
      * @exception SQLException si la requête n'aboutie pas retourne false
      * @param obj
      * @return boolean
@@ -56,7 +56,7 @@ public class Campagne_DAO extends DAO<Campagne>{
     }
 
     /**
-     * Méthode qui supprime une campagne de la base de donnée
+     * Méthode qui supprime une campagne de la base de données
      * @exception SQLException si la requête n'aboutie pas retourne false
      * @param obj
      * @return boolean
@@ -74,7 +74,7 @@ public class Campagne_DAO extends DAO<Campagne>{
     }
 
     /**
-     * Méthode qui modifie une campagne dans la base de donnée
+     * Méthode qui modifie une campagne dans la base de données
      * @exception SQLException si la requête n'aboutie pas retourne false
      * @param obj
      * @return boolean
@@ -155,35 +155,13 @@ public class Campagne_DAO extends DAO<Campagne>{
             return null;
         }
     }
-
-    /**
-     * Méthode qui récupére une campagne par son nom
-     * @exception SQLException si la requête n'aboutie pas retourne null
-     * @param campagne : nom de la campagne
-     * @return Campagne
-     */
-    @Override
-    public Campagne selectByName(String campagne) {
-        try {
-            Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from campagne where Titre_campagne='" + campagne + "'");
-            res.next();
-            Utilisateurs_DAO user = new Utilisateurs_DAO(this.connection);
-            Recevoir_DAO recevoir = new Recevoir_DAO(this.connection);
-            int idCampagne = res.getInt("ID_campagne");
-            return new Campagne(idCampagne, res.getString("Titre_campagne"), this.getMyDate(res.getDate("Date_Debut")),
-                    this.getMyDate(res.getDate("Date_Fin")), this.getMyTime(res.getTime("Heure")), res.getString("frequence"), res.getString("Objet"),
-                    res.getString("Contenu"), recevoir.getListes(idCampagne), user.selectById(res.getInt("ID_utilisateur")));
-        } catch (SQLException ex) {
-            return null;
-        }
-    }
     
     /**
-     * Méthode qui récupére une maison par le dernier id insérer dans la base de donnée
+     * Méthode qui récupére une campagne par le dernier id inséré dans la base de données
      * @exception SQLException si la requête n'aboutie pas retourne 0
      * @return int
      */
+    @Override
     public int getLastInsertId(){
         try{
             Statement etat = this.connection.createStatement();
@@ -198,7 +176,7 @@ public class Campagne_DAO extends DAO<Campagne>{
     }
 
     /**
-     * Méthode qui récupére toute les campagnes de la base de donnée
+     * Méthode qui récupére toute les campagnes de la base de données
      * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Campagne incrémenter
      * @return List<Camapagne>
      */
@@ -233,7 +211,7 @@ public class Campagne_DAO extends DAO<Campagne>{
     }   
     
     /**
-     * Méthode qui récupére uniquement les campagne en cours nécéssitant l'envoie d'un mail 
+     * Méthode qui récupére uniquement les campagnes en cours nécéssitant l'envoi d'un mail 
      * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Campagne incrémenter
      * @return List<Campagne>
      */
@@ -268,7 +246,7 @@ public class Campagne_DAO extends DAO<Campagne>{
     }
     
     /**
-     * Méthode qui récupére toute les listes de diffusion pour n'en faire qu'une seule hors de la base de donnée par rapport à une campagne
+     * Méthode qui récupére toute les listes de diffusion pour n'en faire qu'une seule hors de la base de données par rapport à une campagne
      * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste de liste de diffusion incrémenter
      * @param id : id camapagne
      * @return ListeDeDiffusion
@@ -311,7 +289,7 @@ public class Campagne_DAO extends DAO<Campagne>{
     }
     
     /**
-     * Méthode qui récupére le nombre de campagne finis
+     * Méthode qui récupére le nombre de campagne finies
      * @exception SQLException si la requête n'aboutie pas retourne retourne -1
      * @return int
      */
@@ -325,12 +303,11 @@ public class Campagne_DAO extends DAO<Campagne>{
         catch(SQLException ex){
             return -1;
         }
-
     }
     
     /**
-     *
-     * @return
+     * Méthode qui retourne le nombre de campagnes qui n'ont pas commencées
+     * @return int
      */
     public int getNotBeginCampagne(){
         try{    
@@ -342,7 +319,6 @@ public class Campagne_DAO extends DAO<Campagne>{
         catch(SQLException ex){
             return -1;
         }
-
     }
     
     /**
@@ -360,11 +336,10 @@ public class Campagne_DAO extends DAO<Campagne>{
         catch(SQLException ex){
             return -1;
         }
-
     }
     
     /**
-     * Méthode qui retourne le nombre total des campagnes
+     * Méthode qui retourne le nombre total de campagnes
      * @exception SQLException si la requête n'aboutie pas retourne retourne -1
      * @return int
      */
@@ -378,11 +353,10 @@ public class Campagne_DAO extends DAO<Campagne>{
         catch(SQLException ex){
             return -1;
         }
-
     }
     
     /**
-     * Méthode qui récupére la liste des campagnes auquelle une liste de diffusion est associé
+     * Méthode qui récupère la liste des campagnes auxquelles une liste de diffusion est associée
      * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Campagne incrémenter
      * @param listeId : id liste de diffusion
      * @return List<Campagne>
@@ -403,7 +377,7 @@ public class Campagne_DAO extends DAO<Campagne>{
             }
             ResultSet res = statement.executeQuery("Select ID_campagne from recevoir "+condition+" ");
             while (res.next()) {
-                    listeIdCampagne.add(res.getInt("ID_campagne"));
+                listeIdCampagne.add(res.getInt("ID_campagne"));
             }
             for(int j = 0; j < listeIdCampagne.size(); j++){
                 if(j == 0){
@@ -423,5 +397,4 @@ public class Campagne_DAO extends DAO<Campagne>{
             return listeCampagne;
         }
     }
-
 }

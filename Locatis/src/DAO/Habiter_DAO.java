@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class permettant de se connecter à la base de donnée pour la table Habiter et d'effectuer divers action sur la table
+ * Classe permettant de se connecter à la base de données pour la table Habiter et d'effectuer divers actions sur la table
  * @author Benjamin Mathilde
  */
 public class Habiter_DAO{
@@ -18,7 +18,7 @@ public class Habiter_DAO{
     private Connection connection;
     
     /**
-     *
+     * Constructeur
      * @param connection
      */
     public Habiter_DAO(Connection connection) {
@@ -26,7 +26,7 @@ public class Habiter_DAO{
     }
     
     /**
-     * Méthode qui insére le lien entre un batiment et un locataire
+     * Méthode qui insère le lien entre un batiment et un locataire
      * @exception SQLException si la requête n'aboutie pas retourne false
      * @param idBatiment : id d'un batiment
      * @param idLocataire : id d'un locataire
@@ -36,8 +36,7 @@ public class Habiter_DAO{
         try {
             Statement etat = this.connection.createStatement();
             String requeteProc ="Insert into habiter VALUES ('"+ idLocataire + "' , '"+ idBatiment + "' );";
-            etat.execute(requeteProc);
-            return true;
+            return !etat.execute(requeteProc);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -62,14 +61,14 @@ public class Habiter_DAO{
     }
 
     /**
-     * Méthode qui récupére tous les appartement d'un locataire
-     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste d'appartement incrémenter
+     * Méthode qui récupère tous les appartements d'un locataire
+     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste d'appartements incrémentés
      * @param id : id locataire
      * @return List<Appartement>
      */
     public List<Appartement> getAppartementByIdLocataire(int id){
-         List<Appartement> appartement = new ArrayList<>();
-         try {
+        List<Appartement> appartement = new ArrayList<>();
+        try {
             Statement statement = this.connection.createStatement();
             ResultSet res = statement.executeQuery("Select * from logement where ID_batiment in (select ID_batiment from habiter where ID_locataire = "+id+") AND NumeroAppartement is not NULL;");
             while (res.next()) {
@@ -91,14 +90,14 @@ public class Habiter_DAO{
      }
      
     /**
-     * Méthode qui récupére toute les maisons d'un locataire
-     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste de maison incrémenter
-     * @param id ; id locataire
+     * Méthode qui récupère toutes les maisons d'un locataire
+     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste de maison incrémentées
+     * @param id : id locataire
      * @return List<Maison>
      */
     public List<Maison> getMaisonByIdLocataire(int id){
-         List<Maison> maison = new ArrayList<>();
-         try {
+        List<Maison> maison = new ArrayList<>();
+        try {
             Statement statement = this.connection.createStatement();
             ResultSet res = statement.executeQuery("Select * from logement where ID_batiment in (select ID_batiment from habiter where ID_locataire = "+id+") AND NumeroAppartement is NULL;");
             while (res.next()) {

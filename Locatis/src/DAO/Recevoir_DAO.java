@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class permettant de se connecter à la base de donnée pour la table Recevoir et d'effectuer divers action sur la table
+ * Classe permettant de se connecter à la base de données pour la table Recevoir et d'effectuer divers actions sur la table
  * @author Benjamin Mathilde
  */
 public class Recevoir_DAO {
@@ -26,9 +26,9 @@ public class Recevoir_DAO {
     
     /**
      * Méthode qui crée un lien entre une campagne et une liste de diffusion dans la table recevoir
-     * @exception SQLException si la requête n'aboutie pas retourne retourne false
+     * @exception SQLException si la requête n'aboutie pas retourne false
      * @param idCampagne : id d'une camapagne
-     * @param obj : List de liste de diffusion
+     * @param obj : List de listes de diffusion
      * @return boolean
      */
     public boolean create(int idCampagne, List<ListeDeDiffusion> obj) {
@@ -50,7 +50,7 @@ public class Recevoir_DAO {
     
     /**
      * Méthode qui supprime un lien entre une campagne et une liste de diffusion dans la table recevoir
-     * @exception SQLException si la requête n'aboutie pas retourne retourne false
+     * @exception SQLException si la requête n'aboutie pas retourne false
      * @param idCampagne : id d'une camapagne
      * @return boolean
      */
@@ -66,7 +66,7 @@ public class Recevoir_DAO {
     
     /**
      * Méthode qui supprime un lien entre une campagne et une liste de diffusion dans la table recevoir
-     * @exception SQLException si la requête n'aboutie pas retourne retourne false
+     * @exception SQLException si la requête n'aboutie pas retourne false
      * @param idListe : id d'une liste de diffusion
      * @return boolean
      */
@@ -92,7 +92,7 @@ public class Recevoir_DAO {
     
     /**
      * Méthode qui recupére une liste de diffusion par un id de campagne 
-     * @exception SQLException si la requête n'aboutie pas retourne retourne null
+     * @exception SQLException si la requête n'aboutie pas retourne null
      * @param idCampagne : id d'une campagne
      * @return List<ListeDeDiffusion>
      */
