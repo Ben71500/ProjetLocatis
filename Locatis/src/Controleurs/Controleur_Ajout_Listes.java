@@ -239,7 +239,7 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
     }
     
     /**
-     * Méthode qui trie le tableau contenant les locataires avec diffèrents critères ( Age / Date de naissance)
+     * Méthode qui trie le tableau contenant les locataires avec différents critères ( Age / Date de naissance)
      */
     public void trierTableau(){
         laVue.afficherPanneauBoutonsRadios();
