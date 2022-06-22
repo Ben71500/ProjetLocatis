@@ -13,6 +13,10 @@ import javax.swing.*;
 import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
 import javax.swing.table.*;
 
+/**
+ * Classe dérivée de JFrame qui décrit la vue permettant d'ajouter ou de modifier une liste de diffusion
+ * @author Benjamin Mathilde
+ */
 public class Vue_Ajout_Listes extends JFrame {
 
     private JPanel panneau = new JPanel();
@@ -20,10 +24,8 @@ public class Vue_Ajout_Listes extends JFrame {
     private JPanel centre = new JPanel();
     private JPanel panneau_infos = new JPanel();
     private JPanel panneau_boutons = new JPanel();
-    private JPanel panneau_nom = new JPanel();
     private JPanel panneau_recherches = new JPanel();
     private JPanel panneau_boutons_radios = new JPanel();
-    private JPanel panneau_donnees = new JPanel();
     private JPanel panneau_premiere_ligne = new JPanel();
     
     private JLabel titre;
@@ -61,9 +63,12 @@ public class Vue_Ajout_Listes extends JFrame {
     
     private ListeDeDiffusion listeDiffusion;
 
+    /**
+     * Constructeur de la vue en cas d'ajout
+     * @param donnee : type de personnes contenu dans les listes (locataire ou utilisateur)
+     */
     public Vue_Ajout_Listes(String donnee) {
         super("Création d'une liste de diffusion");
-        
         this.donnees = donnee;
         
         panneau.setLayout(new BorderLayout());
@@ -78,7 +83,6 @@ public class Vue_Ajout_Listes extends JFrame {
         
         centre.setLayout(new BorderLayout());
         centre.add(this.panneau_infos, BorderLayout.NORTH);
-        //centre.add(new JScrollPane(this.panneau_info), BorderLayout.CENTER);
         panneau.add(this.panneau_boutons, BorderLayout.SOUTH);
         
         panneau_premiere_ligne.setLayout(new GridLayout(1,4));
@@ -97,7 +101,6 @@ public class Vue_Ajout_Listes extends JFrame {
         panneau_recherches.add(tri);
         panneau_recherches.add(panneau_boutons_radios);
         remplirComboBox();
-        //panneau_boutons_radios.setVisible(false);
         
         panneau_infos.setLayout(new GridLayout(2,1));
         panneau_infos.add(panneau_premiere_ligne);
@@ -120,29 +123,24 @@ public class Vue_Ajout_Listes extends JFrame {
         group_signe.add(buttonRadioSuperieur);
         group_signe.add(buttonRadioInferieur);
         
-        nombre.setModel(new SpinnerNumberModel(0, 0, 200, 1));
+        nombre.setModel(new SpinnerNumberModel(40, 0, 200, 1));
         nombre.setEditor(new JSpinner.DefaultEditor(nombre));
         
         this.date.setCalendar(Calendar.getInstance());
         JTextFieldDateEditor editor = (JTextFieldDateEditor) this.date.getDateEditor();
         editor.setEditable(false);
-        /*this.date.getDateEditor().addPropertyChangeListener(
-            new PropertyChangeListener() {
-                @Override
-                public void propertyChange(PropertyChangeEvent e) {
-                    /*if(date.getCalendar().before(date.getCalendar()))
-                        System.out.println("");*/
-                    //System.out.println("d");
-               /* }
-        });*/
         
         this.getContentPane().add(this.panneau);
         this.pack();
     }
     
+    /**
+     * Constructeur de la vue en cas de modification
+     * @param donnee : type de personnes contenu dans les listes (locataire ou utilisateur)
+     * @param liste : liste de diffusion à modifier
+     */
     public Vue_Ajout_Listes(String donnee, ListeDeDiffusion liste) {
-        super("Création d'une liste de diffusion");
-        
+        super("Modification d'une liste de diffusion");
         this.donnees = donnee;
         
         panneau.setLayout(new BorderLayout());
@@ -157,7 +155,6 @@ public class Vue_Ajout_Listes extends JFrame {
         
         centre.setLayout(new BorderLayout());
         centre.add(this.panneau_infos, BorderLayout.NORTH);
-        //centre.add(new JScrollPane(this.panneau_info), BorderLayout.CENTER);
         panneau.add(this.panneau_boutons, BorderLayout.SOUTH);
         
         panneau_premiere_ligne.setLayout(new GridLayout(1,4));
@@ -178,7 +175,6 @@ public class Vue_Ajout_Listes extends JFrame {
         panneau_recherches.add(tri);
         panneau_recherches.add(panneau_boutons_radios);
         remplirComboBox();
-        //panneau_boutons_radios.setVisible(false);
         
         panneau_infos.setLayout(new GridLayout(2,1));
         panneau_infos.add(panneau_premiere_ligne);
@@ -211,78 +207,142 @@ public class Vue_Ajout_Listes extends JFrame {
         this.getContentPane().add(this.panneau);
         this.pack();
         
+        //Remplissage des champs par les informations de la liste de diffusion
         listeDiffusion = liste;
         nom.setText(listeDiffusion.getNom());
     }
 
+    /**
+     *
+     * @return la saisie du nom de la liste
+     */
     public String getNom() {
         return nom.getText();
     }
     
+    /**
+     *
+     * @return la date en format SQL dela date saisie lors du tri par date de naissance
+     */
     public String getDateSaisie(){
         return new MyDate(this.date.getCalendar().get(Calendar.YEAR), this.date.getCalendar().get(Calendar.MONTH)+1, this.date.getCalendar().get(Calendar.DAY_OF_MONTH)).getDateSQL();
     }
 
+    /**
+     *
+     * @return JDateChooser
+     */
     public JDateChooser getDate() {
         return date;
     }
     
-    
-
-    public void setTitre(String titre) {
-        this.titre.setText(titre);
-    }
-
-    public DefaultTableModel getTableau() {
-        return tableau;
-    }
-    
-    public int getLigne(){
-        return this.table.getSelectedRow();
-    }
-    
+    /**
+     *
+     * @return le JTextField permettant d'effectuer une recherche
+     */
     public JTextField getRecherche(){
         return this.recherche;
     }
     
+    /**
+     *
+     * @return TableRowSorter
+     */
     public TableRowSorter<TableModel> getSort(){
         return this.sort;
     }
 
-    public JTable getTable() {
+    /**
+     *
+     * @return la JTable des personnes
+     */
+    public JTable getTable(){
         return table;
     }
+    
+    /**
+     *
+     * @return le JRadioButton des locataires
+     */
+    public JRadioButton getButtonRadioLocataires() {
+        return buttonRadioLocataires;
+    }
 
+    /**
+     *
+     * @return le JRadioButton des utilisateurs
+     */
+    public JRadioButton getButtonRadioUtilisateurs() {
+        return buttonRadioUtilisateurs;
+    }
+
+    /**
+     *
+     * @return la JComboBox permettant de choisir la catégorie du tri
+     */
+    public JComboBox getTri() {
+        return tri;
+    }
+    
+    /**
+     *
+     * @return le nombre choisi
+     */
+    public String getNombre() {
+        return nombre.getValue()+"";
+    }
+    
+    /**
+     *
+     * @return JSpinner
+     */
+    public JSpinner getNombreJSpinner(){
+        return this.nombre;
+    }
+
+    /**
+     * Méthode qui permet de modifier les données contenues dans la JTable
+     * @param donnees : les nouvelles données
+     */
     public void setDonnees(String donnees) {
         this.donnees = donnees;
     }
 
+    /**
+     * Méthode qui permet de créer un nouveau tableau de personnes
+     * @param donnees : nouvelles données
+     * @param entetes : tableau des entetes
+     */
     public void definirTableau(Object[][] donnees, String[] entetes) {
-        this.tableau = new DefaultTableModel(donnees, entetes)
-        {
+        this.tableau = new DefaultTableModel(donnees, entetes){
+            //permet de faire en sorte qu'on ne puisse pas modifier le contenu de la JTable
             @Override
             public boolean isCellEditable(int row, int column) {
                 return column==0;
             }
         };
-        
         sort = new TableRowSorter<>(this.tableau);
         for(int i=0;i<entetes.length;i++)
             sort.setSortable(i, false);
-        //Ajout du tableau des locataires
+        //Ajout du tableau des personnes
         this.table = new JTable(tableau){
+            //permet d'afficher des cases à cocher
             @Override
             public Class getColumnClass(int column) {
                 //renvoie Boolean.class
                 return getValueAt(0, column).getClass(); 
             }
         };
-        
         table.setSelectionMode(SINGLE_SELECTION);
         table.setRowSorter(sort);
         centre.add(new JScrollPane(this.table), BorderLayout.CENTER);
     }
     
+    /**
+     * Méthode qui permet d'effacer le tableau et d'en ajouter un nouveau
+     * @param donnees : nouvelles données
+     * @param entetes : tableau des entetes
+     */
     public void changerTableau(Object[][] donnees, String[] entetes){
         centre.removeAll();
         centre.setLayout(new BorderLayout());
@@ -292,8 +352,7 @@ public class Vue_Ajout_Listes extends JFrame {
     }
 
     /**
-     * Ajouter un écouteur à un composant désigné par son nom
-     *
+     * Méthode qui permet d'ajouter un écouteur à un composant désigné par son nom
      * @param nomComposant le nom du composant sur lequel l'écouteur doit être ajouté
      * @param listener l'écouteur à ajouter
      */
@@ -327,11 +386,17 @@ public class Vue_Ajout_Listes extends JFrame {
         } 
     }
 
+    /**
+     * Méthode qui permet de fermer la fenêtre
+     */
     public void quitter() {
-        //System.exit(0);
         this.dispose();
     }
     
+    /**
+     * Méthode qui permet d'afficher ou d'enlever le panneau des boutons radios
+     * permettant de filtrer les données en focntion de certains paramètres
+     */
     public void afficherPanneauBoutonsRadios(){
         if(donnees.equals("locataire") && tri.getSelectedItem()!=null){
             if(tri.getSelectedItem().equals("Age") || tri.getSelectedItem().equals("Date de naissance")){
@@ -348,6 +413,10 @@ public class Vue_Ajout_Listes extends JFrame {
             this.panneau_boutons_radios.setVisible(false);
     }
     
+    /**
+     * Méthode qui retourn le signe sélectionné
+     * @return String
+     */
     public String getBoutonRadioSigne(){
         if(this.buttonRadioEgal.isSelected())
             return "=";
@@ -357,30 +426,11 @@ public class Vue_Ajout_Listes extends JFrame {
             return "<";
         return "";
     }
-    
-    public String getBoutonRadioDonnees(){
-        if(this.buttonRadioLocataires.isSelected())
-            return "Locataires";
-        if(this.buttonRadioUtilisateurs.isSelected())
-            return "Utilisateurs";
-        else
-            return "Signe";
-    }
 
-    public JRadioButton getButtonRadioLocataires() {
-        return buttonRadioLocataires;
-    }
-
-    public JRadioButton getButtonRadioUtilisateurs() {
-        return buttonRadioUtilisateurs;
-    }
-
-    public JComboBox getTri() {
-        return tri;
-    }
-    
-    
-    
+    /**
+     * Méthode qui retourne la catégorie choisie
+     * @return String
+     */
     public String getCategorie(){
         if(tri.getSelectedItem()!=null){
             if(tri.getSelectedItem().equals("Date de naissance"))
@@ -391,31 +441,36 @@ public class Vue_Ajout_Listes extends JFrame {
         return "";
     }
 
-    public String getNombre() {
-        return nombre.getValue()+"";
-    }
-    
-    public JSpinner getNombreJSpinner(){
-        return this.nombre;
-    }
-    
+    /**
+     * Méthode qui permet de vérifier que tous les champs sont bien saisis
+     * @throws EmptyFieldException :  l'exception est lancée si aucun nom de liste n'est saisi
+     */
     public void verifierChamps() throws EmptyFieldException{
         if(this.nom.getText().equals("")){
             throw new EmptyFieldException("un nom de liste");
         }
     }
     
+    /**
+     * Méthode qui permet de réinitialiser le nom de la liste
+     */
     public void reset(){
         this.nom.setText("");
     }
     
+    /**
+     * Méthode qui permet de rendre la vue visible
+     */
     public void afficherVue() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setBounds(100, 100, 800, 300);
-        //controleur.getVue().setSize(500,500);
         this.setVisible(true);
     }
     
+    /**
+     * Méthode qui permet de remplir la JComboBox avec les
+     * différentes catégories en fonction du type de personne
+     */
     public void remplirComboBox(){
         if(this.donnees.equals("locataire")){
             tri.removeAllItems();
@@ -435,6 +490,10 @@ public class Vue_Ajout_Listes extends JFrame {
         }
     }
     
+    /**
+     * Méthode qui retourne la liste de diffusion modifiée
+     * @return la liste modifiée
+     */
     public ListeDeDiffusion getObjetModifie() {
         return new ListeDeDiffusion(this.listeDiffusion.getId(), this.nom.getText(), null);
     }

@@ -6,6 +6,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+/**
+ * Classe dérivée de JFrame qui décrit la vue permettant de se connecter
+ * @author Benjamin Mathilde
+ */
 public class Vue_Connexion extends JFrame {
 
     private JPanel panneau = new JPanel();
@@ -25,6 +29,9 @@ public class Vue_Connexion extends JFrame {
     
     private JButton connexion = new JButton("Connexion");
     
+    /**
+     * Modèle de la vue
+     */
     public Vue_Connexion() {
         super("Se Connecter");
         
@@ -58,29 +65,48 @@ public class Vue_Connexion extends JFrame {
         this.pack();
     }
 
+    /**
+     *
+     * @return le JTextField du login
+     */
     public JTextField getLogin() {
         return login;
     }
 
+    /**
+     *
+     * @return JPasswordField
+     */
     public JPasswordField getMotDePasse() {
         return motDePasse;
     }
 
+    /**
+     *
+     * @return le login
+     */
     public String getLoginTexte() {
         return login.getText();
     }
 
+    /**
+     *
+     * @return le mot de passe
+     */
     public String getMotDePasseTexte() {
         return new String(motDePasse.getPassword());
     }
 
+    /**
+     *
+     * @return le JLabel pouvant afficher un message d'erreur
+     */
     public JLabel getMessageErreur() {
         return messageErreur;
     }
 
     /**
-     * Ajouter un écouteur à un bouton désigné par son nom
-     *
+     * Méthode qui permet d'ajouter un écouteur à un bouton désigné par son nom
      * @param nomBouton le nom du bouton sur lequel l'écouteur doit être ajouté
      * @param listener l'écouteur à ajouter
      */
@@ -96,6 +122,10 @@ public class Vue_Connexion extends JFrame {
         }
     }
     
+    /**
+     * Méthode qui vérifie que les champs sont bien saisis
+     * @throws EmptyFieldException : exception levée si un champs n'est pas saisi
+     */
     public void verifierChamps() throws EmptyFieldException{
         if(this.login.getText().equals("")){
             throw new EmptyFieldException("un login");
@@ -105,6 +135,9 @@ public class Vue_Connexion extends JFrame {
         }
     }
 
+    /**
+     * Méthode qui permet de fermer la fenêtre
+     */
     public void quitter() {
         this.dispose();
     }

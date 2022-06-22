@@ -1,128 +1,89 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vues;
-import javax.swing.*;
 
+import javax.swing.*;
 import Objets_Locatis.PieChart;
 import java.awt.BorderLayout;
-import static java.awt.BorderLayout.CENTER;
-import java.awt.Component;
 import java.awt.GridLayout;
-import java.awt.ScrollPane;
 import java.awt.event.ActionListener;
-import javax.swing.*;
-//import org.jfree.util.*;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.general.DefaultPieDataset;
 
+/**
+ * Classe dérivée de JFrame qui décrit la vue permettant d'afficher les statistiques
+ * @author Benjamin Mathilde
+ */
 public class Vue_Statistique extends JFrame{
+    
     private JPanel panneau = new JPanel();
     private JPanel haut = new JPanel();
-    private JLabel titre = new JLabel("Statistique");
     private JPanel centre = new JPanel();
     private JPanel bas = new JPanel();
+    
+    private JLabel titre = new JLabel("Statistique");
+    
     private PieChart graphiqueParTrancheAge = new PieChart("Tranche d'âge");
     private PieChart graphiqueParLogementOccuper = new PieChart("Logement occupé");
     private PieChart graphiqueDesCampagnesTerminer = new PieChart("Campagne en cours");
+    
     private JButton retour = new JButton("Retour");
     
+    /**
+     * Constructeur de la vue
+     */
     public Vue_Statistique(){
+        
+        super("Statistiques");
         
         panneau.setLayout(new BorderLayout());
         panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
         haut.add(titre);
-        
         centre.setLayout(new GridLayout(1, 3));
-        
         bas.add(retour);
-        retour.setText("Retour");
         
         panneau.add(this.haut, BorderLayout.NORTH);
         panneau.add(this.centre, BorderLayout.CENTER);
         panneau.add(this.bas, BorderLayout.SOUTH);
         
         this.add(panneau);
-        
         this.pack();
     }
 
-    public JPanel getPanneau() {
-        return panneau;
-    }
-
-    public void setPanneau(JPanel panneau) {
-        this.panneau = panneau;
-    }
-
-    public JPanel getHaut() {
-        return haut;
-    }
-
-    public void setHaut(JPanel haut) {
-        this.haut = haut;
-    }
-
-    public JLabel getTitre() {
-        return titre;
-    }
-
-    public void setTitre(JLabel titre) {
-        this.titre = titre;
-    }
-
+    /**
+     *
+     * @return le JPanel au centre
+     */
     public JPanel getCentre() {
         return centre;
     }
 
-    public void setCentre(JPanel centre) {
-        this.centre = centre;
-    }
-
-    public JPanel getBas() {
-        return bas;
-    }
-
-    public void setBas(JPanel bas) {
-        this.bas = bas;
-    }
-
+    /**
+     *
+     * @return le PieChart de l'âge
+     */
     public PieChart getGraphiqueParTrancheAge() {
         return graphiqueParTrancheAge;
     }
 
-    public void setGraphiqueParTrancheAge(PieChart graphiqueParTrancheAge) {
-        this.graphiqueParTrancheAge = graphiqueParTrancheAge;
-    }
-
+    /**
+     *
+     * @return le PieChart des logements
+     */
     public PieChart getGraphiqueParLogementOccuper() {
         return graphiqueParLogementOccuper;
     }
 
-    public void setGraphiqueParLogementOccuper(PieChart graphiqueParLogementOccuper) {
-        this.graphiqueParLogementOccuper = graphiqueParLogementOccuper;
-    }
-
+    /**
+     *
+     * @return le PieChart des campagnes
+     */
     public PieChart getGraphiqueDesCampagnesTerminer() {
         return graphiqueDesCampagnesTerminer;
     }
-
-    public void setGraphiqueDesCampagnesTerminer(PieChart graphiqueDesCampagnesTerminer) {
-        this.graphiqueDesCampagnesTerminer = graphiqueDesCampagnesTerminer;
-    }
-
-    public JButton getRetour() {
-        return retour;
-    }
-
-    public void setRetour(JButton retour) {
-        this.retour = retour;
-    }
     
+    /**
+     * Méthode qui permet d'ajouter des écouteurs à un bouton
+     * @param nomBouton : nom du bouton
+     * @param listener : écouteur
+     */
     public void ajouterEcouteur(String nomBouton, ActionListener listener) {
         JButton bouton;
         bouton = switch (nomBouton.toUpperCase()) {
@@ -136,8 +97,10 @@ public class Vue_Statistique extends JFrame{
         }
     }
     
+    /**
+     * Méthode qui permet de fermer la fenêtre
+     */
     public void quitter() {
-        //System.exit(0);
         this.dispose();
     }
 }

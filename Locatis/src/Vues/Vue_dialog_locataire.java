@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vues;
 
 import Objets_Locatis.Utilisateur;
@@ -13,9 +8,10 @@ import javax.swing.*;
 
 /**
  *
- * @author benja
+ * @author mathi
  */
 public class Vue_dialog_locataire extends JDialog{
+    
     JPanel panneau = new JPanel();
     JPanel haut = new JPanel();
     JPanel centre = new JPanel();
@@ -26,85 +22,44 @@ public class Vue_dialog_locataire extends JDialog{
     
     JButton retour = new JButton("Retour");
     
+    /**
+     *
+     * @param user
+     */
     public Vue_dialog_locataire(Utilisateur user){
+        
         panneau.setLayout(new BorderLayout());
         panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
         haut.add(titre);
         
         centre.setLayout(new GridLayout(1, 1));
-        
         centre.add(label);
+        label.setEditable(false);
         
         bas.add(retour);
-        retour.setText("Retour");
         
         panneau.add(this.haut, BorderLayout.NORTH);
         panneau.add(this.centre, BorderLayout.CENTER);
         panneau.add(this.bas, BorderLayout.SOUTH);
         
-        label.setEditable(false);
         this.add(panneau);
-        
         this.pack();
     }
 
-    public JPanel getPanneau() {
-        return panneau;
-    }
-
-    public void setPanneau(JPanel panneau) {
-        this.panneau = panneau;
-    }
-
-    public JPanel getHaut() {
-        return haut;
-    }
-
-    public void setHaut(JPanel haut) {
-        this.haut = haut;
-    }
-
-    public JPanel getCentre() {
-        return centre;
-    }
-
-    public void setCentre(JPanel centre) {
-        this.centre = centre;
-    }
-
-    public JPanel getBas() {
-        return bas;
-    }
-
-    public void setBas(JPanel bas) {
-        this.bas = bas;
-    }
-
+    /**
+     *
+     * @return
+     */
     public JTextArea getLabel() {
         return label;
     }
-
-    public void setLabel(JTextArea label) {
-        this.label = label;
-    }
-
-    public JLabel getTitre() {
-        return titre;
-    }
-
-    public void setTitre(JLabel titre) {
-        this.titre = titre;
-    }
-
-    public JButton getRetour() {
-        return retour;
-    }
-
-    public void setRetour(JButton retour) {
-        this.retour = retour;
-    }
     
+    /**
+     *
+     * @param nomBouton
+     * @param listener
+     */
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
         JButton bouton;
         bouton = switch (nomBouton.toUpperCase()) {
@@ -118,8 +73,10 @@ public class Vue_dialog_locataire extends JDialog{
         }
     }
     
+    /**
+     *
+     */
     public void quitter() {
-        //System.exit(0);
         this.dispose();
     }
 }

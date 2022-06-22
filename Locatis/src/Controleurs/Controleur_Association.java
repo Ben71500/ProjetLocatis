@@ -40,10 +40,10 @@ public class Controleur_Association implements ActionListener{
         this.laVue = laVue;
         this.unModele = unModele;
         this.user = user;
-        this.laVue.ajouterEcouteurBouton("Ajouter", this);
-        this.laVue.ajouterEcouteurBouton("Retirer", this);
-        this.laVue.ajouterEcouteurBouton("Retour", this);
-        this.laVue.ajouterEcouteurBouton("listeloca", this);
+        this.laVue.ajouterEcouteur("Ajouter", this);
+        this.laVue.ajouterEcouteur("Retirer", this);
+        this.laVue.ajouterEcouteur("Retour", this);
+        this.laVue.ajouterEcouteur("listeloca", this);
         ArrayList<Locataire> listeLocataire= this.unModele.getListeLocataire();
         for(int i = 0; i < listeLocataire.size(); i++){
             this.laVue.getLocataireList().addItem(listeLocataire.get(i));
