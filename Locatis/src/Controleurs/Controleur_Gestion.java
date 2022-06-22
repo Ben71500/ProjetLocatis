@@ -174,9 +174,7 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
                     if (res == JFileChooser.APPROVE_OPTION) {
                       file = choose.getSelectedFile();
                       System.out.println(file.getAbsolutePath());
-                    }
-                    else
-                    {
+                    }else{
                        break;
                     }
                     try{

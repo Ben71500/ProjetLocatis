@@ -1,13 +1,9 @@
 package DAOTest;
 
-import DAO.Campagne_DAO;
 import DAO.ConnectionBDD;
 import DAO.Connexion;
 import DAO.ListeDeDiffusion_DAO;
-import Objets_Locatis.Campagne;
 import Objets_Locatis.ListeDeDiffusion;
-import Objets_Locatis.MyDate;
-import Objets_Locatis.MyTime;
 import Objets_Locatis.Personne;
 import Objets_Locatis.Utilisateur;
 import java.sql.Connection;

@@ -98,9 +98,7 @@ public class Controleur_Association implements ActionListener{
                         else{
                             throw new EmptyFieldException("Logement");
                         }
-                    }catch(EmptyFieldException ex){
-                        
-                    }
+                    }catch(EmptyFieldException ex){}
                 }
                 case "RETOUR" -> {
                     this.laVue.quitter();
@@ -130,9 +128,7 @@ public class Controleur_Association implements ActionListener{
                         else{
                             throw new EmptyFieldException("Logement");
                         }
-                    }catch(EmptyFieldException ex){
-                        
-                    }
+                    }catch(EmptyFieldException ex){}
                 }
             }
         }

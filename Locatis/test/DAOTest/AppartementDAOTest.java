@@ -40,7 +40,7 @@ public class AppartementDAOTest {
     }
     
     /**
-     * Test de la methode insertById de l'objet Locataire_DAO
+     * Test de la methode insertById de l'objet Appartement_DAO
      * @throws SQLException 
      */
     @Test(timeout=1000)
@@ -66,7 +66,7 @@ public class AppartementDAOTest {
     }
     
     /**
-     * Test de la methode remove de l'objet Locataire_DAO
+     * Test de la methode remove de l'objet Appartement_DAO
      * @throws SQLException 
      */
     @Test(timeout=1000)

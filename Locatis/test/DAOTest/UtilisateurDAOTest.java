@@ -1,16 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAOTest;
 
 import DAO.ConnectionBDD;
 import DAO.Connexion;
-import DAO.Locataire_DAO;
 import DAO.Utilisateurs_DAO;
-import Objets_Locatis.Locataire;
-import Objets_Locatis.MyDate;
 import Objets_Locatis.Utilisateur;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -48,7 +40,7 @@ public class UtilisateurDAOTest {
     }
 
     /**
-     * Test de la methode insertById de l'objet Locataire_DAO
+     * Test de la methode insertById de l'objet Utilisateur_DAO
      * @throws SQLException 
      */
     @Test (timeout=1000)
