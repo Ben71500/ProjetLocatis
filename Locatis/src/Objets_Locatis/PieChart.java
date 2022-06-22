@@ -83,11 +83,17 @@ public class PieChart extends ApplicationFrame {
                   total = 1;
               }
               value = campagne.getFinishCampagne();
-              dataset.setValue( "Finis" ,(value/total)*100);
+              if(value !=0){
+                dataset.setValue( "Finis" ,(value/total)*100);
+              }
               value = campagne.getNowCampagne();
-              dataset.setValue( "En Cours" , (value/total)*100);
+              if(value !=0){
+                dataset.setValue( "En Cours" , (value/total)*100);
+              }
               value = campagne.getNotBeginCampagne();
-              dataset.setValue( "Non commencé" , (value/total)*100);
+              if(value !=0){
+                dataset.setValue( "Non commencé" , (value/total)*100);
+              }
             }
           case "logement" -> {
               Appartement_DAO appart = new Appartement_DAO(connBdd);
@@ -96,9 +102,13 @@ public class PieChart extends ApplicationFrame {
                   total = 1;
               }
               value = appart.getLogementFull();
-              dataset.setValue( "Occupé" , (value/total)*100);
+              if(value !=0){
+                dataset.setValue( "Occupé" , (value/total)*100);
+              }
               value = appart.getLogementEmpty();
-              dataset.setValue( "Vide" , (value/total)*100);
+              if(value !=0){
+                dataset.setValue( "Vide" , (value/total)*100);
+              }
             }
       }
       return dataset;

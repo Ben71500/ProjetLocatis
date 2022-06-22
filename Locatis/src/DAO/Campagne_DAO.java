@@ -318,7 +318,7 @@ public class Campagne_DAO extends DAO<Campagne>{
     public int getFinishCampagne(){
         try{    
             Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select COUNT(ID_campagne) as nombre from campagne where Date_Fin < NOW()");
+            ResultSet res = statement.executeQuery("Select COUNT(ID_campagne) as nombre from campagne where END = 1 OR Date_Fin < NOW()");
             res.next();
             return res.getInt("nombre");
         }
@@ -335,7 +335,7 @@ public class Campagne_DAO extends DAO<Campagne>{
     public int getNotBeginCampagne(){
         try{    
             Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select COUNT(ID_campagne) as nombre from campagne where Date_Debut < NOW()");
+            ResultSet res = statement.executeQuery("Select COUNT(ID_campagne) as nombre from campagne where Date_Debut > NOW()");
             res.next();
             return res.getInt("nombre");
         }
@@ -353,7 +353,7 @@ public class Campagne_DAO extends DAO<Campagne>{
     public int getNowCampagne(){
         try{    
             Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select COUNT(ID_campagne) as nombre from campagne where Date_Debut > NOW() AND Date_Fin > NOW()");
+            ResultSet res = statement.executeQuery("Select COUNT(ID_campagne) as nombre from campagne where Date_Debut <= NOW() AND Date_Fin > NOW()");
             res.next();
             return res.getInt("nombre");
         }

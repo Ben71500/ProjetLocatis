@@ -43,6 +43,7 @@ public class Vue_dialog_locataire extends JDialog{
         panneau.add(this.centre, BorderLayout.CENTER);
         panneau.add(this.bas, BorderLayout.SOUTH);
         
+        label.setEditable(false);
         this.add(panneau);
         
         this.pack();
