@@ -36,7 +36,6 @@ public class Habiter_DAO{
         try {
             Statement etat = this.connection.createStatement();
             String requeteProc ="Insert into habiter VALUES ('"+ idLocataire + "' , '"+ idBatiment + "' );";
-            System.out.println(requeteProc);
             etat.execute(requeteProc);
             return true;
         } catch (SQLException ex) {

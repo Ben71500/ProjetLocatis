@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 23 mai 2022 à 21:12
+-- Généré le : mer. 22 juin 2022 à 09:43
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -30,31 +30,28 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `campagne`;
 CREATE TABLE IF NOT EXISTS `campagne` (
   `ID_campagne` int(64) NOT NULL AUTO_INCREMENT,
-  `Titre_campagne` varchar(20) NOT NULL,
+  `Titre_campagne` varchar(50) NOT NULL,
   `Date_Debut` date NOT NULL,
   `Date_Fin` date NOT NULL,
   `Heure` time NOT NULL,
-  `frequence` int(10) NOT NULL,
+  `frequence` varchar(20) NOT NULL,
+  `DateProchainMail` date DEFAULT NULL,
+  `End` int(1) NOT NULL,
   `ID_utilisateur` int(20) NOT NULL,
+  `Objet` varchar(100) NOT NULL,
+  `Contenu` varchar(1000) NOT NULL,
   PRIMARY KEY (`ID_campagne`),
   UNIQUE KEY `ID_Campagne_IND` (`ID_campagne`),
   KEY `REF_Campa_Utili_IND` (`ID_utilisateur`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
--- Structure de la table `contient`
+-- Déchargement des données de la table `campagne`
 --
 
-DROP TABLE IF EXISTS `contient`;
-CREATE TABLE IF NOT EXISTS `contient` (
-  `ID_campagne` int(64) NOT NULL,
-  `ID_message` int(60) NOT NULL,
-  PRIMARY KEY (`ID_campagne`,`ID_message`),
-  UNIQUE KEY `ID_CONTIENT_IND` (`ID_campagne`,`ID_message`),
-  KEY `REF_CONTI_Messa_IND` (`ID_message`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `campagne` (`ID_campagne`, `Titre_campagne`, `Date_Debut`, `Date_Fin`, `Heure`, `frequence`, `DateProchainMail`, `End`, `ID_utilisateur`, `Objet`, `Contenu`) VALUES
+(1, 'Fête du 30 juin', '2022-06-22', '2022-06-30', '10:00:00', 'Quotidien', NULL, 0, 0, 'Fête du 30 juin', 'une fête est organisé à Dijon 8 rue de la chapelle\nCordialement'),
+(2, 'Changement horaire Utilisateurs', '2022-06-22', '2022-07-02', '12:00:00', 'Quotidien', NULL, 0, 0, 'Changement horaire Utilisateurs', 'Changement dans les horaires des utilisateurs.\nConsulter le tableau des horaires.\nCordialement.');
 
 -- --------------------------------------------------------
 
@@ -71,6 +68,17 @@ CREATE TABLE IF NOT EXISTS `habiter` (
   KEY `REF_HABIT_Logem_IND` (`ID_batiment`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `habiter`
+--
+
+INSERT INTO `habiter` (`ID_locataire`, `ID_batiment`) VALUES
+(1, 1),
+(3, 1),
+(4, 1),
+(2, 2),
+(5, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -82,19 +90,20 @@ CREATE TABLE IF NOT EXISTS `listediffusion` (
   `ID_listeDiff` int(64) NOT NULL AUTO_INCREMENT,
   `Nom_liste` varchar(20) NOT NULL,
   PRIMARY KEY (`ID_listeDiff`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `listediffusion`
 --
 
 INSERT INTO `listediffusion` (`ID_listeDiff`, `Nom_liste`) VALUES
-(1, 'liste1'),
-(2, 'azerty'),
-(3, 'asc2'),
-(5, 'essai2'),
-(7, 'ouiiiiiiiiiii7'),
-(8, 'user8');
+(1, 'Feminine'),
+(2, 'Masculine'),
+(3, '30 ans et plus'),
+(4, '30 ans et moins'),
+(5, 'Utilisateur 1 et 2'),
+(6, 'Gestionnaire 1, 2, 3'),
+(7, 'Administrateur');
 
 -- --------------------------------------------------------
 
@@ -108,21 +117,23 @@ CREATE TABLE IF NOT EXISTS `locataire` (
   `Nom` varchar(20) NOT NULL,
   `Prenom` varchar(20) NOT NULL,
   `Age` int(3) NOT NULL,
-  `Anciennete` date NOT NULL,
+  `DateDeNaissance` date NOT NULL,
   `Mail` varchar(100) NOT NULL,
   `Telephone` varchar(10) NOT NULL,
   PRIMARY KEY (`ID_locataire`),
   UNIQUE KEY `ID_Locataire_IND` (`ID_locataire`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `locataire`
 --
 
-INSERT INTO `locataire` (`ID_locataire`, `Nom`, `Prenom`, `Age`, `Anciennete`, `Mail`, `Telephone`) VALUES
-(1, 'Bobie', 'Williams', 18, '2022-05-06', 'benjaminrandazzo2@hotmail.fr', '0771773740'),
-(2, 'paul', 'jacques', 85, '2022-05-04', 'pj@gmail.com', '0369874521'),
-(3, 'monsieur', 'prenom', 45, '2019-05-15', 'mp@gmail.com', '0654789321');
+INSERT INTO `locataire` (`ID_locataire`, `Nom`, `Prenom`, `Age`, `DateDeNaissance`, `Mail`, `Telephone`) VALUES
+(1, 'Dupond', 'Yvan', 28, '1994-01-13', 'yvandupont@gmail.com', '0685984571'),
+(2, 'De La Marre', 'Marie', 43, '1979-01-05', 'mariedelamarre@gmail.com', '0745985212'),
+(3, 'Grand', 'Michel', 22, '2000-06-04', 'michellegrand@gmail.com', '0698589698'),
+(4, 'Barn', 'Francesca', 19, '2002-12-05', 'francescabarn@gmail.com', '0741452589'),
+(5, 'Potter', 'Harry', 72, '1950-06-17', 'harrypotter@gmail.com', '0685985785');
 
 -- --------------------------------------------------------
 
@@ -142,13 +153,15 @@ CREATE TABLE IF NOT EXISTS `locataire_liste` (
 
 INSERT INTO `locataire_liste` (`ID_listeDiff`, `ID_locataire`) VALUES
 (1, 2),
-(1, 3),
-(5, 1),
-(5, 2),
-(0, 1),
-(0, 3),
-(7, 1),
-(7, 2);
+(1, 4),
+(2, 1),
+(2, 3),
+(2, 5),
+(3, 2),
+(3, 5),
+(4, 1),
+(4, 3),
+(4, 4);
 
 -- --------------------------------------------------------
 
@@ -159,28 +172,25 @@ INSERT INTO `locataire_liste` (`ID_listeDiff`, `ID_locataire`) VALUES
 DROP TABLE IF EXISTS `logement`;
 CREATE TABLE IF NOT EXISTS `logement` (
   `ID_batiment` int(10) NOT NULL AUTO_INCREMENT,
-  `Adresse` varchar(30) NOT NULL,
+  `NumeroRue` varchar(30) NOT NULL,
+  `NomRue` varchar(30) NOT NULL,
+  `Ville` varchar(30) NOT NULL,
+  `CodePostal` varchar(30) NOT NULL,
   `NumeroAppartement` int(10) DEFAULT NULL,
   `NombreEtage` int(10) DEFAULT NULL,
   PRIMARY KEY (`ID_batiment`),
   UNIQUE KEY `ID_Logement_IND` (`ID_batiment`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
--- Structure de la table `message`
+-- Déchargement des données de la table `logement`
 --
 
-DROP TABLE IF EXISTS `message`;
-CREATE TABLE IF NOT EXISTS `message` (
-  `ID_message` int(60) NOT NULL AUTO_INCREMENT,
-  `Objet` varchar(20) NOT NULL,
-  `Contenu` varchar(64) NOT NULL,
-  `Date_Ecriture` date NOT NULL,
-  PRIMARY KEY (`ID_message`),
-  UNIQUE KEY `ID_Message_IND` (`ID_message`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `logement` (`ID_batiment`, `NumeroRue`, `NomRue`, `Ville`, `CodePostal`, `NumeroAppartement`, `NombreEtage`) VALUES
+(1, '15', 'Place de la republique', 'Dijon', '21000', 2, 1),
+(2, '98', 'Rue des lezars', 'Dijon', '21000', 1, 3),
+(3, '21B', 'Rue de la pouille', 'Dijon', '21000', NULL, NULL),
+(4, '24', 'Rue des ancres', 'Dijon', '21000', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -191,11 +201,20 @@ CREATE TABLE IF NOT EXISTS `message` (
 DROP TABLE IF EXISTS `recevoir`;
 CREATE TABLE IF NOT EXISTS `recevoir` (
   `ID_campagne` int(64) NOT NULL,
-  `ID_locataire` int(40) NOT NULL,
-  PRIMARY KEY (`ID_campagne`,`ID_locataire`),
-  UNIQUE KEY `ID_RECEVOIR_IND` (`ID_campagne`,`ID_locataire`),
-  KEY `REF_RECEV_Locat_IND` (`ID_locataire`)
+  `ID_listeDiff` int(40) NOT NULL,
+  PRIMARY KEY (`ID_campagne`,`ID_listeDiff`),
+  UNIQUE KEY `ID_RECEVOIR_IND` (`ID_campagne`,`ID_listeDiff`),
+  KEY `REF_RECEV_Locat_IND` (`ID_listeDiff`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `recevoir`
+--
+
+INSERT INTO `recevoir` (`ID_campagne`, `ID_listeDiff`) VALUES
+(1, 4),
+(2, 5),
+(2, 6);
 
 -- --------------------------------------------------------
 
@@ -206,23 +225,27 @@ CREATE TABLE IF NOT EXISTS `recevoir` (
 DROP TABLE IF EXISTS `utilisateur`;
 CREATE TABLE IF NOT EXISTS `utilisateur` (
   `ID_utilisateur` int(20) NOT NULL AUTO_INCREMENT,
-  `login` varchar(15) NOT NULL,
-  `Mdp` varchar(10) NOT NULL,
+  `login` varchar(50) NOT NULL,
+  `Mdp` varchar(50) NOT NULL,
   `CAT` char(5) NOT NULL,
   `Email` varchar(50) NOT NULL,
   `Password` varchar(50) NOT NULL,
   PRIMARY KEY (`ID_utilisateur`),
   UNIQUE KEY `ID_Utilisateur_IND` (`ID_utilisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `utilisateur`
 --
 
 INSERT INTO `utilisateur` (`ID_utilisateur`, `login`, `Mdp`, `CAT`, `Email`, `Password`) VALUES
-(1, 'ben', 'ben', 'adm', '', ''),
-(2, 'Benjamin', 'ben', 'adm', 'theluffydu30@gmail.com', 'bvogzfkcpurcwnnc'),
-(3, 'admin', 'admin', 'adm', 'test', 'test');
+(0, 'Benjamin', 'ben', 'adm', 'theluffydu30@gmail.com', 'bvogzfkcpurcwnnc'),
+(1, 'UtilisateurDemo1', 'uti1', 'uti1', 'utilisateurdemo1@gmail.com', 'uti1'),
+(2, 'UtilisateurDemo2', 'uti2', 'uti2', 'utilisateurdemo2@gmail.com', 'uti2'),
+(3, 'GestionnaireDemo1', 'ges1', 'ges1', 'gestionnairedemo1@gmail.com', 'ges1'),
+(4, 'GestionnaireDemo2', 'ges2', 'ges2', 'gestionnairedemo2@gmail.com', 'ges2'),
+(5, 'GestionnaireDemo3', 'ges3', 'ges3', 'gestionnairedemo3@gmail.com', 'ges3'),
+(6, 'AdministrateurDemo', 'adm', 'adm', 'administrateurdemo@gmail.com', 'adm');
 
 -- --------------------------------------------------------
 
@@ -241,10 +264,13 @@ CREATE TABLE IF NOT EXISTS `utilisateur_liste` (
 --
 
 INSERT INTO `utilisateur_liste` (`ID_listeDiff`, `ID_utilisateur`) VALUES
-(0, 1),
-(0, 2),
-(0, 3),
-(8, 1);
+(5, 2),
+(5, 1),
+(6, 5),
+(6, 4),
+(6, 3),
+(7, 0),
+(7, 6);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
