@@ -12,6 +12,10 @@ import java.sql.SQLException;
 import org.junit.After;
 import org.junit.Before;
 
+/**
+ * Classe test de l'objet Locataire_DAO
+ * @author Benjamin Mathilde
+ */
 public class LocataireDAOTest {
     
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
@@ -19,7 +23,7 @@ public class LocataireDAOTest {
     private Locataire_DAO daoTest = new Locataire_DAO(connBdd);
     
     /**
-     * 
+     * Méthode qui désactive l'autocommit
      * @throws SQLException 
      */
     @Before
@@ -73,8 +77,8 @@ public class LocataireDAOTest {
     }
     
     /**
-     * 
-     * @throws SQLException 
+     * Méthode qui rollback la requête
+     * @throws SQLException
      */
     @After
     public void tearDown() throws SQLException {

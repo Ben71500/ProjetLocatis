@@ -20,8 +20,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
- * @author benja
+ * Classe de Test de l'objet Utilisateur_DAO
+ * @author Benjamin Mathilde
  */
 public class UtilisateurDAOTest {
     
@@ -30,7 +30,7 @@ public class UtilisateurDAOTest {
     private Utilisateurs_DAO daoTest = new Utilisateurs_DAO(connBdd);
     
     /**
-     * 
+     * Méthode qui désactive l'autocommit
      * @throws SQLException 
      */
     @Before
@@ -84,8 +84,8 @@ public class UtilisateurDAOTest {
     }
     
     /**
-     * 
-     * @throws SQLException 
+     * Méthode qui rollback la requête
+     * @throws SQLException
      */
     @After
     public void tearDown() throws SQLException {

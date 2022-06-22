@@ -18,12 +18,19 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Classe test de l'objet ListeDeDiffusion_DAO
+ * @author Benjamin Mathilde
+ */
 public class ListeDeDiffusionDAOTest {
     
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
     private ListeDeDiffusion_DAO daoTest = new ListeDeDiffusion_DAO(connBdd);
     private ListeDeDiffusion listeTest;
     
+    /**
+     * Constructeur de l'objet ListeDeDiffusionDAOTest
+     */
     public ListeDeDiffusionDAOTest(){
         ArrayList<Personne> listePersonnes = new ArrayList<>();
         Utilisateur uti =new Utilisateur(1,"loginTest","mdpTest","adm","email","password");
@@ -31,6 +38,10 @@ public class ListeDeDiffusionDAOTest {
         this.listeTest = new ListeDeDiffusion(0,"nomListe", listePersonnes);
     }
     
+    /**
+     * Méthode qui désactive l'autocommit
+     * @throws SQLException
+     */
     @Before
     public void setUp() throws SQLException{
         connBdd.setAutoCommit(false);
@@ -83,6 +94,10 @@ public class ListeDeDiffusionDAOTest {
         Assert.assertEquals(true, daoTest.delete(daoTest.selectById(idListeTest)));
     }
     
+    /**
+     * Méthode qui rollback la requête
+     * @throws SQLException
+     */
     @After
     public void tearDown() throws SQLException {
         connBdd.rollback();
