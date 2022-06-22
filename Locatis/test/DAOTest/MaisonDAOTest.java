@@ -19,14 +19,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
- * @author benja
+ * Classe test de l'objet Maison_DAO
+ * @author Benjamin Mathilde
  */
 public class MaisonDAOTest {
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
     private Maison maisonTest = new Maison("12", "rue des Test", "TestVille", "71100");
     Maison_DAO daoTest = new Maison_DAO(connBdd);
     
+    /**
+     * Méthode qui désactive l'autocommit
+     * @throws SQLException
+     */
     @Before
     public void setUp() throws SQLException{
         connBdd.setAutoCommit(false);
@@ -76,6 +80,10 @@ public class MaisonDAOTest {
         Assert.assertEquals(true, daoTest.delete(daoTest.selectById(idLogementTest)));
     }
     
+    /**
+     * Méthode qui rollback la requête
+     * @throws SQLException
+     */
     @After
     public void tearDown() throws SQLException {
         connBdd.rollback();
