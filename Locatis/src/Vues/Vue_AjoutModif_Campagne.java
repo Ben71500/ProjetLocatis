@@ -247,23 +247,17 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     }
     
     @Override
-    public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
-        JButton bouton;
-        bouton = switch (nomBouton.toUpperCase()) {
+    public void ajouterEcouteurBouton(String nomComposant, ActionListener listener) {        
+        switch (nomComposant.toUpperCase()) {
             case "AJOUTER" ->
-                bouton = ajouter;
+                ajouter.addActionListener(listener);
             case "MODIFIER" ->
-                bouton = modifier;
+                modifier.addActionListener(listener);
             case "RETOUR" ->
-                bouton = retour;
-            default ->
-                null;
-        };
-        if (bouton != null) {
-            bouton.addActionListener(listener);
+                retour.addActionListener(listener);
+            case "FREQUENCE" ->
+                frequence.addActionListener(listener);
         }
-        if(nomBouton.toUpperCase().equals("FREQUENCE"))
-            this.frequence.addActionListener(listener);
     }
     
     @Override

@@ -6,6 +6,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+/**
+ * Classe dérivée de JFrame qui décrit la vue permettant d'afficher le menu principal
+ * @author Benjamin Mathilde
+ */
 public class Vue_Menu extends JFrame {
 
     private JPanel panneau = new JPanel();
@@ -28,6 +32,10 @@ public class Vue_Menu extends JFrame {
     
     private Utilisateur userConnecte;
 
+    /**
+     * Constructeur de la vue
+     * @param user : l'utilisateur qui est connecté
+     */
     public Vue_Menu(Utilisateur user) {
         super("Menu Principal");
         this.userConnecte = user;
@@ -60,10 +68,9 @@ public class Vue_Menu extends JFrame {
     }
 
     /**
-     * Ajouter un écouteur à un bouton désigné par son nom
-     *
-     * @param nomBouton le nom du bouton sur lequel l'écouteur doit être ajouté
-     * @param listener l'écouteur à ajouter
+     * Méthode qui permet d'ajouter des écouteurs à un bouton
+     * @param nomBouton : nom du bouton
+     * @param listener : écouteur
      */
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
         JButton bouton;
@@ -94,21 +101,36 @@ public class Vue_Menu extends JFrame {
         }
     }
 
+    /**
+     * Méthode qui permet de fermer la fenêtre
+     */
     public void quitter() {
         this.dispose();
     }
     
+    /**
+     * Méthode qui ajoute les boutons en fonction des droits
+     * des utilisateurs dont la catégorie est "Utilisateur 1"
+     */
     public void menuUtilisateurs1(){
         centre.setLayout(new GridLayout(1,1));
         centre.add(this.statistiques);
     }
     
+    /**
+     * Méthode qui ajoute les boutons en fonction des droits
+     * des utilisateurs dont la catégorie est "Utilisateur 2"
+     */
     public void menuUtilisateurs2(){
         centre.setLayout(new GridLayout(2,1));
         centre.add(this.gestionCampagnes);
         centre.add(this.statistiques);
     }
     
+    /**
+     * Méthode qui ajoute les boutons en fonction des droits
+     * des utilisateurs dont la catégorie est "Gestionnaire" (1,2 et 3)
+     */
     public void menuGestionnaires(){
         centre.setLayout(new GridLayout(4,1));
         centre.add(this.gestionCampagnes);
@@ -117,6 +139,10 @@ public class Vue_Menu extends JFrame {
         centre.add(this.statistiques);
     }
     
+    /**
+     * Méthode qui ajoute les boutons en fonction des droits
+     * des utilisateurs dont la catégorie est "Administrateur"
+     */
     public void menuAdministrateurs(){
         centre.setLayout(new GridLayout(7,1));
         centre.add(this.gestionLocataires);

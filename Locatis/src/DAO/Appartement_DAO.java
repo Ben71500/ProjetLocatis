@@ -1,8 +1,6 @@
 package DAO;
 
-import DAO.DAO;
 import Objets_Locatis.Appartement;
-import Objets_Locatis.Locataire;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class permettant de se connecter à la base de donnée pour la table Appartement et d'effectuer divers action sur la table
+ * Class permettant de se connecter à la base de donnée pour la table Appartement et d'effectuer divers actions sur la table
  * @author Benjamin Mathilde
  */
 public class Appartement_DAO extends DAO<Appartement>{
@@ -25,7 +23,7 @@ public class Appartement_DAO extends DAO<Appartement>{
     }
 
     /**
-     * Méthode qui ajoute un appartement dans la base de donnée
+     * Méthode qui ajoute un appartement dans la base de données
      * @exception SQLException si la requête n'aboutie pas retourne false
      * @param obj
      * @return boolean
@@ -44,7 +42,7 @@ public class Appartement_DAO extends DAO<Appartement>{
     }
     
     /**
-     * Méthode qui supprime un appartement de la base de donnée
+     * Méthode qui supprime un appartement de la base de données
      * @exception SQLException si la requête n'aboutie pas retourne false
      * @param obj
      * @return boolean
@@ -63,7 +61,7 @@ public class Appartement_DAO extends DAO<Appartement>{
     }
     
     /**
-     * Méthode qui modifie un appartement de la base de donnée
+     * Méthode qui modifie un appartement de la base de données
      * @exception SQLException si la requête n'aboutie pas retourne false
      * @param obj
      * @return boolean
@@ -82,7 +80,7 @@ public class Appartement_DAO extends DAO<Appartement>{
     }
     
     /**
-     * Méthode qui récupére un appartement par sont id dans la base de donnée
+     * Méthode qui récupére un appartement par son id dans la base de données
      * @exception SQLException si la requête n'aboutie pas retourne null
      * @param id
      * @return Appartement
@@ -108,7 +106,7 @@ public class Appartement_DAO extends DAO<Appartement>{
     }
 
     /**
-     * Méthode qui récupére un appartement par le dernier id insérer dans la base de donnée
+     * Méthode qui récupére un appartement par le dernier id inséré dans la base de données
      * @exception SQLException si la requête n'aboutie pas retourne 0
      * @return int
      */
@@ -125,7 +123,7 @@ public class Appartement_DAO extends DAO<Appartement>{
     }
 
     /**
-     * Méthode qui récupére un appartement par sont adresse dans la base de donnée
+     * Méthode qui récupére un appartement par son adresse dans la base de données
      * @deprecated
      * @exception SQLException si la requête n'aboutie pas retourne null
      * @param adresse
@@ -152,8 +150,8 @@ public class Appartement_DAO extends DAO<Appartement>{
     }
 
     /**
-     * Méthode qui récupére la totalité des appartements dans une List d'appartement
-     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Appartement incrémenter
+     * Méthode qui récupére la totalité des appartements dans une List d'appartements
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Appartement incrémentée
      * @return List<Appartement>
      */
     @Override
@@ -181,7 +179,7 @@ public class Appartement_DAO extends DAO<Appartement>{
     }
     
     /**
-     * Méthode qui récupére les logements vide dans la base de donnée
+     * Méthode qui récupére les logements vides dans la base de données
      * @exception SQLException si la requête n'aboutie pas retourne -1
      * @return int
      */
@@ -198,7 +196,7 @@ public class Appartement_DAO extends DAO<Appartement>{
     }
     
     /**
-     * Méthode qui récupére les logements occupés de la base de donnée
+     * Méthode qui récupére les logements occupés de la base de données
      * @exception SQLException si la requête n'aboutie pas retourne -1
      * @return int
      */
@@ -215,7 +213,7 @@ public class Appartement_DAO extends DAO<Appartement>{
     }
     
     /**
-     * Méthode qui récupére le nombre total de logement de la base de donnée
+     * Méthode qui récupére le nombre total de logements de la base de données
      * @exception SQLException si la requête n'aboutie pas retourne -1
      * @return int
      */
@@ -232,7 +230,7 @@ public class Appartement_DAO extends DAO<Appartement>{
     }
     
     /**
-     * Méthode qui supprime les logements de la base de donnée
+     * Méthode qui supprime les logements de la base de données
      * @exception SQLException si la requête n'aboutie pas retourne false
      * @param obj
      * @return boolean

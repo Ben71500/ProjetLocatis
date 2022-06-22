@@ -315,12 +315,13 @@ public class Vue_Ajout_Listes extends JFrame {
      */
     public void definirTableau(Object[][] donnees, String[] entetes) {
         this.tableau = new DefaultTableModel(donnees, entetes){
-            //permet de faire en sorte qu'on ne puisse pas modifier le contenu de la JTable
+            //permet de faire en sorte qu'on ne puisse pas modifier le contenu de la JTable sauf la colonne des cases à cocher
             @Override
             public boolean isCellEditable(int row, int column) {
                 return column==0;
             }
         };
+        //désactivation du tri des colonnes
         sort = new TableRowSorter<>(this.tableau);
         for(int i=0;i<entetes.length;i++)
             sort.setSortable(i, false);
