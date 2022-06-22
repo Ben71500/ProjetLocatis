@@ -9,6 +9,10 @@ import javax.swing.*;
 import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
 import javax.swing.table.*;
 
+/**
+ * Classe de l'objet Vue_Gestion, l'objet fait l'affichage de la gestion des locataires, utilisateurs, maison, appartement, campagnes et liste de diffusion
+ * @author Benjamin Mathilde
+ */
 public class Vue_Gestion extends JFrame {
 
     private JPanel panneau = new JPanel();
@@ -40,6 +44,11 @@ public class Vue_Gestion extends JFrame {
     private String donnees;
     private Utilisateur utilisateur;
 
+    /**
+     * Constructeur de l'objet Vue_Gestion
+     * @param lesDonnees
+     * @param user
+     */
     public Vue_Gestion(String lesDonnees, Utilisateur user) {
         super("Gestion des "+lesDonnees+"s");
         this.donnees = lesDonnees;
@@ -99,47 +108,91 @@ public class Vue_Gestion extends JFrame {
         this.pack();
     }
 
+    /**
+     * 
+     * @param titre
+     */
     public void setTitre(String titre) {
         this.titre.setText(titre);
     }
 
+    /**
+     *
+     * @param donnees
+     */
     public void setDonnees(String donnees) {
         this.donnees = donnees;
     }
 
-    
+    /**
+     *
+     * @return String
+     */
     public String getDonnees() {
         return donnees;
     }
     
+    /**
+     *
+     * @return DefaultTableModel
+     */
     public DefaultTableModel getTableau() {
         return tableau;
     }
     
+    /**
+     *
+     * @return int
+     */
     public int getLigne(){
         return this.table.getSelectedRow();
     }
     
+    /**
+     *
+     * @return JRadioButton
+     */
     public JRadioButton getButtonRadioAppart(){
         return buttonRadioAppart;
     }
     
+    /**
+     *
+     * @return JRadioButton
+     */
     public JRadioButton getButtonRadioMaison(){
         return buttonRadioMaison;
     }
     
+    /**
+     *
+     * @return JTextField
+     */
     public JTextField getRecherche(){
         return this.recherche;
     }
     
+    /**
+     *
+     * @return TableRowSorter<TableModel>
+     */
     public TableRowSorter<TableModel> getSort(){
         return this.sort;
     }
 
+    /**
+     *
+     * @return JTable
+     */
     public JTable getTable() {
         return table;
     }
 
+    /**
+     * Méthode qui permet de créer un nouveau tableau de personnes
+     * @param donnees : nouvelles données
+     * @param entetes : tableau des entetes
+     */
     public void definirTableau(String[][] donnees, String[] entetes) {
         
         this.tableau = new DefaultTableModel(donnees, entetes)
@@ -158,6 +211,11 @@ public class Vue_Gestion extends JFrame {
         centre.add(new JScrollPane(this.table), BorderLayout.CENTER);
     }
     
+    /**
+     * Méthode qui permet d'effacer le tableau et d'en ajouter un nouveau
+     * @param donnees : nouvelles données
+     * @param entetes : tableau des entetes
+     */
     public void changerTableau(String[][] donnees, String[] entetes){
         centre.removeAll();
         centre.setLayout(new BorderLayout());
@@ -167,9 +225,8 @@ public class Vue_Gestion extends JFrame {
     }
 
     /**
-     * Ajouter un écouteur à un bouton désigné par son nom
-     *
-     * @param nomBouton le nom du bouton sur lequel l'écouteur doit être ajouté
+     * Méthode qui permet d'ajouter un écouteur à un composant désigné par son nom
+     * @param nomComposant le nom du composant sur lequel l'écouteur doit être ajouté
      * @param listener l'écouteur à ajouter
      */
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
@@ -207,10 +264,17 @@ public class Vue_Gestion extends JFrame {
         }   
     }
 
+    /**
+     * Méthode qui permet de fermer la fenêtre
+     */
     public void quitter() {
         this.dispose();
     }
     
+    /**
+     * Méthode qui permet de vérifier que tous les champs sont bien saisis
+     * @throws EmptyFieldException :  l'exception est lancée si aucun nom de liste n'est saisi
+     */
     public void verifierSelection() throws PasDeLignesSelectionneesException{
         if(this.table.getSelectedRowCount()==0){
             if(this.donnees.equals("campagne"))
