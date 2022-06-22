@@ -11,8 +11,8 @@ import org.junit.Test;
 import org.junit.Assert;
 
 /**
- *
- * @author benja
+ * Classe test de l'objet Locataire
+ * @author Benjamin Mathilde
  */
 public class LocataireTest {
     
