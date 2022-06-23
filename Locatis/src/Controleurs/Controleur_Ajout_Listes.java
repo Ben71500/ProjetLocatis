@@ -7,6 +7,8 @@ import Objets_Locatis.Utilisateur;
 import Exceptions.EmptyFieldException;
 import Exceptions.PasDeCaseCocheeException;
 import Popups.PopupInformation;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -160,7 +162,10 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
                             public void run(){
                                 Controleur_Gestion controleur = new Controleur_Gestion(userConnecte, "liste");               
                                 controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                                controleur.getVue().setSize(500,500);
+                                Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+                                int height = 800;
+                                int width = 600;
+                                controleur.getVue().setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
                                 controleur.getVue().setVisible(true);
                             }
                         });
@@ -184,7 +189,10 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
                         public void run(){
                             Controleur_Gestion controleur = new Controleur_Gestion(userConnecte, "liste");                
                             controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                            controleur.getVue().setSize(500,500);
+                            Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+                            int height = 600;
+                            int width = 500;
+                            controleur.getVue().setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
                             controleur.getVue().setVisible(true);
                         }
                     });

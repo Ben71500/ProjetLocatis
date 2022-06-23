@@ -256,7 +256,10 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
     @Override
     public void afficherVue() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setBounds(100, 100, 1000, 700);
+        Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = 800;
+        int width = 800;
+        this.setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
         this.setVisible(true);
     }
 }

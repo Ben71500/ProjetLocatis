@@ -13,6 +13,8 @@ import Objets_Locatis.Maison;
 import Objets_Locatis.Utilisateur;
 import Objets_Locatis.Locataire;
 import Objets_Locatis.MyDate;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -160,7 +162,10 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
                         public void run(){ 
                             Controleur_Menu controleur = new Controleur_Menu(new Vue_Menu(userConnecte), userConnecte);
                             controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                            controleur.getVue().setBounds(100, 100, 350, 300);
+                            Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+                            int height = 600;
+                            int width = 500;
+                            controleur.getVue().setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
                             controleur.getVue().setVisible(true);
                         }
                     });
@@ -264,7 +269,11 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
                 public void run(){
                     Controleur_dialog_locataire controleur = new Controleur_dialog_locataire(loca, userConnecte, new Vue_dialog_locataire(userConnecte), new Modele_dialog_locataire());
                     controleur.getLaVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    controleur.getLaVue().setSize(800,500);
+                    //Centrage de la fenetre sur l'écran
+                    Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+                    int height = 400;
+                    int width = 800;
+                    controleur.getLaVue().setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
                     controleur.getLaVue().setVisible(true);
                 }
             });

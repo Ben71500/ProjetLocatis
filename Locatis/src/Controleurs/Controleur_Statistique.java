@@ -3,6 +3,8 @@ package Controleurs;
 import Vues.Vue_Menu;
 import Vues.Vue_Statistique;
 import Objets_Locatis.Utilisateur;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -57,7 +59,10 @@ public class Controleur_Statistique implements ActionListener{
                     public void run(){
                         Controleur_Menu controleur = new Controleur_Menu(new Vue_Menu(userConnecte), userConnecte);
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        controleur.getVue().setSize(800,500);
+                        Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+                        int height = 600;
+                        int width = 500;
+                        controleur.getVue().setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
                         controleur.getVue().setVisible(true);
                     }
                 });

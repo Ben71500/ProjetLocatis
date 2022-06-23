@@ -7,6 +7,8 @@ import Vues.Vue_Connexion;
 import Vues.Vue_Menu;
 import Vues.Vue_Statistique;
 import Objets_Locatis.Utilisateur;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -63,7 +65,11 @@ public class Controleur_Menu implements ActionListener {
                     public void run(){
                         Controleur_Gestion controleur = new Controleur_Gestion(userConnecte, "liste");
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        controleur.getVue().setSize(800,500);
+                        //Centrage de la fenetre sur l'écran
+                        Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+                        int height = 400;
+                        int width = 800;
+                        controleur.getVue().setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
                         controleur.getVue().setVisible(true);
                     }
                 });
@@ -75,7 +81,11 @@ public class Controleur_Menu implements ActionListener {
                     public void run(){
                         Controleur_Gestion controleur = new Controleur_Gestion(userConnecte, "locataire");
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        controleur.getVue().setSize(800,500);
+                        //Centrage de la fenetre sur l'écran
+                        Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+                        int height = 400;
+                        int width = 800;
+                        controleur.getVue().setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
                         controleur.getVue().setVisible(true);
                     }
                 });
@@ -87,7 +97,11 @@ public class Controleur_Menu implements ActionListener {
                     public void run(){
                         Controleur_Gestion controleur = new Controleur_Gestion(userConnecte, "utilisateur");
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        controleur.getVue().setSize(800,500);
+                        //Centrage de la fenetre sur l'écran
+                        Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+                        int height = 400;
+                        int width = 800;
+                        controleur.getVue().setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
                         controleur.getVue().setVisible(true);
                     }
                 });
@@ -98,7 +112,10 @@ public class Controleur_Menu implements ActionListener {
                     public void run(){
                         Controleur_Gestion controleur = new Controleur_Gestion(userConnecte, "appartement");                
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        controleur.getVue().setSize(800,500);
+                        Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+                        int height = 400;
+                        int width = 800;
+                        controleur.getVue().setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
                         controleur.getVue().setVisible(true);
                     }
                 });
@@ -109,7 +126,10 @@ public class Controleur_Menu implements ActionListener {
                     public void run(){
                         Controleur_Gestion controleur = new Controleur_Gestion(userConnecte, "campagne");                
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        controleur.getVue().setSize(800,500);
+                        Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+                        int height = 400;
+                        int width = 800;
+                        controleur.getVue().setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
                         controleur.getVue().setVisible(true);
                     }
                 });
@@ -120,7 +140,10 @@ public class Controleur_Menu implements ActionListener {
                     public void run(){
                         Controleur_Association controleur = new Controleur_Association(new Vue_Association(), new Modele_Association(), userConnecte);
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        controleur.getVue().setSize(800,500);
+                        Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+                        int height = 400;
+                        int width = 800;
+                        controleur.getVue().setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
                         controleur.getVue().setVisible(true);
                     }
                 });
@@ -131,7 +154,10 @@ public class Controleur_Menu implements ActionListener {
                     public void run(){
                         Controleur_Statistique controleur = new Controleur_Statistique(new Vue_Statistique(), userConnecte);
                         controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        controleur.getVue().setSize(800,500);
+                        Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+                        int height = 500;
+                        int width = 800;
+                        controleur.getVue().setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
                         controleur.getVue().setVisible(true);
                     }
                 });
@@ -140,7 +166,10 @@ public class Controleur_Menu implements ActionListener {
                 laVue.quitter();
                 Controleur_Connexion controleur = new Controleur_Connexion(new Vue_Connexion(), new Modele_Connexion());
                 controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                controleur.getVue().setSize(500,300);
+                Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+                int height = 400;
+                int width = 800;
+                controleur.getVue().setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
                 controleur.getVue().setVisible(true);
             }
             case "QUITTER" -> {

@@ -15,6 +15,7 @@ public class Test {
         //On soumet l'intialisation de l'interface graphique à la file d'attente de l'EDT (Event Dispatching Thread)
         
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 //Création d'une contrôleur qui communique avec une vue et un modèle
                 Controleur_Connexion controleur = new Controleur_Connexion(new Vue_Connexion(), new Modele_Connexion());
@@ -27,7 +28,7 @@ public class Test {
                 controleur.getVue().setVisible(true);
             }
         });
-        SurveillanceCampagne surveillance = new SurveillanceCampagne();
-        surveillance.start();
+        /*SurveillanceCampagne surveillance = new SurveillanceCampagne();
+        surveillance.start();*/
     }
 }
