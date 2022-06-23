@@ -20,6 +20,8 @@ import Graphique.Bouton;
  * @author Benjamin Mathilde
  */
 public class Vue_Ajout_Listes extends JFrame {
+    
+    private ImageIcon logo = new ImageIcon("../logo.jpg");
 
     private Panneau panneau = new Panneau();
     private Panneau haut = new Panneau();
@@ -61,7 +63,7 @@ public class Vue_Ajout_Listes extends JFrame {
     private Bouton deselectionner = new Bouton("Tout deselectionner");
     private Bouton retour = new Bouton("Retour");
     
-    private String donnees;    
+    private String donnees;
     
     private ListeDeDiffusion listeDiffusion;
 
@@ -71,6 +73,7 @@ public class Vue_Ajout_Listes extends JFrame {
      */
     public Vue_Ajout_Listes(String donnee) {
         super("Création d'une liste de diffusion");
+        this.setIconImage(logo.getImage());
         this.donnees = donnee;
         
         panneau.setLayout(new BorderLayout());

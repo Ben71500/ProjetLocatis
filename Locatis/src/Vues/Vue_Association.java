@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import Graphique.Panneau;
 import Graphique.Bouton;
+import javax.swing.ImageIcon;
 
 /**
  * Classe dérivée de JFrame qui décrit la vue permettant d'ajouter
@@ -16,6 +17,8 @@ import Graphique.Bouton;
  * @author Benjamin Mathilde
  */
 public class Vue_Association extends JFrame{
+    
+    private ImageIcon logo = new ImageIcon("../logo.jpg");
     
     private Panneau panneau = new Panneau();
     private Panneau haut = new Panneau();
@@ -40,6 +43,7 @@ public class Vue_Association extends JFrame{
      */
     public Vue_Association(){
         super("Associer un locataire et un logement");
+        this.setIconImage(logo.getImage());
         
         panneau.setLayout(new BorderLayout());
         panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));

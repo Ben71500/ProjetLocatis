@@ -16,6 +16,8 @@ import Graphique.Bouton;
  * @author Benjamin Mathilde
  */
 public class Vue_Gestion extends JFrame {
+    
+    private ImageIcon logo = new ImageIcon("../logo.jpg");
 
     private Panneau panneau = new Panneau();
     private Panneau haut = new Panneau();
@@ -53,6 +55,7 @@ public class Vue_Gestion extends JFrame {
      */
     public Vue_Gestion(String lesDonnees, Utilisateur user) {
         super("Gestion des "+lesDonnees+"s");
+        this.setIconImage(logo.getImage());
         this.donnees = lesDonnees;
         this.utilisateur = user;
         

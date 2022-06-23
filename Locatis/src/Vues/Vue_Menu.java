@@ -13,6 +13,8 @@ import Graphique.Bouton;
  * @author Benjamin Mathilde
  */
 public class Vue_Menu extends JFrame {
+    
+    private ImageIcon logo = new ImageIcon("../logo.jpg");
 
     private Panneau panneau = new Panneau();
     private Panneau haut = new Panneau();
@@ -40,6 +42,7 @@ public class Vue_Menu extends JFrame {
      */
     public Vue_Menu(Utilisateur user) {
         super("Menu Principal");
+        this.setIconImage(logo.getImage());
         this.userConnecte = user;
         
         panneau.setLayout(new BorderLayout());

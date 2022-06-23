@@ -46,11 +46,14 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
     
     private Locataire leLocataire;
     
+    private ImageIcon logo = new ImageIcon("../logo.jpg");
+    
     /**
      * Constructeur de la vue en cas d'ajout
      */
     public Vue_AjoutModif_Locataires(){
         super("Ajouter un locataire");
+        this.setIconImage(logo.getImage());
         titre.setText("Ajouter un locataire");
         initialisation();
         

@@ -15,6 +15,8 @@ import Graphique.Bouton;
  */
 public class Vue_dialog_locataire extends JDialog{
     
+    private ImageIcon logo = new ImageIcon("../logo.jpg");
+    
     Panneau panneau = new Panneau();
     Panneau haut = new Panneau();
     Panneau centre = new Panneau();
@@ -30,6 +32,8 @@ public class Vue_dialog_locataire extends JDialog{
      * @param user : utilisateur dont on affiche ses campagnes
      */
     public Vue_dialog_locataire(Utilisateur user){
+        
+        this.setIconImage(logo.getImage());
         
         panneau.setLayout(new BorderLayout());
         panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));

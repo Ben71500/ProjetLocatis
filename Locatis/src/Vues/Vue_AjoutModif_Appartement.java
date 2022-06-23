@@ -43,11 +43,14 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
     
     private Appartement appart;
     
+    private ImageIcon logo = new ImageIcon("../logo.jpg");
+    
     /**
      * Constructeur de la vue en cas d'ajout
      */
     public Vue_AjoutModif_Appartement(){
         super("Ajouter un appartement");
+        this.setIconImage(logo.getImage());
         titre.setText("Ajouter un appartement");
         initialisation();
         

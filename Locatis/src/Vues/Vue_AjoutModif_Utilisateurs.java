@@ -43,12 +43,15 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
     private Utilisateur user;
     private Utilisateur userConnecte;
     
+    private ImageIcon logo = new ImageIcon("../logo.jpg");
+    
     /**
      * Constructeur de la vue en cas d'ajout
      * @param utilisateurConnecte : l'utilisateur qui utilise l'interface
      */
     public Vue_AjoutModif_Utilisateurs(Utilisateur utilisateurConnecte){
         super("Ajouter un utilisateur");
+        this.setIconImage(logo.getImage());
         titre.setText("Ajouter un utilisateur");
         this.userConnecte=utilisateurConnecte;
         initialisation();

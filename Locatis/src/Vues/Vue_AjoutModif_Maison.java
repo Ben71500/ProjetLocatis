@@ -39,11 +39,14 @@ public class Vue_AjoutModif_Maison extends JFrame implements Vue_AjoutModif{
     
     private Maison maison;
     
+    private ImageIcon logo = new ImageIcon("../logo.jpg");
+    
     /**
      * Constructeur de la vue en cas d'ajout
      */
     public Vue_AjoutModif_Maison(){
         super("Ajouter une maison");
+        this.setIconImage(logo.getImage());
         titre.setText("Ajouter une maison");
         initialisation();
         

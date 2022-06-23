@@ -14,6 +14,8 @@ import Graphique.Bouton;
  */
 public class Vue_Statistique extends JFrame{
     
+    private ImageIcon logo = new ImageIcon("../logo.jpg");
+    
     private Panneau panneau = new Panneau();
     private Panneau haut = new Panneau();
     private Panneau centre = new Panneau();
@@ -33,6 +35,7 @@ public class Vue_Statistique extends JFrame{
     public Vue_Statistique(){
         
         super("Statistiques");
+        this.setIconImage(logo.getImage());
         
         panneau.setLayout(new BorderLayout());
         panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));

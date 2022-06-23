@@ -67,12 +67,15 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     
     private Campagne campagne;
     
+    private ImageIcon logo = new ImageIcon("../logo.jpg");
+    
     /**
      * Constructeur de la vue en cas d'ajout
      * @param liste : liste des listes de diffusion
      */
     public Vue_AjoutModif_Campagne(ArrayList<ListeDeDiffusion> liste){
         super("Ajouter une campagne");
+        this.setIconImage(logo.getImage());
         titre.setText("Ajouter une campagne");
         remplirListe(liste);
         initialisation();

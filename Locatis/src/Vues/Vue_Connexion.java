@@ -4,7 +4,9 @@ import Exceptions.EmptyFieldException;
 import Graphique.Bouton;
 import Graphique.Panneau;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
