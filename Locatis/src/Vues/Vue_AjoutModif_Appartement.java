@@ -2,19 +2,25 @@ package Vues;
 
 import Exceptions.ValeurIncorrecteException;
 import Exceptions.EmptyFieldException;
+import Graphique.Panneau;
+import Graphique.Bouton;
 import Objets_Locatis.Appartement;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.regex.Pattern;
 import javax.swing.*;
 
+/**
+ * Classe implémentant l'interface Vue_AjoutModif et qui décrit la vue permettant d'ajouter ou de modifier un appartement
+ * @author Benjamin Mathilde
+ */
 public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif{
     
-    private JPanel panneau = new JPanel();
-    private JPanel haut = new JPanel();
-    private JPanel centre = new JPanel();
-    private JPanel panneau_info = new JPanel();
-    private JPanel panneau_boutons= new JPanel();
+    private Panneau panneau = new Panneau();
+    private Panneau haut = new Panneau();
+    private Panneau centre = new Panneau();
+    private Panneau panneau_info = new Panneau();
+    private Panneau panneau_boutons= new Panneau();
     
     private JLabel titre = new JLabel();
     private JLabel numero_Rue_label = new JLabel ("Numero Rue : ");
@@ -28,16 +34,18 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
     private JTextField nomRue = new JTextField();
     private JTextField ville = new JTextField();
     private JTextField codePostal = new JTextField();
-    
     private JTextField nombreEtage = new JTextField();
     private JTextField numeroAppart = new JTextField();
     
-    private JButton ajouter = new JButton("Ajouter");
-    private JButton modifier = new JButton("Modifier");
-    private JButton retour = new JButton("Retour");
+    private Bouton ajouter = new Bouton("Ajouter");
+    private Bouton modifier = new Bouton("Modifier");
+    private Bouton retour = new Bouton("Retour");
     
     private Appartement appart;
     
+    /**
+     * Constructeur de la vue en cas d'ajout
+     */
     public Vue_AjoutModif_Appartement(){
         super("Ajouter un appartement");
         titre.setText("Ajouter un appartement");
@@ -51,6 +59,10 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
         this.pack();
     }
     
+    /**
+     * Constructeur de la vue en cas de modification
+     * @param unAppart : l'appartement à modifier
+     */
     public Vue_AjoutModif_Appartement(Appartement unAppart) {
         super("Modifier un appartement");
         titre.setText("Modifier un appartement");
@@ -64,6 +76,7 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
         this.pack();
         
         this.appart=unAppart;
+        //Remplissage des champs par les informations de l'appartement
         numeroRue.setText(appart.getNumeroRue());
         nomRue.setText(appart.getNomRue());
         ville.setText(appart.getVille());
@@ -72,6 +85,9 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
         numeroAppart.setText(appart.getApart()+"");
     }
     
+    /**
+     * Méthode qui permet d'ajouter les éléments communs de la vue
+     */
     public void initialisation(){
         panneau.setLayout(new BorderLayout());
         panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -88,31 +104,21 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
         panneau_info.setLayout(new GridLayout(6,2));
         panneau_info.add(this.numero_Rue_label);
         panneau_info.add(this.numeroRue);
-        
         panneau_info.add(this.nom_Rue_label);
         panneau_info.add(this.nomRue);
-        
         panneau_info.add(this.ville_label);
         panneau_info.add(this.ville);
-        
         panneau_info.add(this.codePostal_label);
         panneau_info.add(this.codePostal);
-        
         panneau_info.add(this.numeroEtage_label);
         panneau_info.add(this.nombreEtage);
         panneau_info.add(this.numeroAppart_label);
         panneau_info.add(this.numeroAppart);
     }
     
-    /**
-     * Ajouter un écouteur à un bouton désigné par son nom
-     *
-     * @param nomBouton le nom du bouton sur lequel l'écouteur doit être ajouté
-     * @param listener l'écouteur à ajouter
-     */
     @Override
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
-        JButton bouton;
+        Bouton bouton;
         bouton = switch (nomBouton.toUpperCase()) {
             case "AJOUTER" ->
                 bouton = ajouter;
@@ -134,13 +140,13 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
         nomRue.setText("");
         ville.setText("");
         codePostal.setText("");
-        
         nombreEtage.setText("");
         numeroAppart.setText("");
     }
     
     @Override
     public void verifierChamps() throws EmptyFieldException, ValeurIncorrecteException{
+        //Vérification que les champs ne soient pas vides
         if(this.numeroRue.getText().equals("")){
             throw new EmptyFieldException("un numéro de rue");
         }else
@@ -153,18 +159,21 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
         if(this.codePostal.getText().equals("")){
             throw new EmptyFieldException("un code postal");
         }else
+        //Vérification que le code postal soit bien composé de 5 chiffres
         if(!Pattern.compile("[0-9]{5}").matcher(codePostal.getText()).matches()){
             throw new ValeurIncorrecteException("un code postal");
         }else
         if(this.nombreEtage.getText().equals("")){
             throw new EmptyFieldException("un numéro d'étage");
         }else
+        //Vérification que le numéro d'étage soit bien un nombre
         if(!Pattern.compile("[0-9]+").matcher(nombreEtage.getText()).matches()){
             throw new ValeurIncorrecteException("un numéro d'étage");
         }else
         if(this.numeroAppart.getText().equals("")){
             throw new EmptyFieldException("un numéro d'appartement");
         }else
+        //Vérification que le numéro d'appartement soit bien un nombre
         if(!Pattern.compile("[0-9]+").matcher(numeroAppart.getText()).matches()){
             throw new ValeurIncorrecteException("un numéro d'appartement");
         }
@@ -189,7 +198,6 @@ public class Vue_AjoutModif_Appartement extends JFrame implements Vue_AjoutModif
     public void afficherVue() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setBounds(100, 100, 350, 300);
-        //controleur.getVue().setSize(500,500);
         this.setVisible(true);
     }
 }

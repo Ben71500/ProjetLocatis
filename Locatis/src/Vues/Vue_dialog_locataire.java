@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vues;
 
 import Objets_Locatis.Utilisateur;
@@ -10,103 +5,66 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import Graphique.Panneau;
+import Graphique.Bouton;
 
 /**
- *
- * @author benja
+ * Classe dérivée de JDialog qui décrit la vue permettant
+ * visualiser les campagnes dont un locataire fait partie
+ * @author Benjamin Mathilde
  */
 public class Vue_dialog_locataire extends JDialog{
-    JPanel panneau = new JPanel();
-    JPanel haut = new JPanel();
-    JPanel centre = new JPanel();
-    JPanel bas = new JPanel();
+    
+    Panneau panneau = new Panneau();
+    Panneau haut = new Panneau();
+    Panneau centre = new Panneau();
+    Panneau bas = new Panneau();
     
     JTextArea label = new JTextArea();
     JLabel titre = new JLabel("Outils de recherche");
     
-    JButton retour = new JButton("Retour");
+    Bouton retour = new Bouton("Retour");
     
+    /**
+     * Constructeur de la vue
+     * @param user : utilisateur dont on affiche ses campagnes
+     */
     public Vue_dialog_locataire(Utilisateur user){
+        
         panneau.setLayout(new BorderLayout());
         panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
         haut.add(titre);
         
         centre.setLayout(new GridLayout(1, 1));
-        
         centre.add(label);
+        label.setEditable(false);
         
         bas.add(retour);
-        retour.setText("Retour");
         
         panneau.add(this.haut, BorderLayout.NORTH);
         panneau.add(this.centre, BorderLayout.CENTER);
         panneau.add(this.bas, BorderLayout.SOUTH);
         
-        label.setEditable(false);
         this.add(panneau);
-        
         this.pack();
     }
 
-    public JPanel getPanneau() {
-        return panneau;
-    }
-
-    public void setPanneau(JPanel panneau) {
-        this.panneau = panneau;
-    }
-
-    public JPanel getHaut() {
-        return haut;
-    }
-
-    public void setHaut(JPanel haut) {
-        this.haut = haut;
-    }
-
-    public JPanel getCentre() {
-        return centre;
-    }
-
-    public void setCentre(JPanel centre) {
-        this.centre = centre;
-    }
-
-    public JPanel getBas() {
-        return bas;
-    }
-
-    public void setBas(JPanel bas) {
-        this.bas = bas;
-    }
-
+    /**
+     *
+     * @return le JTextArea contenant les informations
+     */
     public JTextArea getLabel() {
         return label;
     }
-
-    public void setLabel(JTextArea label) {
-        this.label = label;
-    }
-
-    public JLabel getTitre() {
-        return titre;
-    }
-
-    public void setTitre(JLabel titre) {
-        this.titre = titre;
-    }
-
-    public JButton getRetour() {
-        return retour;
-    }
-
-    public void setRetour(JButton retour) {
-        this.retour = retour;
-    }
     
+    /**
+     * Méthode qui permet d'ajouter des écouteurs à un bouton
+     * @param nomBouton : nom du bouton
+     * @param listener : écouteur
+     */
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
-        JButton bouton;
+        Bouton bouton;
         bouton = switch (nomBouton.toUpperCase()) {
             case "RETOUR" ->
                 bouton = retour;
@@ -118,8 +76,10 @@ public class Vue_dialog_locataire extends JDialog{
         }
     }
     
+    /**
+     * Méthode qui permet de fermer la fenêtre
+     */
     public void quitter() {
-        //System.exit(0);
         this.dispose();
     }
 }

@@ -17,12 +17,19 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Classe test de l'objet Campagne_DAO
+ * @author Benjamin Mathilde
+ */
 public class CampagneDAOTest {
     
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
     private ArrayList<ListeDeDiffusion> listes;
     private Campagne campagneTest;
     
+    /**
+     * Constructeur de l'objet CampagneDAOTest
+     */
     public CampagneDAOTest(){
         this.listes = new ArrayList<>();
         ArrayList<Personne> liste1 = new ArrayList<>();
@@ -34,6 +41,10 @@ public class CampagneDAOTest {
     
     }
     
+    /**
+     * Méthode qui désactive l'autocommit
+     * @throws SQLException
+     */
     @Before
     public void setUp() throws SQLException{
         connBdd.setAutoCommit(false);
@@ -88,6 +99,10 @@ public class CampagneDAOTest {
         Assert.assertEquals(true, daoTest.delete(daoTest.selectById(idCampagneTest)));
     }
     
+    /**
+     * Méthode qui rollback la requête
+     * @throws SQLException
+     */
     @After
     public void tearDown() throws SQLException {
         connBdd.rollback();

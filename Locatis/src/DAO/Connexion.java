@@ -1,7 +1,5 @@
 package DAO;
 
-import DAO.Connector;
-
 /**
  *
  * @author Benjamin Mathilde
@@ -9,7 +7,7 @@ import DAO.Connector;
 public class Connexion extends Connector{
     
     /**
-     * Méthode qui rentre les informations de connection a la base de donnée utlisée
+     * Méthode qui rentre les informations de connection a la base de données utlisée
      */
     public Connexion() {
         super("jdbc:mysql://localhost:3306/javalocatis","root","","javalocatis");

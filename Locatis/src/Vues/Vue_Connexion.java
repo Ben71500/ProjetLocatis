@@ -1,22 +1,26 @@
 package Vues;
 
 import Exceptions.EmptyFieldException;
+import Graphique.Bouton;
+import Graphique.Panneau;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+/**
+ * Classe dérivée de JFrame qui décrit la vue permettant de se connecter
+ * @author Benjamin Mathilde
+ */
 public class Vue_Connexion extends JFrame {
 
-    private JPanel panneau = new JPanel();
-    private JPanel haut = new JPanel();
-    private JPanel centre = new JPanel();
-    private JPanel bas = new JPanel();
-    private JPanel panneau_boutons = new JPanel();
-    private JPanel panneau_infos = new JPanel();
+    private Panneau panneau = new Panneau();
+    private Panneau haut = new Panneau();
+    private Panneau centre = new Panneau();
+    private Panneau bas = new Panneau();
+    private Panneau panneau_infos = new Panneau();
     
     private JLabel titre = new JLabel("Connectez-vous !");
-    
     private JLabel login_label = new JLabel("Login : ");
     private JLabel mdp_label = new JLabel("Mot de Passe : ");
     private JLabel messageErreur = new JLabel();
@@ -25,10 +29,16 @@ public class Vue_Connexion extends JFrame {
     private JTextField login = new JTextField();
     private JPasswordField motDePasse = new JPasswordField();
     
-    private JButton connexion = new JButton("Connexion");
+    private Bouton connexion = new Bouton("Connexion");
     
+    private ImageIcon logo = new ImageIcon("../logo.jpg");
+    
+    /**
+     * Modèle de la vue
+     */
     public Vue_Connexion() {
         super("Se Connecter");
+        this.setIconImage(logo.getImage());
         
         panneau.setLayout(new BorderLayout());
         panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -60,34 +70,53 @@ public class Vue_Connexion extends JFrame {
         this.pack();
     }
 
+    /**
+     *
+     * @return le JTextField du login
+     */
     public JTextField getLogin() {
         return login;
     }
 
+    /**
+     *
+     * @return JPasswordField
+     */
     public JPasswordField getMotDePasse() {
         return motDePasse;
     }
 
+    /**
+     *
+     * @return le login
+     */
     public String getLoginTexte() {
         return login.getText();
     }
 
+    /**
+     *
+     * @return le mot de passe
+     */
     public String getMotDePasseTexte() {
         return new String(motDePasse.getPassword());
     }
 
+    /**
+     *
+     * @return le JLabel pouvant afficher un message d'erreur
+     */
     public JLabel getMessageErreur() {
         return messageErreur;
     }
 
     /**
-     * Ajouter un écouteur à un bouton désigné par son nom
-     *
+     * Méthode qui permet d'ajouter un écouteur à un bouton désigné par son nom
      * @param nomBouton le nom du bouton sur lequel l'écouteur doit être ajouté
      * @param listener l'écouteur à ajouter
      */
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
-        JButton bouton = switch (nomBouton.toUpperCase()) {
+        Bouton bouton = switch (nomBouton.toUpperCase()) {
             case "CONNEXION" ->
                 bouton = connexion;
             default ->
@@ -98,6 +127,10 @@ public class Vue_Connexion extends JFrame {
         }
     }
     
+    /**
+     * Méthode qui vérifie que les champs sont bien saisis
+     * @throws EmptyFieldException : exception levée si un champs n'est pas saisi
+     */
     public void verifierChamps() throws EmptyFieldException{
         if(this.login.getText().equals("")){
             throw new EmptyFieldException("un login");
@@ -107,8 +140,10 @@ public class Vue_Connexion extends JFrame {
         }
     }
 
+    /**
+     * Méthode qui permet de fermer la fenêtre
+     */
     public void quitter() {
-        //System.exit(0);
         this.dispose();
     }
 }

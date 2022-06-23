@@ -1,6 +1,5 @@
 package DAO;
 
-import DAO.DAO;
 import Objets_Locatis.Appartement;
 import Objets_Locatis.Batiment;
 import Objets_Locatis.Locataire;
@@ -9,12 +8,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class permettant de se connecter à la base de donnée pour la table Locataire et d'effectuer divers action sur la table
+ * Classe permettant de se connecter à la base de données pour la table Locataire et d'effectuer divers actions sur la table
  * @author Benjamin Mathilde
  */
 public class Locataire_DAO extends DAO<Locataire>{
@@ -28,8 +26,8 @@ public class Locataire_DAO extends DAO<Locataire>{
     }
     
     /**
-     * Méthode qui crée un locataire dans la base de donnée
-     * @exception SQLException si la requête n'aboutie pas retourne retourne false
+     * Méthode qui crée un locataire dans la base de données
+     * @exception SQLException si la requête n'aboutie pas retourne false
      * @param obj
      * @return boolean
      */
@@ -44,8 +42,7 @@ public class Locataire_DAO extends DAO<Locataire>{
                     + obj.getDateDeNaissance().getDateSQL()+ " , '"
                     + obj.getMail()+ "' , '"
                     + obj.getTelephone()+ "' );";
-            etat.execute(requeteProc);
-            return true;
+            return !etat.execute(requeteProc);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -53,8 +50,8 @@ public class Locataire_DAO extends DAO<Locataire>{
     }
 
     /**
-     * Méthode qui supprime un locataire dans la base de donnée
-     * @exception SQLException si la requête n'aboutie pas retourne retourne false
+     * Méthode qui supprime un locataire dans la base de données
+     * @exception SQLException si la requête n'aboutie pas retourne false
      * @param obj
      * @return boolean
      */
@@ -71,7 +68,7 @@ public class Locataire_DAO extends DAO<Locataire>{
     }
 
     /**
-     * Méthode qui modifie un locataire dans la base de donnée
+     * Méthode qui modifie un locataire dans la base de données
      * @param obj
      * @return boolean
      */
@@ -88,16 +85,15 @@ public class Locataire_DAO extends DAO<Locataire>{
                     +obj.getMail()+"' , Telephone='"
                     +obj.getTelephone()+"' where ID_locataire="
                     +obj.getId()+" ;";
-            etat.execute(requeteProc);
-            return true;
+            return !etat.execute(requeteProc);
         } catch (SQLException ex) {
             return false;
         } 
     }
 
     /**
-     * Méthode qui récupére un Locataire par rapport à un id
-     * @exception SQLException si la requête n'aboutie pas retourne retourne null
+     * Méthode qui récupère un Locataire par rapport à un id
+     * @exception SQLException si la requête n'aboutie pas retourne null
      * @param id : id de locataire
      * @return Locataire
      */
@@ -119,30 +115,28 @@ public class Locataire_DAO extends DAO<Locataire>{
             return null;
         }
     }
-
+    
     /**
-     * Méthode qui retourne un locataire par son nom
-     * @exception SQLException si la requête n'aboutie pas retourne retourne null
-     * @param nom
-     * @return Locataire
+     * Méthode qui récupère un locataire par le dernier id inséré dans la base de données
+     * @exception SQLException si la requête n'aboutie pas retourne 0
+     * @return int
      */
     @Override
-    public Locataire selectByName(String nom) {
-        try {
-            Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from locataire where Nom='" + nom + "'");
+    public int getLastInsertId(){
+        try{
+            Statement etat = this.connection.createStatement();
+            ResultSet res = etat.executeQuery("Select LAST_INSERT_ID() as ID_Locataire from locataire");
             res.next();
-
-            return new Locataire(res.getInt("ID_locataire"), res.getString("Nom"), res.getString("Prenom"), this.getMyDate(res.getDate("DateDeNaissance")), res.getString("Mail"), res.getString("Telephone"));
-
-        } catch (SQLException ex) {
-            return null;
+            return res.getInt("ID_Locataire");
+        }catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return 0;
         }
     }
 
     /**
-     * Méthode qui récupére tous les locataires de la base de donnée
-     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Locataire incrémenter
+     * Méthode qui récupère tous les locataires de la base de données
+     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste de Locataires incrémentés
      * @return List<Locataire>
      */
     @Override
@@ -169,37 +163,9 @@ public class Locataire_DAO extends DAO<Locataire>{
     }
     
     /**
-     * Méthode qui retourne la liste des locataire contenant la sous chaine donné
-     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Locataire incrémenter
-     * @param texte : nom locataire
-     * @return List<Locataire>
-     */
-    public List<Locataire> getSearch(String texte) {
-
-        List<Locataire> allLocataire = new ArrayList<>();
-        try {
-            Statement statement = this.connection.createStatement();
-            ResultSet res = statement.executeQuery("Select * from locataire where Nom like'%" + texte + "%'");
-            while (res.next()) {
-                        allLocataire.add(new Locataire(
-                        res.getInt("ID_locataire"),
-                        res.getString("Nom"),
-                        res.getString("Prenom"),
-                        this.getMyDate(res.getDate("DateDeNaissance")),
-                        res.getString("Mail"),
-                        res.getString("Telephone")
-                ));
-            }
-        } catch (SQLException ex) {
-            return allLocataire;
-        }
-        return allLocataire;
-    }
-    
-    /**
-     * Méthode qui execute une requete et retourne une liste de Locataire en fonction
-     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Locataire incrémenter
-     * @param requete :  requete sql pour la selection des Locataires
+     * Méthode qui exécute une requete et retourne une liste de Locataires en fonction
+     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste de Locataires incrémentés
+     * @param requete : requete sql pour la selection des Locataires
      * @return List<Locataire>
      */
     public List<Locataire> getRequete(String requete) {
@@ -209,13 +175,13 @@ public class Locataire_DAO extends DAO<Locataire>{
             Statement statement = this.connection.createStatement();
             ResultSet res = statement.executeQuery(requete);
             while (res.next()) {
-                        allLocataire.add(new Locataire(
-                        res.getInt("ID_locataire"),
-                        res.getString("Nom"),
-                        res.getString("Prenom"),
-                        this.getMyDate(res.getDate("DateDeNaissance")),
-                        res.getString("Mail"),
-                        res.getString("Telephone")
+                    allLocataire.add(new Locataire(
+                    res.getInt("ID_locataire"),
+                    res.getString("Nom"),
+                    res.getString("Prenom"),
+                    this.getMyDate(res.getDate("DateDeNaissance")),
+                    res.getString("Mail"),
+                    res.getString("Telephone")
                 ));
             }
         } catch (SQLException ex) {
@@ -246,8 +212,8 @@ public class Locataire_DAO extends DAO<Locataire>{
     }
     
     /**
-     * Méthode qui récupére un batiment par rapport a sont id
-     * @exception SQLException si la requête n'aboutie pas retourne retourne null
+     * Méthode qui récupère un batiment par rapport à son id
+     * @exception SQLException si la requête n'aboutie pas retourne null
      * @param id : id Batiment
      * @return Batiment
      */
@@ -277,8 +243,8 @@ public class Locataire_DAO extends DAO<Locataire>{
     }
     
     /**
-     * Méthode qui compte le nombre de locataire compris entre deux age
-     * @param liste : liste de locataire
+     * Méthode qui compte le nombre de locataires compris entre deux ages
+     * @param liste : liste de locataires
      * @param ageMin : age minimum
      * @param ageMax : age maximum
      * @return int
@@ -294,7 +260,7 @@ public class Locataire_DAO extends DAO<Locataire>{
     
     /**
      * Méthode qui supprime le lien entre les batiments d'un locataire
-     * @exception SQLException si la requête n'aboutie pas retourne retourne false
+     * @exception SQLException si la requête n'aboutie pas retourne false
      * @param obj
      * @return boolean
      */
@@ -309,8 +275,8 @@ public class Locataire_DAO extends DAO<Locataire>{
     }
     
     /**
-     * Méthode qui supprime le locataire des liste de diffusions 
-     * @exception SQLException si la requête n'aboutie pas retourne retourne false
+     * Méthode qui supprime le locataire des listes de diffusion
+     * @exception SQLException si la requête n'aboutie pas retourne false
      * @param obj
      * @return boolean
      */

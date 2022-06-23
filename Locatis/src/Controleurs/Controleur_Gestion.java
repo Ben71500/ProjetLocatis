@@ -51,23 +51,23 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
         this.leModele.initialiser();
         
         laVue.definirTableau(leModele.getTableau(),leModele.getEntetes());
-        laVue.ajouterEcouteurBouton("Ajouter", this);
-        laVue.ajouterEcouteurBouton("Modifier", this);
-        laVue.ajouterEcouteurBouton("Supprimer", this);
-        laVue.ajouterEcouteurBouton("Retour", this);
+        laVue.ajouterEcouteur("Ajouter", this);
+        laVue.ajouterEcouteur("Modifier", this);
+        laVue.ajouterEcouteur("Supprimer", this);
+        laVue.ajouterEcouteur("Retour", this);
         if(donnee.equals("locataire")){
-            laVue.ajouterEcouteurBouton("Insere", this);
+            laVue.ajouterEcouteur("Insere", this);
             this.laVue.getTable().addMouseListener(this);
         }
         if(donnee.equals("appartement")){
-            laVue.ajouterEcouteurBouton("Appartement", this);
-            laVue.ajouterEcouteurBouton("Maison", this);
-            laVue.ajouterEcouteurBouton("Insere", this);
+            laVue.ajouterEcouteur("Appartement", this);
+            laVue.ajouterEcouteur("Maison", this);
+            laVue.ajouterEcouteur("Insere", this);
         }
         if(donnee.equals("maison")){
-            laVue.ajouterEcouteurBouton("Appartement", this);
-            laVue.ajouterEcouteurBouton("Maison", this);
-            laVue.ajouterEcouteurBouton("Insere", this);
+            laVue.ajouterEcouteur("Appartement", this);
+            laVue.ajouterEcouteur("Maison", this);
+            laVue.ajouterEcouteur("Insere", this);
         }
         laVue.getRecherche().getDocument().addDocumentListener(effectuerRecherche());
     }
@@ -174,9 +174,7 @@ public class Controleur_Gestion extends KeyAdapter implements ActionListener, Mo
                     if (res == JFileChooser.APPROVE_OPTION) {
                       file = choose.getSelectedFile();
                       System.out.println(file.getAbsolutePath());
-                    }
-                    else
-                    {
+                    }else{
                        break;
                     }
                     try{

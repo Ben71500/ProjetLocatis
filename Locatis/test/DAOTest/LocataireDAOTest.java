@@ -12,6 +12,10 @@ import java.sql.SQLException;
 import org.junit.After;
 import org.junit.Before;
 
+/**
+ * Classe test de l'objet Locataire_DAO
+ * @author Benjamin Mathilde
+ */
 public class LocataireDAOTest {
     
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
@@ -19,7 +23,7 @@ public class LocataireDAOTest {
     private Locataire_DAO daoTest = new Locataire_DAO(connBdd);
     
     /**
-     * 
+     * Méthode qui désactive l'autocommit
      * @throws SQLException 
      */
     @Before
@@ -43,7 +47,7 @@ public class LocataireDAOTest {
     @Test (timeout=1000)
     public void testSelectById() throws SQLException{
         daoTest.create(locataireTest);
-        int id = daoTest.selectByName("NomTest").getId();
+        int id = daoTest.getLastInsertId();
         int idLocataireTest = daoTest.selectById(id).getId();
         Assert.assertEquals(id, idLocataireTest);
     }
@@ -55,7 +59,7 @@ public class LocataireDAOTest {
     @Test(timeout=1000)
     public void testUpdate() throws SQLException{
         daoTest.create(locataireTest);
-        int idLocataireTest = daoTest.selectByName("NomTest").getId();
+        int idLocataireTest = daoTest.getLastInsertId();
         Locataire locataireModifierTest = new Locataire(idLocataireTest, "NomTestModif", "PrenomTestModif", new MyDate(2002, 8, 16), "testModifier@gmail.com", "0771773740");
         Assert.assertEquals(true, daoTest.update(locataireModifierTest));
     }
@@ -67,14 +71,14 @@ public class LocataireDAOTest {
     @Test(timeout=1000)
     public void testRemove() throws SQLException{
         daoTest.create(locataireTest);
-        int idLocataireTest = daoTest.selectByName("NomTest").getId();
+        int idLocataireTest = daoTest.getLastInsertId();
         Locataire locataireModifierSupprimerTest = new Locataire(idLocataireTest, "NomTestModif", "PrenomTestModif", new MyDate(2002, 8, 16), "testModifier@gmail.com", "0771773740");
         Assert.assertEquals(true, daoTest.delete(locataireModifierSupprimerTest));
     }
     
     /**
-     * 
-     * @throws SQLException 
+     * Méthode qui rollback la requête
+     * @throws SQLException
      */
     @After
     public void tearDown() throws SQLException {

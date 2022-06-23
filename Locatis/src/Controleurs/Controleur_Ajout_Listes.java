@@ -54,25 +54,10 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
         laVue.ajouterEcouteur("Inferieur", this);
         laVue.ajouterEcouteur("Tri", this);
         laVue.getRecherche().getDocument().addDocumentListener(effectuerRecherche());
-        laVue.getNombreJSpinner().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                trierTableau();
-            }
-        });
-        laVue.getDate().addPropertyChangeListener("date", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent e) {
-                trierTableau();
-            }   
-        });
+        laVue.getNombreJSpinner().addChangeListener(changerNombre());
+        laVue.getDate().addPropertyChangeListener("date", changerDate());
         laVue.definirTableau(leModele.getTableau(),leModele.getEntetes());
-        laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                leModele.cocher(e.getFirstRow());
-            }
-        });
+        laVue.getTable().getModel().addTableModelListener(cocherLesCases());
     }
     
     /**
@@ -96,24 +81,10 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
         laVue.ajouterEcouteur("Inferieur", this);
         laVue.ajouterEcouteur("Tri", this);
         laVue.getRecherche().getDocument().addDocumentListener(effectuerRecherche());
-        laVue.getNombreJSpinner().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                trierTableau();
-            }
-        });
-        laVue.getDate().addPropertyChangeListener("date", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent e) {
-                trierTableau();
-            }   
-        });
+        laVue.getNombreJSpinner().addChangeListener(changerNombre());
+        laVue.getDate().addPropertyChangeListener("date", changerDate());
         laVue.definirTableau(leModele.getTableau(),leModele.getEntetes());
-        laVue.getTable().getModel().addTableModelListener(new TableModelListener() {
-            public void tableChanged(TableModelEvent e) {
-                leModele.cocher(e.getFirstRow());
-            }
-        });
+        laVue.getTable().getModel().addTableModelListener(cocherLesCases());
     }
     
     /**
@@ -268,7 +239,7 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
     }
     
     /**
-     * Méthode qui trie le tableau contenant les locataires avec diffèrents critères ( Age / Date de naissance)
+     * Méthode qui trie le tableau contenant les locataires avec différents critères ( Age / Date de naissance)
      */
     public void trierTableau(){
         laVue.afficherPanneauBoutonsRadios();
@@ -278,5 +249,44 @@ public class Controleur_Ajout_Listes extends KeyAdapter implements ActionListene
             default -> leModele.trierPar(laVue.getCategorie());
         }
         actualiser();
+    }
+    
+    /**
+     * Méthode qui actualise le tableau lorsque l'on modifie le nombre
+     * @return ChangeListener
+     */
+    public ChangeListener changerNombre(){
+        return new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                trierTableau();
+            }
+        };
+    }
+    
+    /**
+     * Méthode qui actualise le tableau lorsque l'on modifie la date
+     * @return PropertyChangeListener
+     */
+    public PropertyChangeListener changerDate(){
+        return new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                trierTableau();
+            }   
+        };
+    }
+    
+    /**
+     * Méthode qui actualise la liste des id des cases cochés dans le modèle lorsque l'on clique sur une case
+     * @return TableModelListener
+     */
+    public TableModelListener cocherLesCases(){
+        return new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                leModele.cocher(e.getFirstRow());
+            }
+        };
     }
 }

@@ -9,6 +9,8 @@ import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 import Exceptions.EmptyFieldException;
 import Exceptions.PasDeLignesSelectionneesException;
+import Graphique.Panneau;
+import Graphique.Bouton;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -19,26 +21,27 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.*;
 
+/**
+ * Classe implémentant l'interface Vue_AjoutModif et qui décrit la vue permettant d'ajouter ou de modifier une campagne
+ * @author Benjamin Mathilde
+ */
 public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     
-    private JPanel panneau = new JPanel();
-    private JPanel haut = new JPanel();
-    private JPanel centre = new JPanel();
-    private JPanel panneau_info = new JPanel();
-    private JPanel panneau_boutons= new JPanel();
-    private JPanel panneau_gauche = new JPanel();
-    private JPanel panneau_titre = new JPanel();
-    //private JPanel panneau_message = new JPanel();
-    private JPanel panneau_droite = new JPanel();
-    private JPanel panneau_temps = new JPanel();
-    private JPanel panneau_heure = new JPanel();
-    private JPanel panneau_listes = new JPanel();
-    private JPanel panneau_message = new JPanel();
-    //private Panneau_Message panneau_message = new Panneau_Message();
+    private Panneau panneau = new Panneau();
+    private Panneau haut = new Panneau();
+    private Panneau centre = new Panneau();
+    private Panneau panneau_info = new Panneau();
+    private Panneau panneau_boutons= new Panneau();
+    private Panneau panneau_gauche = new Panneau();
+    private Panneau panneau_titre = new Panneau();
+    private Panneau panneau_droite = new Panneau();
+    private Panneau panneau_temps = new Panneau();
+    private Panneau panneau_heure = new Panneau();
+    private Panneau panneau_listes = new Panneau();
+    private Panneau panneau_message = new Panneau();
     
     private JLabel titre = new JLabel();
     private JLabel titreCampagne_label = new JLabel("Titre : ");
-    /*private JLabel message_label = new JLabel("Message : ");*/
     private JLabel frequence_label = new JLabel("Fréquence : ");
     private JLabel dateDebut_label = new JLabel ("Date de début : ");
     private JLabel heure_label = new JLabel ("Heure : ");
@@ -58,12 +61,16 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     private JDateChooser dateFin = new JDateChooser();
     private JList listes;
     
-    private JButton ajouter = new JButton("Ajouter");
-    private JButton modifier = new JButton("Modifier");
-    private JButton retour = new JButton("Retour");
+    private Bouton ajouter = new Bouton("Ajouter");
+    private Bouton modifier = new Bouton("Modifier");
+    private Bouton retour = new Bouton("Retour");
     
     private Campagne campagne;
     
+    /**
+     * Constructeur de la vue en cas d'ajout
+     * @param liste : liste des listes de diffusion
+     */
     public Vue_AjoutModif_Campagne(ArrayList<ListeDeDiffusion> liste){
         super("Ajouter une campagne");
         titre.setText("Ajouter une campagne");
@@ -78,6 +85,12 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         this.pack();
     }
     
+    /**
+     * Constructeur de la vue en cas de modification
+     * @param liste : liste des listes de diffusion
+     * @param camp : campagne à modifier
+     * @param user : utilisateur qui modifie la campagne
+     */
     public Vue_AjoutModif_Campagne(ArrayList<ListeDeDiffusion> liste, Campagne camp, Utilisateur user) {
         super("Modifier une campagne");
         titre.setText("Modifier une campagne");
@@ -92,12 +105,12 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         this.pack();
         
         this.campagne=camp;
+        //Remplissage des champs par les informations de la campagne
         this.titreCampagne.setText(this.campagne.getTitre());
         heure.setSelectedIndex(this.campagne.getHeure().getHeure());
         minute.setSelectedIndex(this.campagne.getHeure().getMinute());
         Calendar calendarDebut = new GregorianCalendar(campagne.getDateDebut().getAnnee(), campagne.getDateDebut().getMois()-1 , campagne.getDateDebut().getJour());
         dateDebut.setCalendar(calendarDebut);
-        
         Calendar calendarFin = new GregorianCalendar(campagne.getDateFin().getAnnee(), campagne.getDateFin().getMois()-1 , campagne.getDateFin().getJour());
         dateFin.setCalendar(calendarFin);
         frequence.setSelectedItem(campagne.getFrequence());
@@ -105,6 +118,8 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         this.contenu.setText(campagne.getMessageMail());
         selectionnerListes();
         
+        //Si l'utilisateur est de la catégorie  "Utilisateur 2", alors il peut
+        //uniquement lancer des campagnes mais pas modifier certains paramètres
         if(user.getCat().equals("uti2")){
             titreCampagne.setEnabled(false);
             this.objet.setEnabled(false);
@@ -113,6 +128,9 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         }
     }
     
+    /**
+     * Méthode qui permet d'ajouter les éléments communs de la vue
+     */
     public void initialisation(){
         panneau.setLayout(new BorderLayout());
         panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -134,8 +152,8 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         panneau_titre.add(this.titreCampagne_label);
         panneau_titre.add(this.titreCampagne);
         
-        JPanel pHaut = new JPanel();
-        JPanel pCentre = new JPanel();
+        Panneau pHaut = new Panneau();
+        Panneau pCentre = new Panneau();
         panneau_message.setLayout(new BorderLayout());
         panneau_message.add(pHaut, BorderLayout.NORTH);
         panneau_message.add(pCentre, BorderLayout.CENTER);
@@ -146,17 +164,15 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         pCentre.add(this.contenu_label, BorderLayout.NORTH);
         pCentre.add(this.contenu, BorderLayout.CENTER);
         
+        contenu.setLineWrap(true);
+        contenu.setWrapStyleWord(true);
         
         panneau_gauche.setLayout(new BorderLayout());
         panneau_gauche.add(panneau_titre, BorderLayout.NORTH);
         panneau_gauche.add(panneau_message, BorderLayout.CENTER);
         
-        panneau_message.setVisible(true);panneau_message.validate();
-        panneau_gauche.validate();
-        
         remplirComboBox(heure, 0, 24);
         remplirComboBox(minute, 0, 60);
-        
         panneau_heure.add(this.heure);
         panneau_heure.add(this.heure2_label);
         panneau_heure.add(this.minute);
@@ -171,13 +187,9 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         panneau_temps.add(this.dateFin_label);
         panneau_temps.add(this.dateFin);
         
-        /*panneau_listes.setLayout(new BorderLayout());
-        panneau_listes.add(listes_label, BorderLayout.NORTH);
-        panneau_listes.add(listes, BorderLayout.CENTER);*/
         panneau_listes.setLayout(new GridLayout(1,2));
         panneau_listes.add(listes_label);
-        JScrollPane pane = new JScrollPane(listes);
-        panneau_listes.add(pane);
+        panneau_listes.add(new JScrollPane(listes));
         
         panneau_droite.add(panneau_temps);
         panneau_droite.add(panneau_listes);
@@ -188,88 +200,71 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         this.frequence.addItem("Mensuel");
         this.frequence.addItem("Annuel");
         
+        //Initialisation de la date de début à aujourd'hui
         this.dateDebut.setCalendar(Calendar.getInstance());
         JTextFieldDateEditor editor = (JTextFieldDateEditor) this.dateDebut.getDateEditor();
         editor.setEditable(false);
+        //La date de début ne peut pas être avant aujourd'hui
         this.dateDebut.setMinSelectableDate(Calendar.getInstance().getTime());
+        //Si on modifie la date de début alors la date de fin ne peut pas être avant celle-ci
         this.dateDebut.getDateEditor().addPropertyChangeListener(
             new PropertyChangeListener() {
                 @Override
                 public void propertyChange(PropertyChangeEvent e) {
-                    if(dateFin.getCalendar().before(dateDebut.getCalendar()))
-                        dateFin.setDate(dateDebut.getDate());
-                    dateFin.setMinSelectableDate(dateDebut.getDate());
-                    /*LocalDate debutDate = LocalDate.of(getDateDebut().getAnnee(), getDateDebut().getMois(), getDateDebut().getJour());
-                    if(LocalDate.now().isEqual(debutDate)){
-     
-                        heure.removeAllItems();
-                        remplirComboBox(heure, LocalDateTime.now().getHour(), 24);
-                        
-                    }else{
-                        heure.removeAllItems();
-                        remplirComboBox(heure, 0, 24);
-                    }*/
+                    if(dateFin.getCalendar()!=null || dateDebut.getCalendar()!=null){
+                        if(dateFin.getCalendar().before(dateDebut.getCalendar()) || frequence.getSelectedItem().equals("Une seule fois"))
+                            dateFin.setDate(dateDebut.getDate());
+                        dateFin.setMinSelectableDate(dateDebut.getDate());
+                    }
                 }
         });
-        
+        //Initialisation de la date de fin à aujourd'hui
         this.dateFin.setCalendar(Calendar.getInstance());
-        
         JTextFieldDateEditor editor2 = (JTextFieldDateEditor) this.dateFin.getDateEditor();
         editor2.setEditable(false);
     }
-
-    public JComboBox getFrequence() {
-        return frequence;
-    }
-
-    public void setFrequence(JComboBox frequence) {
-        this.frequence = frequence;
-    }
     
-    
-    
+    /**
+     * Méthode qui retourne la date de début en objet MyDate
+     * @return MyDate
+     */
     public MyDate getDateDebut(){
         return new MyDate(this.dateDebut.getCalendar().get(Calendar.YEAR), this.dateDebut.getCalendar().get(Calendar.MONTH)+1, this.dateDebut.getCalendar().get(Calendar.DAY_OF_MONTH));
     }
     
+    /**
+     * Méthode qui retourne la date de fin en objet MyDate
+     * @return MyDate
+     */
     public MyDate getDateFin(){
         return new MyDate(this.dateFin.getCalendar().get(Calendar.YEAR), this.dateFin.getCalendar().get(Calendar.MONTH)+1, this.dateFin.getCalendar().get(Calendar.DAY_OF_MONTH));
     }
     
+    /**
+     * Méthode qui retourne l'heure en objet MyTime
+     * @return MyTime
+     */
     public MyTime getHeure(){
         return new MyTime(Integer.parseInt(this.heure.getSelectedItem().toString()),Integer.parseInt(this.minute.getSelectedItem().toString()));
     }
     
-    /**
-     * Ajouter un écouteur à un bouton désigné par son nom
-     *
-     * @param nomBouton le nom du bouton sur lequel l'écouteur doit être ajouté
-     * @param listener l'écouteur à ajouter
-     */
     @Override
-    public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
-        JButton bouton;
-        bouton = switch (nomBouton.toUpperCase()) {
+    public void ajouterEcouteurBouton(String nomComposant, ActionListener listener) {        
+        switch (nomComposant.toUpperCase()) {
             case "AJOUTER" ->
-                bouton = ajouter;
+                ajouter.addActionListener(listener);
             case "MODIFIER" ->
-                bouton = modifier;
+                modifier.addActionListener(listener);
             case "RETOUR" ->
-                bouton = retour;
-            default ->
-                null;
-        };
-        if (bouton != null) {
-            bouton.addActionListener(listener);
+                retour.addActionListener(listener);
+            case "FREQUENCE" ->
+                frequence.addActionListener(listener);
         }
-        if(nomBouton.toUpperCase().equals("FREQUENCE"))
-            this.frequence.addActionListener(listener);
     }
     
     @Override
     public void reset(){
         titreCampagne.setText("");
-        //message.setText("");
         frequence.setSelectedIndex(0);
         heure.setSelectedIndex(0);
         minute.setSelectedIndex(0);
@@ -282,6 +277,7 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     
     @Override
     public void verifierChamps() throws EmptyFieldException, PasDeLignesSelectionneesException{
+        //Vérification que les champs ne soient pas vides
         if(this.titreCampagne.getText().equals("")){
             throw new EmptyFieldException("un titre");
         }else
@@ -291,6 +287,7 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         if(this.contenu.getText().equals("")){
             throw new EmptyFieldException("un message");
         }else
+        //Vérification qu'au moins une liste de diffusion est sélectionnée
         if(this.listes.getSelectedIndices().length==0)
             throw new PasDeLignesSelectionneesException("une liste de diffusion");
         else
@@ -309,26 +306,31 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     @Override
     public Campagne getNouvelObjet() {
         return new Campagne(0, this.titreCampagne.getText(), this.getDateDebut(), this.getDateFin(), this.getHeure(),
-                this.frequence.getSelectedItem().toString(), objet.getText(), contenu.getText(), this.listes.getSelectedValuesList(), null);
+            this.frequence.getSelectedItem().toString(), objet.getText(), contenu.getText(), this.listes.getSelectedValuesList(), null);
     }
 
     @Override
     public Campagne getObjetModifie() {
-        return new Campagne(this.campagne.getId(), this.titreCampagne.getText(), this.getDateDebut(), this.getDateFin(), this.getHeure(), this.frequence.getSelectedItem().toString(), objet.getText(), contenu.getText(), this.listes.getSelectedValuesList(), null);
+        return new Campagne(this.campagne.getId(), this.titreCampagne.getText(), this.getDateDebut(), this.getDateFin(), this.getHeure(),
+            this.frequence.getSelectedItem().toString(), objet.getText(), contenu.getText(), this.listes.getSelectedValuesList(), null);
     }
 
     @Override
     public void afficherVue() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setBounds(100, 100, 600, 600);
-        //controleur.getVue().setSize(500,500);
         this.setVisible(true);
+        //Si la fréquence est "Une seule fois" alors la date de fin est désactivée
         if(this.frequence.getSelectedItem().equals("Une seule fois"))
             this.dateFin.setEnabled(false);
         else
             this.dateFin.setEnabled(true);
     }
     
+    /**
+     * Méthode qui permet de remplir la JList avec les listes de diffusion
+     * @param uneListe : les listes de diffusion
+     */
     public void remplirListe(ArrayList<ListeDeDiffusion> uneListe){
         DefaultListModel<ListeDeDiffusion> model = new DefaultListModel<>();
         for(int i=0;i<uneListe.size();i++){
@@ -337,6 +339,12 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         listes = new JList<>(model);
     }
     
+    /**
+     * Méthode qui permet de remplir une JComboBox avec des nombres entiers
+     * @param comboBox : JComboBox à remplir
+     * @param min : nombre entier minimum
+     * @param max : nombre entier maximum
+     */
     public void remplirComboBox(JComboBox comboBox, int min, int max){
         for(int i=min;i<max;i++){
             if(i<10)
@@ -346,10 +354,9 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         }
     }
     
-    public void test(){
-        System.out.println("test ok");
-    }
-    
+    /**
+     * Méthode qui permet de sélectionner les listes de diffusion d'une campagne
+     */
     public void selectionnerListes(){
         int[] tableauIndices = new int[campagne.getListes().size()];
         for(int i=0;i<campagne.getListes().size();i++){

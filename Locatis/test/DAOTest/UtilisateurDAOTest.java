@@ -1,16 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAOTest;
 
 import DAO.ConnectionBDD;
 import DAO.Connexion;
-import DAO.Locataire_DAO;
 import DAO.Utilisateurs_DAO;
-import Objets_Locatis.Locataire;
-import Objets_Locatis.MyDate;
 import Objets_Locatis.Utilisateur;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -20,8 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
- * @author benja
+ * Classe de Test de l'objet Utilisateur_DAO
+ * @author Benjamin Mathilde
  */
 public class UtilisateurDAOTest {
     
@@ -30,7 +22,7 @@ public class UtilisateurDAOTest {
     private Utilisateurs_DAO daoTest = new Utilisateurs_DAO(connBdd);
     
     /**
-     * 
+     * Méthode qui désactive l'autocommit
      * @throws SQLException 
      */
     @Before
@@ -48,13 +40,13 @@ public class UtilisateurDAOTest {
     }
 
     /**
-     * Test de la methode insertById de l'objet Locataire_DAO
+     * Test de la methode insertById de l'objet Utilisateur_DAO
      * @throws SQLException 
      */
     @Test (timeout=1000)
     public void testSelectById() throws SQLException{
         daoTest.create(utilisateurTest);
-        int id = daoTest.selectByName("testLogin").getId();
+        int id = daoTest.getLastInsertId();
         int idUtilisateur = daoTest.selectById(id).getId();
         Assert.assertEquals(id, idUtilisateur);
     }
@@ -66,7 +58,7 @@ public class UtilisateurDAOTest {
     @Test(timeout=1000)
     public void updateTest() throws SQLException{
         daoTest.create(utilisateurTest);
-        int idUti = daoTest.selectByName("testLogin").getId();
+        int idUti = daoTest.getLastInsertId();
         Utilisateur utilisateurTestModif = new Utilisateur(idUti, "testModifLogin", "mdpTest", "uti", "testModif@gmail.com", "testMailMdp");
         Assert.assertEquals(true, daoTest.update(utilisateurTest));
     }
@@ -78,14 +70,14 @@ public class UtilisateurDAOTest {
     @Test(timeout=1000)
     public void deleteTest() throws SQLException{
         daoTest.create(utilisateurTest);
-        int idUti = daoTest.selectByName("testLogin").getId();
+        int idUti = daoTest.getLastInsertId();
         Utilisateur utilisateurASupprimer = new Utilisateur(idUti, "testModifLogin", "mdpTest", "uti", "testModif@gmail.com", "testMailMdp");
         Assert.assertEquals(true, daoTest.delete(utilisateurTest));
     }
     
     /**
-     * 
-     * @throws SQLException 
+     * Méthode qui rollback la requête
+     * @throws SQLException
      */
     @After
     public void tearDown() throws SQLException {

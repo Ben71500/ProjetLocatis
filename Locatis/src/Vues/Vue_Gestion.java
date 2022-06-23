@@ -8,15 +8,20 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
 import javax.swing.table.*;
+import Graphique.Panneau;
+import Graphique.Bouton;
 
+/**
+ * Classe de l'objet Vue_Gestion, l'objet fait l'affichage de la gestion des locataires, utilisateurs, maisons, appartements, campagnes et listes de diffusion
+ * @author Benjamin Mathilde
+ */
 public class Vue_Gestion extends JFrame {
 
-    private JPanel panneau = new JPanel();
-    private JPanel haut = new JPanel();
-    private JPanel centre = new JPanel();
-    //private JPanel panneau_info = new JPanel();
-    private JPanel panneau_boutons = new JPanel();
-    private JPanel panneau_recherches = new JPanel();
+    private Panneau panneau = new Panneau();
+    private Panneau haut = new Panneau();
+    private Panneau centre = new Panneau();
+    private Panneau panneau_boutons = new Panneau();
+    private Panneau panneau_recherches = new Panneau();
     
     private JLabel titre;
     private JLabel rechercher_label = new JLabel("Rechercher : ");
@@ -32,15 +37,20 @@ public class Vue_Gestion extends JFrame {
     
     private ButtonGroup group = new ButtonGroup();
     
-    private JButton ajouter = new JButton("Ajouter");
-    private JButton modifier = new JButton("Modifier");
-    private JButton supprimer = new JButton("Supprimer");
-    private JButton retour = new JButton("Retour");
-    private JButton inserer = new JButton("Insere");
+    private Bouton ajouter = new Bouton("Ajouter");
+    private Bouton modifier = new Bouton("Modifier");
+    private Bouton supprimer = new Bouton("Supprimer");
+    private Bouton retour = new Bouton("Retour");
+    private Bouton inserer = new Bouton("Insere");
     
     private String donnees;
     private Utilisateur utilisateur;
 
+    /**
+     * Constructeur de l'objet Vue_Gestion
+     * @param lesDonnees : type des données
+     * @param user : utilisateur connecté
+     */
     public Vue_Gestion(String lesDonnees, Utilisateur user) {
         super("Gestion des "+lesDonnees+"s");
         this.donnees = lesDonnees;
@@ -50,6 +60,7 @@ public class Vue_Gestion extends JFrame {
         panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panneau.add(this.haut, BorderLayout.NORTH);
         panneau.add(this.centre, BorderLayout.CENTER);
+        panneau.add(this.panneau_boutons, BorderLayout.SOUTH);
         
         //Titre
         titre = new JLabel("Les "+donnees+"s");
@@ -58,14 +69,12 @@ public class Vue_Gestion extends JFrame {
         
         centre.setLayout(new BorderLayout());
         centre.add(this.panneau_recherches, BorderLayout.NORTH);
-        //centre.add(new JScrollPane(this.panneau_info), BorderLayout.CENTER);
-        panneau.add(this.panneau_boutons, BorderLayout.SOUTH);
         
         panneau_recherches.setLayout(new GridLayout(1,2));
         panneau_recherches.add(this.rechercher_label);
         panneau_recherches.add(this.recherche);
         
-        //Ajout des différents boutons
+        //Ajout des différents boutons en fonction de la catégorie de l'utilisateur
         if(this.utilisateur.getCat().equals("uti2")){
             panneau_boutons.setLayout(new GridLayout(1,2));
             panneau_boutons.add(modifier);
@@ -100,51 +109,94 @@ public class Vue_Gestion extends JFrame {
         this.pack();
     }
 
+    /**
+     * 
+     * @param titre
+     */
     public void setTitre(String titre) {
         this.titre.setText(titre);
     }
 
+    /**
+     *
+     * @param donnees
+     */
     public void setDonnees(String donnees) {
         this.donnees = donnees;
     }
 
-    
+    /**
+     *
+     * @return String
+     */
     public String getDonnees() {
         return donnees;
     }
     
+    /**
+     *
+     * @return DefaultTableModel
+     */
     public DefaultTableModel getTableau() {
         return tableau;
     }
     
+    /**
+     *
+     * @return int
+     */
     public int getLigne(){
         return this.table.getSelectedRow();
     }
     
+    /**
+     *
+     * @return JRadioButton
+     */
     public JRadioButton getButtonRadioAppart(){
         return buttonRadioAppart;
     }
     
+    /**
+     *
+     * @return JRadioButton
+     */
     public JRadioButton getButtonRadioMaison(){
         return buttonRadioMaison;
     }
     
+    /**
+     *
+     * @return JTextField
+     */
     public JTextField getRecherche(){
         return this.recherche;
     }
     
+    /**
+     *
+     * @return TableRowSorter<TableModel>
+     */
     public TableRowSorter<TableModel> getSort(){
         return this.sort;
     }
 
+    /**
+     *
+     * @return JTable
+     */
     public JTable getTable() {
         return table;
     }
 
+    /**
+     * Méthode qui permet de créer un nouveau tableau de données
+     * @param donnees : nouvelles données
+     * @param entetes : tableau des entetes
+     */
     public void definirTableau(String[][] donnees, String[] entetes) {
-        
-        this.tableau = new DefaultTableModel(donnees, entetes)
-        {
+        this.tableau = new DefaultTableModel(donnees, entetes){
+            //permet de faire en sorte qu'on ne puisse pas modifier le contenu de la JTable
             @Override
             public boolean isCellEditable(int row, int column) {
                return false;
@@ -152,21 +204,18 @@ public class Vue_Gestion extends JFrame {
         };
         
         sort = new TableRowSorter<>(this.tableau);
-        //Ajout du tableau des locataires
+        //Ajout du nouveau tableau
         this.table = new JTable(tableau);
         table.setSelectionMode(SINGLE_SELECTION);
         table.setRowSorter(sort);
-        //Dimension preferredSize = new Dimension(1000,1000);
-        //table.setSize(900, 400);
-        /*table.sizeColumnsToFit(500);
-        table.setPreferredSize(1000);
-        table.get*/
-        //table.setPreferredSize(preferredSize);
-        //panneau_info.setPreferredSize(preferredSize);
-        //panneau_info.add(new JScrollPane(table), BorderLayout.CENTER);
         centre.add(new JScrollPane(this.table), BorderLayout.CENTER);
     }
     
+    /**
+     * Méthode qui permet d'effacer le tableau et d'en ajouter un nouveau
+     * @param donnees : nouvelles données
+     * @param entetes : tableau des entetes
+     */
     public void changerTableau(String[][] donnees, String[] entetes){
         centre.removeAll();
         centre.setLayout(new BorderLayout());
@@ -176,51 +225,40 @@ public class Vue_Gestion extends JFrame {
     }
 
     /**
-     * Ajouter un écouteur à un bouton désigné par son nom
-     *
-     * @param nomBouton le nom du bouton sur lequel l'écouteur doit être ajouté
+     * Méthode qui permet d'ajouter un écouteur à un composant désigné par son nom
+     * @param nomElement le nom du composant sur lequel l'écouteur doit être ajouté
      * @param listener l'écouteur à ajouter
      */
-    public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
-        JButton bouton;
-        bouton = switch (nomBouton.toUpperCase()) {
+    public void ajouterEcouteur(String nomElement, ActionListener listener) {
+        switch (nomElement.toUpperCase()) {
             case "AJOUTER" ->
-                bouton = ajouter;
+                ajouter.addActionListener(listener);
             case "MODIFIER" ->
-                bouton = modifier;
+                modifier.addActionListener(listener);
             case "SUPPRIMER" ->
-                bouton = supprimer;
+                supprimer.addActionListener(listener);
             case "RETOUR" ->
-                bouton = retour;
+                retour.addActionListener(listener);
             case "INSERE" ->
-                bouton = inserer;
-            default ->
-                null;
-        };
-        if (bouton != null) {
-            bouton.addActionListener(listener);
+                inserer.addActionListener(listener);
+            case "APPARTEMENT" ->
+                buttonRadioAppart.addActionListener(listener);
+            case "MAISON" ->
+                buttonRadioMaison.addActionListener(listener);
         }
-        if(donnees.equals("appartement") || donnees.equals("maison")){
-            JRadioButton boutonRadio;
-            boutonRadio = switch (nomBouton.toUpperCase()) {
-                case "APPARTEMENT" ->
-                    boutonRadio = buttonRadioAppart;
-                case "MAISON" ->
-                    boutonRadio = buttonRadioMaison;
-                default ->
-                    null;
-            };
-            if (boutonRadio != null) {
-                boutonRadio.addActionListener(listener);
-            }
-        }   
     }
 
+    /**
+     * Méthode qui permet de fermer la fenêtre
+     */
     public void quitter() {
-        //System.exit(0);
         this.dispose();
     }
     
+    /**
+     * Méthode qui permet de vérifier que tous les champs sont bien saisis
+     * @throws PasDeLignesSelectionneesException : exception levée si aucune ligne n'est sélectionnée
+     */
     public void verifierSelection() throws PasDeLignesSelectionneesException{
         if(this.table.getSelectedRowCount()==0){
             if(this.donnees.equals("campagne"))
