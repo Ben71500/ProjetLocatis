@@ -16,6 +16,8 @@ import Objets_Locatis.Maison;
 import Objets_Locatis.Utilisateur;
 import Objets_Locatis.Locataire;
 import Objets_Locatis.Campagne;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -162,7 +164,11 @@ public class Controleur_AjoutModif implements ActionListener{
                         public void run(){
                             Controleur_Gestion controleur = new Controleur_Gestion(userConnecte, typeDonnee);                
                             controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                            controleur.getVue().setSize(500,500);
+                            //Centrage de la fenetre sur l'écran
+                            Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+                            int height = 400;
+                            int width = 800;
+                            controleur.getVue().setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
                             controleur.getVue().setVisible(true);
                         }
                     });

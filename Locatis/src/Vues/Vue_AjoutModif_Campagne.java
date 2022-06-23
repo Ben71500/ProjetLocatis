@@ -12,7 +12,9 @@ import Exceptions.PasDeLignesSelectionneesException;
 import Graphique.Panneau;
 import Graphique.Bouton;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -321,7 +323,10 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     @Override
     public void afficherVue() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setBounds(100, 100, 600, 600);
+        Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = 600;
+        int width = 500;
+        this.setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
         this.setVisible(true);
         //Si la fréquence est "Une seule fois" alors la date de fin est désactivée
         if(this.frequence.getSelectedItem().equals("Une seule fois"))

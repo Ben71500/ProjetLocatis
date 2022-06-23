@@ -209,7 +209,10 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
     @Override
     public void afficherVue() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setBounds(100, 100, 350, 300);
+        Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = 600;
+        int width = 500;
+        this.setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
         this.setVisible(true);
     }
 }

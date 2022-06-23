@@ -11,6 +11,8 @@ import Objets_Locatis.Locataire;
 import Objets_Locatis.Maison;
 import Objets_Locatis.Utilisateur;
 import Exceptions.EmptyFieldException;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -106,7 +108,10 @@ public class Controleur_Association implements ActionListener{
                         public void run(){ 
                             Controleur_Menu controleur = new Controleur_Menu(new Vue_Menu(user), user);
                             controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                            controleur.getVue().setBounds(100, 100, 350, 300);
+                            Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+                            int height = 600;
+                            int width = 500;
+                            controleur.getVue().setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
                             controleur.getVue().setVisible(true);
                         }
                     });

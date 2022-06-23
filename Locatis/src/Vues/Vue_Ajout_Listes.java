@@ -14,6 +14,8 @@ import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
 import javax.swing.table.*;
 import Graphique.Panneau;
 import Graphique.Bouton;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 /**
  * Classe dérivée de JFrame qui décrit la vue permettant d'ajouter ou de modifier une liste de diffusion
@@ -469,7 +471,10 @@ public class Vue_Ajout_Listes extends JFrame {
      */
     public void afficherVue() {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setBounds(100, 100, 800, 300);
+        Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = 600;
+        int width = 900;
+        this.setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
         this.setVisible(true);
     }
     
