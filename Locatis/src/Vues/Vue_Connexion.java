@@ -4,9 +4,7 @@ import Exceptions.EmptyFieldException;
 import Graphique.Bouton;
 import Graphique.Panneau;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
@@ -26,7 +24,6 @@ public class Vue_Connexion extends JFrame {
     private JLabel login_label = new JLabel("Login : ");
     private JLabel mdp_label = new JLabel("Mot de Passe : ");
     private JLabel messageErreur = new JLabel();
-    private JLabel mdp_oublie = new JLabel("Mot de Passe oublié");
     
     private JTextField login = new JTextField();
     private JPasswordField motDePasse = new JPasswordField();
@@ -43,7 +40,7 @@ public class Vue_Connexion extends JFrame {
         this.setIconImage(logo.getImage());
         
         panneau.setLayout(new BorderLayout());
-        panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panneau.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
         panneau.add(this.haut, BorderLayout.NORTH);
         panneau.add(this.centre, BorderLayout.CENTER);
         panneau.add(this.bas, BorderLayout.SOUTH);
@@ -53,7 +50,7 @@ public class Vue_Connexion extends JFrame {
         
         GridLayout gridlayout=new GridLayout(2,2);
         gridlayout.setHgap(10);
-        gridlayout.setVgap(10);
+        gridlayout.setVgap(50);
         panneau_infos.setLayout(gridlayout);
         panneau_infos.add(this.login_label);
         panneau_infos.add(this.login);
@@ -63,10 +60,7 @@ public class Vue_Connexion extends JFrame {
         centre.add(this.panneau_infos, BorderLayout.CENTER);
         centre.add(this.messageErreur, BorderLayout.SOUTH);
         
-        bas.setLayout(new GridLayout(1,2));
         bas.add(this.connexion);
-        mdp_oublie.setForeground(new java.awt.Color(51, 51, 255));
-        bas.add(this.mdp_oublie);
         
         this.getContentPane().add(this.panneau);
         this.pack();

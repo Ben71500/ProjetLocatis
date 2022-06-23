@@ -325,7 +325,7 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
         int height = 600;
-        int width = 500;
+        int width = 800;
         this.setBounds((tailleEcran.width-width)/2, (tailleEcran.height-height)/2, width, height);
         this.setVisible(true);
         //Si la fréquence est "Une seule fois" alors la date de fin est désactivée

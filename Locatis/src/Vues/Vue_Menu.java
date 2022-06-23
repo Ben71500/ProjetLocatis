@@ -46,7 +46,7 @@ public class Vue_Menu extends JFrame {
         this.userConnecte = user;
         
         panneau.setLayout(new BorderLayout());
-        panneau.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panneau.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
         panneau.add(this.haut, BorderLayout.NORTH);
         panneau.add(this.centre, BorderLayout.CENTER);
         panneau.add(this.panneau_boutons, BorderLayout.SOUTH);
