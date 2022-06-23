@@ -3,16 +3,14 @@ package Main;
 import Vues.Vue_Connexion;
 import Modeles.Modele_Connexion;
 import Controleurs.Controleur_Connexion;
-import DAO.ConnectionBDD;
-import DAO.Connexion;
-import DAO.Recevoir_DAO;
-import java.util.ArrayList;
+import Objets_Locatis.SurveillanceCampagne;
 import javax.swing.*;
 
 public class Test {
 
     public static void main(String[] args) {
         //On soumet l'intialisation de l'interface graphique à la file d'attente de l'EDT (Event Dispatching Thread)
+        
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 //Création d'une contrôleur qui communique avec une vue et un modèle
@@ -31,5 +29,7 @@ public class Test {
                     System.out.println(liste.get(i));*/
             }
         });
+        SurveillanceCampagne surveillance = new SurveillanceCampagne();
+        surveillance.start();
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
  * Classe permettant de surveiller les campagnes en cours et d'envoyer les mails correspondants
  * @author Benjamin Mathilde
  */
-public class SurveillanceCampagne {
+public class SurveillanceCampagne extends Thread{
     
     private Connection connBdd= ConnectionBDD.getInstance(new Connexion());
 
@@ -73,10 +73,10 @@ public class SurveillanceCampagne {
     }
     
     /**
-     *
-     * @param arg
+     * Méthode qui lance la surveillance des campagnes pour l'envoie d'emails
      */
-    public static void main(String arg[]){
+    @Override
+    public void run(){
         SurveillanceCampagne surveillance = new SurveillanceCampagne();
         surveillance.surveillance_campagne();
     }
