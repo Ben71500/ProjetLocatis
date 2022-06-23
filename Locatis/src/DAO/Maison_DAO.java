@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Classe permettant de se connecter à la base de données pour la table Logement pour
- * les attributs n'ayant pas de numéro d'étage et d'effectuer divers actions sur la table
+ * les attributs n'ayant pas de numéro d'étage et d'effectuer diverses actions sur la table
  * @author Benjamin Mathilde
  */
 public class Maison_DAO extends DAO<Maison>{

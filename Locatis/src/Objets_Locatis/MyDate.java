@@ -69,7 +69,7 @@ public class MyDate {
     }
     
     /**
-     * Méthode qui permet davoir une chaine normalisé pour l'insértion en base de donnée
+     * Méthode qui permet d'avoir une chaine normalisé pour l'insertion en base de données
      * @return String
      */
     public String getDateSQL(){

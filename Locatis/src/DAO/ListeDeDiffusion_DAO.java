@@ -289,7 +289,7 @@ public class ListeDeDiffusion_DAO extends DAO<ListeDeDiffusion>{
     }
     
     /**
-     * Méthode qui récupère tous les id des listes de diffusion auxquels l'id locataire est associé
+     * Méthode qui récupère tous les id des listes de diffusion auxquelles l'id locataire est associé
      * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste d'entiers incrémentés
      * @param id : id locataire
      * @return List<Integer>

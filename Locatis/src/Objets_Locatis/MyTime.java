@@ -1,9 +1,7 @@
 package Objets_Locatis;
 
-import java.sql.Time;
-
 /**
- * Classe décrivant un temps
+ * Classe décrivant un temps.
  * @author Benjamin Mathilde
  */
 public class MyTime {

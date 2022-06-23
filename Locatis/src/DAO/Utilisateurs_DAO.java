@@ -6,17 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe permettant de se connecter à la base de données pour la table Utilisateur et d'effectuer divers actions sur la table
+ * Classe permettant de se connecter à la base de données pour la table Utilisateur et d'effectuer diverses actions sur la table
  * @author Benjamin Mathilde
  */
 public class Utilisateurs_DAO extends DAO<Utilisateur> {
-    
-    /**
-     * Constructeur de l'objet Utilisateur_DAO
-     */
-    public Utilisateurs_DAO() {
-        super(ConnectionBDD.getInstance(new Connexion()));
-    }
     
     /**
      * Constructeur de l'objet Utilisateur_DAO

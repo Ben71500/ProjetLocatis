@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe permettant de se connecter à la base de données pour la table campagne et d'effectuer divers actions sur la table
+ * Classe permettant de se connecter à la base de données pour la table campagne et d'effectuer diverses actions sur la table
  * @author Benjamin Mathilde
  */
 public class Campagne_DAO extends DAO<Campagne>{
@@ -103,7 +103,7 @@ public class Campagne_DAO extends DAO<Campagne>{
     }
     
     /**
-     * Méthode qui modifie l'état d'une campagne après l'envoie d'un mail
+     * Méthode qui modifie l'état d'une campagne après l'envoi d'un mail
      * @exception SQLException si la requête n'aboutie pas retourne false
      * @param obj
      * @return boolean
@@ -176,8 +176,8 @@ public class Campagne_DAO extends DAO<Campagne>{
     }
 
     /**
-     * Méthode qui récupére toute les campagnes de la base de données
-     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Campagne incrémenter
+     * Méthode qui récupère toutes les campagnes de la base de données
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Campagne incrémentées
      * @return List<Camapagne>
      */
     @Override
@@ -211,8 +211,8 @@ public class Campagne_DAO extends DAO<Campagne>{
     }   
     
     /**
-     * Méthode qui récupére uniquement les campagnes en cours nécéssitant l'envoi d'un mail 
-     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Campagne incrémenter
+     * Méthode qui récupère uniquement les campagnes en cours nécessitant l'envoi d'un mail 
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Campagne incrémentées
      * @return List<Campagne>
      */
     public List<Campagne> getAllSurveillance() {
@@ -246,8 +246,8 @@ public class Campagne_DAO extends DAO<Campagne>{
     }
     
     /**
-     * Méthode qui récupére toute les listes de diffusion pour n'en faire qu'une seule hors de la base de données par rapport à une campagne
-     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste de liste de diffusion incrémenter
+     * Méthode qui récupère toutes les listes de diffusion pour n'en faire qu'une seule hors de la base de données par rapport à une campagne
+     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste des listes de diffusion incrémentées
      * @param id : id camapagne
      * @return ListeDeDiffusion
      */
@@ -289,7 +289,7 @@ public class Campagne_DAO extends DAO<Campagne>{
     }
     
     /**
-     * Méthode qui récupére le nombre de campagne finies
+     * Méthode qui récupère le nombre de campagnes finies
      * @exception SQLException si la requête n'aboutie pas retourne retourne -1
      * @return int
      */
@@ -322,8 +322,8 @@ public class Campagne_DAO extends DAO<Campagne>{
     }
     
     /**
-     * Méthode qui récupére le nombre de campagnes en cours 
-     * @exception SQLException si la requête n'aboutie pas retourne retourne -1
+     * Méthode qui récupère le nombre de campagnes en cours 
+     * @exception SQLException si la requête n'aboutie pas retourne -1
      * @return int 
      */
     public int getNowCampagne(){
@@ -340,7 +340,7 @@ public class Campagne_DAO extends DAO<Campagne>{
     
     /**
      * Méthode qui retourne le nombre total de campagnes
-     * @exception SQLException si la requête n'aboutie pas retourne retourne -1
+     * @exception SQLException si la requête n'aboutie pas retourne -1
      * @return int
      */
     public int getAllCampagne(){
@@ -357,7 +357,7 @@ public class Campagne_DAO extends DAO<Campagne>{
     
     /**
      * Méthode qui récupère la liste des campagnes auxquelles une liste de diffusion est associée
-     * @exception SQLException si la requête n'aboutie pas retourne retourne la liste null ou la liste Campagne incrémenter
+     * @exception SQLException si la requête n'aboutie pas retourne la liste null ou la liste Campagne incrémentées
      * @param listeId : id liste de diffusion
      * @return List<Campagne>
      */

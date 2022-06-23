@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe permettant de se connecter à la base de données pour la table Locataire et d'effectuer divers actions sur la table
+ * Classe permettant de se connecter à la base de données pour la table Locataire et d'effectuer diverses actions sur la table
  * @author Benjamin Mathilde
  */
 public class Locataire_DAO extends DAO<Locataire>{

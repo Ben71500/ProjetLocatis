@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe permettant de se connecter à la base de données pour la table Recevoir et d'effectuer divers actions sur la table
+ * Classe permettant de se connecter à la base de données pour la table Recevoir et d'effectuer diverses actions sur la table
  * @author Benjamin Mathilde
  */
 public class Recevoir_DAO {

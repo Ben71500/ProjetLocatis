@@ -5,8 +5,20 @@ import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 
+/**
+ * Classe qui permet d'envoyer un mail.
+ * @author Benjamin Mathilde
+ */
 public class Mailer {
     
+    /**
+     * Méthode qui envoie un mail à une liste de personnes
+     * @param mailSender : email de celui qui envoie le mail
+     * @param passwordSender : mot de passe de celui qui envoie le mail
+     * @param object : objet du mail
+     * @param message : message contenu dans le mail
+     * @param listeMailTo : liste d'adresses mails à qui on envoie le mail
+     */
     public void sendEmail(String mailSender, String passwordSender, String object, String message, ArrayList<String> listeMailTo){
         Properties properties = System.getProperties();
         properties.put("mail.smtp.host", "smtp.gmail.com");

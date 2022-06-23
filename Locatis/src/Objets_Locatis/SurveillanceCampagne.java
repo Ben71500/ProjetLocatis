@@ -73,7 +73,7 @@ public class SurveillanceCampagne extends Thread{
     }
     
     /**
-     * Méthode qui lance la surveillance des campagnes pour l'envoie d'emails
+     * Méthode qui lance la surveillance des campagnes pour l'envoi d'emails
      */
     @Override
     public void run(){
