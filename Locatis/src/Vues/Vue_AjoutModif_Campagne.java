@@ -9,6 +9,8 @@ import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 import Exceptions.EmptyFieldException;
 import Exceptions.PasDeLignesSelectionneesException;
+import Graphique.Panneau;
+import Graphique.Bouton;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -25,18 +27,18 @@ import javax.swing.*;
  */
 public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     
-    private JPanel panneau = new JPanel();
-    private JPanel haut = new JPanel();
-    private JPanel centre = new JPanel();
-    private JPanel panneau_info = new JPanel();
-    private JPanel panneau_boutons= new JPanel();
-    private JPanel panneau_gauche = new JPanel();
-    private JPanel panneau_titre = new JPanel();
-    private JPanel panneau_droite = new JPanel();
-    private JPanel panneau_temps = new JPanel();
-    private JPanel panneau_heure = new JPanel();
-    private JPanel panneau_listes = new JPanel();
-    private JPanel panneau_message = new JPanel();
+    private Panneau panneau = new Panneau();
+    private Panneau haut = new Panneau();
+    private Panneau centre = new Panneau();
+    private Panneau panneau_info = new Panneau();
+    private Panneau panneau_boutons= new Panneau();
+    private Panneau panneau_gauche = new Panneau();
+    private Panneau panneau_titre = new Panneau();
+    private Panneau panneau_droite = new Panneau();
+    private Panneau panneau_temps = new Panneau();
+    private Panneau panneau_heure = new Panneau();
+    private Panneau panneau_listes = new Panneau();
+    private Panneau panneau_message = new Panneau();
     
     private JLabel titre = new JLabel();
     private JLabel titreCampagne_label = new JLabel("Titre : ");
@@ -59,9 +61,9 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
     private JDateChooser dateFin = new JDateChooser();
     private JList listes;
     
-    private JButton ajouter = new JButton("Ajouter");
-    private JButton modifier = new JButton("Modifier");
-    private JButton retour = new JButton("Retour");
+    private Bouton ajouter = new Bouton("Ajouter");
+    private Bouton modifier = new Bouton("Modifier");
+    private Bouton retour = new Bouton("Retour");
     
     private Campagne campagne;
     
@@ -150,8 +152,8 @@ public class Vue_AjoutModif_Campagne extends JFrame implements Vue_AjoutModif{
         panneau_titre.add(this.titreCampagne_label);
         panneau_titre.add(this.titreCampagne);
         
-        JPanel pHaut = new JPanel();
-        JPanel pCentre = new JPanel();
+        Panneau pHaut = new Panneau();
+        Panneau pCentre = new Panneau();
         panneau_message.setLayout(new BorderLayout());
         panneau_message.add(pHaut, BorderLayout.NORTH);
         panneau_message.add(pCentre, BorderLayout.CENTER);

@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import Graphique.Panneau;
+import Graphique.Bouton;
 
 /**
  * Classe dérivée de JFrame qui décrit la vue permettant d'afficher le menu principal
@@ -12,23 +14,23 @@ import javax.swing.*;
  */
 public class Vue_Menu extends JFrame {
 
-    private JPanel panneau = new JPanel();
-    private JPanel haut = new JPanel();
-    private JPanel centre = new JPanel();
-    private JPanel panneau_boutons = new JPanel();
+    private Panneau panneau = new Panneau();
+    private Panneau haut = new Panneau();
+    private Panneau centre = new Panneau();
+    private Panneau panneau_boutons = new Panneau();
     
     private JLabel titre = new JLabel();
     
-    private JButton gestionListes = new JButton("Gestion des listes de diffusion");
-    private JButton gestionLocataires = new JButton("Gestion des locataires");
-    private JButton gestionUtilisateurs = new JButton("Gestion des utilisateurs");
-    private JButton gestionBatiments = new JButton("Gestion des batiments");
-    private JButton gestionCampagnes = new JButton("Gestion des campagnes");
-    private JButton statistiques = new JButton("Voir les statistiques");
-    private JButton associer = new JButton("Associer un logement");
+    private Bouton gestionListes = new Bouton("Gestion des listes de diffusion");
+    private Bouton gestionLocataires = new Bouton("Gestion des locataires");
+    private Bouton gestionUtilisateurs = new Bouton("Gestion des utilisateurs");
+    private Bouton gestionBatiments = new Bouton("Gestion des batiments");
+    private Bouton gestionCampagnes = new Bouton("Gestion des campagnes");
+    private Bouton statistiques = new Bouton("Voir les statistiques");
+    private Bouton associer = new Bouton("Associer un logement");
     
-    private JButton deconnexion = new JButton("Se déconnecter");
-    private JButton quitter = new JButton("Quitter");
+    private Bouton deconnexion = new Bouton("Se déconnecter");
+    private Bouton quitter = new Bouton("Quitter");
     
     private Utilisateur userConnecte;
 
@@ -73,7 +75,7 @@ public class Vue_Menu extends JFrame {
      * @param listener : écouteur
      */
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
-        JButton bouton;
+        Bouton bouton;
         bouton = switch (nomBouton.toUpperCase()) {
             case "LISTES" ->
                 bouton = gestionListes;

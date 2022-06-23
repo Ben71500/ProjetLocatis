@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import Graphique.Panneau;
+import Graphique.Bouton;
 
 /**
  * Classe dérivée de JDialog qui décrit la vue permettant
@@ -13,15 +15,15 @@ import javax.swing.*;
  */
 public class Vue_dialog_locataire extends JDialog{
     
-    JPanel panneau = new JPanel();
-    JPanel haut = new JPanel();
-    JPanel centre = new JPanel();
-    JPanel bas = new JPanel();
+    Panneau panneau = new Panneau();
+    Panneau haut = new Panneau();
+    Panneau centre = new Panneau();
+    Panneau bas = new Panneau();
     
     JTextArea label = new JTextArea();
     JLabel titre = new JLabel("Outils de recherche");
     
-    JButton retour = new JButton("Retour");
+    Bouton retour = new Bouton("Retour");
     
     /**
      * Constructeur de la vue
@@ -62,7 +64,7 @@ public class Vue_dialog_locataire extends JDialog{
      * @param listener : écouteur
      */
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
-        JButton bouton;
+        Bouton bouton;
         bouton = switch (nomBouton.toUpperCase()) {
             case "RETOUR" ->
                 bouton = retour;

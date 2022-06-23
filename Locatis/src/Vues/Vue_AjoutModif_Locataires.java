@@ -2,6 +2,8 @@ package Vues;
 
 import Exceptions.ValeurIncorrecteException;
 import Exceptions.EmptyFieldException;
+import Graphique.Panneau;
+import Graphique.Bouton;
 import Objets_Locatis.Locataire;
 import Objets_Locatis.MyDate;
 import com.toedter.calendar.JDateChooser;
@@ -19,11 +21,11 @@ import javax.swing.*;
  */
 public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
     
-    private JPanel panneau = new JPanel();
-    private JPanel haut = new JPanel();
-    private JPanel centre = new JPanel();
-    private JPanel panneau_info = new JPanel();
-    private JPanel panneau_boutons= new JPanel();
+    private Panneau panneau = new Panneau();
+    private Panneau haut = new Panneau();
+    private Panneau centre = new Panneau();
+    private Panneau panneau_info = new Panneau();
+    private Panneau panneau_boutons= new Panneau();
     
     private JLabel titre = new JLabel();
     private JLabel nom_label = new JLabel ("Nom : ");
@@ -38,9 +40,9 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
     private JTextField mail = new JTextField();
     private JTextField telephone = new JTextField();
     
-    private JButton ajouter = new JButton("Ajouter");
-    private JButton modifier = new JButton("Modifier");
-    private JButton retour = new JButton("Retour");
+    private Bouton ajouter = new Bouton("Ajouter");
+    private Bouton modifier = new Bouton("Modifier");
+    private Bouton retour = new Bouton("Retour");
     
     private Locataire leLocataire;
     
@@ -133,7 +135,7 @@ public class Vue_AjoutModif_Locataires extends JFrame implements Vue_AjoutModif{
 
     @Override
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
-        JButton bouton;
+        Bouton bouton;
         bouton = switch (nomBouton.toUpperCase()) {
             case "AJOUTER" ->
                 bouton = ajouter;

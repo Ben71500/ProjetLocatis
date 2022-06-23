@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
 import javax.swing.table.*;
+import Graphique.Panneau;
+import Graphique.Bouton;
 
 /**
  * Classe de l'objet Vue_Gestion, l'objet fait l'affichage de la gestion des locataires, utilisateurs, maisons, appartements, campagnes et listes de diffusion
@@ -15,11 +17,11 @@ import javax.swing.table.*;
  */
 public class Vue_Gestion extends JFrame {
 
-    private JPanel panneau = new JPanel();
-    private JPanel haut = new JPanel();
-    private JPanel centre = new JPanel();
-    private JPanel panneau_boutons = new JPanel();
-    private JPanel panneau_recherches = new JPanel();
+    private Panneau panneau = new Panneau();
+    private Panneau haut = new Panneau();
+    private Panneau centre = new Panneau();
+    private Panneau panneau_boutons = new Panneau();
+    private Panneau panneau_recherches = new Panneau();
     
     private JLabel titre;
     private JLabel rechercher_label = new JLabel("Rechercher : ");
@@ -35,11 +37,11 @@ public class Vue_Gestion extends JFrame {
     
     private ButtonGroup group = new ButtonGroup();
     
-    private JButton ajouter = new JButton("Ajouter");
-    private JButton modifier = new JButton("Modifier");
-    private JButton supprimer = new JButton("Supprimer");
-    private JButton retour = new JButton("Retour");
-    private JButton inserer = new JButton("Insere");
+    private Bouton ajouter = new Bouton("Ajouter");
+    private Bouton modifier = new Bouton("Modifier");
+    private Bouton supprimer = new Bouton("Supprimer");
+    private Bouton retour = new Bouton("Retour");
+    private Bouton inserer = new Bouton("Insere");
     
     private String donnees;
     private Utilisateur utilisateur;

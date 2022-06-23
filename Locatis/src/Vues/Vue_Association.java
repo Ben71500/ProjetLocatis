@@ -4,11 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import Graphique.Panneau;
+import Graphique.Bouton;
 
 /**
  * Classe dérivée de JFrame qui décrit la vue permettant d'ajouter
@@ -17,21 +17,21 @@ import javax.swing.JPanel;
  */
 public class Vue_Association extends JFrame{
     
-    private JPanel panneau = new JPanel();
-    private JPanel haut = new JPanel();
-    private JPanel centre = new JPanel();
-    private JPanel centreHaut = new JPanel();
-    private JPanel centreBas = new JPanel();
-    private JPanel bas = new JPanel();
+    private Panneau panneau = new Panneau();
+    private Panneau haut = new Panneau();
+    private Panneau centre = new Panneau();
+    private Panneau centreHaut = new Panneau();
+    private Panneau centreBas = new Panneau();
+    private Panneau bas = new Panneau();
     
     private JComboBox logementList = new JComboBox();
     private JComboBox locataireList = new JComboBox();
     private JComboBox logementListByLocataire = new JComboBox();
     private JComboBox locataireListByLocataire = new JComboBox();
     
-    private JButton ajouter = new JButton("Ajouter");
-    private JButton retirer = new JButton("Retirer");
-    private JButton retour = new JButton("Retour");
+    private Bouton ajouter = new Bouton("Ajouter");
+    private Bouton retirer = new Bouton("Retirer");
+    private Bouton retour = new Bouton("Retour");
     
     private JLabel titre = new JLabel("Attribution de logement");
     

@@ -12,6 +12,8 @@ import java.util.Calendar;
 import javax.swing.*;
 import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
 import javax.swing.table.*;
+import Graphique.Panneau;
+import Graphique.Bouton;
 
 /**
  * Classe dérivée de JFrame qui décrit la vue permettant d'ajouter ou de modifier une liste de diffusion
@@ -19,14 +21,14 @@ import javax.swing.table.*;
  */
 public class Vue_Ajout_Listes extends JFrame {
 
-    private JPanel panneau = new JPanel();
-    private JPanel haut = new JPanel();
-    private JPanel centre = new JPanel();
-    private JPanel panneau_infos = new JPanel();
-    private JPanel panneau_boutons = new JPanel();
-    private JPanel panneau_recherches = new JPanel();
-    private JPanel panneau_boutons_radios = new JPanel();
-    private JPanel panneau_premiere_ligne = new JPanel();
+    private Panneau panneau = new Panneau();
+    private Panneau haut = new Panneau();
+    private Panneau centre = new Panneau();
+    private Panneau panneau_infos = new Panneau();
+    private Panneau panneau_boutons = new Panneau();
+    private Panneau panneau_recherches = new Panneau();
+    private Panneau panneau_boutons_radios = new Panneau();
+    private Panneau panneau_premiere_ligne = new Panneau();
     
     private JLabel titre;
     private JLabel nom_label = new JLabel("Nom de la liste de diffusion : ");
@@ -53,11 +55,11 @@ public class Vue_Ajout_Listes extends JFrame {
     private ButtonGroup group_donnees= new ButtonGroup();
     private ButtonGroup group_signe = new ButtonGroup();
     
-    private JButton ajouter = new JButton("Ajouter");
-    private JButton modifier = new JButton("Modifier");
-    private JButton selectionnerTout = new JButton("Selectionner tout");
-    private JButton deselectionner = new JButton("Tout deselectionner");
-    private JButton retour = new JButton("Retour");
+    private Bouton ajouter = new Bouton("Ajouter");
+    private Bouton modifier = new Bouton("Modifier");
+    private Bouton selectionnerTout = new Bouton("Selectionner tout");
+    private Bouton deselectionner = new Bouton("Tout deselectionner");
+    private Bouton retour = new Bouton("Retour");
     
     private String donnees;    
     

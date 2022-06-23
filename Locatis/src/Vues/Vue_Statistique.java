@@ -5,6 +5,8 @@ import Objets_Locatis.PieChart;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import Graphique.Panneau;
+import Graphique.Bouton;
 
 /**
  * Classe dérivée de JFrame qui décrit la vue permettant d'afficher les statistiques
@@ -12,10 +14,10 @@ import java.awt.event.ActionListener;
  */
 public class Vue_Statistique extends JFrame{
     
-    private JPanel panneau = new JPanel();
-    private JPanel haut = new JPanel();
-    private JPanel centre = new JPanel();
-    private JPanel bas = new JPanel();
+    private Panneau panneau = new Panneau();
+    private Panneau haut = new Panneau();
+    private Panneau centre = new Panneau();
+    private Panneau bas = new Panneau();
     
     private JLabel titre = new JLabel("Statistique");
     
@@ -23,7 +25,7 @@ public class Vue_Statistique extends JFrame{
     private PieChart graphiqueParLogementOccuper = new PieChart("Logement occupé");
     private PieChart graphiqueDesCampagnesTerminer = new PieChart("Campagne en cours");
     
-    private JButton retour = new JButton("Retour");
+    private Bouton retour = new Bouton("Retour");
     
     /**
      * Constructeur de la vue
@@ -49,9 +51,9 @@ public class Vue_Statistique extends JFrame{
 
     /**
      *
-     * @return le JPanel au centre
+     * @return le Panneau au centre
      */
-    public JPanel getCentre() {
+    public Panneau getCentre() {
         return centre;
     }
 
@@ -85,7 +87,7 @@ public class Vue_Statistique extends JFrame{
      * @param listener : écouteur
      */
     public void ajouterEcouteur(String nomBouton, ActionListener listener) {
-        JButton bouton;
+        Bouton bouton;
         bouton = switch (nomBouton.toUpperCase()) {
             case "RETOUR" ->
                 bouton = retour;

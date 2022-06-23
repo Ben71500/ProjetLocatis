@@ -2,6 +2,8 @@ package Vues;
 
 import Exceptions.ValeurIncorrecteException;
 import Exceptions.EmptyFieldException;
+import Graphique.Panneau;
+import Graphique.Bouton;
 import Objets_Locatis.Utilisateur;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -14,12 +16,12 @@ import javax.swing.*;
  */
 public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModif{
     
-    private JPanel panneau = new JPanel();
-    private JPanel haut = new JPanel();
-    private JPanel centre = new JPanel();
-    private JPanel panneau_info = new JPanel();
-    private JPanel panneau_boutons= new JPanel();
-    private JPanel panneau_tableau= new JPanel();
+    private Panneau panneau = new Panneau();
+    private Panneau haut = new Panneau();
+    private Panneau centre = new Panneau();
+    private Panneau panneau_info = new Panneau();
+    private Panneau panneau_boutons= new Panneau();
+    private Panneau panneau_tableau= new Panneau();
     
     private JLabel titre = new JLabel();
     private JLabel login_label = new JLabel ("Login : ");
@@ -34,9 +36,9 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
     private JTextField email = new JTextField();
     private JPasswordField password = new JPasswordField();
     
-    private JButton ajouter = new JButton("Ajouter");
-    private JButton modifier = new JButton("Modifier");
-    private JButton retour = new JButton("Retour");
+    private Bouton ajouter = new Bouton("Ajouter");
+    private Bouton modifier = new Bouton("Modifier");
+    private Bouton retour = new Bouton("Retour");
     
     private Utilisateur user;
     private Utilisateur userConnecte;
@@ -188,7 +190,7 @@ public class Vue_AjoutModif_Utilisateurs extends JFrame implements Vue_AjoutModi
     
     @Override
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
-        JButton bouton;
+        Bouton bouton;
         bouton = switch (nomBouton.toUpperCase()) {
             case "AJOUTER" ->
                 bouton = ajouter;
