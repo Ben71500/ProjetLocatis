@@ -28,7 +28,7 @@ public class Test {
                 controleur.getVue().setVisible(true);
             }
         });
-        /*SurveillanceCampagne surveillance = new SurveillanceCampagne();
-        surveillance.start();*/
+        SurveillanceCampagne surveillance = new SurveillanceCampagne();
+        surveillance.start();
     }
 }
