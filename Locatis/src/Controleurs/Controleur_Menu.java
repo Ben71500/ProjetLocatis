@@ -145,6 +145,7 @@ public class Controleur_Menu implements ActionListener {
             }
             case "QUITTER" -> {
                 laVue.quitter();
+                System.exit(0);
             }
         }
     }
